@@ -1,0 +1,10 @@
+{
+  "scene_path": "scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {"type": "set_property", "node_path": "Player", "property": "position", "value": {"__type": "Vector2", "x": 3486, "y": -760}},
+    {"type": "wait_frames", "frames": 3},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/high_altitude_visual.png"}
+  ]
+}

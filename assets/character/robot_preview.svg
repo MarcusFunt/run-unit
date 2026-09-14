@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="160" viewBox="0 0 200 160">
+  <!-- Transparent assembled neutral pose preview; robot faces left. -->
+  <g transform="translate(112 132) scale(-.7 .7)">
+    <g transform="translate(1.65 -53.9) rotate(25) scale(.3)">
+      <image xlink:href="../source/robot/robot_upper_link.svg" x="-18" y="-18" width="146" height="36"/>
+      <g transform="translate(110 0) rotate(105)">
+        <image xlink:href="../source/robot/robot_lower_link.svg" x="-18" y="-18" width="181" height="36"/>
+        <image xlink:href="../source/robot/robot_joint.svg" x="-27" y="-27" width="54" height="54"/>
+        <g transform="translate(145 0) rotate(-130)">
+          <image xlink:href="../source/robot/robot_wheel.svg" x="-72" y="-72" width="144" height="144"/>
+          <image xlink:href="../source/robot/robot_joint.svg" x="-27" y="-27" width="54" height="54"/>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(1.65 -53.9) scale(.3)">
+      <image xlink:href="../source/robot/robot_body.svg" x="-180" y="-115" width="320" height="190"/>
+      <image xlink:href="../source/robot/robot_eye.svg" x="-150" y="-62" width="38" height="86"/>
+      <image xlink:href="../source/robot/robot_antenna.svg" x="63" y="-146" width="42" height="80"/>
+    </g>
+  </g>
+</svg>

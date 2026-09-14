@@ -1,0 +1,7 @@
+{
+  "dirs": ["res://tests"],
+  "include_subdirs": true,
+  "should_exit": true,
+  "log_level": 3,
+  "failure_error_types": ["engine", "gut", "push_error"]
+}

@@ -1,0 +1,65 @@
+{
+  "scene_path": "scenes/game.tscn",
+  "viewport_size": {
+    "width": 960,
+    "height": 540
+  },
+  "settle_frames": 4,
+  "steps": [
+    {
+      "type": "screenshot",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/tutorial_start.png"
+    },
+    {
+      "type": "action",
+      "action_name": "move_right",
+      "pressed": true
+    },
+    {
+      "type": "wait_seconds",
+      "seconds": 1.65
+    },
+    {
+      "type": "action",
+      "action_name": "move_right",
+      "pressed": false
+    },
+    {
+      "type": "screenshot",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/tutorial_jump.png"
+    }
+  ],
+  "assertions": [
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/MovementPrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/JumpPrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/ChargePrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/CrouchPrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/CrouchGate"
+    },
+    {
+      "assertion": "visible",
+      "node_path": "World/TutorialSigns/MovementPrompt",
+      "expected": true
+    },
+    {
+      "assertion": "property",
+      "node_path": "World/Platform01",
+      "property": "metadata/width_pixels",
+      "expected": 960.0
+    }
+  ]
+}

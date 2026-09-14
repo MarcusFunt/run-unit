@@ -1,0 +1,24 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 4,
+  "steps": [
+    {"type": "key", "keycode": 4194309, "pressed": true, "release_after": true},
+    {"type": "wait_frames", "frames": 3},
+    {"type": "action", "action_name": "move_right", "pressed": true},
+    {"type": "wait_frames", "frames": 45},
+    {"type": "action", "action_name": "move_right", "pressed": false},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "global_position:x", "operator": "greater_than", "expected": 180.0},
+    {"type": "assert", "assertion": "property", "node_path": "ScoreManager", "property": "best_distance", "operator": "greater_than", "expected": 30.0},
+    {"type": "key", "keycode": 66, "pressed": true, "release_after": true},
+    {"type": "wait_frames", "frames": 5},
+    {"type": "assert", "assertion": "property", "node_path": "ScriptedController", "property": "active", "expected": true},
+    {"type": "action", "action_name": "restart", "pressed": true, "release_after": true},
+    {"type": "wait_frames", "frames": 3},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "global_position:x", "operator": "less_than", "expected": 150.0},
+    {"type": "ui_report", "label": "game-hud", "node_path": "HUD", "path": "res://verification/game_hud_layout.json", "fail_on": ["overlap", "zero_size", "offscreen"]}
+  ],
+  "assertions": [
+    {"assertion": "node_exists", "node_path": "World/Platform01/Collision"}
+  ]
+}

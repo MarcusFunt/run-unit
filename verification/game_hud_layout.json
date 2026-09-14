@@ -1,0 +1,155 @@
+{
+  "controls": [
+    {
+      "class": "PanelContainer",
+      "path": "HUD/ScoreBar",
+      "rect": [
+        14,
+        14,
+        332,
+        84
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "HUD/ScoreBar/Margin",
+      "rect": [
+        17,
+        15,
+        328,
+        82
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "HUD/ScoreBar/Margin/Rows",
+      "rect": [
+        27,
+        23,
+        308,
+        66
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "HUD/ScoreBar/Margin/Rows/Header",
+      "rect": [
+        27,
+        23,
+        308,
+        34
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "HUD/ScoreBar/Margin/Rows/Header/TitleLabel",
+      "rect": [
+        27,
+        32,
+        53,
+        16
+      ],
+      "text": "DISTANCE"
+    },
+    {
+      "class": "Label",
+      "path": "HUD/ScoreBar/Margin/Rows/Header/DistanceLabel",
+      "rect": [
+        86,
+        23,
+        249,
+        34
+      ],
+      "text": "00128m"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "HUD/ScoreBar/Margin/Rows/ScoreProgressBar",
+      "rect": [
+        27,
+        61,
+        308,
+        10
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "HUD/ScoreBar/Margin/Rows/Footer",
+      "rect": [
+        27,
+        75,
+        308,
+        14
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "HUD/ScoreBar/Margin/Rows/Footer/MilestoneLabel",
+      "rect": [
+        27,
+        75,
+        235,
+        14
+      ],
+      "text": "ROUTE 01  //  NEXT 00500m"
+    },
+    {
+      "class": "Label",
+      "path": "HUD/ScoreBar/Margin/Rows/Footer/BestLabel",
+      "rect": [
+        268,
+        75,
+        67,
+        14
+      ],
+      "text": "BEST  00206m"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "HUD/StatusBar",
+      "rect": [
+        14,
+        496,
+        932,
+        40
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "HUD/StatusBar/Margin",
+      "rect": [
+        17,
+        497,
+        928,
+        38
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "HUD/StatusBar/Margin/StatusLabel",
+      "rect": [
+        27,
+        509,
+        908,
+        14
+      ],
+      "text": "HUMAN  //  A/D MOVE  //  SPACE JUMP  //  R RESTART  //  B..."
+    }
+  ],
+  "counts": {
+    "controls": 13,
+    "findings": 0,
+    "hidden": 3,
+    "visible": 13
+  },
+  "file": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/verification/game_hud_layout.json",
+  "findings": [],
+  "label": "game-hud",
+  "node_path": "HUD",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 540,
+    "width": 960
+  }
+}

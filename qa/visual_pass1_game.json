@@ -1,0 +1,14 @@
+{
+  "scene_path": "scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {"type": "wait_seconds", "seconds": 1.0},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass1_gameplay.png"},
+    {"type": "ui_report", "label": "gameplay", "fail_on": ["zero_size", "offscreen", "overlap"]},
+    {"type": "action", "action_name": "ui_cancel", "pressed": true, "release_after": true},
+    {"type": "wait_frames", "frames": 4},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass1_pause.png"},
+    {"type": "ui_report", "label": "pause", "fail_on": ["zero_size", "offscreen", "overlap"]}
+  ]
+}

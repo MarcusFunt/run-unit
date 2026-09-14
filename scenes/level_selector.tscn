@@ -1,0 +1,210 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/run_unit_level_selector.gd" id="1_script"]
+[ext_resource type="Theme" path="res://theme/run_unit_menu_theme.tres" id="2_theme"]
+
+[node name="LevelSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.012, 0.027, 0.043, 1)
+
+[node name="TopGlow" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.96, 0.64, 0.18, 0.9)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 18.0
+offset_right = -22.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+
+[node name="TitleBlock" type="VBoxContainer" parent="Margin/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Margin/Layout/Header/TitleBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.73, 0.98, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 34
+text = "RUN//UNIT"
+
+[node name="Subtitle" type="Label" parent="Margin/Layout/Header/TitleBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+theme_override_font_sizes/font_size = 13
+text = "SECTOR ROUTE SELECTOR  //  MUNICIPAL CORE"
+
+[node name="Status" type="Label" parent="Margin/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.45, 0.72, 0.77, 1)
+theme_override_font_sizes/font_size = 14
+text = "RUN STATUS  ONLINE\nLINK  STABLE"
+horizontal_alignment = 2
+
+[node name="Body" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="SectorPanel" type="PanelContainer" parent="Margin/Layout/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SectorMargin" type="MarginContainer" parent="Margin/Layout/Body/SectorPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="SectorLayout" type="VBoxContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Heading" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.95, 0.94, 1)
+theme_override_font_sizes/font_size = 17
+text = "AVAILABLE SECTORS"
+
+[node name="Caption" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.63, 0.68, 1)
+text = "Select a route to review its profile."
+
+[node name="SectorGrid" type="GridContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 7
+columns = 2
+
+[node name="BriefingPanel" type="PanelContainer" parent="Margin/Layout/Body"]
+custom_minimum_size = Vector2(276, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BriefingMargin" type="MarginContainer" parent="Margin/Layout/Body/BriefingPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Briefing" type="VBoxContainer" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Kicker" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+text = "MISSION BRIEFING"
+
+[node name="SelectedSector" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.98, 0.95, 1)
+theme_override_font_sizes/font_size = 18
+text = "01  MAINTENANCE SHAFT"
+autowrap_mode = 2
+
+[node name="Rule" type="HSeparator" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.69, 0.8, 0.81, 1)
+theme_override_font_sizes/font_size = 14
+text = "Service tunnels beneath the municipal core. Tight routing and unstable lift shafts."
+autowrap_mode = 2
+
+[node name="SeedLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.72, 0.77, 1)
+theme_override_font_sizes/font_size = 13
+text = "AUTHORED ROUTE  01"
+
+[node name="DifficultyLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+theme_override_font_sizes/font_size = 13
+text = "THREAT  LOW"
+
+[node name="RouteStatus" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.4, 0.88, 0.76, 1)
+theme_override_font_sizes/font_size = 13
+text = "ROUTE 01 READY"
+
+[node name="Footer" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BackButton" type="Button" parent="Margin/Layout/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(138, 38)
+layout_mode = 2
+text = "←  BACK"
+
+[node name="Hint" type="Label" parent="Margin/Layout/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.35, 0.55, 0.6, 1)
+text = "ARROWS SELECT   TAB DEPLOY   ESC BACK"
+horizontal_alignment = 1
+
+[node name="DeployButton" type="Button" parent="Margin/Layout/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(176, 38)
+layout_mode = 2
+text = "DEPLOY  →"

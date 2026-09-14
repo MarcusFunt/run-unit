@@ -1,0 +1,8 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 1280, "height": 720},
+  "settle_frames": 12,
+  "steps": [
+    {"type": "ui_report", "label": "title-menu-wide", "node_path": "TitleScreen/Overlay/Shell/Rows", "path": "res://verification/title_menu_wide_layout.json", "fail_on": ["overlap", "zero_size", "offscreen"]}
+  ]
+}

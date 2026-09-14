@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="86" viewBox="0 0 38 86">
+  <!-- Local centre: 19,43. Place on the body front at body-local 49,96. -->
+  <defs><linearGradient id="eye" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#C9FAFF"/><stop offset=".35" stop-color="#39D9FF"/><stop offset="1" stop-color="#168FC5"/></linearGradient></defs>
+  <path d="M3 12 L8 4 H30 L35 12 V74 L30 82 H8 L3 74 Z" fill="#101418" stroke="#47535C" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="8" y="9" width="22" height="68" rx="10" fill="url(#eye)"/>
+  <rect x="12" y="14" width="7" height="38" rx="3.5" fill="#E9FEFF" opacity=".8"/>
+  <path d="M32 20 V66" stroke="#7E8D97" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+</svg>

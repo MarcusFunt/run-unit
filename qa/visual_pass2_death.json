@@ -1,0 +1,11 @@
+{
+  "scene_path": "scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {"type": "set_property", "node_path": "Player", "property": "position", "value": {"__type": "Vector2", "x": 128, "y": 900}},
+    {"type": "wait_frames", "frames": 10},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass2_death.png"},
+    {"type": "ui_report", "label": "death", "include_hidden": true, "fail_on": ["zero_size", "offscreen", "overlap"]}
+  ]
+}

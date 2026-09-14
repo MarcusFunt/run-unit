@@ -1,0 +1,16 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 12,
+  "steps": [
+    {"type": "ui_report", "label": "title-menu", "node_path": "TitleScreen/Overlay/Shell/Rows", "path": "res://verification/title_menu_layout.json", "fail_on": ["overlap", "zero_size", "offscreen"]},
+    {"type": "screenshot", "path": "res://verification/title_menu.png"},
+    {"type": "mouse_button", "position": {"x": 770, "y": 230}, "pressed": true},
+    {"type": "mouse_button", "position": {"x": 770, "y": 230}, "pressed": false},
+    {"type": "assert", "label": "selects-power-spine", "assertion": "property", "node_path": "TitleScreen", "property": "selected_level_index", "expected": 5},
+    {"type": "mouse_button", "position": {"x": 700, "y": 450}, "pressed": true},
+    {"type": "mouse_button", "position": {"x": 700, "y": 450}, "pressed": false},
+    {"type": "assert", "label": "starts-selected-route", "assertion": "visible", "node_path": "TitleScreen", "expected": false},
+    {"type": "assert", "label": "applies-sector-profile", "assertion": "property", "node_path": "World", "property": "_level_index", "expected": 5}
+  ]
+}

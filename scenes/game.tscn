@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/gameplay/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+[ext_resource type="Script" path="res://scripts/player/human_controller.gd" id="4_human"]
+[ext_resource type="Script" path="res://scripts/player/scripted_controller.gd" id="5_bot"]
+[ext_resource type="Script" path="res://scripts/gameplay/score_manager.gd" id="6_score"]
+[ext_resource type="Script" path="res://scripts/ai/environment.gd" id="7_environment"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="8_hud"]
+[ext_resource type="PackedScene" path="res://scenes/debug_overlay.tscn" id="9_debug"]
+[ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="10_title"]
+[ext_resource type="Script" path="res://addons/maaacks_menus_template/base/nodes/utilities/pause_menu_controller.gd" id="11_pause"]
+[ext_resource type="PackedScene" path="res://menus/scenes/windows/pause_menu.tscn" id="12_pause_menu"]
+[ext_resource type="PackedScene" path="res://scenes/death_menu.tscn" id="13_death_menu"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="WorldAtmosphere" type="CanvasLayer" parent="."]
+layer = -20
+
+[node name="Base" type="ColorRect" parent="WorldAtmosphere"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.012, 0.034, 0.05, 1)
+
+[node name="LowerHaze" type="ColorRect" parent="WorldAtmosphere"]
+anchors_preset = 12
+anchor_top = 0.56
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.035, 0.11, 0.14, 0.4)
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(128, 385)
+
+[node name="HumanController" type="Node" parent="."]
+script = ExtResource("4_human")
+player_path = NodePath("../Player")
+
+[node name="ScriptedController" type="Node" parent="."]
+script = ExtResource("5_bot")
+player_path = NodePath("../Player")
+world_path = NodePath("../World")
+
+[node name="ScoreManager" type="Node" parent="."]
+script = ExtResource("6_score")
+
+[node name="Environment" type="Node" parent="."]
+script = ExtResource("7_environment")
+game_path = NodePath("..")
+
+[node name="HUD" parent="." instance=ExtResource("8_hud")]
+
+[node name="DebugOverlay" parent="." instance=ExtResource("9_debug")]
+
+[node name="TitleScreen" parent="." instance=ExtResource("10_title")]
+
+[node name="PauseMenuController" type="Node" parent="."]
+script = ExtResource("11_pause")
+pause_menu_packed = ExtResource("12_pause_menu")
+
+[node name="DeathMenu" parent="." instance=ExtResource("13_death_menu")]
+visible = false

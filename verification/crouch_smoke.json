@@ -1,0 +1,16 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 2,
+  "steps": [
+    {"type": "wait_seconds", "seconds": 0.60},
+    {"type": "key", "keycode": 4194322, "pressed": true},
+    {"type": "wait_seconds", "seconds": 0.25},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "crouch_ratio", "operator": "greater_than", "expected": 0.95},
+    {"type": "assert", "assertion": "property", "node_path": "Player/CollisionShape2D", "property": "shape:size:y", "operator": "less_than", "expected": 25.0},
+    {"type": "key", "keycode": 4194322, "pressed": false},
+    {"type": "wait_seconds", "seconds": 0.25},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "crouch_ratio", "operator": "less_than", "expected": 0.05},
+    {"type": "assert", "assertion": "property", "node_path": "Player/CollisionShape2D", "property": "shape:size:y", "operator": "greater_than", "expected": 29.0}
+  ]
+}

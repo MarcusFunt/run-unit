@@ -1,0 +1,13 @@
+{
+  "scene_path": "scenes/robot_preview.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 4,
+  "assertions": [
+    {"assertion": "node_exists", "node_path": "RobotVisual/BodyPivot/Body"},
+    {"assertion": "node_exists", "node_path": "RobotVisual/UpperLinkPivot/KneePivot/WheelPivot/Wheel"}
+  ],
+  "steps": [
+    {"type": "wait_frames", "frames": 12},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/verification/robot_preview_full.png"}
+  ]
+}

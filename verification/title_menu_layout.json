@@ -1,0 +1,393 @@
+{
+  "controls": [
+    {
+      "class": "VBoxContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows",
+      "rect": [
+        32,
+        14.5,
+        896,
+        513
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/TopBar",
+      "rect": [
+        32,
+        14.5,
+        896,
+        22
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/TopBar/SystemLabel",
+      "rect": [
+        32,
+        17.5,
+        754,
+        16
+      ],
+      "text": "HELIOS-9  //  MUNICIPAL NETWORK"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/TopBar/StatusLabel",
+      "rect": [
+        798,
+        17.5,
+        130,
+        16
+      ],
+      "text": "●  SOLAR GRID: CRITICAL"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel",
+      "rect": [
+        32,
+        46.5,
+        896,
+        457
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content",
+      "rect": [
+        50,
+        62.5,
+        860,
+        425
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel",
+      "rect": [
+        50,
+        62.5,
+        421,
+        425
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing",
+      "rect": [
+        68,
+        78.5,
+        385,
+        393
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/Kicker",
+      "rect": [
+        68,
+        78.5,
+        385,
+        16
+      ],
+      "text": "FINAL WORK ORDER 09-441"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/Title",
+      "rect": [
+        68,
+        102.5,
+        385,
+        55
+      ],
+      "text": "RUN//UNIT"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/Subtitle",
+      "rect": [
+        68,
+        165.5,
+        385,
+        18
+      ],
+      "text": "LAST LIGHT PROTOCOL"
+    },
+    {
+      "class": "ColorRect",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/Rule",
+      "rect": [
+        68,
+        191.5,
+        385,
+        1
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/UnitLabel",
+      "rect": [
+        68,
+        200.5,
+        385,
+        16
+      ],
+      "text": "MUNICIPAL MAINTENANCE UNIT  /  U-07"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/Objective",
+      "rect": [
+        68,
+        224.5,
+        385,
+        179
+      ],
+      "text": "The artificial sun has failed.  Carry the Solar Ignition ..."
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/CoreStatus",
+      "rect": [
+        68,
+        411.5,
+        385,
+        17
+      ],
+      "text": "◆  CORE STATUS: STABLE  //  LIGHT REMAINING"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/BriefingPanel/Briefing/Dispatch",
+      "rect": [
+        68,
+        436.5,
+        385,
+        35
+      ],
+      "text": "TASK PRIORITY: 9 — CIVILIZATION CRITICAL UNIT CLASS: ORDI..."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel",
+      "rect": [
+        489,
+        62.5,
+        421,
+        425
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector",
+      "rect": [
+        507,
+        78.5,
+        385,
+        393
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/SelectorHeader",
+      "rect": [
+        507,
+        78.5,
+        385,
+        23
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/SelectorHeader/SelectorTitle",
+      "rect": [
+        507,
+        78.5,
+        235,
+        23
+      ],
+      "text": "SELECT A SECTOR"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/SelectorHeader/SelectorHint",
+      "rect": [
+        754,
+        82.5,
+        138,
+        14
+      ],
+      "text": "ARROWS / TAB TO NAVIGATE"
+    },
+    {
+      "class": "GridContainer",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid",
+      "rect": [
+        507,
+        109.5,
+        385,
+        194
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level01",
+      "rect": [
+        507,
+        109.5,
+        172,
+        44
+      ],
+      "text": "01  MAINTENANCE SHAFT"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level02",
+      "rect": [
+        687,
+        109.5,
+        200,
+        44
+      ],
+      "text": "02  MANUFACTURING DISTRICT"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level03",
+      "rect": [
+        507,
+        159.5,
+        172,
+        44
+      ],
+      "text": "03  THERMAL SECTOR"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level04",
+      "rect": [
+        687,
+        159.5,
+        200,
+        44
+      ],
+      "text": "04  FREIGHT NETWORK"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level05",
+      "rect": [
+        507,
+        209.5,
+        172,
+        44
+      ],
+      "text": "05  HABITATION GARDENS"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level06",
+      "rect": [
+        687,
+        209.5,
+        200,
+        44
+      ],
+      "text": "06  POWER SPINE"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level07",
+      "rect": [
+        507,
+        259.5,
+        172,
+        44
+      ],
+      "text": "07  BEACON APPROACH"
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/LevelGrid/Level08",
+      "rect": [
+        687,
+        259.5,
+        200,
+        44
+      ],
+      "text": "08  BEACON 9"
+    },
+    {
+      "class": "ColorRect",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/SelectionRule",
+      "rect": [
+        507,
+        311.5,
+        385,
+        1
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/SelectionLabel",
+      "rect": [
+        507,
+        320.5,
+        385,
+        17
+      ],
+      "text": "SECTOR 01  //  MAINTENANCE SHAFT"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/SelectionDescription",
+      "rect": [
+        507,
+        345.5,
+        385,
+        74
+      ],
+      "text": "Wake protocol active. The first route to Beacon 9 begins ..."
+    },
+    {
+      "class": "Button",
+      "path": "TitleScreen/Overlay/Shell/Rows/MainPanel/Content/SelectorPanel/Selector/StartButton",
+      "rect": [
+        507,
+        427.5,
+        385,
+        44
+      ],
+      "text": "BEGIN SELECTED ROUTE   [ENTER]"
+    },
+    {
+      "class": "Label",
+      "path": "TitleScreen/Overlay/Shell/Rows/Footer",
+      "rect": [
+        32,
+        513.5,
+        896,
+        14
+      ],
+      "text": "A / D MOVE   ·   HOLD SPACE CHARGE   ·   RELEASE JUMP   ·..."
+    }
+  ],
+  "counts": {
+    "controls": 35,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 35
+  },
+  "file": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/verification/title_menu_layout.json",
+  "findings": [],
+  "label": "title-menu",
+  "node_path": "TitleScreen/Overlay/Shell/Rows",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 540,
+    "width": 960
+  }
+}

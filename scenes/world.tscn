@@ -1,0 +1,421 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
+
+[node name="World" type="Node2D" unique_id=379300857]
+script = ExtResource("1_world")
+
+[node name="Backdrop" type="Polygon2D" parent="." unique_id=1737796308]
+z_index = -10
+color = Color(0.025, 0.08, 0.12, 1)
+polygon = PackedVector2Array(-512, -1600, 13568, -1600, 13568, 1600, -512, 1600)
+
+[node name="HorizonGlow" type="Polygon2D" parent="." unique_id=908215080]
+z_index = -9
+color = Color(0.1, 0.3, 0.34, 0.22)
+polygon = PackedVector2Array(-512, 318, 13568, 318, 13568, 462, -512, 462)
+
+[node name="Platform01" type="StaticBody2D" parent="." unique_id=941757946]
+position = Vector2(0, 448)
+metadata/width_pixels = 960.0
+
+[node name="Visual" type="Polygon2D" parent="Platform01" unique_id=1035956946]
+color = Color(0.24, 0.44, 0.51, 1)
+polygon = PackedVector2Array(0, 0, 960, 0, 960, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform01" unique_id=190318854]
+polygon = PackedVector2Array(0, 0, 960, 0, 960, 800, 0, 800)
+
+[node name="Platform02" type="StaticBody2D" parent="." unique_id=1646967430]
+position = Vector2(1088, 448)
+metadata/width_pixels = 480.0
+
+[node name="Visual" type="Polygon2D" parent="Platform02" unique_id=298963504]
+color = Color(0.23, 0.4, 0.45, 1)
+polygon = PackedVector2Array(0, 0, 480, 0, 480, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform02" unique_id=1537722995]
+polygon = PackedVector2Array(0, 0, 480, 0, 480, 800, 0, 800)
+
+[node name="Platform03" type="StaticBody2D" parent="." unique_id=1108091225]
+position = Vector2(1824, 448)
+metadata/width_pixels = 640.0
+
+[node name="Visual" type="Polygon2D" parent="Platform03" unique_id=1967556333]
+color = Color(0.32, 0.43, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform03" unique_id=1468710760]
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 800, 0, 800)
+
+[node name="Platform04" type="StaticBody2D" parent="." unique_id=1660166654]
+position = Vector2(2592, 384)
+metadata/width_pixels = 320.0
+
+[node name="Visual" type="Polygon2D" parent="Platform04" unique_id=1387510733]
+color = Color(0.3, 0.41, 0.42, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform04" unique_id=343960722]
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Platform05" type="StaticBody2D" parent="." unique_id=564885267]
+position = Vector2(3008, 448)
+metadata/width_pixels = 512.0
+
+[node name="Visual" type="Polygon2D" parent="Platform05" unique_id=1662239021]
+color = Color(0.24, 0.4, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform05" unique_id=68095757]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Platform06" type="StaticBody2D" parent="." unique_id=655609293]
+position = Vector2(3648, 416)
+metadata/width_pixels = 352.0
+
+[node name="Visual" type="Polygon2D" parent="Platform06" unique_id=2079925310]
+color = Color(0.24, 0.44, 0.51, 1)
+polygon = PackedVector2Array(0, 0, 352, 0, 352, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform06" unique_id=1467021128]
+polygon = PackedVector2Array(0, 0, 352, 0, 352, 800, 0, 800)
+
+[node name="Platform07" type="StaticBody2D" parent="." unique_id=724353797]
+position = Vector2(4096, 480)
+metadata/width_pixels = 416.0
+
+[node name="Visual" type="Polygon2D" parent="Platform07" unique_id=12056497]
+color = Color(0.23, 0.4, 0.45, 1)
+polygon = PackedVector2Array(0, 0, 416, 0, 416, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform07" unique_id=923747195]
+polygon = PackedVector2Array(0, 0, 416, 0, 416, 800, 0, 800)
+
+[node name="Platform08" type="StaticBody2D" parent="." unique_id=24128627]
+position = Vector2(4672, 416)
+metadata/width_pixels = 320.0
+
+[node name="Visual" type="Polygon2D" parent="Platform08" unique_id=284368976]
+color = Color(0.32, 0.43, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform08" unique_id=787890004]
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Platform09" type="StaticBody2D" parent="." unique_id=1122683711]
+position = Vector2(5184, 448)
+metadata/width_pixels = 512.0
+
+[node name="Visual" type="Polygon2D" parent="Platform09" unique_id=1142682597]
+color = Color(0.3, 0.41, 0.42, 1)
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform09" unique_id=1200614459]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Platform10" type="StaticBody2D" parent="." unique_id=1973260094]
+position = Vector2(5888, 384)
+metadata/width_pixels = 352.0
+
+[node name="Visual" type="Polygon2D" parent="Platform10" unique_id=1023641822]
+color = Color(0.24, 0.4, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 352, 0, 352, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform10" unique_id=1800319446]
+polygon = PackedVector2Array(0, 0, 352, 0, 352, 800, 0, 800)
+
+[node name="Platform11" type="StaticBody2D" parent="." unique_id=165217292]
+position = Vector2(6400, 448)
+metadata/width_pixels = 448.0
+
+[node name="Visual" type="Polygon2D" parent="Platform11" unique_id=132798405]
+color = Color(0.24, 0.44, 0.51, 1)
+polygon = PackedVector2Array(0, 0, 448, 0, 448, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform11" unique_id=1910773068]
+polygon = PackedVector2Array(0, 0, 448, 0, 448, 800, 0, 800)
+
+[node name="Platform12" type="StaticBody2D" parent="." unique_id=1267610463]
+position = Vector2(7040, 416)
+metadata/width_pixels = 320.0
+
+[node name="Visual" type="Polygon2D" parent="Platform12" unique_id=355442975]
+color = Color(0.23, 0.4, 0.45, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform12" unique_id=1507147791]
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Platform13" type="StaticBody2D" parent="." unique_id=1319582590]
+position = Vector2(7552, 480)
+metadata/width_pixels = 512.0
+
+[node name="Visual" type="Polygon2D" parent="Platform13" unique_id=1301769625]
+color = Color(0.32, 0.43, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform13" unique_id=2077849206]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Platform14" type="StaticBody2D" parent="." unique_id=654937239]
+position = Vector2(8256, 416)
+metadata/width_pixels = 384.0
+
+[node name="Visual" type="Polygon2D" parent="Platform14" unique_id=1454095629]
+color = Color(0.3, 0.41, 0.42, 1)
+polygon = PackedVector2Array(0, 0, 384, 0, 384, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform14" unique_id=149297152]
+polygon = PackedVector2Array(0, 0, 384, 0, 384, 800, 0, 800)
+
+[node name="Platform15" type="StaticBody2D" parent="." unique_id=1784885372]
+position = Vector2(8832, 448)
+metadata/width_pixels = 448.0
+
+[node name="Visual" type="Polygon2D" parent="Platform15" unique_id=1151917965]
+color = Color(0.24, 0.4, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 448, 0, 448, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform15" unique_id=396748122]
+polygon = PackedVector2Array(0, 0, 448, 0, 448, 800, 0, 800)
+
+[node name="Platform16" type="StaticBody2D" parent="." unique_id=839719719]
+position = Vector2(9472, 384)
+metadata/width_pixels = 320.0
+
+[node name="Visual" type="Polygon2D" parent="Platform16" unique_id=1445294291]
+color = Color(0.24, 0.44, 0.51, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform16" unique_id=241570457]
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
+
+[node name="Platform17" type="StaticBody2D" parent="." unique_id=1914249621]
+position = Vector2(9984, 448)
+metadata/width_pixels = 512.0
+
+[node name="Visual" type="Polygon2D" parent="Platform17" unique_id=1144933652]
+color = Color(0.23, 0.4, 0.45, 1)
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform17" unique_id=1507424426]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 800, 0, 800)
+
+[node name="Platform18" type="StaticBody2D" parent="." unique_id=1954866442]
+position = Vector2(10624, 416)
+metadata/width_pixels = 384.0
+
+[node name="Visual" type="Polygon2D" parent="Platform18" unique_id=1580740152]
+color = Color(0.32, 0.43, 0.47, 1)
+polygon = PackedVector2Array(0, 0, 384, 0, 384, 800, 0, 800)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Platform18" unique_id=953024959]
+polygon = PackedVector2Array(0, 0, 384, 0, 384, 800, 0, 800)
+
+[node name="TutorialSigns" type="Node2D" parent="." unique_id=1145643915]
+z_index = 5
+
+[node name="MovementPrompt" type="Node2D" parent="TutorialSigns" unique_id=539167248]
+position = Vector2(390, 238)
+
+[node name="Heading" type="Label" parent="TutorialSigns/MovementPrompt" unique_id=1748121271]
+offset_left = -190.0
+offset_top = -48.0
+offset_right = 190.0
+offset_bottom = -22.0
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "DRIVE // BASIC MOVEMENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Keys" type="Label" parent="TutorialSigns/MovementPrompt" unique_id=1162684919]
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 17
+text = "[ A ]    < DRIVE >    [ D ]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Instruction" type="Label" parent="TutorialSigns/MovementPrompt" unique_id=801399887]
+offset_left = -210.0
+offset_top = 14.0
+offset_right = 210.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+text = "MOVE LEFT / RIGHT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GuideLine" type="Line2D" parent="TutorialSigns/MovementPrompt" unique_id=692882368]
+points = PackedVector2Array(-142, 42, 142, 42)
+width = 2.0
+default_color = Color(0.25, 0.78, 0.82, 0.72)
+
+[node name="JumpPrompt" type="Node2D" parent="TutorialSigns" unique_id=1926187148]
+position = Vector2(790, 238)
+
+[node name="Heading" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=274601350]
+offset_left = -190.0
+offset_top = -48.0
+offset_right = 190.0
+offset_bottom = -22.0
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "JUMP // SMALL GAP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Keys" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=1519235251]
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 17
+text = "[ SPACE ]    /\\"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Instruction" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=1641057979]
+offset_left = -210.0
+offset_top = 14.0
+offset_right = 210.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+text = "TAP AND RELEASE TO CLEAR IT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GuideLine" type="Line2D" parent="TutorialSigns/JumpPrompt" unique_id=37286691]
+points = PackedVector2Array(-142, 42, 142, 42)
+width = 2.0
+default_color = Color(0.25, 0.78, 0.82, 0.72)
+
+[node name="ChargePrompt" type="Node2D" parent="TutorialSigns" unique_id=1302908448]
+position = Vector2(1330, 238)
+
+[node name="Heading" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=707481448]
+offset_left = -190.0
+offset_top = -48.0
+offset_right = 190.0
+offset_bottom = -22.0
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "CHARGE // WIDE GAP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Keys" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=1725014648]
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 17
+text = "HOLD [ SPACE ]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Instruction" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=1487936754]
+offset_left = -210.0
+offset_top = 14.0
+offset_right = 210.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+text = "RELEASE FOR EXTRA HEIGHT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GuideLine" type="Line2D" parent="TutorialSigns/ChargePrompt" unique_id=1962869606]
+points = PackedVector2Array(-142, 42, 142, 42)
+width = 2.0
+default_color = Color(0.25, 0.78, 0.82, 0.72)
+
+[node name="CrouchPrompt" type="Node2D" parent="TutorialSigns" unique_id=1057484640]
+position = Vector2(2075, 238)
+
+[node name="Heading" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=2087742363]
+offset_left = -190.0
+offset_top = -48.0
+offset_right = 190.0
+offset_bottom = -22.0
+theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "CROUCH // LOW GATE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Keys" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=2057428429]
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 17
+text = "HOLD [ DOWN ]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Instruction" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=1251486785]
+offset_left = -210.0
+offset_top = 14.0
+offset_right = 210.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
+theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+text = "STAY LOW UNDER THE BARRIER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GuideLine" type="Line2D" parent="TutorialSigns/CrouchPrompt" unique_id=1779394291]
+points = PackedVector2Array(-142, 42, 142, 42)
+width = 2.0
+default_color = Color(0.25, 0.78, 0.82, 0.72)
+
+[node name="CrouchGate" type="StaticBody2D" parent="." unique_id=2031405057]
+z_index = 2
+position = Vector2(2220, 390)
+
+[node name="Visual" type="Polygon2D" parent="CrouchGate" unique_id=1393484033]
+color = Color(0.8, 0.45, 0.15, 1)
+polygon = PackedVector2Array(0, 0, 200, 0, 200, 32, 0, 32)
+
+[node name="GlowStrip" type="Polygon2D" parent="CrouchGate" unique_id=2098498878]
+z_index = 1
+color = Color(0.55, 0.95, 0.92, 1)
+polygon = PackedVector2Array(0, 0, 200, 0, 200, 5, 0, 5)
+
+[node name="Collision" type="CollisionPolygon2D" parent="CrouchGate" unique_id=729259772]
+polygon = PackedVector2Array(0, 0, 200, 0, 200, 32, 0, 32)

@@ -1,0 +1,11 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 2,
+  "steps": [
+    {"type": "wait_seconds", "seconds": 0.60},
+    {"type": "key", "keycode": 4194320, "pressed": true},
+    {"type": "wait_seconds", "seconds": 0.35},
+    {"type": "screenshot", "path": "res://verification/spring_crouch.png"}
+  ]
+}

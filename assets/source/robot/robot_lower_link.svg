@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="181" height="36" viewBox="0 0 181 36">
+  <!-- Endpoint pivots: 18,18 and 163,18. Long lower/shin link. -->
+  <path d="M18 3 H163 A15 15 0 0 1 163 33 H18 A15 15 0 0 1 18 3Z" fill="#15191D"/>
+  <path d="M18 6 H163 A12 12 0 0 1 163 30 H18 A12 12 0 0 1 18 6Z" fill="#278BD2"/>
+  <path d="M29 11 H152" fill="none" stroke="#43A9E8" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+  <path d="M35 25 H145" fill="none" stroke="#17649D" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+  <circle cx="18" cy="18" r="8" fill="#15191D"/><circle cx="163" cy="18" r="8" fill="#15191D"/>
+</svg>

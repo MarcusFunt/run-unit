@@ -1,0 +1,11 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {"type": "action", "action_name": "move_right", "pressed": true},
+    {"type": "wait_frames", "frames": 30},
+    {"type": "action", "action_name": "move_right", "pressed": false},
+    {"type": "screenshot", "path": "res://verification/gameplay.png"}
+  ]
+}

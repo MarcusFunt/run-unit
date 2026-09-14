@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/robot_visual.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_body.svg" id="2_body"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_eye.svg" id="3_eye"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_antenna.svg" id="4_antenna"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_upper_link.svg" id="5_upper"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_lower_link.svg" id="6_lower"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_joint.svg" id="7_joint"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_wheel.svg" id="8_wheel"]
+
+[node name="RobotVisual" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="BodyPivot" type="Node2D" parent="."]
+z_index = 2
+
+[node name="Body" type="Sprite2D" parent="BodyPivot"]
+texture = ExtResource("2_body")
+centered = false
+position = Vector2(-180, -115)
+
+[node name="Eye" type="Sprite2D" parent="BodyPivot"]
+texture = ExtResource("3_eye")
+centered = false
+position = Vector2(-150, -62)
+
+[node name="Antenna" type="Sprite2D" parent="BodyPivot"]
+texture = ExtResource("4_antenna")
+centered = false
+position = Vector2(63, -146)
+
+[node name="UpperLinkPivot" type="Node2D" parent="."]
+z_index = 3
+
+[node name="UpperLink" type="Sprite2D" parent="UpperLinkPivot"]
+texture = ExtResource("5_upper")
+centered = false
+position = Vector2(-18, -18)
+
+[node name="KneePivot" type="Node2D" parent="UpperLinkPivot"]
+position = Vector2(110, 0)
+
+[node name="KneeJoint" type="Sprite2D" parent="UpperLinkPivot/KneePivot"]
+texture = ExtResource("7_joint")
+centered = false
+position = Vector2(-27, -27)
+z_index = 3
+
+[node name="LowerLink" type="Sprite2D" parent="UpperLinkPivot/KneePivot"]
+texture = ExtResource("6_lower")
+centered = false
+position = Vector2(-18, -18)
+
+[node name="WheelPivot" type="Node2D" parent="UpperLinkPivot/KneePivot"]
+position = Vector2(145, 0)
+
+[node name="WheelJoint" type="Sprite2D" parent="UpperLinkPivot/KneePivot/WheelPivot"]
+texture = ExtResource("7_joint")
+centered = false
+position = Vector2(-27, -27)
+z_index = 3
+
+[node name="Wheel" type="Sprite2D" parent="UpperLinkPivot/KneePivot/WheelPivot"]
+texture = ExtResource("8_wheel")
+centered = false
+position = Vector2(-72, -72)
+z_index = 2

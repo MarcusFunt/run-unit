@@ -1,0 +1,12 @@
+{
+  "scene_path": "scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {"type": "wait_seconds", "seconds": 0.5},
+    {"type": "key", "keycode": 4194305, "pressed": true},
+    {"type": "wait_frames", "frames": 8},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass1_pause_direct.png"},
+    {"type": "ui_report", "label": "pause", "include_hidden": true}
+  ]
+}

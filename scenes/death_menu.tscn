@@ -1,0 +1,85 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/run_unit_death_menu.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="DeathPanel"]
+bg_color = Color(0.012, 0.045, 0.065, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.94, 0.45, 0.22, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 30.0
+content_margin_top = 26.0
+content_margin_right = 30.0
+content_margin_bottom = 26.0
+
+[node name="DeathMenu" type="CanvasLayer"]
+layer = 30
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="Overlay" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Dimmer" type="ColorRect" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.006, 0.012, 0.9)
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DeathPanel" type="PanelContainer" parent="Overlay/Center"]
+custom_minimum_size = Vector2(430, 300)
+theme_override_styles/panel = SubResource("DeathPanel")
+
+[node name="Content" type="VBoxContainer" parent="Overlay/Center/DeathPanel"]
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="Overlay/Center/DeathPanel/Content"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1, 0.7, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.015, 0.01, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 30
+text = "UNIT OFFLINE"
+horizontal_alignment = 1
+
+[node name="Rule" type="HSeparator" parent="Overlay/Center/DeathPanel/Content"]
+
+[node name="DescriptionLabel" type="Label" parent="Overlay/Center/DeathPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+theme_override_colors/font_color = Color(0.73, 0.91, 0.9, 1)
+theme_override_font_sizes/font_size = 16
+text = "ROUTE TERMINATED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="Overlay/Center/DeathPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+text = "RETRY ROUTE"
+
+[node name="MainMenuButton" type="Button" parent="Overlay/Center/DeathPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+text = "SECTOR SELECT"

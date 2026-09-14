@@ -1,0 +1,13 @@
+{
+  "scene_path": "scenes/main_menu.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 4,
+  "steps": [
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass1_main_menu.png"},
+    {"type": "ui_report", "label": "main-menu", "fail_on": ["zero_size", "offscreen", "overlap"]},
+    {"type": "action", "action_name": "ui_accept", "pressed": true, "release_after": true},
+    {"type": "wait_seconds", "seconds": 1.5},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass1_level_selector.png"},
+    {"type": "ui_report", "label": "level-selector", "fail_on": ["zero_size", "offscreen", "overlap"]}
+  ]
+}

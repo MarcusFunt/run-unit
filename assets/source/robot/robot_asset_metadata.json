@@ -1,0 +1,10 @@
+{
+  "design": {"facing": "left", "source_scale_in_scene": 0.30, "units": "SVG pixels", "driving_pose": {"upper_link_degrees": 25, "knee_relative_degrees": 105}},
+  "palette": {"body": "#20252B", "body_secondary": "#30363D", "link": "#278BD2", "link_highlight": "#43A9E8", "eye": "#39D9FF", "joint_dark": "#15191D", "joint_metal": "#606A73", "tire": "#171A1E", "hub": "#242A30"},
+  "body": {"size": [320, 190], "link_pivot": [180, 115], "eye_center": [49, 96], "antenna_base": [263, 39]},
+  "upper_link": {"size": [146, 36], "start_pivot": [18, 18], "end_pivot": [128, 18], "length": 110},
+  "lower_link": {"size": [181, 36], "start_pivot": [18, 18], "end_pivot": [163, 18], "length": 145},
+  "joint": {"size": [54, 54], "pivot": [27, 27]},
+  "wheel": {"size": [144, 144], "pivot": [72, 72], "diameter": 144},
+  "antenna": {"size": [42, 80], "base_pivot": [20, 70]}
+}

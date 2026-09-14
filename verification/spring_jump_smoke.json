@@ -1,0 +1,22 @@
+{
+  "scene_path": "res://scenes/game.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 2,
+  "steps": [
+    {"type": "wait_seconds", "seconds": 0.60},
+    {"type": "key", "keycode": 4194320, "pressed": true},
+    {"type": "wait_seconds", "seconds": 0.15},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "charge_ratio", "operator": "greater_than", "expected": 0.20},
+    {"type": "key", "keycode": 4194320, "pressed": false},
+    {"type": "wait_seconds", "seconds": 0.10},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "last_launch_velocity", "operator": "less_than", "expected": -300.0},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "last_launch_velocity", "operator": "greater_than", "expected": -500.0},
+    {"type": "wait_seconds", "seconds": 1.00},
+    {"type": "key", "keycode": 4194320, "pressed": true},
+    {"type": "wait_seconds", "seconds": 0.40},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "charge_ratio", "operator": "greater_than", "expected": 0.75},
+    {"type": "key", "keycode": 4194320, "pressed": false},
+    {"type": "wait_seconds", "seconds": 0.10},
+    {"type": "assert", "assertion": "property", "node_path": "Player", "property": "last_launch_velocity", "operator": "less_than", "expected": -520.0}
+  ]
+}

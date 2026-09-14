@@ -1,0 +1,12 @@
+{
+  "scene_path": "scenes/level_selector.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass2_level_selector.png"},
+    {"type": "key", "keycode": 4194322, "pressed": true},
+    {"type": "wait_frames", "frames": 2},
+    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/qa/pass2_level_selector_focus.png"},
+    {"type": "ui_report", "label": "level-selector", "fail_on": ["zero_size", "offscreen", "overlap"]}
+  ]
+}

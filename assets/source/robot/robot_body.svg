@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="190" viewBox="0 0 320 190">
+  <!-- Left-facing body. Rig pivot: 180,115. -->
+  <defs>
+    <linearGradient id="shell" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#30363D"/>
+      <stop offset="0.28" stop-color="#20252B"/>
+      <stop offset="1" stop-color="#171B20"/>
+    </linearGradient>
+  </defs>
+  <path d="M28 61 L74 29 L140 13 L239 20 L272 35 L300 76 L308 108 L295 143 L258 168 L104 173 L58 158 L27 126 L18 91 Z" fill="#15191D"/>
+  <path d="M34 62 L79 35 L143 21 L235 28 L264 42 L292 80 L299 108 L287 136 L253 159 L106 164 L63 150 L35 120 L27 91 Z" fill="url(#shell)" stroke="#0D1013" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M82 45 L118 32 L201 35 L239 42 L263 56 L278 84 L275 122 L254 143 L218 151 L106 150 L77 136 L66 107 L68 69 Z" fill="#30363D" opacity=".88"/>
+  <path d="M90 47 L126 37 L200 40 L239 47" fill="none" stroke="#4B545D" stroke-width="7" stroke-linecap="round" opacity=".62"/>
+  <path d="M267 67 L280 74 L277 108 L265 116 Z" fill="#15191D" opacity=".72"/>
+  <!-- Recessed front-light pocket: eye overlay sits inside this rather than on the shell. -->
+  <path d="M30 61 L71 50 L77 142 L33 136 L25 116 L24 85 Z" fill="#111519" stroke="#4B545D" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M34 68 L68 59 L72 134 L36 130" fill="none" stroke="#1E272D" stroke-width="5" stroke-linejoin="round"/>
+  <!-- Antenna foot remains part of the body, visually locking the separate antenna to its shell. -->
+  <path d="M253 41 L271 39 L280 51 L276 61 L256 59 L250 50 Z" fill="#15191D" stroke="#4B545D" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="263" cy="49" r="7" fill="#606A73"/><circle cx="263" cy="49" r="3" fill="#15191D"/>
+  <path d="M119 140 L171 140" fill="none" stroke="#161B20" stroke-width="11" stroke-linecap="round"/>
+  <path d="M121 140 L139 140" fill="none" stroke="#39D9FF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M147 140 L160 140" fill="none" stroke="#39D9FF" stroke-width="4" stroke-linecap="round" opacity=".72"/>
+  <text x="219" y="127" fill="#77828C" font-family="sans-serif" font-size="12" font-weight="700" letter-spacing="2">RU-01</text>
+  <circle cx="180" cy="115" r="26" fill="#15191D"/>
+  <circle cx="180" cy="115" r="19" fill="#606A73"/>
+  <circle cx="180" cy="115" r="13" fill="#242A30"/>
+  <circle cx="180" cy="115" r="6" fill="#15191D"/>
+</svg>

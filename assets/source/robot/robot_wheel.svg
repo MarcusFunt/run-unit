@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">
+  <!-- Rotation pivot: 72,72. -->
+  <circle cx="72" cy="72" r="70" fill="#0D1013"/>
+  <circle cx="72" cy="72" r="64" fill="#171A1E" stroke="#30363D" stroke-width="4"/>
+  <path d="M72 9 V22 M72 122 V135 M9 72 H22 M122 72 H135 M27 27 L36 36 M108 108 L117 117 M117 27 L108 36 M36 108 L27 117" stroke="#3D464E" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="72" cy="72" r="42" fill="#242A30" stroke="#111519" stroke-width="4"/>
+  <circle cx="72" cy="72" r="31" fill="none" stroke="#278BD2" stroke-width="8"/>
+  <path d="M72 41 L81 62 L103 72 L81 82 L72 103 L63 82 L41 72 L63 62Z" fill="#3B454E"/>
+  <circle cx="72" cy="72" r="14" fill="#15191D" stroke="#606A73" stroke-width="4"/>
+  <circle cx="72" cy="72" r="5" fill="#278BD2"/>
+</svg>
