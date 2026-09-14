@@ -18,6 +18,17 @@ authored run.
 - B: enable/disable the simple scripted validation bot
 - F3: debug overlay
 
+## Development
+
+The project includes GUT tests. With `godot` available on your PATH, run:
+
+```sh
+godot --headless --path . -s res://addons/gut/gut_cmdln.gd -gdir=res://tests -ginclude_subdirs -gexit
+```
+
+Generated Godot caches, exports, validation screenshots, local research files,
+IDE settings, and secrets are intentionally excluded from Git.
+
 ## Project structure
 
 - `scenes/`: game composition, player, world, HUD, and debug overlay.

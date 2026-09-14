@@ -1,0 +1,50 @@
+# Godot editor state, import cache, and shader cache (generated per machine).
+/.godot/
+/.import/
+*.import
+
+# Temporary add-on/template install workspaces.
+/.addon-install-staging/
+/.menus-template-staging/
+
+# Local exports and build output.
+/export/
+/exports/
+/build/
+/bin/
+/dist/
+
+# Generated validation artefacts and temporary research files.
+/artifacts/
+/tmp/
+/qa/*.png
+/qa/*.import
+/qa/*_report.md
+/verification/*.png
+/verification/*.import
+
+# Local environment, logs, crash dumps, and coverage.
+.env
+.env.*
+!.env.example
+*.log
+*.dmp
+crash*.txt
+/coverage/
+
+# IDE and operating-system files.
+/.idea/
+/.vscode/
+/.vs/
+*.suo
+*.user
+*.userprefs
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Language/tool caches that may be created by local tooling.
+__pycache__/
+*.py[cod]
+/node_modules/
+.pytest_cache/
