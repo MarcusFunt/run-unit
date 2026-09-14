@@ -4,19 +4,15 @@ RUN//UNIT is a small 2D platformer made with Godot 4.7. Move a robot through an 
 
 ## Run and controls
 
-Open `project.godot` in Godot 4.x and run the project.
+Open `project.godot` in Godot 4.7 (or a compatible Godot 4.x release) and run the project.
 
-The title screen presents the Helios-9 last-light briefing and an 8-sector route
-selector based on the story outline. Each sector selects a route profile for the
-authored run.
+Select **START NEW RUN** to open Route Deployment. The Maintenance Shaft is the
+current authored route; future routes are visibly offline until they are added.
 
-- A / Left Arrow: move left
-- D / Right Arrow: move right
+- A / D: move left / right
 - Space / Up Arrow: hold to charge the spring crouch, then release to jump; deeper crouches launch higher
 - Down Arrow: crouch without charging or jumping; crouching reduces movement speed and collision height
 - R: immediate restart from the beginning of the authored route
-- B: enable/disable the simple scripted validation bot
-- F3: debug overlay
 
 ## Project structure
 

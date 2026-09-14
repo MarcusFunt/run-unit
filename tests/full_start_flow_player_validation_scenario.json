@@ -1,0 +1,47 @@
+{
+  "scene_path": "scenes/main_menu.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {
+      "type": "key",
+      "keycode": 32,
+      "unicode": 32,
+      "pressed": true,
+      "frames": 1
+    },
+    {
+      "type": "key",
+      "keycode": 32,
+      "unicode": 32,
+      "pressed": false,
+      "frames": 2
+    },
+    {
+      "type": "wait_seconds",
+      "seconds": 0.5
+    },
+    {
+      "type": "key",
+      "keycode": 32,
+      "unicode": 32,
+      "pressed": true,
+      "frames": 1
+    },
+    {
+      "type": "key",
+      "keycode": 32,
+      "unicode": 32,
+      "pressed": false,
+      "frames": 2
+    },
+    {
+      "type": "wait_seconds",
+      "seconds": 1.0
+    },
+    {
+      "type": "screenshot",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/player_validation/full_start_flow.png"
+    }
+  ]
+}

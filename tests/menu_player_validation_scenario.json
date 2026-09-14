@@ -1,0 +1,22 @@
+{
+  "scene_path": "scenes/level_selector.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {
+      "type": "ui_report",
+      "label": "route-selector-player-view",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/player_validation/route_selector.json",
+      "fail_on": ["zero_size", "offscreen"]
+    },
+    {
+      "type": "screenshot",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/player_validation/route_selector.png"
+    }
+  ],
+  "assertions": [
+    {"assertion": "node_exists", "node_path": "Margin/Layout/Footer/DeployButton"},
+    {"assertion": "property", "node_path": "Margin/Layout/Footer/Hint", "property": "text", "expected": "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK"},
+    {"assertion": "visible", "node_path": "Margin/Layout/Footer/DeployButton", "expected": true}
+  ]
+}

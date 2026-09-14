@@ -107,12 +107,13 @@ theme_override_constants/separation = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.95, 0.94, 1)
 theme_override_font_sizes/font_size = 17
-text = "AVAILABLE SECTORS"
+text = "ROUTE DEPLOYMENT"
 
 [node name="Caption" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.63, 0.68, 1)
-text = "Select a route to review its profile."
+text = "Select the available route. Offline routes will unlock in a future build."
+autowrap_mode = 2
 
 [node name="SectorGrid" type="GridContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
 unique_name_in_owner = true
@@ -160,7 +161,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.69, 0.8, 0.81, 1)
 theme_override_font_sizes/font_size = 14
-text = "Service tunnels beneath the municipal core. Tight routing and unstable lift shafts."
+text = "FINAL WORK ORDER 09-441\nCarry the Solar Ignition Core to Beacon 9.\n\nCurrent playable route: service tunnels beneath the municipal core."
 autowrap_mode = 2
 
 [node name="SeedLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
@@ -168,14 +169,14 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.72, 0.77, 1)
 theme_override_font_sizes/font_size = 13
-text = "AUTHORED ROUTE  01"
+text = "AUTHORED ROUTE  //  AVAILABLE"
 
 [node name="DifficultyLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_font_sizes/font_size = 13
-text = "THREAT  LOW"
+text = "THREAT  //  LOW"
 
 [node name="RouteStatus" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 unique_name_in_owner = true
@@ -183,7 +184,7 @@ layout_mode = 2
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.4, 0.88, 0.76, 1)
 theme_override_font_sizes/font_size = 13
-text = "ROUTE 01 READY"
+text = "ROUTE ONLINE  //  READY TO DEPLOY"
 
 [node name="Footer" type="HBoxContainer" parent="Margin/Layout"]
 layout_mode = 2
@@ -200,7 +201,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.35, 0.55, 0.6, 1)
-text = "ARROWS SELECT   TAB DEPLOY   ESC BACK"
+text = "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK"
 horizontal_alignment = 1
 
 [node name="DeployButton" type="Button" parent="Margin/Layout/Footer"]
