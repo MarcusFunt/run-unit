@@ -2,6 +2,7 @@ class_name RunUnitStaticWorld
 extends Node2D
 
 signal world_metrics_updated(metrics: Dictionary)
+@warning_ignore("unused_signal")
 signal obstacle_triggered(obstacle_type: String, platform_id: int)
 
 const TILE_SIZE: float = 32.0
