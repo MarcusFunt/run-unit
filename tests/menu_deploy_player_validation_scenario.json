@@ -1,0 +1,29 @@
+{
+  "scene_path": "scenes/level_selector.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {
+      "type": "mouse_button",
+      "button_index": 1,
+      "pressed": true,
+      "position": {"x": 188, "y": 241},
+      "frames": 1
+    },
+    {
+      "type": "mouse_button",
+      "button_index": 1,
+      "pressed": false,
+      "position": {"x": 188, "y": 241},
+      "frames": 2
+    },
+    {
+      "type": "wait_seconds",
+      "seconds": 1.0
+    },
+    {
+      "type": "screenshot",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/player_validation/deploy_transition.png"
+    }
+  ]
+}

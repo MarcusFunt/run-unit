@@ -7,8 +7,14 @@
 
 [node name="InputActionsList" parent="VBoxContainer/InputMappingContainer" parent_id_path=PackedInt32Array(1004992485) index="1" unique_id=2089976301 node_paths=PackedStringArray("input_icon_mapper")]
 input_icon_mapper = NodePath("../../../InputIconMapper")
+input_action_names = Array[StringName]([&"move_left", &"move_right", &"jump", &"crouch", &"restart"])
+readable_action_names = Array[String](["Move Left", "Move Right", "Jump", "Crouch", "Restart"])
+show_all_actions = false
 
 [node name="InputActionsTree" parent="VBoxContainer/InputMappingContainer" parent_id_path=PackedInt32Array(1004992485) index="2" unique_id=780755880 node_paths=PackedStringArray("input_icon_mapper")]
 input_icon_mapper = NodePath("../../../InputIconMapper")
+input_action_names = Array[StringName]([&"move_left", &"move_right", &"jump", &"crouch", &"restart"])
+readable_action_names = Array[String](["Move Left", "Move Right", "Jump", "Crouch", "Restart"])
+show_all_actions = false
 
 [node name="InputIconMapper" parent="." index="6" unique_id=1326793573 instance=ExtResource("3_y3sxr")]

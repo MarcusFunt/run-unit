@@ -11,8 +11,9 @@ extends Node2D
 @onready var score_manager: RunUnitScoreManager = $ScoreManager
 @onready var hud: RunUnitHud = $HUD
 @onready var debug_overlay: RunUnitDebugOverlay = $DebugOverlay
-@onready var title_screen: RunUnitTitleScreen = $TitleScreen
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
+
+const PLAYABLE_LEVEL_INDEX: int = 0
 
 var _terminal: bool = false
 var _run_started: bool = false
@@ -24,7 +25,8 @@ var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 
 func _ready() -> void:
 	_ensure_input_map()
-	_selected_level_index = clampi(RunUnitSession.selected_level_index, 0, 7)
+	_selected_level_index = PLAYABLE_LEVEL_INDEX
+	RunUnitSession.selected_level_index = PLAYABLE_LEVEL_INDEX
 	world.set_level_profile(_selected_level_index)
 	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", "world.tscn")
 	if not world.obstacle_triggered.is_connected(_on_obstacle_triggered):
@@ -32,7 +34,6 @@ func _ready() -> void:
 	hud.set_route(_selected_level_index)
 	reset_run(0)
 	_run_started = true
-	title_screen.close()
 
 func _physics_process(_delta: float) -> void:
 	if not _run_started:
@@ -50,7 +51,7 @@ func _physics_process(_delta: float) -> void:
 	world.set_progress(current_distance)
 	hud.set_scores(current_distance, score_manager.best_distance)
 	var controller_name: String = "BOT" if _bot_enabled else ("AI" if _external_control else "HUMAN")
-	hud.set_status("%s  //  A/D MOVE  //  SPACE JUMP  //  R RESTART  //  B BOT  //  F3 DEBUG" % controller_name)
+	hud.set_status("%s  //  A/D MOVE  //  SPACE JUMP  //  R RESTART" % controller_name)
 	_update_debug(current_distance)
 	if player.global_position.y > world.death_y:
 		_end_run()
@@ -58,13 +59,9 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not (event is InputEventKey) or not event.pressed or event.echo:
 		return
-	if not _run_started:
-		if event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER:
-			_on_start_requested()
-		return
-	if event.keycode == KEY_F3:
+	if OS.is_debug_build() and event.is_action_pressed("toggle_debug"):
 		debug_overlay.set_open(not debug_overlay.visible)
-	elif event.keycode == KEY_B and not _terminal:
+	elif OS.is_debug_build() and event.keycode == KEY_B and not _terminal:
 		_bot_enabled = not _bot_enabled
 		_external_control = false
 		human_controller.active = not _bot_enabled
@@ -92,24 +89,6 @@ func reset_run(run_seed: int) -> void:
 	hud.hide_game_over()
 	death_menu.close()
 	hud.set_scores(0.0, score_manager.best_distance)
-
-func _show_title_screen() -> void:
-	human_controller.active = false
-	scripted_controller.active = false
-	player.set_physics_process(false)
-	hud.set_status("A/D MOVE  |  HOLD SPACE TO CHARGE  |  RELEASE SPACE TO JUMP")
-	title_screen.open()
-
-func _on_start_requested(level_index: int = 0) -> void:
-	if _run_started:
-		return
-	_selected_level_index = clampi(level_index, 0, 7)
-	initial_seed = 0
-	world.set_level_profile(_selected_level_index)
-	hud.set_route(_selected_level_index)
-	_run_started = true
-	title_screen.close()
-	reset_run(0)
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
 	if _terminal:

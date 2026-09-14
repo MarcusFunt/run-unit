@@ -1,0 +1,21 @@
+{
+  "scene_path": "menus/scenes/menus/options_menu/master_options_menu_with_tabs.tscn",
+  "viewport_size": {"width": 960, "height": 540},
+  "settle_frames": 8,
+  "steps": [
+    {
+      "type": "ui_report",
+      "label": "player-controls-view",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/player_validation/options.json",
+      "fail_on": ["overlap", "zero_size", "offscreen"]
+    },
+    {
+      "type": "screenshot",
+      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/player_validation/options.png"
+    }
+  ],
+  "assertions": [
+    {"assertion": "node_exists", "node_path": "Controls/VBoxContainer/InputMappingContainer/InputActionsList"},
+    {"assertion": "property", "node_path": "Controls/VBoxContainer/InputMappingContainer/InputActionsList", "property": "show_all_actions", "expected": false}
+  ]
+}

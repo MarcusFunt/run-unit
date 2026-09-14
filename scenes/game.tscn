@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://scripts/ai/environment.gd" id="7_environment"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="8_hud"]
 [ext_resource type="PackedScene" path="res://scenes/debug_overlay.tscn" id="9_debug"]
-[ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="10_title"]
 [ext_resource type="Script" path="res://addons/maaacks_menus_template/base/nodes/utilities/pause_menu_controller.gd" id="11_pause"]
 [ext_resource type="PackedScene" path="res://menus/scenes/windows/pause_menu.tscn" id="12_pause_menu"]
 [ext_resource type="PackedScene" path="res://scenes/death_menu.tscn" id="13_death_menu"]
@@ -63,8 +62,6 @@ game_path = NodePath("..")
 [node name="HUD" parent="." instance=ExtResource("8_hud")]
 
 [node name="DebugOverlay" parent="." instance=ExtResource("9_debug")]
-
-[node name="TitleScreen" parent="." instance=ExtResource("10_title")]
 
 [node name="PauseMenuController" type="Node" parent="."]
 script = ExtResource("11_pause")
