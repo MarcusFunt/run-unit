@@ -1,34 +1,29 @@
 class_name RunUnitHud
 extends CanvasLayer
 
-const SCORE_MILESTONE_DISTANCE: float = 500.0
-
 @onready var distance_label: Label = %DistanceLabel
 @onready var best_label: Label = %BestLabel
 @onready var score_progress_bar: ProgressBar = %ScoreProgressBar
-@onready var milestone_label: Label = %MilestoneLabel
 @onready var status_label: Label = %StatusLabel
 @onready var game_over_panel: PanelContainer = %GameOverPanel
 @onready var game_over_label: Label = %GameOverLabel
 
 var _game_over_tween: Tween = null
-var _route_index: int = 0
+var _level_length: float = 1.0
 
 func _ready() -> void:
-	score_progress_bar.max_value = SCORE_MILESTONE_DISTANCE
+	score_progress_bar.max_value = _level_length
 	game_over_panel.hide()
 
 func set_scores(distance: float, best: float) -> void:
 	var safe_distance: float = maxf(distance, 0.0)
-	var milestone_index: int = floori(safe_distance / SCORE_MILESTONE_DISTANCE)
-	var next_milestone: int = int((milestone_index + 1) * SCORE_MILESTONE_DISTANCE)
-	distance_label.text = "%05dm" % int(safe_distance)
-	score_progress_bar.value = fposmod(safe_distance, SCORE_MILESTONE_DISTANCE)
-	milestone_label.text = "ROUTE %02d  //  NEXT %05dm" % [_route_index + 1, next_milestone]
-	best_label.text = "BEST  %05dm" % int(best)
+	distance_label.text = "%05d" % int(safe_distance)
+	score_progress_bar.value = clampf(safe_distance, 0.0, _level_length)
+	best_label.text = "BEST  %05d" % int(best)
 
-func set_route(route_index: int) -> void:
-	_route_index = clampi(route_index, 0, 7)
+func set_level_length(length: float) -> void:
+	_level_length = maxf(length, 1.0)
+	score_progress_bar.max_value = _level_length
 
 func set_status(text_value: String) -> void:
 	status_label.text = text_value

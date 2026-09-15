@@ -1,0 +1,183 @@
+[gd_scene load_steps=8 format=3]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_track_a"]
+bg_color = Color(0.07, 0.2, 0.24, 0.4)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill_a"]
+bg_color = Color(0.32, 0.88, 0.94, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_track_b"]
+bg_color = Color(0.04, 0.14, 0.18, 0.68)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill_b"]
+bg_color = Color(0.22, 0.77, 0.82, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_track_c"]
+bg_color = Color(0.12, 0.29, 0.32, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill_c"]
+bg_color = Color(1, 0.7, 0.3, 1)
+
+[node name="HudCounterDesignSamples" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.012, 0.042, 0.06, 1)
+
+[node name="Samples" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 84.0
+offset_right = -540.0
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Rows" type="VBoxContainer" parent="Samples"]
+layout_mode = 2
+theme_override_constants/separation = 52
+
+[node name="SampleA" type="VBoxContainer" parent="Samples/Rows"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="HBoxContainer" parent="Samples/Rows/SampleA"]
+layout_mode = 2
+
+[node name="Distance" type="Label" parent="Samples/Rows/SampleA/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.86, 0.98, 0.97, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.08, 0.11, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 30
+vertical_alignment = 1
+text = "01872"
+
+[node name="Best" type="Label" parent="Samples/Rows/SampleA/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.77, 0.4, 0.94)
+theme_override_font_sizes/font_size = 11
+vertical_alignment = 2
+text = "BEST  03412"
+
+[node name="Progress" type="ProgressBar" parent="Samples/Rows/SampleA"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+max_value = 4608.0
+value = 1872.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_track_a")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill_a")
+mouse_filter = 2
+
+[node name="SampleB" type="HBoxContainer" parent="Samples/Rows"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Accent" type="ColorRect" parent="Samples/Rows/SampleB"]
+custom_minimum_size = Vector2(3, 52)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.32, 0.88, 0.94, 0.95)
+
+[node name="Content" type="VBoxContainer" parent="Samples/Rows/SampleB"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Header" type="HBoxContainer" parent="Samples/Rows/SampleB/Content"]
+layout_mode = 2
+
+[node name="Distance" type="Label" parent="Samples/Rows/SampleB/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.96, 0.95, 1)
+theme_override_font_sizes/font_size = 26
+vertical_alignment = 1
+text = "01872"
+
+[node name="Best" type="Label" parent="Samples/Rows/SampleB/Content/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.83, 0.82, 0.92)
+theme_override_font_sizes/font_size = 10
+vertical_alignment = 2
+text = "BEST  03412"
+
+[node name="Progress" type="ProgressBar" parent="Samples/Rows/SampleB/Content"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+max_value = 4608.0
+value = 1872.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_track_b")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill_b")
+mouse_filter = 2
+
+[node name="SampleC" type="VBoxContainer" parent="Samples/Rows"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Samples/Rows/SampleC"]
+layout_mode = 2
+
+[node name="Distance" type="Label" parent="Samples/Rows/SampleC/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.82, 0.46, 1)
+theme_override_font_sizes/font_size = 22
+vertical_alignment = 1
+text = "01872"
+
+[node name="Best" type="Label" parent="Samples/Rows/SampleC/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.9, 0.88, 0.9)
+theme_override_font_sizes/font_size = 11
+vertical_alignment = 1
+text = "BEST  03412"
+
+[node name="Progress" type="ProgressBar" parent="Samples/Rows/SampleC"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+max_value = 4608.0
+value = 1872.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_track_c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill_c")
+mouse_filter = 2

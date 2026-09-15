@@ -89,189 +89,181 @@ z_index = 5
 position = Vector2(360, 238)
 
 [node name="Heading" type="Label" parent="TutorialSigns/MovementPrompt" unique_id=1748121271]
-offset_left = -190.0
+offset_left = -154.0
 offset_top = -48.0
 offset_right = 190.0
 offset_bottom = -22.0
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "01 // DRIVE CHECK"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/MovementPrompt" unique_id=1162684919]
-offset_left = -200.0
+offset_left = -154.0
 offset_top = -20.0
-offset_right = 200.0
+offset_right = 190.0
 offset_bottom = 12.0
 theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 17
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "[ A ]     DRIVE     [ D ]"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Instruction" type="Label" parent="TutorialSigns/MovementPrompt" unique_id=801399887]
-offset_left = -210.0
+offset_left = -154.0
 offset_top = 14.0
-offset_right = 210.0
+offset_right = 190.0
 offset_bottom = 40.0
 theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 11
 text = "REACH THE NEXT BAY"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
-
-[node name="GuideLine" type="Line2D" parent="TutorialSigns/MovementPrompt" unique_id=692882368]
-points = PackedVector2Array(-142, 42, 142, 42)
-width = 2.0
-default_color = Color(0.25, 0.78, 0.82, 0.72)
 
 [node name="JumpPrompt" type="Node2D" parent="TutorialSigns" unique_id=1926187148]
 position = Vector2(900, 238)
 
 [node name="Heading" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=274601350]
-offset_left = -190.0
+offset_left = -154.0
 offset_top = -48.0
 offset_right = 190.0
 offset_bottom = -22.0
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "02 // SPRING GAP"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=1519235251]
-offset_left = -200.0
+offset_left = -154.0
 offset_top = -20.0
-offset_right = 200.0
+offset_right = 190.0
 offset_bottom = 12.0
 theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 17
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "TAP [ SPACE ]"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Instruction" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=1641057979]
-offset_left = -210.0
+offset_left = -154.0
 offset_top = 14.0
-offset_right = 210.0
+offset_right = 190.0
 offset_bottom = 40.0
 theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 11
 text = "RELEASE TO CLEAR 3 TILES"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
-
-[node name="GuideLine" type="Line2D" parent="TutorialSigns/JumpPrompt" unique_id=37286691]
-points = PackedVector2Array(-142, 42, 142, 42)
-width = 2.0
-default_color = Color(0.25, 0.78, 0.82, 0.72)
 
 [node name="ChargePrompt" type="Node2D" parent="TutorialSigns" unique_id=1302908448]
 position = Vector2(1230, 206)
 
 [node name="Heading" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=707481448]
-offset_left = -190.0
+offset_left = -154.0
 offset_top = -48.0
 offset_right = 190.0
 offset_bottom = -22.0
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "03 // CHARGED ASCENT"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=1725014648]
-offset_left = -200.0
+offset_left = -154.0
 offset_top = -20.0
-offset_right = 200.0
+offset_right = 190.0
 offset_bottom = 12.0
 theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 17
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "HOLD [ SPACE ]"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Instruction" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=1487936754]
-offset_left = -210.0
+offset_left = -154.0
 offset_top = 14.0
-offset_right = 210.0
+offset_right = 190.0
 offset_bottom = 40.0
 theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 11
 text = "RELEASE // CLEAR THE RAISED BAY"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
-
-[node name="GuideLine" type="Line2D" parent="TutorialSigns/ChargePrompt" unique_id=1962869606]
-points = PackedVector2Array(-142, 42, 142, 42)
-width = 2.0
-default_color = Color(0.25, 0.78, 0.82, 0.72)
 
 [node name="CrouchPrompt" type="Node2D" parent="TutorialSigns" unique_id=1057484640]
 position = Vector2(1770, 206)
 
 [node name="Heading" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=2087742363]
-offset_left = -190.0
+offset_left = -154.0
 offset_top = -48.0
 offset_right = 190.0
 offset_bottom = -22.0
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "04 // CLEARANCE GATE"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=2057428429]
-offset_left = -200.0
+offset_left = -154.0
 offset_top = -20.0
-offset_right = 200.0
+offset_right = 190.0
 offset_bottom = 12.0
 theme_override_colors/font_color = Color(0.76, 0.98, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 17
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 16
 text = "HOLD [ DOWN ]"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
 
 [node name="Instruction" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=1251486785]
-offset_left = -210.0
+offset_left = -154.0
 offset_top = 14.0
-offset_right = 210.0
+offset_right = 190.0
 offset_bottom = 40.0
 theme_override_colors/font_color = Color(0.42, 0.74, 0.77, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 0.96)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_shadow_color = Color(0.005, 0.03, 0.045, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 11
 text = "STAY LOW // EXIT THE SHAFT"
-horizontal_alignment = 1
+horizontal_alignment = 0
 vertical_alignment = 1
-
-[node name="GuideLine" type="Line2D" parent="TutorialSigns/CrouchPrompt" unique_id=1779394291]
-points = PackedVector2Array(-142, 42, 142, 42)
-width = 2.0
-default_color = Color(0.25, 0.78, 0.82, 0.72)
 
 [node name="CrouchGate" type="StaticBody2D" parent="." unique_id=2031405057]
 z_index = 2

@@ -31,7 +31,7 @@ func _ready() -> void:
 	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", "world.tscn")
 	if not world.obstacle_triggered.is_connected(_on_obstacle_triggered):
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
-	hud.set_route(_selected_level_index)
+	hud.set_level_length(world.get_route_length())
 	reset_run(0)
 	_run_started = true
 

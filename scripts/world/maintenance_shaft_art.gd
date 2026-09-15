@@ -51,10 +51,10 @@ func _draw_background() -> void:
 		cable_x += 384
 
 func _draw_foreground() -> void:
-	_draw_stage_plate(360.0, SIGNAL_TEAL)
-	_draw_stage_plate(900.0, SIGNAL_AMBER)
-	_draw_stage_plate(1230.0, SIGNAL_AMBER)
-	_draw_stage_plate(1770.0, SIGNAL_TEAL)
+	_draw_tutorial_marker(Vector2(360.0, 238.0), SIGNAL_TEAL)
+	_draw_tutorial_marker(Vector2(900.0, 238.0), SIGNAL_AMBER)
+	_draw_tutorial_marker(Vector2(1230.0, 206.0), SIGNAL_AMBER)
+	_draw_tutorial_marker(Vector2(1770.0, 206.0), SIGNAL_TEAL)
 
 	_draw_platform_surface(0.0, 448.0, 736.0, SIGNAL_TEAL)
 	_draw_platform_surface(832.0, 448.0, 448.0, SIGNAL_TEAL)
@@ -71,13 +71,10 @@ func _draw_foreground() -> void:
 	_draw_gate_frame()
 	_draw_completion_beacon()
 
-func _draw_stage_plate(centre_x: float, accent: Color) -> void:
-	var plate: Rect2 = Rect2(centre_x - 210.0, 166.0, 420.0, 116.0)
-	draw_rect(plate, Color(0.008, 0.035, 0.050, 0.78))
-	draw_rect(plate, Color(accent, 0.42), false, 2.0)
-	draw_line(Vector2(plate.position.x + 22.0, plate.position.y + 91.0), Vector2(plate.end.x - 22.0, plate.position.y + 91.0), Color(accent, 0.70), 2.0)
-	draw_circle(Vector2(plate.position.x + 18.0, plate.position.y + 18.0), 4.0, accent)
-	draw_circle(Vector2(plate.end.x - 18.0, plate.position.y + 18.0), 4.0, accent)
+func _draw_tutorial_marker(anchor: Vector2, accent: Color) -> void:
+	var rail_x: float = anchor.x - 174.0
+
+	draw_line(Vector2(rail_x, anchor.y - 46.0), Vector2(rail_x, anchor.y + 24.0), Color(accent, 0.9), 2.0)
 
 func _draw_platform_surface(surface_x: float, surface_y: float, surface_width: float, accent: Color) -> void:
 	draw_rect(Rect2(surface_x, surface_y, surface_width, 8.0), STEEL_DARK)

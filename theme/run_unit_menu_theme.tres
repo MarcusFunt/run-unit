@@ -1,5 +1,21 @@
 [gd_resource type="Theme" format=3 uid="uid://drs3743bdb0x2"]
 
+[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.02, 0.055, 0.07, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.075, 0.19, 0.22, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxFlat" id="ButtonFocus"]
 draw_center = false
 border_width_left = 3
@@ -64,22 +80,6 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
-content_margin_left = 18.0
-content_margin_top = 10.0
-content_margin_right = 18.0
-content_margin_bottom = 10.0
-bg_color = Color(0.02, 0.055, 0.07, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.075, 0.19, 0.22, 0.9)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="StyleBoxFlat" id="PanelStyle"]
 content_margin_left = 22.0
 content_margin_top = 18.0
@@ -111,10 +111,10 @@ border_color = Color(0.12, 0.36, 0.43, 1)
 [resource]
 default_font_size = 18
 Button/colors/font_color = Color(0.75, 0.94, 0.93, 1)
+Button/colors/font_disabled_color = Color(0.33, 0.53, 0.55, 1)
 Button/colors/font_focus_color = Color(1, 1, 1, 1)
 Button/colors/font_hover_color = Color(1, 1, 1, 1)
 Button/colors/font_pressed_color = Color(1, 0.94, 0.73, 1)
-Button/colors/font_disabled_color = Color(0.33, 0.53, 0.55, 1)
 Button/styles/disabled = SubResource("ButtonDisabled")
 Button/styles/focus = SubResource("ButtonFocus")
 Button/styles/hover = SubResource("ButtonHover")

@@ -11,32 +11,37 @@ border_width_bottom = 1
 border_color = Color(0.2, 0.62, 0.7, 0.9)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_score_background"]
-bg_color = Color(0.006, 0.022, 0.035, 0.98)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.14, 0.42, 0.5, 0.95)
+bg_color = Color(0.06, 0.2, 0.24, 0.4)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_score_fill"]
-bg_color = Color(0.25, 0.82, 0.96, 1)
+bg_color = Color(0.32, 0.88, 0.94, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_transparent"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
 
 [node name="ScoreBar" type="PanelContainer" parent="."]
-offset_left = 14.0
-offset_top = 14.0
-offset_right = 346.0
-offset_bottom = 86.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 384.0
+offset_bottom = 82.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_transparent")
 mouse_filter = 2
 
 [node name="Margin" type="MarginContainer" parent="ScoreBar"]
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
 [node name="Rows" type="VBoxContainer" parent="ScoreBar/Margin"]
 theme_override_constants/separation = 4
@@ -44,23 +49,22 @@ theme_override_constants/separation = 4
 [node name="Header" type="HBoxContainer" parent="ScoreBar/Margin/Rows"]
 theme_override_constants/separation = 6
 
-[node name="TitleLabel" type="Label" parent="ScoreBar/Margin/Rows/Header"]
-theme_override_colors/font_color = Color(0.42, 0.72, 0.79, 1)
-theme_override_font_sizes/font_size = 11
-text = "DISTANCE"
-
 [node name="DistanceLabel" type="Label" parent="ScoreBar/Margin/Rows/Header"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.82, 0.97, 0.94, 1)
-theme_override_font_sizes/font_size = 24
-horizontal_alignment = 2
-text = "00000m"
+theme_override_colors/font_color = Color(0.86, 0.98, 0.97, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.08, 0.11, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 0
+vertical_alignment = 1
+text = "00000"
 
 [node name="ScoreProgressBar" type="ProgressBar" parent="ScoreBar/Margin/Rows"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 10)
-max_value = 500.0
+custom_minimum_size = Vector2(0, 5)
+max_value = 4608.0
 show_percentage = false
 theme_override_styles/background = SubResource("StyleBoxFlat_score_background")
 theme_override_styles/fill = SubResource("StyleBoxFlat_score_fill")
@@ -69,38 +73,32 @@ mouse_filter = 2
 [node name="Footer" type="HBoxContainer" parent="ScoreBar/Margin/Rows"]
 theme_override_constants/separation = 6
 
-[node name="MilestoneLabel" type="Label" parent="ScoreBar/Margin/Rows/Footer"]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.38, 0.67, 0.7, 1)
-theme_override_font_sizes/font_size = 10
-text = "NEXT CHECKPOINT 00500m"
-
 [node name="BestLabel" type="Label" parent="ScoreBar/Margin/Rows/Footer"]
 unique_name_in_owner = true
-theme_override_colors/font_color = Color(0.93, 0.72, 0.35, 1)
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.98, 0.77, 0.4, 0.94)
 theme_override_font_sizes/font_size = 10
-horizontal_alignment = 2
-text = "BEST  00000m"
+horizontal_alignment = 0
+text = "BEST  00000"
 
 [node name="StatusBar" type="PanelContainer" parent="."]
-offset_left = 14.0
-offset_top = 496.0
-offset_right = 946.0
-offset_bottom = 536.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+offset_left = 24.0
+offset_top = 506.0
+offset_right = 936.0
+offset_bottom = 532.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_transparent")
 mouse_filter = 2
 
 [node name="Margin" type="MarginContainer" parent="StatusBar"]
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
 [node name="StatusLabel" type="Label" parent="StatusBar/Margin"]
 unique_name_in_owner = true
-theme_override_colors/font_color = Color(0.63, 0.82, 0.84, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.63, 0.82, 0.84, 0.82)
+theme_override_font_sizes/font_size = 9
 text = "HUMAN  //  A/D MOVE  //  SPACE JUMP  //  R RESTART  //  B BOT  //  F3 DEBUG"
 
 [node name="GameOverPanel" type="PanelContainer" parent="."]

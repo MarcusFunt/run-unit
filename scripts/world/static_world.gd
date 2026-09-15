@@ -68,6 +68,13 @@ func is_route_valid() -> bool:
 func get_tile_size() -> float:
 	return tile_size
 
+func get_route_length() -> float:
+	var route_end: float = 0.0
+	for platform: Dictionary in _platforms:
+		var platform_end: float = (float(platform.get("end_x", 0)) + 1.0) * tile_size
+		route_end = maxf(route_end, platform_end)
+	return route_end
+
 func _load_authored_platforms() -> void:
 	_platforms.clear()
 	var platform_id: int = 1
