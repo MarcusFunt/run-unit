@@ -1,10 +1,8 @@
-[gd_scene format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="Script" path="res://scripts/world/maintenance_shaft_art.gd" id="2_rwgxs"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_completion_trigger"]
-size = Vector2(64, 128)
+[ext_resource type="PackedScene" path="res://assets/tiled/levels/maintenance_shaft.tmj" id="3_shaft"]
 
 [node name="World" type="Node2D" unique_id=379300857]
 script = ExtResource("1_world")
@@ -19,71 +17,7 @@ z_index = -9
 color = Color(0.1, 0.3, 0.34, 0.22)
 polygon = PackedVector2Array(-512, 318, 13568, 318, 13568, 462, -512, 462)
 
-[node name="Platform01" type="StaticBody2D" parent="." unique_id=941757946]
-position = Vector2(0, 448)
-metadata/width_pixels = 736.0
-
-[node name="Visual" type="Polygon2D" parent="Platform01" unique_id=1035956946]
-color = Color(0.24, 0.44, 0.51, 1)
-polygon = PackedVector2Array(0, 0, 736, 0, 736, 800, 0, 800)
-
-[node name="Collision" type="CollisionPolygon2D" parent="Platform01" unique_id=190318854]
-polygon = PackedVector2Array(0, 0, 736, 0, 736, 800, 0, 800)
-
-[node name="Platform02" type="StaticBody2D" parent="." unique_id=1646967430]
-position = Vector2(832, 448)
-metadata/width_pixels = 448.0
-
-[node name="Visual" type="Polygon2D" parent="Platform02" unique_id=298963504]
-color = Color(0.23, 0.4, 0.45, 1)
-polygon = PackedVector2Array(0, 0, 448, 0, 448, 800, 0, 800)
-
-[node name="Collision" type="CollisionPolygon2D" parent="Platform02" unique_id=1537722995]
-polygon = PackedVector2Array(0, 0, 448, 0, 448, 800, 0, 800)
-
-[node name="Platform03" type="StaticBody2D" parent="." unique_id=1108091225]
-position = Vector2(1504, 416)
-metadata/width_pixels = 640.0
-
-[node name="Visual" type="Polygon2D" parent="Platform03" unique_id=1967556333]
-color = Color(0.32, 0.43, 0.47, 1)
-polygon = PackedVector2Array(0, 0, 640, 0, 640, 800, 0, 800)
-
-[node name="Collision" type="CollisionPolygon2D" parent="Platform03" unique_id=1468710760]
-polygon = PackedVector2Array(0, 0, 640, 0, 640, 800, 0, 800)
-
-[node name="Platform04" type="StaticBody2D" parent="." unique_id=1660166654]
-position = Vector2(2144, 416)
-metadata/width_pixels = 896.0
-
-[node name="Visual" type="Polygon2D" parent="Platform04" unique_id=1387510733]
-color = Color(0.3, 0.41, 0.42, 1)
-polygon = PackedVector2Array(0, 0, 896, 0, 896, 800, 0, 800)
-
-[node name="Collision" type="CollisionPolygon2D" parent="Platform04" unique_id=343960722]
-polygon = PackedVector2Array(0, 0, 896, 0, 896, 800, 0, 800)
-
-[node name="Platform05" type="StaticBody2D" parent="." unique_id=564885267]
-position = Vector2(3136, 384)
-metadata/width_pixels = 320.0
-
-[node name="Visual" type="Polygon2D" parent="Platform05" unique_id=1662239021]
-color = Color(0.24, 0.4, 0.47, 1)
-polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
-
-[node name="Collision" type="CollisionPolygon2D" parent="Platform05" unique_id=68095757]
-polygon = PackedVector2Array(0, 0, 320, 0, 320, 800, 0, 800)
-
-[node name="Platform06" type="StaticBody2D" parent="." unique_id=655609293]
-position = Vector2(3584, 416)
-metadata/width_pixels = 1024.0
-
-[node name="Visual" type="Polygon2D" parent="Platform06" unique_id=2079925310]
-color = Color(0.24, 0.44, 0.51, 1)
-polygon = PackedVector2Array(0, 0, 1024, 0, 1024, 800, 0, 800)
-
-[node name="Collision" type="CollisionPolygon2D" parent="Platform06" unique_id=1467021128]
-polygon = PackedVector2Array(0, 0, 1024, 0, 1024, 800, 0, 800)
+[node name="ShaftGeometry" parent="." instance=ExtResource("3_shaft")]
 
 [node name="TutorialSigns" type="Node2D" parent="." unique_id=1145643915]
 z_index = 5
@@ -267,31 +201,6 @@ theme_override_font_sizes/font_size = 11
 text = "STAY LOW // EXIT THE SHAFT"
 horizontal_alignment = 0
 vertical_alignment = 1
-
-[node name="CrouchGate" type="StaticBody2D" parent="." unique_id=2031405057]
-z_index = 2
-position = Vector2(1900, 358)
-
-[node name="Visual" type="Polygon2D" parent="CrouchGate" unique_id=1393484033]
-color = Color(0.8, 0.45, 0.15, 1)
-polygon = PackedVector2Array(0, 0, 96, 0, 96, 32, 0, 32)
-
-[node name="GlowStrip" type="Polygon2D" parent="CrouchGate" unique_id=2098498878]
-z_index = 1
-color = Color(0.55, 0.95, 0.92, 1)
-polygon = PackedVector2Array(0, 0, 96, 0, 96, 5, 0, 5)
-
-[node name="Collision" type="CollisionPolygon2D" parent="CrouchGate" unique_id=729259772]
-polygon = PackedVector2Array(0, 0, 96, 0, 96, 32, 0, 32)
-
-[node name="CompletionTrigger" type="Area2D" parent="."]
-position = Vector2(4544, 352)
-collision_layer = 0
-collision_mask = 1
-monitoring = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionTrigger"]
-shape = SubResource("RectangleShape2D_completion_trigger")
 
 [node name="ShaftBackdropArt" type="Node2D" parent="." unique_id=1344403441]
 z_index = -8

@@ -1,12 +1,11 @@
 extends GutTest
 
-## Proves the Tiled -> YATI -> TileMapLayer round-trip end to end against
-## scenes/poc/tiled_world_poc.tscn (built from scenes/poc/tiled_level_poc.tmj):
-## semantic collision/query data comes from the "Semantic" TileMapLayer,
-## decorative art from the "Art" TileMapLayer never creates collision, and
-## RunUnitTiledStaticWorld exposes the same public contract as
-## RunUnitStaticWorld (scripts/world/static_world.gd) while reading tiles
-## instead of StaticBody2D children.
+## Pins the Tiled -> YATI -> TileMapLayer invariants that RunUnitStaticWorld
+## relies on, using a small purpose-built fixture level
+## (scenes/poc/tiled_level_poc.tmj) rather than the shipping maintenance shaft:
+## platforms are derived from the "Semantic" layer, semantic values stay
+## queryable independently of collision, one-way tiles are enterable from
+## below, and decorative "Art" layer tiles never create collision.
 
 const WORLD_SCENE: PackedScene = preload("res://scenes/poc/tiled_world_poc.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
@@ -14,7 +13,7 @@ const TILE: float = 32.0
 
 
 func test_platforms_are_derived_from_the_semantic_tilemap_layer() -> void:
-	var world: RunUnitTiledStaticWorld = WORLD_SCENE.instantiate() as RunUnitTiledStaticWorld
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
 
 	assert_true(world.is_route_valid(), "Four solid/one-way tile runs should produce a valid route")
@@ -47,7 +46,7 @@ func test_platforms_are_derived_from_the_semantic_tilemap_layer() -> void:
 
 
 func test_semantic_values_are_queryable_independent_of_collision() -> void:
-	var world: RunUnitTiledStaticWorld = WORLD_SCENE.instantiate() as RunUnitTiledStaticWorld
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
 
 	assert_eq(world.get_semantic_value(2 * TILE + 16, 3 * TILE + 16), 4, "conveyor sample cell")
@@ -57,7 +56,7 @@ func test_semantic_values_are_queryable_independent_of_collision() -> void:
 
 
 func test_player_lands_on_a_solid_platform_derived_from_tiles() -> void:
-	var world: RunUnitTiledStaticWorld = WORLD_SCENE.instantiate() as RunUnitTiledStaticWorld
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
@@ -73,7 +72,7 @@ func test_player_lands_on_a_solid_platform_derived_from_tiles() -> void:
 
 
 func test_player_falls_through_a_decorative_only_tile_with_no_semantic_collision() -> void:
-	var world: RunUnitTiledStaticWorld = WORLD_SCENE.instantiate() as RunUnitTiledStaticWorld
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
@@ -91,7 +90,7 @@ func test_player_falls_through_a_decorative_only_tile_with_no_semantic_collision
 
 
 func test_one_way_platform_can_be_entered_from_below() -> void:
-	var world: RunUnitTiledStaticWorld = WORLD_SCENE.instantiate() as RunUnitTiledStaticWorld
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)

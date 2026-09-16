@@ -14,7 +14,6 @@ extends Node2D
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
 
 const PLAYABLE_LEVEL_INDEX: int = 0
-const PLAYER_START_POSITION: Vector2 = Vector2(128.0, 385.0)
 
 enum RunState { ACTIVE, FAILED, COMPLETED }
 
@@ -82,7 +81,8 @@ func reset_run(run_seed: int) -> void:
 	human_controller.active = true
 	scripted_controller.active = false
 	scripted_controller.reset_controller()
-	score_manager.reset(PLAYER_START_POSITION.x, RunUnitSession.best_distance)
+	var spawn_position: Vector2 = world.get_spawn_position()
+	score_manager.reset(spawn_position.x, RunUnitSession.best_distance)
 	_last_reward_distance = 0.0
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
@@ -90,7 +90,7 @@ func reset_run(run_seed: int) -> void:
 	RunUnitSession.run_seed = run_seed
 	RunUnitSession.set_run_outcome("active")
 	_trace.begin(run_seed)
-	player.global_position = PLAYER_START_POSITION
+	player.global_position = spawn_position
 	player.reset_motor()
 	player.set_physics_process(true)
 	death_menu.close()
