@@ -12,6 +12,7 @@ extends Node2D
 @onready var hud: RunUnitHud = $HUD
 @onready var debug_overlay: RunUnitDebugOverlay = $DebugOverlay
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
+@onready var elevator_exit: RunUnitTutorialElevatorExit = $World/ElevatorExit
 
 const PLAYABLE_LEVEL_INDEX: int = 0
 
@@ -94,6 +95,8 @@ func reset_run(run_seed: int) -> void:
 	player.reset_motor()
 	player.set_physics_process(true)
 	death_menu.close()
+	if elevator_exit != null:
+		elevator_exit.reset_transition()
 	hud.set_scores(0.0, score_manager.best_distance)
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
@@ -159,6 +162,8 @@ func _finish_run(result: int) -> void:
 	RunUnitSession.set_run_outcome(outcome)
 	if result == RunState.FAILED:
 		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+	elif elevator_exit != null:
+		elevator_exit.begin_transition()
 	else:
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
 

@@ -43,7 +43,7 @@
     },
     {
       "type": "wait_frames",
-      "frames": 105
+      "frames": 150
     },
     {
       "type": "action",
@@ -52,29 +52,36 @@
     },
     {
       "type": "wait_frames",
-      "frames": 75
-    },
-    {
-      "type": "action",
-      "action_name": "crouch",
-      "pressed": false
-    },
-    {
-      "type": "wait_frames",
       "frames": 180
     },
     {
+      "type": "wait_seconds",
+      "seconds": 0.45
+    },
+    {
       "type": "screenshot",
-      "path": "res://artifacts/maintenance_shaft_route_finish.png"
+      "path": "res://artifacts/tutorial_elevator_route_finish.png"
     }
   ],
   "assertions": [
     {
       "assertion": "property",
-      "node_path": "DeathMenu/Overlay/Center/DeathPanel/Content/TitleLabel",
-      "property": "text",
+      "node_path": "World/ElevatorExit",
+      "property": "transition_started",
       "operator": "equals",
-      "expected": "ROUTE COMPLETE"
+      "expected": true
+    },
+    {
+      "assertion": "property",
+      "node_path": "World/ElevatorExit",
+      "property": "door_slammed",
+      "operator": "equals",
+      "expected": true
+    },
+    {
+      "assertion": "visible",
+      "node_path": "DeathMenu",
+      "expected": false
     }
   ]
 }

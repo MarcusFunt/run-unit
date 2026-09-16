@@ -33,6 +33,11 @@ extends Node2D
 @export_range(0.1, 2.0, 0.01) var antenna_damping_ratio: float = 0.72
 @export_range(0.0, 4.0, 0.1) var antenna_idle_sway_deg: float = 1.2
 @export_range(0.1, 2.0, 0.05) var antenna_idle_sway_hz: float = 0.55
+@export_range(30.0, 88.0, 1.0) var antenna_contact_max_fold_deg: float = 76.0
+
+@export_category("Crouch Presentation")
+@export_range(0.65, 1.0, 0.01) var crouch_body_y_scale: float = 0.82
+@export_range(0.0, 40.0, 1.0) var crouch_body_drop: float = 35.5
 
 const UPPER_LINK_LENGTH: float = 110.0
 const LOWER_LINK_LENGTH: float = 145.0
@@ -41,6 +46,7 @@ const WHEEL_RADIUS_SOURCE_PX: float = 70.0
 ## Antenna spring integration never advances by more than this, so a large
 ## frame-time spike (a hitch, a debugger pause) can't destabilize it.
 const ANTENNA_MAX_SUBSTEP: float = 1.0 / 120.0
+const ANTENNA_TIP_SOURCE: Vector2 = Vector2(12.0, -60.0)
 
 @onready var body_pivot: Node2D = $BodyPivot
 @onready var upper_link_pivot: Node2D = $UpperLinkPivot
@@ -95,6 +101,8 @@ func _process(delta: float) -> void:
 	_update_eye()
 
 	_apply_pose(pose["upper_deg"], pose["knee_deg"], pose["body_lean"], _wheel_spin)
+	_apply_crouch_body_presentation()
+	_apply_antenna_overhead_contact()
 
 func _update_facing() -> void:
 	if player == null:
@@ -243,6 +251,59 @@ func _update_antenna_motion(delta: float) -> void:
 	var local_forward_accel: float = _local_forward_acceleration(acceleration_x)
 	var target: float = _antenna_target(local_forward_accel, _idle_weight())
 	_update_antenna(target, delta)
+
+func _apply_crouch_body_presentation() -> void:
+	var crouch: float = clampf(player.crouch_ratio if player != null else 0.0, 0.0, 1.0)
+	body_pivot.scale = Vector2(art_scale, art_scale * lerpf(1.0, crouch_body_y_scale, crouch))
+	body_pivot.position.y += crouch_body_drop * crouch
+
+func _antenna_hits_world(angle: float) -> bool:
+	if player == null or not player.is_inside_tree():
+		return false
+	antenna_pivot.rotation = angle
+	var space_state: PhysicsDirectSpaceState2D = player.get_world_2d().direct_space_state
+	var tip_position: Vector2 = antenna_pivot.to_global(ANTENNA_TIP_SOURCE)
+
+	# A ray alone cannot detect the real crouch-door case when the antenna tip
+	# already begins inside the overhang. Check endpoint occupancy as well so
+	# contact still folds the cosmetic spring instead of clipping through it.
+	var point_query: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
+	point_query.position = tip_position
+	point_query.collision_mask = player.collision_mask
+	point_query.exclude = [player.get_rid()]
+	point_query.collide_with_areas = false
+	point_query.collide_with_bodies = true
+	if not space_state.intersect_point(point_query, 1).is_empty():
+		return true
+
+	var ray_query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(
+		antenna_pivot.global_position, tip_position, player.collision_mask
+	)
+	ray_query.exclude = [player.get_rid()]
+	ray_query.collide_with_areas = false
+	ray_query.collide_with_bodies = true
+	return not space_state.intersect_ray(ray_query).is_empty()
+
+func _apply_antenna_overhead_contact() -> void:
+	var free_angle: float = _antenna_angle
+	if not _antenna_hits_world(free_angle):
+		antenna_pivot.rotation = free_angle
+		return
+	var folded_angle: float = deg_to_rad(antenna_contact_max_fold_deg)
+	if _antenna_hits_world(folded_angle):
+		_antenna_angle = folded_angle
+		antenna_pivot.rotation = folded_angle
+		return
+	var colliding_angle: float = free_angle
+	var clear_angle: float = folded_angle
+	for iteration: int in range(9):
+		var candidate: float = (colliding_angle + clear_angle) * 0.5
+		if _antenna_hits_world(candidate):
+			colliding_angle = candidate
+		else:
+			clear_angle = candidate
+	_antenna_angle = clear_angle
+	antenna_pivot.rotation = clear_angle
 
 func _update_eye() -> void:
 	var pulse: float = 0.88 + 0.12 * sin(_visual_time * TAU * 0.9)

@@ -88,7 +88,7 @@ func test_player_crossing_the_maintenance_shaft_finish_area_completes_the_world(
 	assert_true(world.is_completion_triggered())
 
 
-func test_game_enters_completed_state_when_the_route_trigger_fires() -> void:
+func test_game_completion_uses_elevator_blackout_instead_of_results_menu() -> void:
 	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
 	var pause_menu_controller: Node = game.get_node_or_null("PauseMenuController")
 	if pause_menu_controller != null:
@@ -98,8 +98,23 @@ func test_game_enters_completed_state_when_the_route_trigger_fires() -> void:
 
 	assert_true(game.is_terminal())
 	assert_eq(RunUnitSession.last_run_outcome, "completed")
-	assert_true(game.death_menu.visible)
-	assert_eq(game.death_menu.title_label.text, "ROUTE COMPLETE")
+	assert_false(game.death_menu.visible, "Tutorial completion should stay diegetic instead of opening the results menu")
+	var elevator_exit: Node = game.world.get_node_or_null("ElevatorExit")
+	assert_not_null(elevator_exit, "The tutorial world should own its elevator exit transition")
+	if elevator_exit == null:
+		get_tree().paused = false
+		return
+	assert_true(bool(elevator_exit.get("transition_started")))
+	var transition_time: float = (
+		float(elevator_exit.get("close_duration"))
+		+ float(elevator_exit.get("blackout_delay"))
+		+ float(elevator_exit.get("fade_duration"))
+		+ 0.10
+	)
+	await get_tree().create_timer(transition_time).timeout
+	var blackout: ColorRect = elevator_exit.get_node_or_null("BlackoutLayer/Blackout") as ColorRect
+	assert_not_null(blackout)
+	assert_gt(blackout.color.a, 0.95, "The elevator slam should end on a full blackout for the Level 1 handoff")
 
 	get_tree().paused = false
 

@@ -17,27 +17,33 @@
       }
     },
     {
-      "type": "wait_frames",
-      "frames": 9
+      "type": "wait_seconds",
+      "seconds": 0.55
     },
     {
-      "type": "ui_report",
-      "label": "completion-hud",
-      "node_path": "HUD",
-      "fail_on": [
-        "overlap",
-        "zero_size",
-        "offscreen"
-      ]
+      "type": "screenshot",
+      "path": "res://artifacts/tutorial_elevator_blackout.png"
     }
   ],
   "assertions": [
     {
       "assertion": "property",
-      "node_path": "DeathMenu/Overlay/Center/DeathPanel/Content/TitleLabel",
-      "property": "text",
+      "node_path": "World/ElevatorExit",
+      "property": "transition_started",
       "operator": "equals",
-      "expected": "ROUTE COMPLETE"
+      "expected": true
+    },
+    {
+      "assertion": "property",
+      "node_path": "World/ElevatorExit",
+      "property": "door_slammed",
+      "operator": "equals",
+      "expected": true
+    },
+    {
+      "assertion": "visible",
+      "node_path": "DeathMenu",
+      "expected": false
     }
   ]
 }
