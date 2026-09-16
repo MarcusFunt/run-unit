@@ -68,7 +68,7 @@ func test_player_lands_on_a_solid_platform_derived_from_tiles() -> void:
 		await get_tree().physics_frame
 
 	assert_true(player.is_on_floor(), "The player should land on collision generated from the Semantic TileMapLayer")
-	assert_almost_eq(player.global_position.y, surface_y - 15.0, 6.0, "Player should settle on top of the tile surface")
+	assert_almost_eq(player.global_position.y, surface_y - 24.0, 6.0, "Player should settle on top of the tile surface")
 
 
 func test_player_falls_through_a_decorative_only_tile_with_no_semantic_collision() -> void:
@@ -78,9 +78,11 @@ func test_player_falls_through_a_decorative_only_tile_with_no_semantic_collision
 	add_child_autofree(player)
 
 	# x=22..23,y=6 only has an Art-layer tile (no Semantic cell underneath) --
-	# it must look identical to Platform C but never stop the player.
+	# it must look identical to Platform C but never stop the player. Centered
+	# well clear of Platform C's real collision edge at x=21*TILE so the wider
+	# player body doesn't clip it.
 	var decorative_surface_y: float = 6 * TILE
-	player.global_position = Vector2(22 * TILE + 16, decorative_surface_y - 60.0)
+	player.global_position = Vector2(22 * TILE + 24, decorative_surface_y - 60.0)
 
 	for frame: int in range(60):
 		await get_tree().physics_frame
