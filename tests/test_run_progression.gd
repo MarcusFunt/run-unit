@@ -75,12 +75,12 @@ func test_game_enters_completed_state_when_the_route_trigger_fires() -> void:
 
 func test_player_stays_crouched_when_releasing_under_a_low_ceiling() -> void:
 	var ground: StaticBody2D = _create_static_body(Vector2(200.0, 432.0), Vector2(500.0, 32.0))
-	var ceiling: StaticBody2D = _create_static_body(Vector2(200.0, 358.0), Vector2(96.0, 32.0))
+	var ceiling: StaticBody2D = _create_static_body(Vector2(200.0, 350.0), Vector2(96.0, 32.0))
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(ground)
 	add_child_autofree(ceiling)
 	add_child_autofree(player)
-	player.global_position = Vector2(200.0, 392.0)
+	player.global_position = Vector2(200.0, 384.0)
 
 	await get_tree().physics_frame
 	await get_tree().physics_frame

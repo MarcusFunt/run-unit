@@ -3,17 +3,17 @@ extends Node2D
 
 ## Transform-only presentation rig for the articulated single-wheel player.
 ## Scaled so the wheel's visual diameter (WHEEL_RADIUS_SOURCE_PX * 2 *
-## art_scale) matches the 38 px collision body's width -- the robot was
+## art_scale) matches the 50 px collision body's width -- the robot was
 ## previously sized to a 24x30 collision body that read as tiny against the
 ## 32 px tile grid, making the shaft ceilings and the crouch gate look
 ## wildly oversized relative to the robot and forcing an absurdly high jump
-## arc just to clear ordinary gaps. Both the collision body and this rig were
-## scaled up together (by 1.6x) so the world reads at a believable size
-## without touching level geometry or jump physics.
-@export var art_scale: float = 0.271429
-@export var body_to_wheel_offset: Vector2 = Vector2(-2.317, -20.571)
-## The wheel's visual bottom matches the 48 px player collision body's bottom.
-@export var wheel_anchor: Vector2 = Vector2(5.76, 4.8)
+## arc just to clear ordinary gaps. The collision body and this rig are
+## scaled up together so the world reads at a believable size without
+## touching level geometry or jump physics.
+@export var art_scale: float = 0.357143
+@export var body_to_wheel_offset: Vector2 = Vector2(-3.089, -27.428)
+## The wheel's visual bottom matches the 64 px player collision body's bottom.
+@export var wheel_anchor: Vector2 = Vector2(7.68, 6.4)
 
 @export_category("Idle")
 @export_range(0.2, 1.5, 0.05) var idle_frequency_hz: float = 0.70

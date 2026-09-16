@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/player/player_feedback.gd" id="3_feedback"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(38, 48)
+size = Vector2(50, 64)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_motor")
@@ -20,6 +20,6 @@ script = ExtResource("3_feedback")
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(232, -99)
+position = Vector2(309, -132)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0

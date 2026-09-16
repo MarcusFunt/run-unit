@@ -26,7 +26,7 @@ func _drive_through_gate(crouch: bool) -> float:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
-	player.global_position = Vector2(GATE_LEFT_X - 120.0, DECK_Y - 24.0)
+	player.global_position = Vector2(GATE_LEFT_X - 120.0, DECK_Y - 32.0)
 
 	for frame: int in range(150):
 		player.set_action(_standing_action(1.0, crouch))
@@ -79,12 +79,13 @@ func test_player_lands_on_the_shipping_starting_deck() -> void:
 		await get_tree().physics_frame
 
 	assert_true(player.is_on_floor(), "Spawning at the level's Spawn marker should land on the starting deck")
-	assert_almost_eq(player.global_position.y, 448.0 - 24.0, 6.0, "The player settles on the tiled deck surface")
+	assert_almost_eq(player.global_position.y, 448.0 - 32.0, 6.0, "The player settles on the tiled deck surface")
 
 
-## The gate tile's collider is 6px taller than its cell, which is the whole
-## reason the crouch lesson survives being put on a 32px grid. These two tests
-## pin that behaviour to the real tile rather than a synthetic ceiling.
+## The gate tile's collider is shorter than its 32px cell, leaving just enough
+## clearance to force a crouch, which is the whole reason the crouch lesson
+## survives being put on a 32px grid. These two tests pin that behaviour to
+## the real tile rather than a synthetic ceiling.
 func test_shipping_crouch_gate_blocks_a_standing_player() -> void:
 	var reached_x: float = await _drive_through_gate(false)
 	assert_true(reached_x < GATE_LEFT_X, "A standing player must be stopped by the gate, got x=%.1f" % reached_x)
