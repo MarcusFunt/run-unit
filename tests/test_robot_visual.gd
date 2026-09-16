@@ -123,7 +123,7 @@ func test_idle_suspension_moves_body_without_moving_wheel_anchor() -> void:
 	assert_almost_eq(wheel_a.distance_to(wheel_b), 0.0, 0.1, "The cosmetic wheel must not skate while idling")
 
 
-func test_idle_and_drive_motion_are_suppressed_while_airborne() -> void:
+func test_idle_motion_is_suppressed_while_airborne() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
 	assert_false(player.is_on_floor())
@@ -131,10 +131,9 @@ func test_idle_and_drive_motion_are_suppressed_while_airborne() -> void:
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 
 	assert_false(visual.is_idle_eligible_for_test())
-	assert_false(visual.is_drive_eligible_for_test())
 
 
-func test_idle_and_drive_motion_are_suppressed_while_charging() -> void:
+func test_idle_motion_is_suppressed_while_charging() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	_ground_player(player)
 	await get_tree().physics_frame
@@ -148,10 +147,9 @@ func test_idle_and_drive_motion_are_suppressed_while_charging() -> void:
 
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 	assert_false(visual.is_idle_eligible_for_test())
-	assert_false(visual.is_drive_eligible_for_test())
 
 
-func test_idle_and_drive_motion_are_suppressed_while_crouching() -> void:
+func test_idle_motion_is_suppressed_while_crouching() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	_ground_player(player)
 	await get_tree().physics_frame
@@ -166,35 +164,32 @@ func test_idle_and_drive_motion_are_suppressed_while_crouching() -> void:
 
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 	assert_false(visual.is_idle_eligible_for_test())
-	assert_false(visual.is_drive_eligible_for_test())
 
 
-func test_travel_phase_does_not_advance_at_zero_speed() -> void:
+func test_driving_does_not_add_a_walk_cycle_suspension_wobble() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
-	add_child_autofree(player)
+	_ground_player(player)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+	player.velocity.x = -260.0
 
-	player.velocity.x = 0.0
-	visual.update_travel_phase_for_test(0.5)
+	# Settling onto the ground fires the same "landed" event as a real jump
+	# landing, which briefly compresses the suspension. Let that decay before
+	# asserting the steady-state driving pose.
+	for frame: int in range(20):
+		visual.run_process_for_test(0.05)
 
-	assert_almost_eq(visual.get_travel_phase_for_test(), 0.0, 0.0001)
+	var upper: Node2D = visual.get_node("UpperLinkPivot") as Node2D
+	var knee: Node2D = visual.get_node("UpperLinkPivot/KneePivot") as Node2D
 
-
-func test_travel_phase_advances_faster_at_higher_speed() -> void:
-	var slow_player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
-	var fast_player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
-	add_child_autofree(slow_player)
-	add_child_autofree(fast_player)
-	var slow_visual: RunUnitRobotVisual = slow_player.get_node("RobotVisual") as RunUnitRobotVisual
-	var fast_visual: RunUnitRobotVisual = fast_player.get_node("RobotVisual") as RunUnitRobotVisual
-
-	slow_player.velocity.x = -80.0
-	fast_player.velocity.x = -260.0
-
-	slow_visual.update_travel_phase_for_test(0.1)
-	fast_visual.update_travel_phase_for_test(0.1)
-
-	assert_gt(fast_visual.get_travel_phase_for_test(), slow_visual.get_travel_phase_for_test())
+	# A wheel has no gait: while driving at a steady speed the suspension
+	# angles should sit at the rigid base pose, not oscillate like a walk cycle.
+	for frame: int in range(60):
+		visual.run_process_for_test(0.016)
+		assert_almost_eq(upper.rotation, deg_to_rad(25.0), 0.001)
+		assert_almost_eq(knee.rotation, deg_to_rad(105.0), 0.001)
 
 
 func test_body_lean_ramps_smoothly_toward_target_speed_lean() -> void:
