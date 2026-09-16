@@ -1,0 +1,48 @@
+{
+  "landmark": {
+    "bounds": [
+      297,
+      45,
+      414,
+      260
+    ],
+    "layer": 4,
+    "name": "megastructure"
+  },
+  "layers": [
+    {
+      "index": 1,
+      "path": "assets/generated/converted/menu_city_parallax/menu_city_layer_1.png",
+      "scroll_scale": 0.3
+    },
+    {
+      "index": 2,
+      "path": "assets/generated/converted/menu_city_parallax/menu_city_layer_2.png",
+      "scroll_scale": 0.18
+    },
+    {
+      "index": 3,
+      "path": "assets/generated/converted/menu_city_parallax/menu_city_layer_3.png",
+      "scroll_scale": 0.1
+    },
+    {
+      "index": 4,
+      "path": "assets/generated/converted/menu_city_parallax/menu_city_layer_4.png",
+      "scroll_scale": 0.05
+    },
+    {
+      "index": 5,
+      "path": "assets/generated/converted/menu_city_parallax/menu_city_layer_5.png",
+      "scroll_scale": 0.02
+    }
+  ],
+  "native_size": [
+    480,
+    270
+  ],
+  "source": "city_parallax",
+  "viewport_size": [
+    960,
+    540
+  ]
+}
