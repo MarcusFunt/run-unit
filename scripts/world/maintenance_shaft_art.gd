@@ -77,14 +77,15 @@ func _draw_gap_marker(start_x: float, end_x: float, surface_y: float, accent: Co
 	draw_line(Vector2(midpoint, surface_y - 12.0), Vector2(midpoint + 8.0, surface_y - 20.0), accent, 2.0)
 
 ## Posts bracket the gate cells at tiles 59-61 (x 1888-1984); the gate's
-## underside sits at y=371, 45px above the deck, so a standing (48px) player
-## must crouch (28px) to pass. The gate tile's collision box is shorter than
-## the 32px cell it sits in, ending 13px above the cell's bottom edge, so the
-## underside strip at y=365-371 draws that inset -- without it the player
-## would pass through geometry the gate does not appear to have.
+## underside sits at y=358, 58px above the deck, so a standing (64px) player
+## must crouch (36px) to pass. The mechanism is mounted right at the top of
+## its 32px cell (the shaft is wide open above it, see the Semantic layer),
+## so almost the whole cell below the bar is open air -- raising the bar this
+## close to the real ceiling keeps the gate from reading as a low ceiling of
+## its own while a player is just running or jumping past it.
 func _draw_gate_frame() -> void:
-	draw_rect(Rect2(1888.0, 365.0, 96.0, 6.0), GATE_UNDERSIDE)
-	draw_rect(Rect2(1888.0, 369.0, 96.0, 2.0), SIGNAL_AMBER)
+	draw_rect(Rect2(1888.0, 352.0, 96.0, 6.0), GATE_UNDERSIDE)
+	draw_rect(Rect2(1888.0, 356.0, 96.0, 2.0), SIGNAL_AMBER)
 	draw_line(Vector2(1878.0, 352.0), Vector2(1878.0, 416.0), SIGNAL_AMBER, 3.0)
 	draw_line(Vector2(1994.0, 352.0), Vector2(1994.0, 416.0), SIGNAL_AMBER, 3.0)
 	draw_circle(Vector2(1878.0, 346.0), 5.0, SIGNAL_AMBER)

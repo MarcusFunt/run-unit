@@ -48,7 +48,7 @@ func test_wheel_radius_comes_from_source_geometry() -> void:
 
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 
-	assert_almost_eq(visual.get_wheel_radius_world(), 19.0, 0.001)
+	assert_almost_eq(visual.get_wheel_radius_world(), 25.0, 0.001)
 
 
 func test_wheel_spin_matches_linear_travel() -> void:
@@ -57,7 +57,7 @@ func test_wheel_spin_matches_linear_travel() -> void:
 
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 
-	player.velocity.x = -190.0
+	player.velocity.x = -250.0
 	visual.set_facing_left_for_test(true)
 	visual.update_wheel_for_test(0.1)
 
@@ -387,5 +387,5 @@ func _ground_player(player: RunUnitPlayerMotor, x_offset: float = 0.0) -> Static
 	var ground: StaticBody2D = _create_static_body(Vector2(200.0 + x_offset, 432.0), Vector2(500.0, 32.0))
 	add_child_autofree(ground)
 	add_child_autofree(player)
-	player.global_position = Vector2(200.0 + x_offset, 401.0)
+	player.global_position = Vector2(200.0 + x_offset, 384.0)
 	return ground
