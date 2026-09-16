@@ -100,3 +100,9 @@ func _on_player_landed() -> void:
 		return
 	var impact_ratio: float = clampf(player.last_landing_speed / player.max_fall_speed, 0.0, 1.0)
 	_landing_compression = lerpf(0.35, 0.75, impact_ratio)
+
+func get_visual_wheel_anchor() -> Vector2:
+	return wheel_anchor
+
+func apply_pose_for_test(upper_degrees: float, knee_degrees: float, body_lean: float, wheel_spin: float) -> void:
+	_apply_pose(upper_degrees, knee_degrees, body_lean, wheel_spin)
