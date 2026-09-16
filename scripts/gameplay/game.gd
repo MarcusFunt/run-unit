@@ -14,8 +14,11 @@ extends Node2D
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
 
 const PLAYABLE_LEVEL_INDEX: int = 0
+const PLAYER_START_POSITION: Vector2 = Vector2(128.0, 385.0)
 
-var _terminal: bool = false
+enum RunState { ACTIVE, FAILED, COMPLETED }
+
+var _run_state: int = RunState.ACTIVE
 var _run_started: bool = false
 var _bot_enabled: bool = false
 var _external_control: bool = false
@@ -31,6 +34,8 @@ func _ready() -> void:
 	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", "world.tscn")
 	if not world.obstacle_triggered.is_connected(_on_obstacle_triggered):
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
+	if not world.route_completed.is_connected(_on_route_completed):
+		world.route_completed.connect(_on_route_completed)
 	hud.set_level_length(world.get_route_length())
 	reset_run(0)
 	_run_started = true
@@ -38,7 +43,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if not _run_started:
 		return
-	if _terminal:
+	if is_terminal():
 		if Input.is_action_just_pressed("restart"):
 			reset_run(0)
 		return
@@ -46,6 +51,7 @@ func _physics_process(_delta: float) -> void:
 		reset_run(0)
 		return
 	var current_distance: float = score_manager.record_position(player.global_position.x)
+	RunUnitSession.record_best_distance(score_manager.best_distance)
 	var current_platform: Dictionary = world.get_platform_below(player.global_position.x)
 	_trace.record("sample", player.global_position, player.velocity, int(current_platform.get("platform_id", -1)))
 	world.set_progress(current_distance)
@@ -54,14 +60,14 @@ func _physics_process(_delta: float) -> void:
 	hud.set_status("%s  //  A/D MOVE  //  SPACE JUMP  //  R RESTART" % controller_name)
 	_update_debug(current_distance)
 	if player.global_position.y > world.death_y:
-		_end_run()
+		_fail_run()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not (event is InputEventKey) or not event.pressed or event.echo:
 		return
 	if OS.is_debug_build() and event.is_action_pressed("toggle_debug"):
 		debug_overlay.set_open(not debug_overlay.visible)
-	elif OS.is_debug_build() and event.keycode == KEY_B and not _terminal:
+	elif OS.is_debug_build() and event.keycode == KEY_B and not is_terminal():
 		_bot_enabled = not _bot_enabled
 		_external_control = false
 		human_controller.active = not _bot_enabled
@@ -70,28 +76,28 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func reset_run(run_seed: int) -> void:
 	initial_seed = run_seed
-	_terminal = false
+	_run_state = RunState.ACTIVE
 	_external_control = false
 	_bot_enabled = false
 	human_controller.active = true
 	scripted_controller.active = false
 	scripted_controller.reset_controller()
-	score_manager.reset()
+	score_manager.reset(PLAYER_START_POSITION.x, RunUnitSession.best_distance)
 	_last_reward_distance = 0.0
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
 	world.reset(run_seed)
 	RunUnitSession.run_seed = run_seed
+	RunUnitSession.set_run_outcome("active")
 	_trace.begin(run_seed)
-	player.global_position = Vector2(128.0, 385.0)
+	player.global_position = PLAYER_START_POSITION
 	player.reset_motor()
 	player.set_physics_process(true)
-	hud.hide_game_over()
 	death_menu.close()
 	hud.set_scores(0.0, score_manager.best_distance)
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
-	if _terminal:
+	if is_terminal():
 		return
 	_external_control = true
 	_bot_enabled = false
@@ -122,22 +128,39 @@ func get_observation() -> Dictionary:
 func consume_reward() -> float:
 	var reward: float = score_manager.distance - _last_reward_distance
 	_last_reward_distance = score_manager.distance
-	if _terminal:
+	if _run_state == RunState.FAILED:
 		reward -= 1.0
 	return reward
 
 func is_terminal() -> bool:
-	return _terminal
+	return _run_state != RunState.ACTIVE
 
-func _end_run() -> void:
-	_terminal = true
+func _fail_run() -> void:
+	_finish_run(RunState.FAILED)
+
+func _complete_run() -> void:
+	_finish_run(RunState.COMPLETED)
+
+func _finish_run(result: int) -> void:
+	if is_terminal():
+		return
+	_run_state = result
 	human_controller.active = false
 	scripted_controller.active = false
 	player.set_physics_process(false)
-	player_feedback.play_game_over_feedback()
-	_trace.record("death", player.global_position, player.velocity)
+	var current_distance: float = score_manager.record_position(player.global_position.x)
+	RunUnitSession.record_best_distance(score_manager.best_distance)
+	hud.set_scores(current_distance, score_manager.best_distance)
+	var outcome: String = "failed" if result == RunState.FAILED else "completed"
+	if result == RunState.FAILED:
+		player_feedback.play_game_over_feedback()
+	_trace.record(outcome, player.global_position, player.velocity)
 	RunUnitSession.set_traversal_trace(_trace.export_data())
-	death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+	RunUnitSession.set_run_outcome(outcome)
+	if result == RunState.FAILED:
+		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+	else:
+		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
 
 func _update_debug(current_distance: float) -> void:
 	if not debug_overlay.visible:
@@ -156,10 +179,13 @@ func _on_world_metrics_updated(metrics: Dictionary) -> void:
 	RunUnitSession.set_world_metrics(metrics)
 
 func _on_obstacle_triggered(obstacle_type: String, platform_id: int) -> void:
-	if _terminal:
+	if is_terminal():
 		return
 	_trace.record("obstacle:%s" % obstacle_type, player.global_position, player.velocity, platform_id)
-	_end_run()
+	_fail_run()
+
+func _on_route_completed() -> void:
+	_complete_run()
 
 func _ensure_input_map() -> void:
 	_add_key_action("move_left", KEY_A)

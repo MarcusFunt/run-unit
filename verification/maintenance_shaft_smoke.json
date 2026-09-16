@@ -19,6 +19,7 @@
     {"assertion": "node_exists", "node_path": "World/ShaftBackdropArt"},
     {"assertion": "node_exists", "node_path": "World/ShaftRouteArt"},
     {"assertion": "node_exists", "node_path": "World/CompletionLabel"},
+    {"assertion": "node_exists", "node_path": "World/CompletionTrigger"},
     {"assertion": "node_exists", "node_path": "World/CrouchGate"}
   ]
 }

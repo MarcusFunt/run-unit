@@ -7,6 +7,8 @@ var world_mode: String = "authored"
 var configuration_hash: String = ""
 var last_world_metrics: Dictionary = {}
 var traversal_trace: Dictionary = {}
+var best_distance: float = 0.0
+var last_run_outcome: String = "active"
 
 func begin_run(level_index: int, seed_value: int, mode: String, version: String, config_hash: String) -> void:
 	selected_level_index = level_index
@@ -16,9 +18,16 @@ func begin_run(level_index: int, seed_value: int, mode: String, version: String,
 	configuration_hash = config_hash
 	last_world_metrics = {}
 	traversal_trace = {}
+	last_run_outcome = "active"
 
 func set_world_metrics(metrics: Dictionary) -> void:
 	last_world_metrics = metrics.duplicate(true)
 
 func set_traversal_trace(trace: Dictionary) -> void:
 	traversal_trace = trace.duplicate(true)
+
+func record_best_distance(distance_value: float) -> void:
+	best_distance = maxf(best_distance, maxf(distance_value, 0.0))
+
+func set_run_outcome(outcome: String) -> void:
+	last_run_outcome = outcome

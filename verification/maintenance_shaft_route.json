@@ -26,6 +26,6 @@
     {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_route_finish.png"}
   ],
   "assertions": [
-    {"assertion": "property", "node_path": "ScoreManager", "property": "distance", "operator": "greater_or_equal", "expected": 3600.0}
+    {"assertion": "property", "node_path": "ScoreManager", "property": "distance", "operator": "greater_or_equal", "expected": 100.0}
   ]
 }

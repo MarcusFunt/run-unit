@@ -39,12 +39,14 @@ var last_landing_speed: float = 0.0
 var _is_crouching: bool = false
 var crouch_ratio: float = 0.0
 var _standing_collision_height: float = 0.0
+var _standing_collision_position: Vector2 = Vector2.ZERO
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
 	var rectangle: RectangleShape2D = _collision_shape.shape as RectangleShape2D
 	if rectangle != null:
 		_standing_collision_height = rectangle.size.y
+		_standing_collision_position = _collision_shape.position
 
 func set_action(action: RunUnitPlayerAction) -> void:
 	_action = action.duplicate_action()
@@ -100,10 +102,8 @@ func _physics_process(delta: float) -> void:
 		_released_charge_ratio = 0.0
 		_jump_press_buffer_remaining = 0.0
 
-	_is_crouching = _action.crouch_held and started_on_floor and not _action.jump_held
-	var target_crouch_ratio: float = 1.0 if _is_crouching else 0.0
-	crouch_ratio = move_toward(crouch_ratio, target_crouch_ratio, delta / crouch_transition_time)
-	_update_crouch_collision()
+	var wants_to_crouch: bool = _action.crouch_held and started_on_floor and not _action.jump_held
+	_update_crouch_state(wants_to_crouch, delta)
 
 	var speed_multiplier: float = crouch_speed_multiplier if _is_crouching else 1.0
 	var target_speed: float = _action.movement * max_run_speed * speed_multiplier
@@ -146,4 +146,41 @@ func _update_crouch_collision() -> void:
 		return
 	var height: float = lerpf(_standing_collision_height, crouch_collision_height, crouch_ratio)
 	rectangle.size = Vector2(rectangle.size.x, height)
-	_collision_shape.position.y = (_standing_collision_height - height) * 0.5
+	_collision_shape.position = _standing_collision_position + Vector2(0.0, (_standing_collision_height - height) * 0.5)
+
+func _update_crouch_state(wants_to_crouch: bool, delta: float) -> void:
+	var target_crouch_ratio: float = 1.0 if wants_to_crouch else 0.0
+	var next_crouch_ratio: float = move_toward(crouch_ratio, target_crouch_ratio, delta / crouch_transition_time)
+	if next_crouch_ratio < crouch_ratio and not _can_expand_to(next_crouch_ratio):
+		next_crouch_ratio = crouch_ratio
+	crouch_ratio = next_crouch_ratio
+	_is_crouching = crouch_ratio > 0.001
+	_update_crouch_collision()
+
+func _can_expand_to(target_crouch_ratio: float) -> bool:
+	if _collision_shape == null or _standing_collision_height <= 0.0:
+		return true
+	var rectangle: RectangleShape2D = _collision_shape.shape as RectangleShape2D
+	if rectangle == null:
+		return true
+	var current_height: float = rectangle.size.y
+	var target_height: float = lerpf(_standing_collision_height, crouch_collision_height, target_crouch_ratio)
+	if target_height <= current_height + 0.001:
+		return true
+
+	# Only query the strip that would be added above the current collider. This
+	# avoids treating the floor beneath the already-safe body as a ceiling.
+	var extension_height: float = target_height - current_height
+	var extension_shape: RectangleShape2D = RectangleShape2D.new()
+	extension_shape.size = Vector2(rectangle.size.x, extension_height)
+	var strip_center_y: float = _standing_collision_position.y + _standing_collision_height * 0.5 - (target_height + current_height) * 0.5
+	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = extension_shape
+	query.transform = global_transform * Transform2D(0.0, Vector2(0.0, strip_center_y))
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	query.margin = 0.0
+	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+	return space_state.intersect_shape(query, 1).is_empty()

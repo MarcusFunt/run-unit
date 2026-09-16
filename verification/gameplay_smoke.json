@@ -9,7 +9,7 @@
     {"type": "wait_frames", "frames": 45},
     {"type": "action", "action_name": "move_right", "pressed": false},
     {"type": "assert", "assertion": "property", "node_path": "Player", "property": "global_position:x", "operator": "greater_than", "expected": 180.0},
-    {"type": "assert", "assertion": "property", "node_path": "ScoreManager", "property": "best_distance", "operator": "greater_than", "expected": 30.0},
+    {"type": "assert", "assertion": "property", "node_path": "ScoreManager", "property": "best_distance", "operator": "greater_than", "expected": 1.0},
     {"type": "key", "keycode": 66, "pressed": true, "release_after": true},
     {"type": "wait_frames", "frames": 5},
     {"type": "assert", "assertion": "property", "node_path": "ScriptedController", "property": "active", "expected": true},

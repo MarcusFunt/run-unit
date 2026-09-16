@@ -3,6 +3,9 @@
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="Script" path="res://scripts/world/maintenance_shaft_art.gd" id="2_rwgxs"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_completion_trigger"]
+size = Vector2(64, 128)
+
 [node name="World" type="Node2D" unique_id=379300857]
 script = ExtResource("1_world")
 
@@ -280,6 +283,15 @@ polygon = PackedVector2Array(0, 0, 96, 0, 96, 5, 0, 5)
 
 [node name="Collision" type="CollisionPolygon2D" parent="CrouchGate" unique_id=729259772]
 polygon = PackedVector2Array(0, 0, 96, 0, 96, 32, 0, 32)
+
+[node name="CompletionTrigger" type="Area2D" parent="."]
+position = Vector2(4544, 352)
+collision_layer = 0
+collision_mask = 1
+monitoring = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionTrigger"]
+shape = SubResource("RectangleShape2D_completion_trigger")
 
 [node name="ShaftBackdropArt" type="Node2D" parent="." unique_id=1344403441]
 z_index = -8

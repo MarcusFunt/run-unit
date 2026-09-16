@@ -4,6 +4,7 @@ extends Node2D
 signal world_metrics_updated(metrics: Dictionary)
 @warning_ignore("unused_signal")
 signal obstacle_triggered(obstacle_type: String, platform_id: int)
+signal route_completed
 
 const TILE_SIZE: float = 32.0
 
@@ -13,20 +14,25 @@ var tile_size: float = TILE_SIZE
 var _platforms: Array[Dictionary] = []
 var _difficulty: float = 0.0
 var _metrics: Dictionary = {}
+var _completion_triggered: bool = false
+@onready var _completion_trigger: Area2D = get_node_or_null("CompletionTrigger") as Area2D
 
 func _ready() -> void:
 	_load_authored_platforms()
 	_update_metrics()
+	if _completion_trigger != null and not _completion_trigger.body_entered.is_connected(_on_completion_trigger_body_entered):
+		_completion_trigger.body_entered.connect(_on_completion_trigger_body_entered)
 
 func set_level_profile(_level_index: int) -> void:
 	pass
 
 func reset(_run_seed: int = 0, _mode: String = "campaign") -> void:
 	_difficulty = 0.0
+	_completion_triggered = false
 	_update_metrics()
 
 func set_progress(max_distance: float) -> void:
-	_difficulty = clampf(max_distance / 6000.0, 0.0, 1.0)
+	_difficulty = clampf(max_distance / get_route_length(), 0.0, 1.0)
 	_metrics["difficulty"] = _difficulty
 	world_metrics_updated.emit(_metrics.duplicate(true))
 
@@ -73,7 +79,10 @@ func get_route_length() -> float:
 	for platform: Dictionary in _platforms:
 		var platform_end: float = (float(platform.get("end_x", 0)) + 1.0) * tile_size
 		route_end = maxf(route_end, platform_end)
-	return route_end
+	return route_end / tile_size
+
+func is_completion_triggered() -> bool:
+	return _completion_triggered
 
 func _load_authored_platforms() -> void:
 	_platforms.clear()
@@ -110,3 +119,9 @@ func _update_metrics() -> void:
 		"difficulty": _difficulty
 	}
 	world_metrics_updated.emit(_metrics.duplicate(true))
+
+func _on_completion_trigger_body_entered(body: Node2D) -> void:
+	if _completion_triggered or not body is RunUnitPlayerMotor:
+		return
+	_completion_triggered = true
+	route_completed.emit()
