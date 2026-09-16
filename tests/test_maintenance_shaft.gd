@@ -9,8 +9,8 @@ const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 
 const DECK_Y: float = 416.0          # Platform03/04 surface the gate sits over
-const GATE_LEFT_X: float = 1888.0    # gate cells are tiles 59-61
-const GATE_RIGHT_X: float = 1984.0
+const GATE_LEFT_X: float = 1632.0    # gate cells are tiles 51-53
+const GATE_RIGHT_X: float = 1728.0
 
 
 func _standing_action(movement: float, crouch: bool) -> RunUnitPlayerAction:
@@ -42,16 +42,21 @@ func test_shipping_maintenance_shaft_has_the_expected_route() -> void:
 	assert_true(world.is_route_valid(), "The shipping level must produce a route from its Semantic layer")
 
 	var plan: Array[Dictionary] = world.get_current_plan()
-	assert_eq(plan.size(), 5, "Platform03 and Platform04 abut at the same height, so they read as one ledge")
+	assert_eq(plan.size(), 4, "The light calibration route should have four readable platform beats")
 
-	var first: Dictionary = plan[0]
-	assert_eq(int(first.get("start_x", -1)), 0, "The starting deck begins at tile 0")
-	assert_eq(int(first.get("end_x", -1)), 22, "The starting deck is 23 tiles wide")
-	assert_eq(int(first.get("height", -1)), 14, "The starting deck surface is at tile row 14 (y=448)")
+	var expected: Array[Array] = [
+		[0, 17, 14],
+		[21, 31, 14],
+		[34, 45, 12],
+		[46, 68, 13],
+	]
+	for index: int in range(expected.size()):
+		var platform: Dictionary = plan[index]
+		assert_eq(int(platform.get("start_x", -1)), int(expected[index][0]))
+		assert_eq(int(platform.get("end_x", -1)), int(expected[index][1]))
+		assert_eq(int(platform.get("height", -1)), int(expected[index][2]))
 
-	var last: Dictionary = plan[plan.size() - 1]
-	assert_eq(int(last.get("end_x", -1)), 143, "The final deck ends at tile 143 (x=4608)")
-	assert_eq(world.get_route_length(), 144.0, "Route length spans to the far edge of the final deck")
+	assert_eq(world.get_route_length(), 69.0, "The tutorial should stay deliberately short")
 
 
 func test_shipping_level_publishes_spawn_and_goal_markers() -> void:
@@ -60,7 +65,7 @@ func test_shipping_level_publishes_spawn_and_goal_markers() -> void:
 
 	assert_eq(world.get_spawn_position(), Vector2(128.0, 385.0), "Spawn comes from the level's Markers layer")
 	assert_true(world.has_goal(), "The shipping level declares a Goal marker")
-	assert_eq(world.get_goal_position(), Vector2(4544.0, 352.0))
+	assert_eq(world.get_goal_position(), Vector2(2080.0, 352.0))
 
 	var trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
 	assert_not_null(trigger, "A completion trigger should be built from the Goal marker")
@@ -94,3 +99,51 @@ func test_shipping_crouch_gate_blocks_a_standing_player() -> void:
 func test_shipping_crouch_gate_lets_a_crouched_player_through() -> void:
 	var reached_x: float = await _drive_through_gate(true)
 	assert_true(reached_x > GATE_RIGHT_X, "A crouched player must clear the gate, got x=%.1f" % reached_x)
+
+func test_short_tap_jump_stays_below_the_charged_jump_pad_height() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	player.global_position = Vector2(800.0, 416.0)
+	for frame: int in range(4):
+		await get_tree().physics_frame
+
+	var tap: RunUnitPlayerAction = RunUnitPlayerAction.new()
+	tap.jump_pressed = true
+	player.set_action(tap)
+	await get_tree().physics_frame
+	player.set_action(RunUnitPlayerAction.new())
+	var minimum_y: float = player.global_position.y
+	for frame: int in range(50):
+		await get_tree().physics_frame
+		minimum_y = minf(minimum_y, player.global_position.y)
+
+	assert_gt(minimum_y, 352.0, "A tap jump should not reach the upper pad's standing height")
+
+
+func test_charged_jump_reaches_the_charged_jump_pad_height() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	player.global_position = Vector2(800.0, 416.0)
+	for frame: int in range(4):
+		await get_tree().physics_frame
+
+	var charge: RunUnitPlayerAction = RunUnitPlayerAction.new()
+	charge.jump_held = true
+	for frame: int in range(18):
+		player.set_action(charge)
+		await get_tree().physics_frame
+	var release: RunUnitPlayerAction = RunUnitPlayerAction.new()
+	release.jump_released = true
+	player.set_action(release)
+	await get_tree().physics_frame
+	player.set_action(RunUnitPlayerAction.new())
+	var minimum_y: float = player.global_position.y
+	for frame: int in range(50):
+		await get_tree().physics_frame
+		minimum_y = minf(minimum_y, player.global_position.y)
+
+	assert_lt(minimum_y, 352.0, "Holding SPACE should provide enough spring height for the upper pad")

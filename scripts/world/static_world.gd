@@ -5,7 +5,7 @@ extends Node2D
 ## node (assets/tiled/levels/maintenance_shaft.tmj):
 ##   "Semantic"  - route floor; owns collision and is scanned for platforms
 ##   "Obstacles" - collidable obstacle geometry (the crouch gate); never a platform
-##   "ArtFill" / "ArtDeck" - decoration only, carry no collision at all
+##   "ArtBackground" / "ArtStructure" / "ArtDeck" - decoration only; no collision
 ##   "Markers"   - Spawn/Goal points, so start and finish travel with the level
 ## Collision is the tiles' own, so it stays independent of the artwork drawn
 ## over it (metadata/semantic_tile_contract.json).

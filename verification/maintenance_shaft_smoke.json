@@ -1,25 +1,102 @@
 {
   "scene_path": "res://scenes/game.tscn",
-  "viewport_size": {"width": 960, "height": 540},
+  "viewport_size": {
+    "width": 960,
+    "height": 540
+  },
   "settle_frames": 6,
   "steps": [
-    {"type": "wait_frames", "frames": 6},
-    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_start.png"},
-    {"type": "set_property", "node_path": "Player", "property": "global_position", "value": {"__type": "Vector2", "x": 1050.0, "y": 433.0}},
-    {"type": "wait_frames", "frames": 36},
-    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_charge.png"},
-    {"type": "set_property", "node_path": "Player", "property": "global_position", "value": {"__type": "Vector2", "x": 1750.0, "y": 401.0}},
-    {"type": "wait_frames", "frames": 36},
-    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_crouch.png"},
-    {"type": "set_property", "node_path": "Player", "property": "global_position", "value": {"__type": "Vector2", "x": 4310.0, "y": 401.0}},
-    {"type": "wait_frames", "frames": 36},
-    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_complete.png"}
+    {
+      "type": "wait_frames",
+      "frames": 6
+    },
+    {
+      "type": "screenshot",
+      "path": "res://artifacts/maintenance_shaft_start.png"
+    },
+    {
+      "type": "set_property",
+      "node_path": "Player",
+      "property": "global_position",
+      "value": {
+        "__type": "Vector2",
+        "x": 900.0,
+        "y": 416.0
+      }
+    },
+    {
+      "type": "wait_frames",
+      "frames": 12
+    },
+    {
+      "type": "screenshot",
+      "path": "res://artifacts/maintenance_shaft_charge.png"
+    },
+    {
+      "type": "set_property",
+      "node_path": "Player",
+      "property": "global_position",
+      "value": {
+        "__type": "Vector2",
+        "x": 1450.0,
+        "y": 384.0
+      }
+    },
+    {
+      "type": "wait_frames",
+      "frames": 12
+    },
+    {
+      "type": "screenshot",
+      "path": "res://artifacts/maintenance_shaft_crouch.png"
+    },
+    {
+      "type": "set_property",
+      "node_path": "Player",
+      "property": "global_position",
+      "value": {
+        "__type": "Vector2",
+        "x": 1880.0,
+        "y": 384.0
+      }
+    },
+    {
+      "type": "wait_frames",
+      "frames": 12
+    },
+    {
+      "type": "screenshot",
+      "path": "res://artifacts/maintenance_shaft_complete.png"
+    }
   ],
   "assertions": [
-    {"assertion": "node_exists", "node_path": "World/ShaftBackdropArt"},
-    {"assertion": "node_exists", "node_path": "World/ShaftRouteArt"},
-    {"assertion": "node_exists", "node_path": "World/CompletionLabel"},
-    {"assertion": "node_exists", "node_path": "World/CompletionTrigger"},
-    {"assertion": "node_exists", "node_path": "World/CrouchGate"}
+    {
+      "assertion": "node_exists",
+      "node_path": "World/ShaftGeometry"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/MovementPrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/JumpPrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/ChargePrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/TutorialSigns/CrouchPrompt"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/CompletionLabel"
+    },
+    {
+      "assertion": "node_exists",
+      "node_path": "World/CompletionTrigger"
+    }
   ]
 }

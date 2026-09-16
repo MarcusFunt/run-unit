@@ -1,31 +1,80 @@
 {
   "scene_path": "res://scenes/game.tscn",
-  "viewport_size": {"width": 960, "height": 540},
+  "viewport_size": {
+    "width": 960,
+    "height": 540
+  },
   "settle_frames": 4,
   "steps": [
-    {"type": "action", "action_name": "move_right", "pressed": true},
-    {"type": "wait_frames", "frames": 120},
-    {"type": "action", "action_name": "jump", "pressed": true, "frames": 8},
-    {"type": "action", "action_name": "jump", "pressed": false},
-    {"type": "wait_frames", "frames": 85},
-    {"type": "action", "action_name": "jump", "pressed": true, "frames": 36},
-    {"type": "action", "action_name": "jump", "pressed": false},
-    {"type": "wait_frames", "frames": 60},
-    {"type": "action", "action_name": "crouch", "pressed": true},
-    {"type": "wait_frames", "frames": 190},
-    {"type": "action", "action_name": "crouch", "pressed": false},
-    {"type": "wait_frames", "frames": 12},
-    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_route_clear.png"},
-    {"type": "wait_frames", "frames": 190},
-    {"type": "action", "action_name": "jump", "pressed": true, "frames": 10},
-    {"type": "action", "action_name": "jump", "pressed": false},
-    {"type": "wait_frames", "frames": 78},
-    {"type": "action", "action_name": "jump", "pressed": true, "frames": 16},
-    {"type": "action", "action_name": "jump", "pressed": false},
-    {"type": "wait_frames", "frames": 60},
-    {"type": "screenshot", "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/maintenance_shaft_route_finish.png"}
+    {
+      "type": "action",
+      "action_name": "move_right",
+      "pressed": true
+    },
+    {
+      "type": "wait_frames",
+      "frames": 94
+    },
+    {
+      "type": "action",
+      "action_name": "jump",
+      "pressed": true,
+      "frames": 1
+    },
+    {
+      "type": "action",
+      "action_name": "jump",
+      "pressed": false
+    },
+    {
+      "type": "wait_frames",
+      "frames": 60
+    },
+    {
+      "type": "action",
+      "action_name": "jump",
+      "pressed": true,
+      "frames": 18
+    },
+    {
+      "type": "action",
+      "action_name": "jump",
+      "pressed": false
+    },
+    {
+      "type": "wait_frames",
+      "frames": 105
+    },
+    {
+      "type": "action",
+      "action_name": "crouch",
+      "pressed": true
+    },
+    {
+      "type": "wait_frames",
+      "frames": 75
+    },
+    {
+      "type": "action",
+      "action_name": "crouch",
+      "pressed": false
+    },
+    {
+      "type": "wait_frames",
+      "frames": 180
+    },
+    {
+      "type": "screenshot",
+      "path": "res://artifacts/maintenance_shaft_route_finish.png"
+    }
   ],
   "assertions": [
-    {"assertion": "property", "node_path": "ScoreManager", "property": "distance", "operator": "greater_or_equal", "expected": 100.0}
+    {
+      "assertion": "property",
+      "node_path": "DeathMenu/Overlay/Center/DeathPanel/Content/TitleLabel",
+      "property": "text",
+      "operator": "equals",
+      "expected": "ROUTE COMPLETE"
+    }
   ]
 }

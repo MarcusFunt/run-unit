@@ -19,6 +19,6 @@
     {"type": "ui_report", "label": "game-hud", "node_path": "HUD", "path": "res://verification/game_hud_layout.json", "fail_on": ["overlap", "zero_size", "offscreen"]}
   ],
   "assertions": [
-    {"assertion": "node_exists", "node_path": "World/Platform01/Collision"}
+    {"assertion": "node_exists", "node_path": "World/ShaftGeometry"}
   ]
 }
