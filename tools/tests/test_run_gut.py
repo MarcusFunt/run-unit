@@ -8,7 +8,8 @@ from tools import run_gut
 
 class TiledCacheTests(unittest.TestCase):
     def test_resolve_godot_prefers_real_windows_install_over_path_wrapper(self) -> None:
-        local_exe = str(Path.home() / "Documents" / "GODOT" / "Godot_v4.7.1-stable_win64.exe")
+        fake_home = Path("/fake-home")
+        local_exe = str(fake_home / "Documents" / "GODOT" / "Godot_v4.7.1-stable_win64.exe")
 
         def fake_existing(value: str | None) -> str | None:
             if value == local_exe:
@@ -17,7 +18,7 @@ class TiledCacheTests(unittest.TestCase):
                 return "PATH_WRAPPER"
             return None
 
-        with patch.object(run_gut.os, "name", "nt"), patch.object(run_gut, "_existing_executable", side_effect=fake_existing):
+        with patch.object(run_gut.os, "name", "nt"), patch.object(run_gut.Path, "home", return_value=fake_home), patch.object(run_gut, "_existing_executable", side_effect=fake_existing):
             self.assertEqual(run_gut.resolve_godot(), "LOCAL_EXE")
 
     def test_discover_tiled_import_cache_only_returns_tmj_cache_files(self) -> None:
