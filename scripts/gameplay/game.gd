@@ -35,7 +35,7 @@ func _ready() -> void:
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
 	if not world.route_completed.is_connected(_on_route_completed):
 		world.route_completed.connect(_on_route_completed)
-	hud.set_level_length(world.get_route_length())
+	hud.set_level_length(world.get_traversal_length())
 	reset_run(0)
 	_run_started = true
 
@@ -51,7 +51,7 @@ func _physics_process(_delta: float) -> void:
 		return
 	var current_distance: float = score_manager.record_position(player.global_position.x)
 	RunUnitSession.record_best_distance(score_manager.best_distance)
-	var current_platform: Dictionary = world.get_platform_below(player.global_position.x)
+	var current_platform: Dictionary = world.get_platform_below_position(player.global_position)
 	_trace.record("sample", player.global_position, player.velocity, int(current_platform.get("platform_id", -1)))
 	world.set_progress(current_distance)
 	hud.set_scores(current_distance, score_manager.best_distance)
@@ -165,7 +165,7 @@ func _finish_run(result: int) -> void:
 func _update_debug(current_distance: float) -> void:
 	if not debug_overlay.visible:
 		return
-	var current: Dictionary = world.get_platform_below(player.global_position.x)
+	var current: Dictionary = world.get_platform_below_position(player.global_position)
 	var upcoming: Array[Dictionary] = world.get_upcoming_platforms(player.global_position.x, 2)
 	var current_id: Variant = current.get("platform_id", "-")
 	var next_id: Variant = "-"

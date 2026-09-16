@@ -1,0 +1,48 @@
+name: Godot CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-and-export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot 4.7.1
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.1
+          use-dotnet: false
+          include-templates: true
+
+      - name: Verify toolchain
+        run: |
+          godot --version
+          python3 --version
+
+      - name: Test Python tooling
+        run: python3 -m unittest discover -s tools/tests -v
+
+      - name: Import and run GUT
+        run: python3 tools/run_gut.py --godot godot
+
+      - name: Export Windows release
+        run: |
+          mkdir -p build
+          godot --headless --path . --export-release "Windows Desktop" build/RUN_UNIT.exe
+          test -s build/RUN_UNIT.exe
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: RUN_UNIT-windows
+          path: build/
+          if-no-files-found: error
+          retention-days: 14

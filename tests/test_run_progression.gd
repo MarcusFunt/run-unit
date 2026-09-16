@@ -7,13 +7,44 @@ const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
 
 
 func test_distance_is_measured_in_metres_from_the_start_pad() -> void:
-	var score_manager: RunUnitScoreManager = SCORE_MANAGER_SCRIPT.new() as RunUnitScoreManager
+	var score_manager: RunUnitScoreManager = autofree(SCORE_MANAGER_SCRIPT.new()) as RunUnitScoreManager
 	score_manager.call("reset", 128.0, 18.0)
 
 	var distance: float = score_manager.record_position(160.0)
 
 	assert_eq(distance, 1.0, "32 world pixels should equal one metre from the start pad")
 	assert_eq(score_manager.best_distance, 18.0, "A retry should retain the session's existing best distance")
+
+
+func test_authored_route_progress_uses_spawn_to_goal_distance() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var traversal_metres: float = absf(world.get_goal_position().x - world.get_spawn_position().x) / world.get_tile_size()
+
+	assert_eq(traversal_metres, 138.0, "The authored route travels 138 m from Spawn to Goal")
+	world.set_progress(traversal_metres)
+	assert_eq(world.get_difficulty(), 1.0, "Reaching the Goal should produce 100% route progress")
+
+
+func test_game_hud_length_matches_spawn_to_goal_traversal() -> void:
+	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
+	var pause_menu_controller: Node = game.get_node_or_null("PauseMenuController")
+	if pause_menu_controller != null:
+		pause_menu_controller.free()
+	add_child_autofree(game)
+	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()
+
+	assert_eq(game.hud.score_progress_bar.max_value, expected_metres, "HUD progress should reach its maximum at the authored Goal")
+
+
+func test_completion_trigger_tracks_goal_when_world_is_transformed() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	world.position = Vector2(320.0, 96.0)
+	add_child_autofree(world)
+	var completion_trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
+
+	assert_not_null(completion_trigger)
+	assert_eq(completion_trigger.global_position, world.get_goal_position(), "Completion trigger should use the Goal's world-space position")
 
 
 func test_session_keeps_the_best_distance_between_retries() -> void:
@@ -33,7 +64,7 @@ func test_maintenance_shaft_exposes_a_completion_trigger_and_signal() -> void:
 	assert_true(world.has_signal(&"route_completed"))
 	var completion_trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
 	assert_not_null(completion_trigger)
-	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	var player: RunUnitPlayerMotor = autofree(PLAYER_SCENE.instantiate()) as RunUnitPlayerMotor
 	var completion_events: Array[int] = [0]
 	world.route_completed.connect(func() -> void: completion_events[0] += 1)
 

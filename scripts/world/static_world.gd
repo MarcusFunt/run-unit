@@ -58,7 +58,8 @@ func reset(_run_seed: int = 0, _mode: String = "campaign") -> void:
 	_update_metrics()
 
 func set_progress(max_distance: float) -> void:
-	_difficulty = clampf(max_distance / get_route_length(), 0.0, 1.0)
+	var traversal_length: float = maxf(get_traversal_length(), 1.0)
+	_difficulty = clampf(max_distance / traversal_length, 0.0, 1.0)
 	_metrics["difficulty"] = _difficulty
 	world_metrics_updated.emit(_metrics.duplicate(true))
 
@@ -68,6 +69,22 @@ func get_platform_below(world_x: float) -> Dictionary:
 		if tile_x >= int(platform.get("start_x", 0)) and tile_x <= int(platform.get("end_x", 0)):
 			return platform.duplicate()
 	return {}
+
+func get_platform_below_position(world_position: Vector2) -> Dictionary:
+	var local_position: Vector2 = to_local(world_position)
+	var tile_x: int = floori(local_position.x / tile_size)
+	var nearest: Dictionary = {}
+	var nearest_vertical_distance: float = INF
+	for platform: Dictionary in _platforms:
+		if tile_x < int(platform.get("start_x", 0)) or tile_x > int(platform.get("end_x", 0)):
+			continue
+		var surface_y: float = float(platform.get("height", 0)) * tile_size
+		var vertical_distance: float = surface_y - local_position.y
+		if vertical_distance < -0.001 or vertical_distance >= nearest_vertical_distance:
+			continue
+		nearest = platform
+		nearest_vertical_distance = vertical_distance
+	return nearest.duplicate()
 
 func get_upcoming_platforms(world_x: float, count: int = 3) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
@@ -107,6 +124,13 @@ func get_route_length() -> float:
 		route_end = maxf(route_end, platform_end)
 	return route_end / tile_size
 
+func get_traversal_length() -> float:
+	# ScoreManager measures forward X travel from Spawn, so progress must use
+	# the same authored interval rather than the map's world-space extent.
+	if has_goal():
+		return absf(get_goal_position().x - get_spawn_position().x) / tile_size
+	return maxf(get_route_length() - get_spawn_position().x / tile_size, 0.0)
+
 func is_completion_triggered() -> bool:
 	return _completion_triggered
 
@@ -134,7 +158,7 @@ func _ensure_completion_trigger() -> void:
 	if _completion_trigger == null and has_goal():
 		var trigger: Area2D = Area2D.new()
 		trigger.name = "CompletionTrigger"
-		trigger.position = get_goal_position()
+		trigger.position = to_local(get_goal_position())
 		trigger.collision_layer = 0
 		trigger.collision_mask = 1
 		var shape: CollisionShape2D = CollisionShape2D.new()

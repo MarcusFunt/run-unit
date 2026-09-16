@@ -21,9 +21,12 @@ func test_level_selector_marks_only_the_authored_route_playable() -> void:
 		assert_true(sector_buttons[index].disabled, "Future route %d should be clearly unavailable" % (index + 1))
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
+	assert_true(selector.selected_sector.text.contains("FINAL INSPECTION"), "The playable route should use the current factory narrative")
+	assert_true(selector.description.text.contains("stalled transfer line"), "Route briefing should explain the broken factory transfer")
+	assert_false(selector.description.text.contains("Solar Ignition Core"), "Retired Last Light Protocol copy must not return")
 
 func test_player_options_list_only_live_gameplay_actions() -> void:
-	var options: TabContainer = OPTIONS_SCENE.instantiate() as TabContainer
+	var options: TabContainer = autofree(OPTIONS_SCENE.instantiate()) as TabContainer
 	assert_not_null(options, "The options menu should instantiate")
 	var input_list: Control = options.get_node_or_null("Controls/VBoxContainer/InputMappingContainer/InputActionsList") as Control
 	assert_not_null(input_list, "The player control list should be present")
@@ -32,6 +35,6 @@ func test_player_options_list_only_live_gameplay_actions() -> void:
 	assert_eq(action_names, [&"move_left", &"move_right", &"jump", &"crouch", &"restart"])
 
 func test_game_scene_has_one_pre_run_flow() -> void:
-	var game: Node = GAME_SCENE.instantiate() as Node
+	var game: Node = autofree(GAME_SCENE.instantiate()) as Node
 	assert_not_null(game, "The game scene should instantiate")
 	assert_null(game.get_node_or_null("TitleScreen"), "The retired duplicate route briefing must not be loaded into gameplay")
