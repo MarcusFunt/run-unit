@@ -1,0 +1,182 @@
+[
+  {
+    "frame_size": [
+      24,
+      24
+    ],
+    "frames": 8,
+    "key": "card",
+    "size": [
+      192,
+      24
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Card.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/card.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 8,
+    "key": "chest",
+    "size": [
+      256,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Chest.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/chest.tres"
+  },
+  {
+    "frame_size": [
+      64,
+      64
+    ],
+    "frames": 4,
+    "key": "entry",
+    "size": [
+      256,
+      64
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Entry.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/entry.tres"
+  },
+  {
+    "frame_size": [
+      64,
+      64
+    ],
+    "frames": 4,
+    "key": "hammer",
+    "size": [
+      256,
+      64
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Hammer.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/hammer.tres"
+  },
+  {
+    "frame_size": [
+      24,
+      24
+    ],
+    "frames": 6,
+    "key": "money",
+    "size": [
+      144,
+      24
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Money.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/money.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 8,
+    "key": "platform",
+    "size": [
+      256,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Platform.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/platform.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 4,
+    "key": "screen1",
+    "size": [
+      128,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Screen1.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/screen1.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      42
+    ],
+    "frames": 4,
+    "key": "screen2",
+    "size": [
+      128,
+      42
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Screen2.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/screen2.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 12,
+    "key": "transporter",
+    "size": [
+      384,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Transporter.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/transporter.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 4,
+    "key": "transporter1",
+    "size": [
+      128,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Transporter1.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/transporter1.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 4,
+    "key": "transporter2",
+    "size": [
+      128,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Transporter2.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/transporter2.tres"
+  },
+  {
+    "frame_size": [
+      32,
+      32
+    ],
+    "frames": 4,
+    "key": "transporter3",
+    "size": [
+      128,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "4 Animated objects/Transporter3.png",
+    "spriteframes": "assets/generated/godot/spriteframes/industrial/transporter3.tres"
+  }
+]

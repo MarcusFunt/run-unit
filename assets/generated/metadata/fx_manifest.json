@@ -1,0 +1,2526 @@
+{
+  "count": 180,
+  "curation_status": "uncurated -- all 180 sheets are listed with generator-assigned keys (e.g. 'part_7_336'); a follow-up visual pass should promote ~20-30 of these into named SEMANTIC_ASSET_LIBRARY entries (spark_small, electrical_arc, ...) the way floor_solid or pipe_v_mid were promoted from Smafu/Industrial Zone.",
+  "effects": [
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_10_464",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_464.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/464.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_464.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_465",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_465.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/465.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_465.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_10_466",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_466.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/466.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_466.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_10_467",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_467.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/467.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_467.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_10_474",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_474.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/474.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_474.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_475",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_475.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/475.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_475.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_476",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_476.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/476.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_476.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_477",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_477.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/477.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_477.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_484",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_484.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/484.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_484.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_485",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_485.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/485.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_485.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_10_486",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_486.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/486.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_486.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_10_487",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_10/fx_487.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 10/487.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_10/fx_487.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_11_506",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_506.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/506.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_506.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_11_507",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_507.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/507.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_507.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_11_508",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_508.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/508.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_508.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_11_509",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_509.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/509.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_509.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_11_516",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_516.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/516.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_516.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_11_517",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_517.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/517.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_517.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_11_518",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_518.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/518.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_518.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_11_519",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_519.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/519.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_519.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_11_526",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_526.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/526.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_526.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_11_527",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_527.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/527.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_527.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_11_528",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_528.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/528.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_528.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_11_529",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_11/fx_529.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 11/529.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_11/fx_529.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_12_566",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_566.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/566.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_566.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_12_567",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_567.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/567.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_567.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_568",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_568.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/568.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_568.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_12_569",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_569.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/569.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_569.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_576",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_576.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/576.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_576.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_577",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_577.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/577.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_577.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_12_578",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_578.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/578.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_578.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_579",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_579.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/579.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_579.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_586",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_586.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/586.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_586.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_12_587",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_587.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/587.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_587.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_588",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_588.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/588.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_588.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_12_589",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_12/fx_589.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 12/589.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_12/fx_589.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_13_612",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_612.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/612.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_612.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_13_613",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_613.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/613.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_613.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_13_614",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_614.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/614.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_614.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_13_615",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_615.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/615.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_615.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_13_622",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_622.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/622.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_622.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_13_623",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_623.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/623.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_623.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_13_624",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_624.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/624.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_624.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_13_625",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_625.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/625.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_625.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_13_632",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_632.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/632.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_632.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_13_633",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_633.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/633.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_633.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_13_634",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_634.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/634.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_634.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_13_635",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_13/fx_635.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 13/635.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_13/fx_635.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 16,
+      "key": "part_14_652",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_652.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/652.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_652.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 17,
+      "key": "part_14_653",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_653.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/653.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_653.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 17,
+      "key": "part_14_654",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_654.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/654.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_654.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_14_655",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_655.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/655.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_655.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_14_662",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_662.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/662.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_662.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 16,
+      "key": "part_14_663",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_663.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/663.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_663.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 16,
+      "key": "part_14_664",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_664.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/664.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_664.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 16,
+      "key": "part_14_665",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_665.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/665.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_665.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_14_672",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_672.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/672.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_672.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 18,
+      "key": "part_14_673",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_673.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/673.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_673.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 18,
+      "key": "part_14_674",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_674.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/674.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_674.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 19,
+      "key": "part_14_675",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_14/fx_675.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 14/675.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_14/fx_675.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 22,
+      "key": "part_15_700",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_700.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/700.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_700.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 19,
+      "key": "part_15_701",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_701.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/701.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_701.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 17,
+      "key": "part_15_702",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_702.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/702.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_702.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 22,
+      "key": "part_15_703",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_703.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/703.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_703.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 18,
+      "key": "part_15_710",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_710.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/710.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_710.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 20,
+      "key": "part_15_711",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_711.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/711.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_711.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 21,
+      "key": "part_15_712",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_712.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/712.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_712.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 23,
+      "key": "part_15_713",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_713.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/713.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_713.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 20,
+      "key": "part_15_720",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_720.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/720.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_720.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 22,
+      "key": "part_15_721",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_721.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/721.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_721.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 23,
+      "key": "part_15_722",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_722.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/722.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_722.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 23,
+      "key": "part_15_723",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_15/fx_723.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 15/723.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_15/fx_723.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_1_03",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_03.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/03.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_03.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_04",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_04.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/04.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_04.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_05",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_05.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/05.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_05.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 15,
+      "key": "part_1_06",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_06.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/06.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_06.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 13,
+      "key": "part_1_13",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_13.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/13.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_13.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_14",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_14.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/14.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_14.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_15",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_15.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/15.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_15.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_16",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_16.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/16.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_16.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_23",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_23.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/23.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_23.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_24",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_24.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/24.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_24.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_25",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_25.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/25.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_25.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_1_26",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_1/fx_26.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 1/26.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_1/fx_26.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_2_62",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_62.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/62.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_62.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 7,
+      "key": "part_2_63",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_63.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/63.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_63.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_2_64",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_64.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/64.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_64.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_2_65",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_65.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/65.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_65.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_2_69",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_69.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/69.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_69.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_2_70",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_70.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/70.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_70.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_2_71",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_71.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/71.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_71.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_2_72",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_72.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/72.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_72.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_2_76",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_76.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/76.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_76.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_2_77",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_77.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/77.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_77.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_2_78",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_78.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/78.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_78.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_2_79",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_2/fx_79.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 2/79.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_2/fx_79.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_113",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_113.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/113.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_113.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_114",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_114.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/114.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_114.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_115",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_115.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/115.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_115.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_116",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_116.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/116.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_116.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_123",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_123.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/123.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_123.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_124",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_124.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/124.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_124.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_125",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_125.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/125.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_125.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_126",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_126.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/126.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_126.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_133",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_133.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/133.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_133.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_134",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_134.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/134.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_134.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_135",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_135.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/135.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_135.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_3_136",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_3/fx_136.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 3/136.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_3/fx_136.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_4_174",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_174.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/174.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_174.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_4_175",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_175.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/175.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_175.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_4_176",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_176.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/176.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_176.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_4_177",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_177.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/177.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_177.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 11,
+      "key": "part_4_184",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_184.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/184.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_184.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_4_185",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_185.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/185.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_185.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_4_186",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_186.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/186.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_186.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_4_187",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_187.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/187.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_187.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 12,
+      "key": "part_4_194",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_194.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/194.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_194.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_4_195",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_195.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/195.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_195.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_4_196",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_196.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/196.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_196.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 14,
+      "key": "part_4_197",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_4/fx_197.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 4/197.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_4/fx_197.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_5_220",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_220.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/220.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_220.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_5_221",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_221.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/221.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_221.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_5_222",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_222.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/222.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_222.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 5,
+      "key": "part_5_223",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_223.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/223.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_223.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 5,
+      "key": "part_5_230",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_230.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/230.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_230.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_5_231",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_231.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/231.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_231.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_5_232",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_232.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/232.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_232.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_5_233",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_233.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/233.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_233.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_5_240",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_240.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/240.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_240.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_5_241",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_241.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/241.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_241.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_5_242",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_242.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/242.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_242.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_5_243",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_5/fx_243.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 5/243.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_5/fx_243.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_6_273",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_273.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/273.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_273.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_6_274",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_274.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/274.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_274.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_6_275",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_275.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/275.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_275.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_6_276",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_276.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/276.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_276.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_6_283",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_283.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/283.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_283.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_6_284",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_284.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/284.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_284.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_6_285",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_285.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/285.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_285.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_6_286",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_286.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/286.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_286.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_6_293",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_293.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/293.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_293.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_6_294",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_294.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/294.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_294.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_6_295",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_295.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/295.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_295.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_6_296",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_6/fx_296.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 6/296.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_6/fx_296.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_7_313",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_313.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/313.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_313.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_7_314",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_314.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/314.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_314.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 7,
+      "key": "part_7_315",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_315.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/315.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_315.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_7_316",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_316.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/316.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_316.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 6,
+      "key": "part_7_323",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_323.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/323.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_323.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_7_324",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_324.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/324.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_324.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_7_325",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_325.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/325.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_325.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_7_326",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_326.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/326.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_326.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_7_333",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_333.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/333.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_333.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_7_334",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_334.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/334.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_334.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_7_335",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_335.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/335.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_335.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_7_336",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_7/fx_336.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 7/336.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_7/fx_336.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_375",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_375.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/375.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_375.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_376",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_376.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/376.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_376.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_377",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_377.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/377.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_377.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_378",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_378.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/378.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_378.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_385",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_385.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/385.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_385.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_8_386",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_386.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/386.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_386.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_387",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_387.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/387.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_387.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_8_388",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_388.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/388.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_388.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_8_395",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_395.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/395.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_395.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_8_396",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_396.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/396.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_396.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_8_397",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_397.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/397.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_397.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_8_398",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_8/fx_398.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 8/398.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_8/fx_398.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_426",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_426.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/426.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_426.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 8,
+      "key": "part_9_427",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_427.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/427.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_427.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_428",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_428.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/428.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_428.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_429",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_429.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/429.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_429.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_9_436",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_436.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/436.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_436.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_437",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_437.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/437.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_437.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_438",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_438.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/438.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_438.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_439",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_439.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/439.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_439.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_446",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_446.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/446.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_446.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_9_447",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_447.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/447.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_447.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 10,
+      "key": "part_9_448",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_448.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/448.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_448.tres"
+    },
+    {
+      "fps": 16,
+      "frame_size": [
+        64,
+        64
+      ],
+      "frames": 9,
+      "key": "part_9_449",
+      "palette_rows": 9,
+      "sheet_output_path": "assets/generated/fx/sheets/part_9/fx_449.png",
+      "source_pack": "fx_pack",
+      "source_path": "Free/Part 9/449.png",
+      "spriteframes_output_path": "assets/generated/godot/spriteframes/fx/part_9/fx_449.tres"
+    }
+  ]
+}

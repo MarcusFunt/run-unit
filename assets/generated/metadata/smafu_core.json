@@ -1,0 +1,2216 @@
+{
+  "atlas_output_path": "assets/generated/converted/smafu_core_cyan.png",
+  "columns": 18,
+  "source_pack": "smafu",
+  "source_path": "tileset.png",
+  "tile_size": [
+    16,
+    16
+  ],
+  "tiles": [
+    {
+      "atlas_cell": [
+        0,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 0,
+      "key": "smafu_000",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_solid"
+      ]
+    },
+    {
+      "atlas_cell": [
+        1,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 1,
+      "key": "smafu_001",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 2,
+      "key": "smafu_002",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 3,
+      "key": "smafu_003",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 4,
+      "key": "smafu_004",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 5,
+      "key": "smafu_005",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 6,
+      "key": "smafu_006",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 7,
+      "key": "smafu_007",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 8,
+      "key": "smafu_008",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 9,
+      "key": "smafu_009",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 10,
+      "key": "smafu_010",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 11,
+      "key": "smafu_011",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 12,
+      "key": "smafu_012",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 13,
+      "key": "smafu_013",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 14,
+      "key": "smafu_014",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        15,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 15,
+      "key": "smafu_015",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        16,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 16,
+      "key": "smafu_016",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        0
+      ],
+      "collision": "level_semantic_layer",
+      "id": 17,
+      "key": "smafu_017",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 18,
+      "key": "smafu_018",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 19,
+      "key": "smafu_019",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 20,
+      "key": "smafu_020",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 21,
+      "key": "smafu_021",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_hatch_grate"
+      ]
+    },
+    {
+      "atlas_cell": [
+        4,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 22,
+      "key": "smafu_022",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_hatch_grate"
+      ]
+    },
+    {
+      "atlas_cell": [
+        5,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 23,
+      "key": "smafu_023",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_wedge_nw"
+      ]
+    },
+    {
+      "atlas_cell": [
+        6,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 24,
+      "key": "smafu_024",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_wedge_ne"
+      ]
+    },
+    {
+      "atlas_cell": [
+        7,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 25,
+      "key": "smafu_025",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 26,
+      "key": "smafu_026",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 27,
+      "key": "smafu_027",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 28,
+      "key": "smafu_028",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 29,
+      "key": "smafu_029",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 30,
+      "key": "smafu_030",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 31,
+      "key": "smafu_031",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 32,
+      "key": "smafu_032",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        15,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 33,
+      "key": "smafu_033",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        16,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 34,
+      "key": "smafu_034",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        1
+      ],
+      "collision": "level_semantic_layer",
+      "id": 35,
+      "key": "smafu_035",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 36,
+      "key": "smafu_036",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 37,
+      "key": "smafu_037",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 38,
+      "key": "smafu_038",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 39,
+      "key": "smafu_039",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_hatch_grate"
+      ]
+    },
+    {
+      "atlas_cell": [
+        4,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 40,
+      "key": "smafu_040",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_hatch_grate"
+      ]
+    },
+    {
+      "atlas_cell": [
+        5,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 41,
+      "key": "smafu_041",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_wedge_sw"
+      ]
+    },
+    {
+      "atlas_cell": [
+        6,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 42,
+      "key": "smafu_042",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "floor_wedge_se"
+      ]
+    },
+    {
+      "atlas_cell": [
+        7,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 43,
+      "key": "smafu_043",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 44,
+      "key": "smafu_044",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_stripe_marker"
+      ]
+    },
+    {
+      "atlas_cell": [
+        9,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 45,
+      "key": "smafu_045",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 46,
+      "key": "smafu_046",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 47,
+      "key": "smafu_047",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 48,
+      "key": "smafu_048",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 49,
+      "key": "smafu_049",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 50,
+      "key": "smafu_050",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        15,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 51,
+      "key": "smafu_051",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        16,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 52,
+      "key": "smafu_052",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        2
+      ],
+      "collision": "level_semantic_layer",
+      "id": 53,
+      "key": "smafu_053",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 54,
+      "key": "smafu_054",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 55,
+      "key": "smafu_055",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 56,
+      "key": "smafu_056",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 57,
+      "key": "smafu_057",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 58,
+      "key": "smafu_058",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 59,
+      "key": "smafu_059",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 60,
+      "key": "smafu_060",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 61,
+      "key": "smafu_061",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 62,
+      "key": "smafu_062",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 63,
+      "key": "smafu_063",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 64,
+      "key": "smafu_064",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 65,
+      "key": "smafu_065",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 66,
+      "key": "smafu_066",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_spike_row"
+      ]
+    },
+    {
+      "atlas_cell": [
+        13,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 67,
+      "key": "smafu_067",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 68,
+      "key": "smafu_068",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        15,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 69,
+      "key": "smafu_069",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        16,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 70,
+      "key": "smafu_070",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        3
+      ],
+      "collision": "level_semantic_layer",
+      "id": 71,
+      "key": "smafu_071",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 72,
+      "key": "smafu_072",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 73,
+      "key": "smafu_073",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 74,
+      "key": "smafu_074",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 75,
+      "key": "smafu_075",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 76,
+      "key": "smafu_076",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 77,
+      "key": "smafu_077",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 78,
+      "key": "smafu_078",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 79,
+      "key": "smafu_079",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 80,
+      "key": "smafu_080",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 81,
+      "key": "smafu_081",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 82,
+      "key": "smafu_082",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 83,
+      "key": "smafu_083",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 84,
+      "key": "smafu_084",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 85,
+      "key": "smafu_085",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 86,
+      "key": "smafu_086",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        15,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 87,
+      "key": "smafu_087",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        16,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 88,
+      "key": "smafu_088",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        4
+      ],
+      "collision": "level_semantic_layer",
+      "id": 89,
+      "key": "smafu_089",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 90,
+      "key": "smafu_090",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 91,
+      "key": "smafu_091",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 92,
+      "key": "smafu_092",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 93,
+      "key": "smafu_093",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 94,
+      "key": "smafu_094",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 95,
+      "key": "smafu_095",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 96,
+      "key": "smafu_096",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 97,
+      "key": "smafu_097",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 98,
+      "key": "smafu_098",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 99,
+      "key": "smafu_099",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 100,
+      "key": "smafu_100",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 101,
+      "key": "smafu_101",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 102,
+      "key": "smafu_102",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 103,
+      "key": "smafu_103",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_thin"
+      ]
+    },
+    {
+      "atlas_cell": [
+        14,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 104,
+      "key": "smafu_104",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_double"
+      ]
+    },
+    {
+      "atlas_cell": [
+        15,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 105,
+      "key": "smafu_105",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_wide"
+      ]
+    },
+    {
+      "atlas_cell": [
+        16,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 106,
+      "key": "smafu_106",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        5
+      ],
+      "collision": "level_semantic_layer",
+      "id": 107,
+      "key": "smafu_107",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 108,
+      "key": "smafu_108",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 109,
+      "key": "smafu_109",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 110,
+      "key": "smafu_110",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 111,
+      "key": "smafu_111",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 112,
+      "key": "smafu_112",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 113,
+      "key": "smafu_113",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 114,
+      "key": "smafu_114",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 115,
+      "key": "smafu_115",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 116,
+      "key": "smafu_116",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 117,
+      "key": "smafu_117",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 118,
+      "key": "smafu_118",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 119,
+      "key": "smafu_119",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 120,
+      "key": "smafu_120",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 121,
+      "key": "smafu_121",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_thin"
+      ]
+    },
+    {
+      "atlas_cell": [
+        14,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 122,
+      "key": "smafu_122",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_double"
+      ]
+    },
+    {
+      "atlas_cell": [
+        15,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 123,
+      "key": "smafu_123",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_wide"
+      ]
+    },
+    {
+      "atlas_cell": [
+        16,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 124,
+      "key": "smafu_124",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        6
+      ],
+      "collision": "level_semantic_layer",
+      "id": 125,
+      "key": "smafu_125",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 126,
+      "key": "smafu_126",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 127,
+      "key": "smafu_127",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 128,
+      "key": "smafu_128",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 129,
+      "key": "smafu_129",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 130,
+      "key": "smafu_130",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 131,
+      "key": "smafu_131",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 132,
+      "key": "smafu_132",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 133,
+      "key": "smafu_133",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 134,
+      "key": "smafu_134",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 135,
+      "key": "smafu_135",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 136,
+      "key": "smafu_136",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 137,
+      "key": "smafu_137",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 138,
+      "key": "smafu_138",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 139,
+      "key": "smafu_139",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_thin"
+      ]
+    },
+    {
+      "atlas_cell": [
+        14,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 140,
+      "key": "smafu_140",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_double"
+      ]
+    },
+    {
+      "atlas_cell": [
+        15,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 141,
+      "key": "smafu_141",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_wide"
+      ]
+    },
+    {
+      "atlas_cell": [
+        16,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 142,
+      "key": "smafu_142",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        7
+      ],
+      "collision": "level_semantic_layer",
+      "id": 143,
+      "key": "smafu_143",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 144,
+      "key": "smafu_144",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 145,
+      "key": "smafu_145",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 146,
+      "key": "smafu_146",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 147,
+      "key": "smafu_147",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 148,
+      "key": "smafu_148",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 149,
+      "key": "smafu_149",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 150,
+      "key": "smafu_150",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 151,
+      "key": "smafu_151",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 152,
+      "key": "smafu_152",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 153,
+      "key": "smafu_153",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 154,
+      "key": "smafu_154",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 155,
+      "key": "smafu_155",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 156,
+      "key": "smafu_156",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 157,
+      "key": "smafu_157",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 158,
+      "key": "smafu_158",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_double"
+      ]
+    },
+    {
+      "atlas_cell": [
+        15,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 159,
+      "key": "smafu_159",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": [
+        "hazard_laser_gate_wide"
+      ]
+    },
+    {
+      "atlas_cell": [
+        16,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 160,
+      "key": "smafu_160",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        8
+      ],
+      "collision": "level_semantic_layer",
+      "id": 161,
+      "key": "smafu_161",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        0,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 162,
+      "key": "smafu_162",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        1,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 163,
+      "key": "smafu_163",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        2,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 164,
+      "key": "smafu_164",
+      "nonempty": true,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        3,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 165,
+      "key": "smafu_165",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        4,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 166,
+      "key": "smafu_166",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        5,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 167,
+      "key": "smafu_167",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        6,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 168,
+      "key": "smafu_168",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        7,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 169,
+      "key": "smafu_169",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        8,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 170,
+      "key": "smafu_170",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        9,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 171,
+      "key": "smafu_171",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        10,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 172,
+      "key": "smafu_172",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        11,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 173,
+      "key": "smafu_173",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        12,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 174,
+      "key": "smafu_174",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        13,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 175,
+      "key": "smafu_175",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        14,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 176,
+      "key": "smafu_176",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        15,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 177,
+      "key": "smafu_177",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        16,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 178,
+      "key": "smafu_178",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    },
+    {
+      "atlas_cell": [
+        17,
+        9
+      ],
+      "collision": "level_semantic_layer",
+      "id": 179,
+      "key": "smafu_179",
+      "nonempty": false,
+      "role": "decoration",
+      "semantic_keys": []
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "cell_values": {
+    "0": "empty",
+    "1": "solid",
+    "2": "one_way",
+    "3": "hazard",
+    "4": "conveyor",
+    "5": "foreground"
+  },
+  "purpose": "Gameplay is independent from art tile IDs.",
+  "rule": "Only the level semantic layer may create collision. Generated art tiles are decor/background by default."
+}

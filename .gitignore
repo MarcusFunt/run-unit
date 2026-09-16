@@ -6,6 +6,9 @@
 # Temporary add-on/template install workspaces.
 /.addon-install-staging/
 /.menus-template-staging/
+/tools/.run_unit_asset_extract/
+/tools/source_assets/
+/tools/run_unit_generated_assets/
 
 # Local exports and build output.
 /export/

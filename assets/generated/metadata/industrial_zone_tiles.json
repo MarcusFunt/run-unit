@@ -1,0 +1,1582 @@
+{
+  "atlas_output_path": "assets/generated/atlases/industrial_zone_cyan_32.png",
+  "tile_size": [
+    32,
+    32
+  ],
+  "tiles": [
+    {
+      "atlas_cell": [
+        0,
+        0
+      ],
+      "atlas_rect": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 0,
+      "key": "industrialtile_01",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_accent"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_01.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        0
+      ],
+      "atlas_rect": [
+        32,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 1,
+      "key": "industrialtile_02",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_02.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        0
+      ],
+      "atlas_rect": [
+        64,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 2,
+      "key": "industrialtile_03",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_flat"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_03.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        0
+      ],
+      "atlas_rect": [
+        96,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 3,
+      "key": "industrialtile_04",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_04.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        0
+      ],
+      "atlas_rect": [
+        128,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 4,
+      "key": "industrialtile_05",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_05.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        0
+      ],
+      "atlas_rect": [
+        160,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 5,
+      "key": "industrialtile_06",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_06.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        0
+      ],
+      "atlas_rect": [
+        192,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 6,
+      "key": "industrialtile_07",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_07.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        0
+      ],
+      "atlas_rect": [
+        224,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 7,
+      "key": "industrialtile_08",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_08.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        0
+      ],
+      "atlas_rect": [
+        256,
+        0,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 8,
+      "key": "industrialtile_09",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_09.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        1
+      ],
+      "atlas_rect": [
+        0,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 9,
+      "key": "industrialtile_10",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_10.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        1
+      ],
+      "atlas_rect": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 10,
+      "key": "industrialtile_11",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_11.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        1
+      ],
+      "atlas_rect": [
+        64,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 11,
+      "key": "industrialtile_12",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_12.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        1
+      ],
+      "atlas_rect": [
+        96,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 12,
+      "key": "industrialtile_13",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_13.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        1
+      ],
+      "atlas_rect": [
+        128,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 13,
+      "key": "industrialtile_14",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_14.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        1
+      ],
+      "atlas_rect": [
+        160,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 14,
+      "key": "industrialtile_15",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_15.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        1
+      ],
+      "atlas_rect": [
+        192,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 15,
+      "key": "industrialtile_16",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_16.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        1
+      ],
+      "atlas_rect": [
+        224,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 16,
+      "key": "industrialtile_17",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_17.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        1
+      ],
+      "atlas_rect": [
+        256,
+        32,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 17,
+      "key": "industrialtile_18",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_18.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        2
+      ],
+      "atlas_rect": [
+        0,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 18,
+      "key": "industrialtile_19",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_19.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        2
+      ],
+      "atlas_rect": [
+        32,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 19,
+      "key": "industrialtile_20",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_20.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        2
+      ],
+      "atlas_rect": [
+        64,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 20,
+      "key": "industrialtile_21",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_21.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        2
+      ],
+      "atlas_rect": [
+        96,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 21,
+      "key": "industrialtile_22",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_22.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        2
+      ],
+      "atlas_rect": [
+        128,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 22,
+      "key": "industrialtile_23",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_23.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        2
+      ],
+      "atlas_rect": [
+        160,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 23,
+      "key": "industrialtile_24",
+      "role": "decoration",
+      "semantic_keys": [
+        "wall_panel_riveted_large"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_24.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        2
+      ],
+      "atlas_rect": [
+        192,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 24,
+      "key": "industrialtile_25",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_25.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        2
+      ],
+      "atlas_rect": [
+        224,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 25,
+      "key": "industrialtile_26",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_26.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        2
+      ],
+      "atlas_rect": [
+        256,
+        64,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 26,
+      "key": "industrialtile_27",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_27.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        3
+      ],
+      "atlas_rect": [
+        0,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 27,
+      "key": "industrialtile_28",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_28.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        3
+      ],
+      "atlas_rect": [
+        32,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 28,
+      "key": "industrialtile_29",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_29.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        3
+      ],
+      "atlas_rect": [
+        64,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 29,
+      "key": "industrialtile_30",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_30.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        3
+      ],
+      "atlas_rect": [
+        96,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 30,
+      "key": "industrialtile_31",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_31.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        3
+      ],
+      "atlas_rect": [
+        128,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 31,
+      "key": "industrialtile_32",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_32.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        3
+      ],
+      "atlas_rect": [
+        160,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 32,
+      "key": "industrialtile_33",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_33.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        3
+      ],
+      "atlas_rect": [
+        192,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 33,
+      "key": "industrialtile_34",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_34.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        3
+      ],
+      "atlas_rect": [
+        224,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 34,
+      "key": "industrialtile_35",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_35.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        3
+      ],
+      "atlas_rect": [
+        256,
+        96,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 35,
+      "key": "industrialtile_36",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_36.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        4
+      ],
+      "atlas_rect": [
+        0,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 36,
+      "key": "industrialtile_37",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_37.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        4
+      ],
+      "atlas_rect": [
+        32,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 37,
+      "key": "industrialtile_38",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_38.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        4
+      ],
+      "atlas_rect": [
+        64,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 38,
+      "key": "industrialtile_39",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_39.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        4
+      ],
+      "atlas_rect": [
+        96,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 39,
+      "key": "industrialtile_40",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_40.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        4
+      ],
+      "atlas_rect": [
+        128,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 40,
+      "key": "industrialtile_41",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_41.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        4
+      ],
+      "atlas_rect": [
+        160,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 41,
+      "key": "industrialtile_42",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_42.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        4
+      ],
+      "atlas_rect": [
+        192,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 42,
+      "key": "industrialtile_43",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_43.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        4
+      ],
+      "atlas_rect": [
+        224,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 43,
+      "key": "industrialtile_44",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_44.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        4
+      ],
+      "atlas_rect": [
+        256,
+        128,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 44,
+      "key": "industrialtile_45",
+      "role": "decoration",
+      "semantic_keys": [
+        "pipe_column_reactor"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_45.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        5
+      ],
+      "atlas_rect": [
+        0,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 45,
+      "key": "industrialtile_46",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_46.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        5
+      ],
+      "atlas_rect": [
+        32,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 46,
+      "key": "industrialtile_47",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_47.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        5
+      ],
+      "atlas_rect": [
+        64,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 47,
+      "key": "industrialtile_48",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_48.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        5
+      ],
+      "atlas_rect": [
+        96,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 48,
+      "key": "industrialtile_49",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_49.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        5
+      ],
+      "atlas_rect": [
+        128,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 49,
+      "key": "industrialtile_50",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_50.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        5
+      ],
+      "atlas_rect": [
+        160,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 50,
+      "key": "industrialtile_51",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_51.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        5
+      ],
+      "atlas_rect": [
+        192,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 51,
+      "key": "industrialtile_52",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_52.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        5
+      ],
+      "atlas_rect": [
+        224,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 52,
+      "key": "industrialtile_53",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_53.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        5
+      ],
+      "atlas_rect": [
+        256,
+        160,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 53,
+      "key": "industrialtile_54",
+      "role": "decoration",
+      "semantic_keys": [
+        "pipe_column_reactor"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_54.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        6
+      ],
+      "atlas_rect": [
+        0,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 54,
+      "key": "industrialtile_55",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_55.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        6
+      ],
+      "atlas_rect": [
+        32,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 55,
+      "key": "industrialtile_56",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_56.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        6
+      ],
+      "atlas_rect": [
+        64,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 56,
+      "key": "industrialtile_57",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_57.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        6
+      ],
+      "atlas_rect": [
+        96,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 57,
+      "key": "industrialtile_58",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_58.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        6
+      ],
+      "atlas_rect": [
+        128,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 58,
+      "key": "industrialtile_59",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_59.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        6
+      ],
+      "atlas_rect": [
+        160,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 59,
+      "key": "industrialtile_60",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_60.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        6
+      ],
+      "atlas_rect": [
+        192,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 60,
+      "key": "industrialtile_61",
+      "role": "decoration",
+      "semantic_keys": [
+        "pipe_v_mid"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_61.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        6
+      ],
+      "atlas_rect": [
+        224,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 61,
+      "key": "industrialtile_62",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_62.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        6
+      ],
+      "atlas_rect": [
+        256,
+        192,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 62,
+      "key": "industrialtile_63",
+      "role": "decoration",
+      "semantic_keys": [
+        "pipe_column_reactor"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_63.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        7
+      ],
+      "atlas_rect": [
+        0,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 63,
+      "key": "industrialtile_64",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_64.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        7
+      ],
+      "atlas_rect": [
+        32,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 64,
+      "key": "industrialtile_65",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_65.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        7
+      ],
+      "atlas_rect": [
+        64,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 65,
+      "key": "industrialtile_66",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_66.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        7
+      ],
+      "atlas_rect": [
+        96,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 66,
+      "key": "industrialtile_67",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_67.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        7
+      ],
+      "atlas_rect": [
+        128,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 67,
+      "key": "industrialtile_68",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_68.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        7
+      ],
+      "atlas_rect": [
+        160,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 68,
+      "key": "industrialtile_69",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_69.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        7
+      ],
+      "atlas_rect": [
+        192,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 69,
+      "key": "industrialtile_70",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_70.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        7
+      ],
+      "atlas_rect": [
+        224,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 70,
+      "key": "industrialtile_71",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_71.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        7
+      ],
+      "atlas_rect": [
+        256,
+        224,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 71,
+      "key": "industrialtile_72",
+      "role": "decoration",
+      "semantic_keys": [
+        "pipe_column_reactor"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_72.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        8
+      ],
+      "atlas_rect": [
+        0,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 72,
+      "key": "industrialtile_73",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_73.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        8
+      ],
+      "atlas_rect": [
+        32,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 73,
+      "key": "industrialtile_74",
+      "role": "decoration",
+      "semantic_keys": [
+        "warning_light_strip"
+      ],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_74.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        8
+      ],
+      "atlas_rect": [
+        64,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 74,
+      "key": "industrialtile_75",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_75.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        8
+      ],
+      "atlas_rect": [
+        96,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 75,
+      "key": "industrialtile_76",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_76.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        8
+      ],
+      "atlas_rect": [
+        128,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 76,
+      "key": "industrialtile_77",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_77.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        8
+      ],
+      "atlas_rect": [
+        160,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 77,
+      "key": "industrialtile_78",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_78.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        8
+      ],
+      "atlas_rect": [
+        192,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 78,
+      "key": "industrialtile_79",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_79.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        8
+      ],
+      "atlas_rect": [
+        224,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 79,
+      "key": "industrialtile_80",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_80.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        8
+      ],
+      "atlas_rect": [
+        256,
+        256,
+        32,
+        32
+      ],
+      "collision": "level_semantic_layer",
+      "id": 80,
+      "key": "industrialtile_81",
+      "role": "decoration",
+      "semantic_keys": [],
+      "source_pack": "industrial_zone",
+      "source_path": "1 Tiles/IndustrialTile_81.png"
+    }
+  ]
+}

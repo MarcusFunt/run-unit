@@ -1,0 +1,442 @@
+[
+  {
+    "key": "0",
+    "output_path": "assets/generated/converted/industrial_objects/0.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/0.png"
+  },
+  {
+    "key": "1",
+    "output_path": "assets/generated/converted/industrial_objects/1.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/1.png"
+  },
+  {
+    "key": "2",
+    "output_path": "assets/generated/converted/industrial_objects/2.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/2.png"
+  },
+  {
+    "key": "3",
+    "output_path": "assets/generated/converted/industrial_objects/3.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/3.png"
+  },
+  {
+    "key": "4",
+    "output_path": "assets/generated/converted/industrial_objects/4.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/4.png"
+  },
+  {
+    "key": "5",
+    "output_path": "assets/generated/converted/industrial_objects/5.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/5.png"
+  },
+  {
+    "key": "6",
+    "output_path": "assets/generated/converted/industrial_objects/6.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/6.png"
+  },
+  {
+    "key": "7",
+    "output_path": "assets/generated/converted/industrial_objects/7.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/7.png"
+  },
+  {
+    "key": "8",
+    "output_path": "assets/generated/converted/industrial_objects/8.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/8.png"
+  },
+  {
+    "key": "9",
+    "output_path": "assets/generated/converted/industrial_objects/9.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/9.png"
+  },
+  {
+    "key": "barrel1",
+    "output_path": "assets/generated/converted/industrial_objects/barrel1.png",
+    "size": [
+      18,
+      26
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Barrel1.png"
+  },
+  {
+    "key": "barrel2",
+    "output_path": "assets/generated/converted/industrial_objects/barrel2.png",
+    "size": [
+      18,
+      26
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Barrel2.png"
+  },
+  {
+    "key": "barrel3",
+    "output_path": "assets/generated/converted/industrial_objects/barrel3.png",
+    "size": [
+      18,
+      26
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Barrel3.png"
+  },
+  {
+    "key": "barrel4",
+    "output_path": "assets/generated/converted/industrial_objects/barrel4.png",
+    "size": [
+      18,
+      26
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Barrel4.png"
+  },
+  {
+    "key": "bench",
+    "output_path": "assets/generated/converted/industrial_objects/bench.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Bench.png"
+  },
+  {
+    "key": "board1",
+    "output_path": "assets/generated/converted/industrial_objects/board1.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Board1.png"
+  },
+  {
+    "key": "board2",
+    "output_path": "assets/generated/converted/industrial_objects/board2.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Board2.png"
+  },
+  {
+    "key": "board3",
+    "output_path": "assets/generated/converted/industrial_objects/board3.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Board3.png"
+  },
+  {
+    "key": "box1",
+    "output_path": "assets/generated/converted/industrial_objects/box1.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box1.png"
+  },
+  {
+    "key": "box2",
+    "output_path": "assets/generated/converted/industrial_objects/box2.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box2.png"
+  },
+  {
+    "key": "box3",
+    "output_path": "assets/generated/converted/industrial_objects/box3.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box3.png"
+  },
+  {
+    "key": "box4",
+    "output_path": "assets/generated/converted/industrial_objects/box4.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box4.png"
+  },
+  {
+    "key": "box5",
+    "output_path": "assets/generated/converted/industrial_objects/box5.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box5.png"
+  },
+  {
+    "key": "box6",
+    "output_path": "assets/generated/converted/industrial_objects/box6.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box6.png"
+  },
+  {
+    "key": "box7",
+    "output_path": "assets/generated/converted/industrial_objects/box7.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box7.png"
+  },
+  {
+    "key": "box8",
+    "output_path": "assets/generated/converted/industrial_objects/box8.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Box8.png"
+  },
+  {
+    "key": "bucket",
+    "output_path": "assets/generated/converted/industrial_objects/bucket.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Bucket.png"
+  },
+  {
+    "key": "fence1",
+    "output_path": "assets/generated/converted/industrial_objects/fence1.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Fence1.png"
+  },
+  {
+    "key": "fence2",
+    "output_path": "assets/generated/converted/industrial_objects/fence2.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Fence2.png"
+  },
+  {
+    "key": "fence3",
+    "output_path": "assets/generated/converted/industrial_objects/fence3.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Fence3.png"
+  },
+  {
+    "key": "fire_extinguisher1",
+    "output_path": "assets/generated/converted/industrial_objects/fire_extinguisher1.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Fire-extinguisher1.png"
+  },
+  {
+    "key": "fire_extinguisher2",
+    "output_path": "assets/generated/converted/industrial_objects/fire_extinguisher2.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Fire-extinguisher2.png"
+  },
+  {
+    "key": "fire_extinguisher3",
+    "output_path": "assets/generated/converted/industrial_objects/fire_extinguisher3.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Fire-extinguisher3.png"
+  },
+  {
+    "key": "flag",
+    "output_path": "assets/generated/converted/industrial_objects/flag.png",
+    "size": [
+      32,
+      64
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Flag.png"
+  },
+  {
+    "key": "ladder1",
+    "output_path": "assets/generated/converted/industrial_objects/ladder1.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Ladder1.png"
+  },
+  {
+    "key": "ladder2",
+    "output_path": "assets/generated/converted/industrial_objects/ladder2.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Ladder2.png"
+  },
+  {
+    "key": "ladder3",
+    "output_path": "assets/generated/converted/industrial_objects/ladder3.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Ladder3.png"
+  },
+  {
+    "key": "locker1",
+    "output_path": "assets/generated/converted/industrial_objects/locker1.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Locker1.png"
+  },
+  {
+    "key": "locker2",
+    "output_path": "assets/generated/converted/industrial_objects/locker2.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Locker2.png"
+  },
+  {
+    "key": "locker3",
+    "output_path": "assets/generated/converted/industrial_objects/locker3.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Locker3.png"
+  },
+  {
+    "key": "locker4",
+    "output_path": "assets/generated/converted/industrial_objects/locker4.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Locker4.png"
+  },
+  {
+    "key": "mop",
+    "output_path": "assets/generated/converted/industrial_objects/mop.png",
+    "size": [
+      32,
+      36
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Mop.png"
+  },
+  {
+    "key": "pointer1",
+    "output_path": "assets/generated/converted/industrial_objects/pointer1.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Pointer1.png"
+  },
+  {
+    "key": "pointer2",
+    "output_path": "assets/generated/converted/industrial_objects/pointer2.png",
+    "size": [
+      32,
+      32
+    ],
+    "source_pack": "industrial_zone",
+    "source_path": "3 Objects/Pointer2.png"
+  }
+]

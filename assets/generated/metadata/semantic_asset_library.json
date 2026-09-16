@@ -1,0 +1,427 @@
+{
+  "entries": {
+    "energy_cell": {
+      "asset": "battery_25x50px1",
+      "cell_size": [
+        18,
+        25
+      ],
+      "fps": 12,
+      "frame_count": 60,
+      "pack": "battery",
+      "placement": "prop_or_ui",
+      "semantic_support": "none",
+      "summary": "60-frame battery charge-level animation, previously hard-classified as UI-only. Equally usable as a world prop, pickup, or machine component -- the role depends on where it is placed, not on the art.",
+      "usage": [
+        "world_prop",
+        "collectible",
+        "machine_component",
+        "hud_icon"
+      ]
+    },
+    "floor_hatch_grate": {
+      "assembly": {
+        "bottom_left": "smafu_039",
+        "bottom_right": "smafu_040",
+        "top_left": "smafu_021",
+        "top_right": "smafu_022"
+      },
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "unassigned",
+      "summary": "2x2 green-bordered floor hatch / grate panel. Whether it should be walkable, one-way, or purely decorative is a level-design call this table does not make.",
+      "usage": [
+        "level_geometry",
+        "decoration"
+      ]
+    },
+    "floor_solid": {
+      "adjacency": {
+        "bottom": [
+          "floor_solid"
+        ],
+        "left": [
+          "floor_solid"
+        ],
+        "right": [
+          "floor_solid"
+        ],
+        "top": [
+          "floor_solid"
+        ]
+      },
+      "asset": "smafu_000",
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "sockets": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "summary": "Flat 16px navy panel with no ornamentation; safe generic solid ground/wall block.",
+      "usage": [
+        "level_geometry",
+        "background_wall"
+      ]
+    },
+    "floor_wedge_ne": {
+      "asset": "smafu_024",
+      "cell_size": [
+        16,
+        16
+      ],
+      "matched_set": [
+        "smafu_023",
+        "smafu_024",
+        "smafu_041",
+        "smafu_042"
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "summary": "45-degree corner-cut ground tile, NE cell of the same matched 2x2 wedge set as floor_wedge_nw.",
+      "usage": [
+        "level_geometry"
+      ]
+    },
+    "floor_wedge_nw": {
+      "asset": "smafu_023",
+      "cell_size": [
+        16,
+        16
+      ],
+      "matched_set": [
+        "smafu_023",
+        "smafu_024",
+        "smafu_041",
+        "smafu_042"
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "summary": "45-degree corner-cut ground tile, NW cell of a matched 2x2 wedge set. Confirm the exact slope direction visually before using it as a walkable ramp.",
+      "usage": [
+        "level_geometry"
+      ]
+    },
+    "floor_wedge_se": {
+      "asset": "smafu_042",
+      "cell_size": [
+        16,
+        16
+      ],
+      "matched_set": [
+        "smafu_023",
+        "smafu_024",
+        "smafu_041",
+        "smafu_042"
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "summary": "45-degree corner-cut ground tile, SE cell of the same matched 2x2 wedge set as floor_wedge_nw.",
+      "usage": [
+        "level_geometry"
+      ]
+    },
+    "floor_wedge_sw": {
+      "asset": "smafu_041",
+      "cell_size": [
+        16,
+        16
+      ],
+      "matched_set": [
+        "smafu_023",
+        "smafu_024",
+        "smafu_041",
+        "smafu_042"
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "summary": "45-degree corner-cut ground tile, SW cell of the same matched 2x2 wedge set as floor_wedge_nw.",
+      "usage": [
+        "level_geometry"
+      ]
+    },
+    "hazard_laser_gate_double": {
+      "assembly": {
+        "base": "smafu_158",
+        "mid_lower": "smafu_140",
+        "mid_upper": "smafu_122",
+        "top": "smafu_104"
+      },
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "vertical_stack",
+      "semantic_support": "hazard",
+      "sockets": [
+        "top",
+        "bottom"
+      ],
+      "summary": "4-cell vertical laser-hazard column with a taller double beam between cap and base.",
+      "usage": [
+        "hazard"
+      ]
+    },
+    "hazard_laser_gate_thin": {
+      "assembly": {
+        "base": "smafu_139",
+        "mid": "smafu_121",
+        "top": "smafu_103"
+      },
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "vertical_stack",
+      "semantic_support": "hazard",
+      "sockets": [
+        "top",
+        "bottom"
+      ],
+      "summary": "3-cell vertical laser-hazard column: emitter cap, single thin beam, emitter base.",
+      "usage": [
+        "hazard"
+      ]
+    },
+    "hazard_laser_gate_wide": {
+      "assembly": {
+        "base": "smafu_159",
+        "mid_lower": "smafu_141",
+        "mid_upper": "smafu_123",
+        "top": "smafu_105"
+      },
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "vertical_stack",
+      "semantic_support": "hazard",
+      "sockets": [
+        "top",
+        "bottom"
+      ],
+      "summary": "4-cell vertical laser-hazard column with a wide/pink beam variant of hazard_laser_gate_double.",
+      "usage": [
+        "hazard"
+      ]
+    },
+    "hazard_spike_row": {
+      "adjacency": {
+        "left": [
+          "hazard_spike_row"
+        ],
+        "right": [
+          "hazard_spike_row"
+        ]
+      },
+      "asset": "smafu_066",
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "hazard",
+      "sockets": [
+        "left",
+        "right"
+      ],
+      "summary": "Repeatable spike-hazard strip (white spikes on a dark base); variants continue through smafu_067-smafu_071.",
+      "usage": [
+        "hazard"
+      ]
+    },
+    "hazard_stripe_marker": {
+      "asset": "smafu_044",
+      "cell_size": [
+        16,
+        16
+      ],
+      "pack": "smafu",
+      "placement": "surface",
+      "semantic_support": "none",
+      "summary": "Orange diagonal warning-stripe floor marking. This is a decorative caution marker, not itself a collision hazard -- pair it with a real hazard tile or a level edge.",
+      "usage": [
+        "decoration",
+        "hazard_marker"
+      ]
+    },
+    "pipe_column_reactor": {
+      "assembly": {
+        "base": "industrialtile_72",
+        "body": "industrialtile_63",
+        "mid": "industrialtile_54",
+        "top": "industrialtile_45"
+      },
+      "cell_size": [
+        32,
+        32
+      ],
+      "pack": "industrial_zone",
+      "placement": "vertical_stack",
+      "semantic_support": "none",
+      "sockets": [
+        "top",
+        "bottom"
+      ],
+      "summary": "Vertical hazard-banded reactor conduit assembled from 4 stacked 32px segments; visually distinct from the plain repeatable pipe_v_mid segment.",
+      "usage": [
+        "world_prop",
+        "background_wall"
+      ]
+    },
+    "pipe_v_mid": {
+      "adjacency": {
+        "bottom": [
+          "pipe_v_mid"
+        ],
+        "top": [
+          "pipe_v_mid"
+        ]
+      },
+      "asset": "industrialtile_61",
+      "cell_size": [
+        32,
+        32
+      ],
+      "pack": "industrial_zone",
+      "placement": "vertical_stack",
+      "semantic_support": "none",
+      "sockets": [
+        "top",
+        "bottom"
+      ],
+      "summary": "Plain gray cylindrical pipe segment with no caps; repeat vertically for a pipe run of any height.",
+      "usage": [
+        "world_prop",
+        "background_wall"
+      ]
+    },
+    "wall_panel_accent": {
+      "asset": "industrialtile_01",
+      "cell_size": [
+        32,
+        32
+      ],
+      "pack": "industrial_zone",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "summary": "Flat violet accent-color panel, same silhouette as wall_panel_flat; use to break up large industrial surfaces.",
+      "usage": [
+        "level_geometry",
+        "background_wall"
+      ]
+    },
+    "wall_panel_flat": {
+      "adjacency": {
+        "bottom": [
+          "wall_panel_flat"
+        ],
+        "left": [
+          "wall_panel_flat"
+        ],
+        "right": [
+          "wall_panel_flat"
+        ],
+        "top": [
+          "wall_panel_flat"
+        ]
+      },
+      "asset": "industrialtile_03",
+      "cell_size": [
+        32,
+        32
+      ],
+      "pack": "industrial_zone",
+      "placement": "surface",
+      "semantic_support": "solid",
+      "sockets": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "summary": "Plain flat industrial wall/floor panel with no ornamentation; safe generic 32px solid block.",
+      "usage": [
+        "level_geometry",
+        "background_wall"
+      ]
+    },
+    "wall_panel_riveted_large": {
+      "assembly": {
+        "row0": [
+          "industrialtile_04",
+          "industrialtile_05",
+          "industrialtile_06"
+        ],
+        "row1": [
+          "industrialtile_13",
+          "industrialtile_14",
+          "industrialtile_15"
+        ],
+        "row2": [
+          "industrialtile_22",
+          "industrialtile_23",
+          "industrialtile_24"
+        ]
+      },
+      "cell_size": [
+        32,
+        32
+      ],
+      "pack": "industrial_zone",
+      "placement": "background_wall",
+      "semantic_support": "none",
+      "summary": "3x3 riveted wall section with a recessed bolted center; a large background/structural motif, not a single repeatable tile.",
+      "usage": [
+        "background_wall",
+        "decoration"
+      ]
+    },
+    "warning_light_strip": {
+      "asset": "industrialtile_74",
+      "cell_size": [
+        32,
+        32
+      ],
+      "pack": "industrial_zone",
+      "placement": "surface",
+      "semantic_support": "none",
+      "summary": "Horizontal strip of red warning lights; decorative hazard marker drawn as one wide sprite.",
+      "usage": [
+        "decoration",
+        "hazard_marker"
+      ]
+    }
+  },
+  "purpose": "Curated, human/agent-readable semantic roles for a subset of generated assets -- a design aid for SELECTING art. It never creates collision; semantic_tile_contract.json's level layer is the only thing allowed to do that.",
+  "schema": {
+    "adjacency": "socket -> list of semantic keys that tile naturally against it",
+    "assembly": "role -> asset key (or nested list of keys) for a multi-cell prop",
+    "asset": "a single raw tile/frame key, for a single-cell entry",
+    "cell_size": "[w, h] px of one cell in the assembly's native pack",
+    "matched_set": "sibling asset keys authored together as one visual set",
+    "pack": "which source pack (see source_signatures) the asset was drawn from",
+    "placement": "surface | background_wall | vertical_stack | prop_or_ui",
+    "semantic_support": "solid | hazard | one_way | none | unassigned -- a HINT only; semantic_tile_contract.json's level layer is authoritative",
+    "sockets": "named connection points this entry exposes",
+    "usage": "intended roles; an asset may serve more than one"
+  }
+}

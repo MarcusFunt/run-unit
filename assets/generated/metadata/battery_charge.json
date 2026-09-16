@@ -1,0 +1,1154 @@
+{
+  "atlas_output_path": "assets/generated/atlases/battery_charge_cyan_18x25.png",
+  "fps": 12,
+  "frame_count": 60,
+  "frame_size": [
+    18,
+    25
+  ],
+  "frames": [
+    {
+      "atlas_cell": [
+        0,
+        0
+      ],
+      "atlas_rect": [
+        0,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 0,
+      "key": "battery_25x50px1",
+      "role": "ui",
+      "semantic_keys": [
+        "energy_cell"
+      ],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px1.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        0
+      ],
+      "atlas_rect": [
+        18,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 1,
+      "key": "battery_25x50px2",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px2.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        0
+      ],
+      "atlas_rect": [
+        36,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 2,
+      "key": "battery_25x50px3",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px3.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        0
+      ],
+      "atlas_rect": [
+        54,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 3,
+      "key": "battery_25x50px4",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px4.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        0
+      ],
+      "atlas_rect": [
+        72,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 4,
+      "key": "battery_25x50px5",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px5.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        0
+      ],
+      "atlas_rect": [
+        90,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 5,
+      "key": "battery_25x50px6",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px6.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        0
+      ],
+      "atlas_rect": [
+        108,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 6,
+      "key": "battery_25x50px7",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px7.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        0
+      ],
+      "atlas_rect": [
+        126,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 7,
+      "key": "battery_25x50px8",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px8.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        0
+      ],
+      "atlas_rect": [
+        144,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 8,
+      "key": "battery_25x50px9",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px9.png"
+    },
+    {
+      "atlas_cell": [
+        9,
+        0
+      ],
+      "atlas_rect": [
+        162,
+        0,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 9,
+      "key": "battery_25x50px10",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px10.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        1
+      ],
+      "atlas_rect": [
+        0,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 10,
+      "key": "battery_25x50px11",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px11.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        1
+      ],
+      "atlas_rect": [
+        18,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 11,
+      "key": "battery_25x50px12",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px12.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        1
+      ],
+      "atlas_rect": [
+        36,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 12,
+      "key": "battery_25x50px13",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px13.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        1
+      ],
+      "atlas_rect": [
+        54,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 13,
+      "key": "battery_25x50px14",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px14.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        1
+      ],
+      "atlas_rect": [
+        72,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 14,
+      "key": "battery_25x50px15",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px15.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        1
+      ],
+      "atlas_rect": [
+        90,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 15,
+      "key": "battery_25x50px16",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px16.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        1
+      ],
+      "atlas_rect": [
+        108,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 16,
+      "key": "battery_25x50px17",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px17.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        1
+      ],
+      "atlas_rect": [
+        126,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 17,
+      "key": "battery_25x50px18",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px18.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        1
+      ],
+      "atlas_rect": [
+        144,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 18,
+      "key": "battery_25x50px19",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px19.png"
+    },
+    {
+      "atlas_cell": [
+        9,
+        1
+      ],
+      "atlas_rect": [
+        162,
+        25,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 19,
+      "key": "battery_25x50px20",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px20.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        2
+      ],
+      "atlas_rect": [
+        0,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 20,
+      "key": "battery_25x50px21",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px21.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        2
+      ],
+      "atlas_rect": [
+        18,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 21,
+      "key": "battery_25x50px22",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px22.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        2
+      ],
+      "atlas_rect": [
+        36,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 22,
+      "key": "battery_25x50px23",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px23.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        2
+      ],
+      "atlas_rect": [
+        54,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 23,
+      "key": "battery_25x50px24",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px24.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        2
+      ],
+      "atlas_rect": [
+        72,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 24,
+      "key": "battery_25x50px25",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px25.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        2
+      ],
+      "atlas_rect": [
+        90,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 25,
+      "key": "battery_25x50px26",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px26.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        2
+      ],
+      "atlas_rect": [
+        108,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 26,
+      "key": "battery_25x50px27",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px27.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        2
+      ],
+      "atlas_rect": [
+        126,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 27,
+      "key": "battery_25x50px28",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px28.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        2
+      ],
+      "atlas_rect": [
+        144,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 28,
+      "key": "battery_25x50px29",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px29.png"
+    },
+    {
+      "atlas_cell": [
+        9,
+        2
+      ],
+      "atlas_rect": [
+        162,
+        50,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 29,
+      "key": "battery_25x50px30",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px30.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        3
+      ],
+      "atlas_rect": [
+        0,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 30,
+      "key": "battery_25x50px31",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px31.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        3
+      ],
+      "atlas_rect": [
+        18,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 31,
+      "key": "battery_25x50px32",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px32.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        3
+      ],
+      "atlas_rect": [
+        36,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 32,
+      "key": "battery_25x50px33",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px33.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        3
+      ],
+      "atlas_rect": [
+        54,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 33,
+      "key": "battery_25x50px34",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px34.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        3
+      ],
+      "atlas_rect": [
+        72,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 34,
+      "key": "battery_25x50px35",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px35.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        3
+      ],
+      "atlas_rect": [
+        90,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 35,
+      "key": "battery_25x50px36",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px36.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        3
+      ],
+      "atlas_rect": [
+        108,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 36,
+      "key": "battery_25x50px37",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px37.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        3
+      ],
+      "atlas_rect": [
+        126,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 37,
+      "key": "battery_25x50px38",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px38.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        3
+      ],
+      "atlas_rect": [
+        144,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 38,
+      "key": "battery_25x50px39",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px39.png"
+    },
+    {
+      "atlas_cell": [
+        9,
+        3
+      ],
+      "atlas_rect": [
+        162,
+        75,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 39,
+      "key": "battery_25x50px40",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px40.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        4
+      ],
+      "atlas_rect": [
+        0,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 40,
+      "key": "battery_25x50px41",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px41.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        4
+      ],
+      "atlas_rect": [
+        18,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 41,
+      "key": "battery_25x50px42",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px42.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        4
+      ],
+      "atlas_rect": [
+        36,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 42,
+      "key": "battery_25x50px43",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px43.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        4
+      ],
+      "atlas_rect": [
+        54,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 43,
+      "key": "battery_25x50px44",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px44.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        4
+      ],
+      "atlas_rect": [
+        72,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 44,
+      "key": "battery_25x50px45",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px45.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        4
+      ],
+      "atlas_rect": [
+        90,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 45,
+      "key": "battery_25x50px46",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px46.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        4
+      ],
+      "atlas_rect": [
+        108,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 46,
+      "key": "battery_25x50px47",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px47.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        4
+      ],
+      "atlas_rect": [
+        126,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 47,
+      "key": "battery_25x50px48",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px48.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        4
+      ],
+      "atlas_rect": [
+        144,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 48,
+      "key": "battery_25x50px49",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px49.png"
+    },
+    {
+      "atlas_cell": [
+        9,
+        4
+      ],
+      "atlas_rect": [
+        162,
+        100,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 49,
+      "key": "battery_25x50px50",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px50.png"
+    },
+    {
+      "atlas_cell": [
+        0,
+        5
+      ],
+      "atlas_rect": [
+        0,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 50,
+      "key": "battery_25x50px51",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px51.png"
+    },
+    {
+      "atlas_cell": [
+        1,
+        5
+      ],
+      "atlas_rect": [
+        18,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 51,
+      "key": "battery_25x50px52",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px52.png"
+    },
+    {
+      "atlas_cell": [
+        2,
+        5
+      ],
+      "atlas_rect": [
+        36,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 52,
+      "key": "battery_25x50px53",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px53.png"
+    },
+    {
+      "atlas_cell": [
+        3,
+        5
+      ],
+      "atlas_rect": [
+        54,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 53,
+      "key": "battery_25x50px54",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px54.png"
+    },
+    {
+      "atlas_cell": [
+        4,
+        5
+      ],
+      "atlas_rect": [
+        72,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 54,
+      "key": "battery_25x50px55",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px55.png"
+    },
+    {
+      "atlas_cell": [
+        5,
+        5
+      ],
+      "atlas_rect": [
+        90,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 55,
+      "key": "battery_25x50px56",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px56.png"
+    },
+    {
+      "atlas_cell": [
+        6,
+        5
+      ],
+      "atlas_rect": [
+        108,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 56,
+      "key": "battery_25x50px57",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px57.png"
+    },
+    {
+      "atlas_cell": [
+        7,
+        5
+      ],
+      "atlas_rect": [
+        126,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 57,
+      "key": "battery_25x50px58",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px58.png"
+    },
+    {
+      "atlas_cell": [
+        8,
+        5
+      ],
+      "atlas_rect": [
+        144,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 58,
+      "key": "battery_25x50px59",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px59.png"
+    },
+    {
+      "atlas_cell": [
+        9,
+        5
+      ],
+      "atlas_rect": [
+        162,
+        125,
+        18,
+        25
+      ],
+      "collision": "none",
+      "id": 59,
+      "key": "battery_25x50px60",
+      "role": "ui",
+      "semantic_keys": [],
+      "source_pack": "battery",
+      "source_path": "Battery/battery_25x50px60.png"
+    }
+  ],
+  "license": "No licence file was present in the supplied archive; verify provenance before release."
+}
