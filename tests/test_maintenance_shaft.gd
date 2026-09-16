@@ -9,8 +9,8 @@ const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 
 const DECK_Y: float = 416.0          # Platform03/04 surface the gate sits over
-const GATE_LEFT_X: float = 1632.0    # gate cells are tiles 51-53
-const GATE_RIGHT_X: float = 1728.0
+const GATE_LEFT_X: float = 1920.0    # jammed elevator door spans tiles 60-62
+const GATE_RIGHT_X: float = 2016.0
 
 
 func _standing_action(movement: float, crouch: bool) -> RunUnitPlayerAction:
@@ -21,11 +21,12 @@ func _standing_action(movement: float, crouch: bool) -> RunUnitPlayerAction:
 
 
 ## Drives the player rightwards for a while and reports how far it got.
-func _drive_through_gate(crouch: bool) -> float:
+func _drive_through_gate(crouch: bool, crouch_height: float = 36.0) -> float:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
+	player.crouch_collision_height = crouch_height
 	player.global_position = Vector2(GATE_LEFT_X - 120.0, DECK_Y - 32.0)
 
 	for frame: int in range(150):
@@ -99,6 +100,11 @@ func test_shipping_crouch_gate_blocks_a_standing_player() -> void:
 func test_shipping_crouch_gate_lets_a_crouched_player_through() -> void:
 	var reached_x: float = await _drive_through_gate(true)
 	assert_true(reached_x > GATE_RIGHT_X, "A crouched player must clear the gate, got x=%.1f" % reached_x)
+
+
+func test_shipping_jammed_door_is_lower_than_a_partial_crouch() -> void:
+	var reached_x: float = await _drive_through_gate(true, 48.0)
+	assert_true(reached_x < GATE_LEFT_X, "A 48 px partial crouch must still be blocked by the lower jammed door, got x=%.1f" % reached_x)
 
 func test_short_tap_jump_stays_below_the_charged_jump_pad_height() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld

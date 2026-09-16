@@ -38,9 +38,14 @@
       "property": "global_position",
       "value": {
         "__type": "Vector2",
-        "x": 1450.0,
+        "x": 1945.0,
         "y": 384.0
       }
+    },
+    {
+      "type": "action",
+      "action_name": "crouch",
+      "pressed": true
     },
     {
       "type": "wait_frames",

@@ -1,6 +1,7 @@
 extends GutTest
 
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
+const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
 
 
 func test_robot_visual_preserves_rigid_link_lengths() -> void:
@@ -213,6 +214,23 @@ func test_body_lean_ramps_smoothly_toward_target_speed_lean() -> void:
 	assert_almost_eq(settled_lean, deg_to_rad(5.5), 0.05)
 
 
+func test_full_crouch_visual_body_fits_low_elevator_opening() -> void:
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = Vector2(400.0, 384.0)
+	player._is_crouching = true
+	player.crouch_ratio = 1.0
+	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+	visual.run_process_for_test(0.016)
+	var body: Sprite2D = visual.get_node("BodyPivot/Body") as Sprite2D
+	var rect: Rect2 = body.get_rect()
+	var top_y: float = body.to_global(rect.position).y
+	var bottom_y: float = body.to_global(rect.position + Vector2(0.0, rect.size.y)).y
+
+	assert_gte(top_y, 360.0, "Fully crouched body artwork should sit below the ~56 px jammed-door edge")
+	assert_lte(bottom_y, 416.0, "Crouch presentation should not push the body through the floor")
+
+
 func test_antenna_deflects_backward_under_forward_acceleration() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
@@ -302,6 +320,52 @@ func test_antenna_never_exceeds_configured_limit() -> void:
 	for frame: int in range(20):
 		visual.update_antenna_motion_for_test(0.016)
 		assert_lte(absf(visual.antenna_pivot.rotation), limit)
+
+
+func test_antenna_folds_under_shipping_jammed_elevator_door() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	player.global_position = Vector2(1945.0, 384.0)
+	player._is_crouching = true
+	player.crouch_ratio = 1.0
+	player._update_crouch_collision()
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	player.set_physics_process(false)
+	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+
+	for frame: int in range(8):
+		visual.run_process_for_test(0.016)
+
+	assert_gt(absf(visual.antenna_pivot.rotation), deg_to_rad(45.0), "The real jammed elevator door should visibly fold the crouched antenna")
+
+
+func test_antenna_folds_when_free_tip_starts_inside_overhang() -> void:
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = Vector2(220.0, 300.0)
+	player._is_crouching = true
+	player.crouch_ratio = 1.0
+	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+
+	visual.run_process_for_test(0.016)
+	var pivot: Node2D = visual.get_node("BodyPivot/AntennaPivot") as Node2D
+	var overhang: StaticBody2D = StaticBody2D.new()
+	var collision: CollisionShape2D = CollisionShape2D.new()
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = Vector2(120.0, 70.0)
+	collision.shape = shape
+	overhang.add_child(collision)
+	overhang.global_position = pivot.global_position + Vector2(20.0, -20.0)
+	add_child_autofree(overhang)
+	await get_tree().physics_frame
+
+	for frame: int in range(8):
+		visual.run_process_for_test(0.016)
+
+	assert_gt(absf(pivot.rotation), deg_to_rad(45.0), "Antenna should fold even when its free tip begins inside the low door collider")
 
 
 func test_eye_pulse_is_deterministic_function_of_visual_time() -> void:
