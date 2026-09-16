@@ -15,6 +15,7 @@ const LOWER_LINK_LENGTH: float = 145.0
 @onready var knee_pivot: Node2D = $UpperLinkPivot/KneePivot
 @onready var wheel_pivot: Node2D = $UpperLinkPivot/KneePivot/WheelPivot
 @onready var eye: Sprite2D = $BodyPivot/Eye
+@onready var antenna_pivot: Node2D = $BodyPivot/AntennaPivot
 @onready var player: RunUnitPlayerMotor = get_parent() as RunUnitPlayerMotor
 
 var _wheel_spin: float = 0.0
