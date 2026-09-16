@@ -25,10 +25,13 @@ texture = ExtResource("3_eye")
 centered = false
 position = Vector2(-150, -62)
 
-[node name="Antenna" type="Sprite2D" parent="BodyPivot"]
+[node name="AntennaPivot" type="Node2D" parent="BodyPivot"]
+position = Vector2(83, -76)
+
+[node name="Antenna" type="Sprite2D" parent="BodyPivot/AntennaPivot"]
 texture = ExtResource("4_antenna")
 centered = false
-position = Vector2(63, -146)
+position = Vector2(-20, -70)
 
 [node name="UpperLinkPivot" type="Node2D" parent="."]
 z_index = 3
