@@ -39,15 +39,20 @@ func _draw_background() -> void:
 		draw_circle(Vector2(float(rib_x) + 30.0, -125.0), 2.0, SIGNAL_TEAL)
 		rib_x += 256
 
-	var cable_y: float = 74.0
-	while cable_y <= 126.0:
+	# Kept well above the highest point the (now 64px-tall) robot's antenna
+	# reaches at the peak of a full charged jump (~world y=125 from the lowest
+	# deck) -- at the old y=74-146 these purely decorative, non-collidable
+	# cables sat right in the jump arc and looked like a low ceiling the
+	# player was clipping through.
+	var cable_y: float = -76.0
+	while cable_y <= -24.0:
 		draw_line(Vector2(-256.0, cable_y), Vector2(route_length + 256.0, cable_y), Color(0.100, 0.360, 0.390, 0.42), 2.0)
 		cable_y += 18.0
 
 	var cable_x: int = 0
 	while cable_x <= int(route_length):
-		draw_line(Vector2(float(cable_x), 72.0), Vector2(float(cable_x) + 22.0, 146.0), Color(0.120, 0.390, 0.420, 0.42), 1.0)
-		draw_circle(Vector2(float(cable_x) + 22.0, 146.0), 3.0, Color(0.180, 0.570, 0.600, 0.52))
+		draw_line(Vector2(float(cable_x), -78.0), Vector2(float(cable_x) + 22.0, -4.0), Color(0.120, 0.390, 0.420, 0.42), 1.0)
+		draw_circle(Vector2(float(cable_x) + 22.0, -4.0), 3.0, Color(0.180, 0.570, 0.600, 0.52))
 		cable_x += 384
 
 func _draw_foreground() -> void:
