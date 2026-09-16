@@ -1,0 +1,14 @@
+{
+  "colors": {
+    "detail": "#4d7891",
+    "highlight": "#dffcff",
+    "shadow": "#13213a",
+    "steel": "#294b66",
+    "teal": "#16d9e8",
+    "teal_dark": "#007f99",
+    "void": "#090d18",
+    "warning": "#ffb020"
+  },
+  "conversion": "Orange/yellow high-saturation pixels become warning amber; all other pixels are quantised by HSL lightness into the navy/cyan material ramp.",
+  "name": "RUN_UNIT_Cyan_Industrial"
+}

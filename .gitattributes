@@ -5,9 +5,12 @@
 *.tres text eol=lf
 *.godot text eol=lf
 *.json text eol=lf
+*.tsj text eol=lf
 *.md text eol=lf
 *.cfg text eol=lf
 *.svg text eol=lf
+*.py text eol=lf
+*.txt text eol=lf
 
 # Do not run line-ending conversion on binary game assets.
 *.png binary

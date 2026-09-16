@@ -1,0 +1,62 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/generated/industrial_animated/money.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0_0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0_1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0_4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0_5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(120, 0, 24, 24)
+
+[resource]
+animations = [
+{
+"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0_0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0_3")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0_4")
+},
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0_5")
+},
+],
+"loop": true,
+"name": &"palette_0",
+"speed": 8.0
+},
+]

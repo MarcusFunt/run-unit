@@ -1,0 +1,48 @@
+{
+  "layers": [
+    {
+      "index": 1,
+      "path": "assets/generated/converted/city_parallax/city_layer_1.png",
+      "scroll_scale": 0.3,
+      "source_pack": "dark_city",
+      "source_path": "blue/paralax1.png"
+    },
+    {
+      "index": 2,
+      "path": "assets/generated/converted/city_parallax/city_layer_2.png",
+      "scroll_scale": 0.18,
+      "source_pack": "dark_city",
+      "source_path": "blue/paralax2.png"
+    },
+    {
+      "index": 3,
+      "path": "assets/generated/converted/city_parallax/city_layer_3.png",
+      "scroll_scale": 0.1,
+      "source_pack": "dark_city",
+      "source_path": "blue/paralax3.png"
+    },
+    {
+      "index": 4,
+      "path": "assets/generated/converted/city_parallax/city_layer_4.png",
+      "scroll_scale": 0.05,
+      "source_pack": "dark_city",
+      "source_path": "blue/paralax4.png"
+    },
+    {
+      "index": 5,
+      "path": "assets/generated/converted/city_parallax/city_layer_5.png",
+      "scroll_scale": 0.02,
+      "source_pack": "dark_city",
+      "source_path": "blue/paralax5.png"
+    }
+  ],
+  "native_size": [
+    480,
+    270
+  ],
+  "source_palette": "blue",
+  "viewport_size": [
+    960,
+    540
+  ]
+}

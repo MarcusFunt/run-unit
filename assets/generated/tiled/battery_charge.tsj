@@ -1,0 +1,1275 @@
+{
+  "columns": 10,
+  "image": "../atlases/battery_charge_cyan_18x25.png",
+  "imageheight": 150,
+  "imagewidth": 180,
+  "name": "RUN_UNIT_Battery_Charge",
+  "tilecount": 60,
+  "tiledversion": "1.11",
+  "tileheight": 25,
+  "tiles": [
+    {
+      "id": 0,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px1"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 1,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px2"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 2,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px3"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 3,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px4"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 4,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px5"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 5,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px6"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 6,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px7"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 7,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px8"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 8,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px9"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 9,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px10"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 10,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px11"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 11,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px12"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 12,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px13"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 13,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px14"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 14,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px15"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 15,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px16"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 16,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px17"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 17,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px18"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 18,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px19"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 19,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px20"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 20,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px21"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 21,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px22"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 22,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px23"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 23,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px24"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 24,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px25"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 25,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px26"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 26,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px27"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 27,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px28"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 28,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px29"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 29,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px30"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 30,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px31"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 31,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px32"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 32,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px33"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 33,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px34"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 34,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px35"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 35,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px36"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 36,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px37"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 37,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px38"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 38,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px39"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 39,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px40"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 40,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px41"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 41,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px42"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 42,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px43"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 43,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px44"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 44,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px45"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 45,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px46"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 46,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px47"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 47,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px48"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 48,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px49"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 49,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px50"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 50,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px51"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 51,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px52"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 52,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px53"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 53,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px54"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 54,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px55"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 55,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px56"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 56,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px57"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 57,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px58"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 58,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px59"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    },
+    {
+      "id": 59,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "battery_25x50px60"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_UI"
+    }
+  ],
+  "tilewidth": 18,
+  "type": "tileset",
+  "version": "1.10"
+}

@@ -1,0 +1,1 @@
+Battery.zip was supplied by the user and contained no licence file. Treat the derived battery sprites as provenance-unverified until their upstream source and licence are recorded.

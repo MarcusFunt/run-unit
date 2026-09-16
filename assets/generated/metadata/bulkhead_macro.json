@@ -1,0 +1,15 @@
+{
+  "collision": "none",
+  "layers": [
+    "bulkhead-walls-back.png",
+    "cols.png",
+    "bulkhead-walls-pipes.png",
+    "bulkhead-walls-platform.png"
+  ],
+  "size": [
+    352,
+    224
+  ],
+  "source_pack": "bulkhead",
+  "use": "background_macro_chunk"
+}

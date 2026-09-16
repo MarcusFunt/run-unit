@@ -1,0 +1,119 @@
+[
+  {
+    "collision": "level_semantic_layer",
+    "id": 0,
+    "key": "barrel_1",
+    "output_path": "assets/generated/converted/pzuh_objects/barrel_1.png",
+    "role": "object",
+    "size": [
+      177,
+      238
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/Barrel (1).png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 1,
+    "key": "barrel_2",
+    "output_path": "assets/generated/converted/pzuh_objects/barrel_2.png",
+    "role": "object",
+    "size": [
+      177,
+      238
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/Barrel (2).png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 2,
+    "key": "box",
+    "output_path": "assets/generated/converted/pzuh_objects/box.png",
+    "role": "object",
+    "size": [
+      256,
+      256
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/Box.png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 3,
+    "key": "doorlocked",
+    "output_path": "assets/generated/converted/pzuh_objects/doorlocked.png",
+    "role": "object",
+    "size": [
+      280,
+      464
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/DoorLocked.png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 4,
+    "key": "dooropen",
+    "output_path": "assets/generated/converted/pzuh_objects/dooropen.png",
+    "role": "object",
+    "size": [
+      280,
+      464
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/DoorOpen.png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 5,
+    "key": "doorunlocked",
+    "output_path": "assets/generated/converted/pzuh_objects/doorunlocked.png",
+    "role": "object",
+    "size": [
+      281,
+      464
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/DoorUnlocked.png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 6,
+    "key": "saw",
+    "output_path": "assets/generated/converted/pzuh_objects/saw.png",
+    "role": "object",
+    "size": [
+      357,
+      361
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/Saw.png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 7,
+    "key": "switch_1",
+    "output_path": "assets/generated/converted/pzuh_objects/switch_1.png",
+    "role": "object",
+    "size": [
+      72,
+      257
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/Switch (1).png"
+  },
+  {
+    "collision": "level_semantic_layer",
+    "id": 8,
+    "key": "switch_2",
+    "output_path": "assets/generated/converted/pzuh_objects/switch_2.png",
+    "role": "object",
+    "size": [
+      72,
+      257
+    ],
+    "source_pack": "pzuh",
+    "source_path": "png/Objects/Switch (2).png"
+  }
+]

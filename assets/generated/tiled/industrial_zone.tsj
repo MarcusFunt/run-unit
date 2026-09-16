@@ -1,0 +1,1716 @@
+{
+  "columns": 9,
+  "image": "../atlases/industrial_zone_cyan_32.png",
+  "imageheight": 288,
+  "imagewidth": 288,
+  "name": "RUN_UNIT_Industrial_Zone",
+  "tilecount": 81,
+  "tiledversion": "1.11",
+  "tileheight": 32,
+  "tiles": [
+    {
+      "id": 0,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_01"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 1,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_02"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 2,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_03"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 3,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_04"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 4,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_05"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 5,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_06"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 6,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_07"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 7,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_08"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 8,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_09"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 9,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_10"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 10,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_11"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 11,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_12"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 12,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_13"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 13,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_14"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 14,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_15"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 15,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_16"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 16,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_17"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 17,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_18"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 18,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_19"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 19,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_20"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 20,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_21"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 21,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_22"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 22,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_23"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 23,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_24"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 24,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_25"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 25,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_26"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 26,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_27"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 27,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_28"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 28,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_29"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 29,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_30"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 30,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_31"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 31,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_32"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 32,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_33"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 33,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_34"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 34,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_35"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 35,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_36"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 36,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_37"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 37,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_38"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 38,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_39"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 39,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_40"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 40,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_41"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 41,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_42"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 42,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_43"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 43,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_44"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 44,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_45"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 45,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_46"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 46,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_47"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 47,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_48"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 48,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_49"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 49,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_50"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 50,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_51"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 51,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_52"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 52,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_53"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 53,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_54"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 54,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_55"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 55,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_56"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 56,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_57"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 57,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_58"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 58,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_59"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 59,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_60"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 60,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_61"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 61,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_62"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 62,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_63"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 63,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_64"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 64,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_65"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 65,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_66"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 66,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_67"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 67,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_68"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 68,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_69"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 69,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_70"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 70,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_71"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 71,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_72"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 72,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_73"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 73,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_74"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 74,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_75"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 75,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_76"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 76,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_77"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 77,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_78"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 78,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_79"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 79,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_80"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 80,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "industrialtile_81"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        },
+        {
+          "name": "review_status",
+          "type": "string",
+          "value": "art_classified"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    }
+  ],
+  "tilewidth": 32,
+  "type": "tileset",
+  "version": "1.10"
+}

@@ -1,0 +1,183 @@
+{
+  "columns": 0,
+  "name": "RUN_UNIT_PZUH_Objects",
+  "tilecount": 9,
+  "tiledversion": "1.11",
+  "tileheight": 512,
+  "tiles": [
+    {
+      "id": 0,
+      "image": "../converted/pzuh_objects/barrel_1.png",
+      "imageheight": 238,
+      "imagewidth": 177,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "barrel_1"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 1,
+      "image": "../converted/pzuh_objects/barrel_2.png",
+      "imageheight": 238,
+      "imagewidth": 177,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "barrel_2"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 2,
+      "image": "../converted/pzuh_objects/box.png",
+      "imageheight": 256,
+      "imagewidth": 256,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "box"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 3,
+      "image": "../converted/pzuh_objects/doorlocked.png",
+      "imageheight": 464,
+      "imagewidth": 280,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "doorlocked"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 4,
+      "image": "../converted/pzuh_objects/dooropen.png",
+      "imageheight": 464,
+      "imagewidth": 280,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "dooropen"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 5,
+      "image": "../converted/pzuh_objects/doorunlocked.png",
+      "imageheight": 464,
+      "imagewidth": 281,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "doorunlocked"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 6,
+      "image": "../converted/pzuh_objects/saw.png",
+      "imageheight": 361,
+      "imagewidth": 357,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "saw"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 7,
+      "image": "../converted/pzuh_objects/switch_1.png",
+      "imageheight": 257,
+      "imagewidth": 72,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "switch_1"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    },
+    {
+      "id": 8,
+      "image": "../converted/pzuh_objects/switch_2.png",
+      "imageheight": 257,
+      "imagewidth": 72,
+      "properties": [
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "switch_2"
+        },
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "level_semantic_layer"
+        }
+      ],
+      "type": "RUN_UNIT_DECOR"
+    }
+  ],
+  "tilewidth": 512,
+  "type": "tileset",
+  "version": "1.10"
+}

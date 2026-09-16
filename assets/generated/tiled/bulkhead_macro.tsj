@@ -1,0 +1,31 @@
+{
+  "columns": 0,
+  "name": "RUN_UNIT_Bulkhead_Macros",
+  "tilecount": 1,
+  "tiledversion": "1.11",
+  "tileheight": 224,
+  "tiles": [
+    {
+      "id": 0,
+      "image": "../converted/bulkhead/bulkhead_run_unit_full.png",
+      "imageheight": 224,
+      "imagewidth": 352,
+      "properties": [
+        {
+          "name": "collision",
+          "type": "string",
+          "value": "none"
+        },
+        {
+          "name": "asset_key",
+          "type": "string",
+          "value": "bulkhead_run_unit_full"
+        }
+      ],
+      "type": "RUN_UNIT_BACKGROUND"
+    }
+  ],
+  "tilewidth": 352,
+  "type": "tileset",
+  "version": "1.10"
+}

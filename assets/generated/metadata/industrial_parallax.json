@@ -1,0 +1,41 @@
+{
+  "layers": [
+    {
+      "bottom_aligned": true,
+      "index": 1,
+      "scroll_scale": 0.35,
+      "source_pack": "industrial_parallax",
+      "source_path": "parallax-industrial-pack/layers/skill-desc_0000_foreground.png"
+    },
+    {
+      "bottom_aligned": true,
+      "index": 2,
+      "scroll_scale": 0.18,
+      "source_pack": "industrial_parallax",
+      "source_path": "parallax-industrial-pack/layers/skill-desc_0001_buildings.png"
+    },
+    {
+      "bottom_aligned": true,
+      "index": 3,
+      "scroll_scale": 0.08,
+      "source_pack": "industrial_parallax",
+      "source_path": "parallax-industrial-pack/layers/skill-desc_0002_far-buildings.png"
+    },
+    {
+      "bottom_aligned": true,
+      "index": 4,
+      "scroll_scale": 0.02,
+      "source_pack": "industrial_parallax",
+      "source_path": "parallax-industrial-pack/layers/skill-desc_0003_bg.png"
+    }
+  ],
+  "license": "CC0; bundled licence.txt from the supplied archive",
+  "native_size": [
+    272,
+    160
+  ],
+  "viewport_composition": [
+    1088,
+    640
+  ]
+}
