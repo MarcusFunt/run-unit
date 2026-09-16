@@ -122,9 +122,9 @@
             "name": "low_clearance_overhang",
             "type": "",
             "x": 0,
-            "y": 0,
+            "y": -400,
             "width": 32,
-            "height": 6,
+            "height": 406,
             "rotation": 0,
             "visible": true,
             "properties": [
