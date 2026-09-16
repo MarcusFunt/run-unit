@@ -70,6 +70,7 @@ func _process(delta: float) -> void:
 	_advance_visual_clock(delta)
 
 	if player == null:
+		_update_eye()
 		_apply_pose(25.0, 105.0, 0.0, 0.0)
 		return
 
