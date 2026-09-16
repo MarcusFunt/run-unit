@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/tiled_static_world.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/poc/tiled_level_poc.tmj" id="2_level"]
+
+[node name="TiledWorldPoc" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="TiledLevel" parent="." instance=ExtResource("2_level")]

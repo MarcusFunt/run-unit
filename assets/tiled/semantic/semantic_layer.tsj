@@ -1,0 +1,105 @@
+{
+  "columns": 5,
+  "image": "semantic_layer.png",
+  "imageheight": 32,
+  "imagewidth": 160,
+  "margin": 0,
+  "name": "RUN_UNIT_Semantic_Layer",
+  "spacing": 0,
+  "tilecount": 5,
+  "tiledversion": "1.11",
+  "tileheight": 32,
+  "tilewidth": 32,
+  "type": "tileset",
+  "version": "1.10",
+  "tiles": [
+    {
+      "id": 0,
+      "properties": [
+        { "name": "data_semantic", "type": "int", "value": 1 },
+        { "name": "data_semantic_name", "type": "string", "value": "solid" }
+      ],
+      "objectgroup": {
+        "draworder": "index",
+        "id": 1,
+        "name": "",
+        "opacity": 1,
+        "type": "objectgroup",
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "objects": [
+          {
+            "id": 1,
+            "name": "",
+            "type": "",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "rotation": 0,
+            "visible": true,
+            "properties": [
+              { "name": "physics_layer", "type": "int", "value": 0 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "properties": [
+        { "name": "data_semantic", "type": "int", "value": 2 },
+        { "name": "data_semantic_name", "type": "string", "value": "one_way" }
+      ],
+      "objectgroup": {
+        "draworder": "index",
+        "id": 1,
+        "name": "",
+        "opacity": 1,
+        "type": "objectgroup",
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "objects": [
+          {
+            "id": 1,
+            "name": "",
+            "type": "",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "rotation": 0,
+            "visible": true,
+            "properties": [
+              { "name": "physics_layer", "type": "int", "value": 0 },
+              { "name": "one_way", "type": "bool", "value": true }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "properties": [
+        { "name": "data_semantic", "type": "int", "value": 3 },
+        { "name": "data_semantic_name", "type": "string", "value": "hazard" }
+      ]
+    },
+    {
+      "id": 3,
+      "properties": [
+        { "name": "data_semantic", "type": "int", "value": 4 },
+        { "name": "data_semantic_name", "type": "string", "value": "conveyor" }
+      ]
+    },
+    {
+      "id": 4,
+      "properties": [
+        { "name": "data_semantic", "type": "int", "value": 5 },
+        { "name": "data_semantic_name", "type": "string", "value": "foreground" }
+      ]
+    }
+  ]
+}
