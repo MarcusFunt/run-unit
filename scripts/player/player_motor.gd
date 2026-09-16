@@ -21,7 +21,7 @@ signal jumped
 @export_category("Crouch")
 @export_range(0.1, 1.0, 0.05) var crouch_speed_multiplier: float = 0.45
 @export_range(0.08, 0.50, 0.01) var crouch_transition_time: float = 0.18
-@export_range(12.0, 48.0, 1.0) var crouch_collision_height: float = 32.0
+@export_range(12.0, 48.0, 1.0) var crouch_collision_height: float = 28.0
 @export_category("Jump Assist")
 @export var coyote_time: float = 0.11
 @export var jump_buffer_time: float = 0.12

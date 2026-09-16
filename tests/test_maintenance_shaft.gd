@@ -82,9 +82,10 @@ func test_player_lands_on_the_shipping_starting_deck() -> void:
 	assert_almost_eq(player.global_position.y, 448.0 - 24.0, 6.0, "The player settles on the tiled deck surface")
 
 
-## The gate tile's collider is 6px taller than its cell, which is the whole
-## reason the crouch lesson survives being put on a 32px grid. These two tests
-## pin that behaviour to the real tile rather than a synthetic ceiling.
+## The gate tile's collider is shorter than its 32px cell, leaving just enough
+## clearance to force a crouch, which is the whole reason the crouch lesson
+## survives being put on a 32px grid. These two tests pin that behaviour to
+## the real tile rather than a synthetic ceiling.
 func test_shipping_crouch_gate_blocks_a_standing_player() -> void:
 	var reached_x: float = await _drive_through_gate(false)
 	assert_true(reached_x < GATE_LEFT_X, "A standing player must be stopped by the gate, got x=%.1f" % reached_x)
