@@ -8,4 +8,6 @@
   <path d="M72 41 L81 62 L103 72 L81 82 L72 103 L63 82 L41 72 L63 62Z" fill="#3B454E"/>
   <circle cx="72" cy="72" r="14" fill="#15191D" stroke="#606A73" stroke-width="4"/>
   <circle cx="72" cy="72" r="5" fill="#278BD2"/>
+  <!-- Asymmetric tread marker: breaks the wheel's rotational symmetry so spin is perceptually readable. -->
+  <path d="M72 9 V22" stroke="#39D9FF" stroke-width="4" stroke-linecap="round"/>
 </svg>
