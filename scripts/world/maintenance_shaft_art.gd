@@ -83,11 +83,13 @@ func _draw_gap_marker(start_x: float, end_x: float, surface_y: float, accent: Co
 
 ## Posts bracket the gate cells at tiles 59-61 (x 1888-1984); the gate's
 ## underside sits at y=358, 58px above the deck, so a standing (64px) player
-## must crouch (36px) to pass. The mechanism is mounted right at the top of
-## its 32px cell (the shaft is wide open above it, see the Semantic layer),
-## so almost the whole cell below the bar is open air -- raising the bar this
-## close to the real ceiling keeps the gate from reading as a low ceiling of
-## its own while a player is just running or jumping past it.
+## must crouch (36px) to pass. Only the underside (drawn here) is visible --
+## the tile's actual collider (semantic_layer.tsj, "low_clearance_overhang")
+## extends far above the cell, all the way past the top of a full charged
+## jump's arc. The Semantic layer is wide open above this column, so a
+## collider confined to the 32px cell let a player jump clean over the gate
+## and land standing on top of it; the tall collider makes it a true
+## impassable ceiling instead of a floating landable platform.
 func _draw_gate_frame() -> void:
 	draw_rect(Rect2(1888.0, 352.0, 96.0, 6.0), GATE_UNDERSIDE)
 	draw_rect(Rect2(1888.0, 356.0, 96.0, 2.0), SIGNAL_AMBER)
