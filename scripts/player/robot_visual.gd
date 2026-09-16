@@ -14,9 +14,8 @@ extends Node2D
 @export_range(0.0, 2.0, 0.1) var idle_body_lean_deg: float = 0.6
 
 @export_category("Driving Motion")
-@export_range(0.0, 4.0, 0.1) var run_upper_amplitude_deg: float = 1.5
-@export_range(0.0, 6.0, 0.1) var run_knee_amplitude_deg: float = 3.0
-@export_range(0.0, 2.0, 0.1) var run_body_amplitude_deg: float = 0.8
+## A wheel has no gait, so driving only leans the body toward speed; it does
+## not add a walk-cycle-style suspension wobble (see idle sway for that).
 @export_range(0.0, 10.0, 0.1) var max_drive_body_lean_deg: float = 5.5
 
 @export_category("Antenna")
@@ -50,7 +49,6 @@ var _facing_left: bool = true
 ## Accumulated delta time driving all presentation animation. Never wall-clock
 ## time, so behavior stays identical regardless of render framerate.
 var _visual_time: float = 0.0
-var _travel_phase: float = 0.0
 var _smoothed_body_lean: float = 0.0
 var _antenna_angle: float = 0.0
 var _antenna_velocity: float = 0.0
@@ -78,12 +76,10 @@ func _process(delta: float) -> void:
 	_landing_compression = maxf(_landing_compression - delta * 3.4, 0.0)
 
 	_update_wheel_spin(delta)
-	_update_travel_phase(delta)
 
 	var pose: Dictionary = _build_base_pose()
 
 	_apply_idle_motion(pose)
-	_apply_drive_motion(pose)
 	_apply_landing_response(pose)
 	_apply_body_lean(pose, delta)
 
@@ -157,24 +153,6 @@ func _apply_idle_motion(pose: Dictionary) -> void:
 	pose["knee_deg"] -= idle_wave * idle_knee_amplitude_deg * idle_weight
 	pose["body_lean"] += deg_to_rad(cos(idle_phase) * idle_body_lean_deg * idle_weight)
 
-func _is_drive_eligible() -> bool:
-	if player == null or not player.is_on_floor():
-		return false
-	if player.is_charging() or player.is_crouching():
-		return false
-	return true
-
-func _apply_drive_motion(pose: Dictionary) -> void:
-	if not _is_drive_eligible():
-		return
-	var run_weight: float = smoothstep(0.08, 0.40, _speed_ratio())
-	if run_weight <= 0.0:
-		return
-	var run_wave: float = sin(_travel_phase * 2.0)
-	pose["upper_deg"] += run_wave * run_upper_amplitude_deg * run_weight
-	pose["knee_deg"] -= run_wave * run_knee_amplitude_deg * run_weight
-	pose["body_lean"] += deg_to_rad(run_wave * run_body_amplitude_deg * run_weight)
-
 func _apply_landing_response(pose: Dictionary) -> void:
 	if player == null or not player.is_on_floor():
 		return
@@ -213,13 +191,6 @@ func _update_wheel_spin(delta: float) -> void:
 	# forward travel always yields a spin magnitude equal to the angle rolled,
 	# rather than wrapping into the [0, TAU) range and inflating the magnitude.
 	_wheel_spin = fmod(_wheel_spin - angular_delta, TAU)
-
-func _update_travel_phase(delta: float) -> void:
-	var radius: float = get_wheel_radius_world()
-	if radius <= 0.001:
-		return
-	var forward_speed: float = absf(_forward_velocity())
-	_travel_phase = fposmod(_travel_phase + forward_speed * delta / radius, TAU)
 
 func _player_acceleration_x(delta: float) -> float:
 	if player == null:
@@ -322,12 +293,6 @@ func advance_visual_time_for_test(delta: float) -> void:
 func get_visual_time_for_test() -> float:
 	return _visual_time
 
-func update_travel_phase_for_test(delta: float) -> void:
-	_update_travel_phase(delta)
-
-func get_travel_phase_for_test() -> float:
-	return _travel_phase
-
 func run_process_for_test(delta: float) -> void:
 	_process(delta)
 
@@ -351,6 +316,3 @@ func apply_landing_impulse_for_test() -> void:
 
 func is_idle_eligible_for_test() -> bool:
 	return _is_idle_eligible()
-
-func is_drive_eligible_for_test() -> bool:
-	return _is_drive_eligible()
