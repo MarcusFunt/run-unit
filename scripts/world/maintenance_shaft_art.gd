@@ -1,8 +1,10 @@
 extends Node2D
 
 ## Drawn-in-world dressing for the authored Maintenance Shaft tutorial.
-## The collision route remains in world.tscn; this layer only makes the route
-## legible as a service shaft and gives each lesson a distinct visual identity.
+## Gameplay geometry and collision come from the Tiled-authored level
+## (assets/tiled/levels/maintenance_shaft.tmj); this layer is level-specific
+## presentation only, making the route legible as a service shaft and giving
+## each lesson a distinct visual identity.
 
 @export var foreground: bool = false
 @export var route_length: float = 4864.0
@@ -12,6 +14,7 @@ const WALL_PANEL: Color = Color(0.030, 0.110, 0.145, 0.72)
 const WALL_EDGE: Color = Color(0.090, 0.310, 0.360, 0.42)
 const SIGNAL_TEAL: Color = Color(0.300, 0.930, 0.900, 0.88)
 const SIGNAL_AMBER: Color = Color(1.000, 0.620, 0.180, 0.96)
+const GATE_UNDERSIDE: Color = Color(0.129, 0.255, 0.353, 1.0)
 
 func _ready() -> void:
 	queue_redraw()
@@ -75,7 +78,12 @@ func _draw_gap_marker(start_x: float, end_x: float, surface_y: float, accent: Co
 
 ## Posts bracket the gate cells at tiles 59-61 (x 1888-1984); the gate's
 ## underside sits at y=390, 26px above the deck, so the player must crouch.
+## The gate tile's collision box is 6px taller than the 32px cell it sits in,
+## so the underside strip below y=384 draws that overhang -- without it the
+## player would be stopped by geometry the gate does not appear to have.
 func _draw_gate_frame() -> void:
+	draw_rect(Rect2(1888.0, 384.0, 96.0, 6.0), GATE_UNDERSIDE)
+	draw_rect(Rect2(1888.0, 388.0, 96.0, 2.0), SIGNAL_AMBER)
 	draw_line(Vector2(1878.0, 352.0), Vector2(1878.0, 416.0), SIGNAL_AMBER, 3.0)
 	draw_line(Vector2(1994.0, 352.0), Vector2(1994.0, 416.0), SIGNAL_AMBER, 3.0)
 	draw_circle(Vector2(1878.0, 346.0), 5.0, SIGNAL_AMBER)

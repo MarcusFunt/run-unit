@@ -1,11 +1,12 @@
 class_name RunUnitStaticWorld
 extends Node2D
 
-## Route geometry comes from the Tiled-authored, YATI-imported TileMapLayers
-## under this node (assets/tiled/levels/maintenance_shaft.tmj):
+## Route geometry comes from the Tiled-authored, YATI-imported level under this
+## node (assets/tiled/levels/maintenance_shaft.tmj):
 ##   "Semantic"  - route floor; owns collision and is scanned for platforms
 ##   "Obstacles" - collidable obstacle geometry (the crouch gate); never a platform
-##   "Art"       - decoration only, carries no collision at all
+##   "ArtFill" / "ArtDeck" - decoration only, carry no collision at all
+##   "Markers"   - Spawn/Goal points, so start and finish travel with the level
 ## Collision is the tiles' own, so it stays independent of the artwork drawn
 ## over it (metadata/semantic_tile_contract.json).
 
@@ -19,6 +20,11 @@ const SEMANTIC_EMPTY: int = 0
 const SEMANTIC_SOLID: int = 1
 const SEMANTIC_ONE_WAY: int = 2
 
+## Used only when a level ships without a Spawn marker, so a malformed map
+## still starts somewhere sane instead of dropping the player at the origin.
+const FALLBACK_SPAWN_POSITION: Vector2 = Vector2(128.0, 385.0)
+const COMPLETION_TRIGGER_SIZE: Vector2 = Vector2(64.0, 128.0)
+
 @export var death_y: float = 900.0
 
 var tile_size: float = TILE_SIZE
@@ -27,14 +33,21 @@ var _difficulty: float = 0.0
 var _metrics: Dictionary = {}
 var _completion_triggered: bool = false
 var _semantic_layer: TileMapLayer = null
-@onready var _completion_trigger: Area2D = get_node_or_null("CompletionTrigger") as Area2D
+var _spawn_marker: Marker2D = null
+var _goal_marker: Marker2D = null
+var _completion_trigger: Area2D = null
 
 func _ready() -> void:
 	_semantic_layer = _find_layer(&"Semantic")
+	if _semantic_layer == null:
+		push_error("RunUnitStaticWorld: required 'Semantic' TileMapLayer is missing; the route will be empty.")
+	_spawn_marker = _find_marker(&"Spawn")
+	if _spawn_marker == null:
+		push_warning("RunUnitStaticWorld: no 'Spawn' marker in the level; falling back to %s." % FALLBACK_SPAWN_POSITION)
+	_goal_marker = _find_marker(&"Goal")
 	_load_platforms_from_tilemap()
 	_update_metrics()
-	if _completion_trigger != null and not _completion_trigger.body_entered.is_connected(_on_completion_trigger_body_entered):
-		_completion_trigger.body_entered.connect(_on_completion_trigger_body_entered)
+	_ensure_completion_trigger()
 
 func set_level_profile(_level_index: int) -> void:
 	pass
@@ -97,6 +110,43 @@ func get_route_length() -> float:
 func is_completion_triggered() -> bool:
 	return _completion_triggered
 
+## Where a run starts. Authored as a "Spawn" point in the level's Markers
+## layer so a generated map can move it without touching Godot scenes or code.
+func get_spawn_position() -> Vector2:
+	if _spawn_marker == null:
+		return FALLBACK_SPAWN_POSITION
+	return _spawn_marker.global_position
+
+func has_goal() -> bool:
+	return _goal_marker != null
+
+## Where a run finishes; the completion trigger is built around this point.
+func get_goal_position() -> Vector2:
+	if _goal_marker == null:
+		return Vector2.ZERO
+	return _goal_marker.global_position
+
+## Builds the finish area from the level's Goal marker, so a level that moves
+## its finish does not also need its trigger repositioned by hand. A trigger
+## already present in the scene wins, which keeps hand-authored levels working.
+func _ensure_completion_trigger() -> void:
+	_completion_trigger = get_node_or_null("CompletionTrigger") as Area2D
+	if _completion_trigger == null and has_goal():
+		var trigger: Area2D = Area2D.new()
+		trigger.name = "CompletionTrigger"
+		trigger.position = get_goal_position()
+		trigger.collision_layer = 0
+		trigger.collision_mask = 1
+		var shape: CollisionShape2D = CollisionShape2D.new()
+		var rectangle: RectangleShape2D = RectangleShape2D.new()
+		rectangle.size = COMPLETION_TRIGGER_SIZE
+		shape.shape = rectangle
+		trigger.add_child(shape)
+		add_child(trigger)
+		_completion_trigger = trigger
+	if _completion_trigger != null and not _completion_trigger.body_entered.is_connected(_on_completion_trigger_body_entered):
+		_completion_trigger.body_entered.connect(_on_completion_trigger_body_entered)
+
 ## Raw semantic value (0-5, see metadata/semantic_tile_contract.json) of the
 ## cell at a world position, whether or not it forms a walkable platform.
 func get_semantic_value(world_x: float, world_y: float) -> int:
@@ -109,13 +159,16 @@ func get_semantic_value(world_x: float, world_y: float) -> int:
 	return int(data.get_custom_data("semantic"))
 
 func _find_layer(layer_name: StringName) -> TileMapLayer:
-	return _find_layer_recursive(self, layer_name)
+	return _find_node_of_type(self, layer_name, "TileMapLayer") as TileMapLayer
 
-func _find_layer_recursive(node: Node, layer_name: StringName) -> TileMapLayer:
+func _find_marker(marker_name: StringName) -> Marker2D:
+	return _find_node_of_type(self, marker_name, "Marker2D") as Marker2D
+
+func _find_node_of_type(node: Node, wanted_name: StringName, wanted_class: String) -> Node:
 	for child: Node in node.get_children():
-		if child.name == layer_name and child is TileMapLayer:
-			return child as TileMapLayer
-		var found: TileMapLayer = _find_layer_recursive(child, layer_name)
+		if child.name == wanted_name and child.is_class(wanted_class):
+			return child
+		var found: Node = _find_node_of_type(child, wanted_name, wanted_class)
 		if found != null:
 			return found
 	return null

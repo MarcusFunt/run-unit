@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="Script" path="res://scripts/world/maintenance_shaft_art.gd" id="2_rwgxs"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/maintenance_shaft.tmj" id="3_shaft"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_completion_trigger"]
-size = Vector2(64, 128)
 
 [node name="World" type="Node2D" unique_id=379300857]
 script = ExtResource("1_world")
@@ -204,15 +201,6 @@ theme_override_font_sizes/font_size = 11
 text = "STAY LOW // EXIT THE SHAFT"
 horizontal_alignment = 0
 vertical_alignment = 1
-
-[node name="CompletionTrigger" type="Area2D" parent="."]
-position = Vector2(4544, 352)
-collision_layer = 0
-collision_mask = 1
-monitoring = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionTrigger"]
-shape = SubResource("RectangleShape2D_completion_trigger")
 
 [node name="ShaftBackdropArt" type="Node2D" parent="." unique_id=1344403441]
 z_index = -8

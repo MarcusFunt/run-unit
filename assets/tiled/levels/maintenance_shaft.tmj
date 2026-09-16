@@ -17693,10 +17693,46 @@
       "width": 152,
       "x": 0,
       "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 5,
+      "name": "Markers",
+      "objects": [
+        {
+          "id": 1,
+          "name": "Spawn",
+          "type": "",
+          "point": true,
+          "x": 128,
+          "y": 385,
+          "width": 0,
+          "height": 0,
+          "rotation": 0,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "name": "Goal",
+          "type": "",
+          "point": true,
+          "x": 4544,
+          "y": 352,
+          "width": 0,
+          "height": 0,
+          "rotation": 0,
+          "visible": true
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
     }
   ],
-  "nextlayerid": 5,
-  "nextobjectid": 1,
+  "nextlayerid": 6,
+  "nextobjectid": 3,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.11",
