@@ -45,6 +45,36 @@ func test_platforms_are_derived_from_the_semantic_tilemap_layer() -> void:
 	assert_eq(world.get_route_length(), 22.0, "Route length should reach the far edge of the last platform (x=21)")
 
 
+func test_position_aware_platform_query_prefers_nearest_surface_below_player() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var overlapping_platforms: Array[Dictionary] = [
+		{"platform_id": 1, "start_x": 0, "end_x": 10, "height": 5},
+		{"platform_id": 2, "start_x": 0, "end_x": 10, "height": 10},
+	]
+	world.set("_platforms", overlapping_platforms)
+
+	var above_both: Dictionary = world.get_platform_below_position(Vector2(5 * TILE, 100.0))
+	assert_eq(int(above_both.get("platform_id", -1)), 1, "Nearest lower surface should win when platforms overlap in X")
+	var between_surfaces: Dictionary = world.get_platform_below_position(Vector2(5 * TILE, 200.0))
+	assert_eq(int(between_surfaces.get("platform_id", -1)), 2, "A platform already above the player must not be reported as below")
+
+
+func test_position_aware_platform_query_handles_world_transform() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	world.position = Vector2(320.0, 96.0)
+	add_child_autofree(world)
+	var platforms: Array[Dictionary] = [
+		{"platform_id": 7, "start_x": 0, "end_x": 10, "height": 5},
+	]
+	world.set("_platforms", platforms)
+	var query_position: Vector2 = world.to_global(Vector2(5 * TILE, 100.0))
+
+	var platform: Dictionary = world.get_platform_below_position(query_position)
+
+	assert_eq(int(platform.get("platform_id", -1)), 7, "World-space queries should respect the StaticWorld transform")
+
+
 func test_semantic_values_are_queryable_independent_of_collision() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)

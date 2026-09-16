@@ -4,8 +4,8 @@ extends Control
 @export_file("*.tscn") var game_scene_path: String = "res://scenes/game.tscn"
 const PLAYABLE_LEVEL_INDEX: int = 0
 const ROUTE_SLOT_COUNT: int = 8
-const PLAYABLE_ROUTE_NAME: String = "MAINTENANCE SHAFT"
-const PLAYABLE_ROUTE_DESCRIPTION: String = "FINAL WORK ORDER 09-441\nCarry the Solar Ignition Core to Beacon 9.\n\nCurrent playable route: service tunnels beneath the municipal core."
+const PLAYABLE_ROUTE_NAME: String = "FINAL INSPECTION"
+const PLAYABLE_ROUTE_DESCRIPTION: String = "CALIBRATION COMPLETE\nProceed through Final Inspection and cross the stalled transfer line toward storage.\n\nAutomation is offline. Traverse the factory manually."
 
 @onready var sector_grid: GridContainer = %SectorGrid
 @onready var selected_sector: Label = %SelectedSector

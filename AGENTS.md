@@ -2,8 +2,10 @@
 
 ## Stack
 
-- Godot 4.7, GDScript, and text-based `.tscn` / `.tres` resources.
-- GUT is bundled under `addons/gut` for automated tests.
+- Godot 4.7.1, GDScript, and text-based `.tscn` / `.tres` resources.
+- Tiled + YATI are the authored-level pipeline.
+- GUT 9.7.1 is bundled under `addons/gut`.
+- Python 3 is used for deterministic repository tooling.
 
 ## Local commands
 
@@ -12,22 +14,37 @@
 godot --editor --path .
 godot --path .
 
-# Run all GUT tests
-godot --headless --path . -s res://addons/gut/gut_cmdln.gd -gdir=res://tests -ginclude_subdirs -gexit
+# Canonical test path: force Tiled reimport, import project, run all GUT tests
+python tools/run_gut.py
+
+# Tooling unit tests
+python -m unittest discover -s tools/tests -v
 ```
+
+If Godot is not on `PATH`, use `python tools/run_gut.py --godot <path>`.
+
+## Authored world contract
+
+`assets/tiled/levels/maintenance_shaft.tmj` is the current playable map despite its legacy filename. Its external semantic tileset is `assets/tiled/semantic/semantic_layer.tsj`. `scenes/world.tscn` wraps the imported map; do not move authored platform geometry back into hand-maintained Godot collision nodes.
+
+After any `.tmj` or `.tsj` change, use `tools/run_gut.py`. Godot/YATI may otherwise reuse a stale `.tmj` cache when only the external `.tsj` changed.
 
 ## Repository boundaries
 
-- Commit gameplay source, scenes, themes, assets, add-ons, test scripts, test
-  scenarios, and useful project documentation.
-- Do not commit Godot's `.godot/` cache, staged add-on/template folders,
-  exports, local settings, secrets, logs, or rendered QA/validation artefacts.
-- Keep `.uid` files next to GDScript source when Godot creates them; they are
-  source identifiers, not editor cache files.
-- Keep Godot scene/resource files as text and preserve their LF line endings.
+- Commit gameplay source, scenes, themes, authored assets/maps, add-ons, tests, export presets, CI, and useful project documentation.
+- Never commit `.godot/`, new `*.import` sidecars, staged template folders, local exports/builds, local MCP state, secrets, logs, or QA screenshots. Legacy tracked sidecars exist; do not intentionally rewrite them.
+- Keep `.uid` files next to GDScript source when Godot creates them.
+- Preserve LF line endings for Godot scenes/resources and scripts.
 
 ## Change discipline
 
 - Keep feature, test, and repository-hygiene changes easy to review.
-- Run the relevant GUT suite before committing gameplay changes.
+- Write a regression test before changing gameplay behavior.
+- Run `python tools/run_gut.py` before committing gameplay or Tiled changes.
+- Keep `StorylineSketch.md` and player-facing route copy aligned; do not restore the retired Solar Ignition Core / Beacon 9 storyline.
+- Do not rewrite the Tiled/YATI pipeline, player motor, or menu framework merely to add level content.
 - Never force-push shared branches or commit credentials.
+
+## Release
+
+`export_presets.cfg` defines the Windows Desktop build. GitHub Actions installs matching export templates, validates the project, exports the build, and publishes the `RUN_UNIT-windows` artifact. Prefer that reproducible artifact for deadline submissions unless a local export is explicitly required.
