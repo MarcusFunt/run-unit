@@ -1,12 +1,12 @@
 {
-  "columns": 5,
+  "columns": 6,
   "image": "semantic_layer.png",
   "imageheight": 32,
-  "imagewidth": 160,
+  "imagewidth": 192,
   "margin": 0,
   "name": "RUN_UNIT_Semantic_Layer",
   "spacing": 0,
-  "tilecount": 5,
+  "tilecount": 6,
   "tiledversion": "1.11",
   "tileheight": 32,
   "tilewidth": 32,
@@ -100,6 +100,39 @@
         { "name": "data_semantic", "type": "int", "value": 5 },
         { "name": "data_semantic_name", "type": "string", "value": "foreground" }
       ]
+    },
+    {
+      "id": 5,
+      "properties": [
+        { "name": "data_semantic", "type": "int", "value": 1 },
+        { "name": "data_semantic_name", "type": "string", "value": "gate_ceiling" }
+      ],
+      "objectgroup": {
+        "draworder": "index",
+        "id": 1,
+        "name": "",
+        "opacity": 1,
+        "type": "objectgroup",
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "objects": [
+          {
+            "id": 1,
+            "name": "low_clearance_overhang",
+            "type": "",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 38,
+            "rotation": 0,
+            "visible": true,
+            "properties": [
+              { "name": "physics_layer", "type": "int", "value": 0 }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
