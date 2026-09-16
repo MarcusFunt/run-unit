@@ -5,7 +5,7 @@ extends Control
 const PLAYABLE_LEVEL_INDEX: int = 0
 const ROUTE_SLOT_COUNT: int = 8
 const PLAYABLE_ROUTE_NAME: String = "FINAL INSPECTION"
-const PLAYABLE_ROUTE_DESCRIPTION: String = "CALIBRATION COMPLETE\nProceed through Final Inspection and cross the stalled transfer line toward storage.\n\nAutomation is offline. Traverse the factory manually."
+const PLAYABLE_ROUTE_DESCRIPTION: String = "CALIBRATION READY\nComplete mobility, spring, and clearance checks in Final Inspection.\n\nFour checks. One short route."
 
 @onready var sector_grid: GridContainer = %SectorGrid
 @onready var selected_sector: Label = %SelectedSector

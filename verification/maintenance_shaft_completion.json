@@ -1,13 +1,43 @@
 {
   "scene_path": "res://scenes/game.tscn",
-  "viewport_size": {"width": 960, "height": 540},
+  "viewport_size": {
+    "width": 960,
+    "height": 540
+  },
   "settle_frames": 6,
   "steps": [
-    {"type": "set_property", "node_path": "Player", "property": "global_position", "value": {"__type": "Vector2", "x": 4544.0, "y": 401.0}},
-    {"type": "wait_frames", "frames": 9},
-    {"type": "ui_report", "label": "completion-hud", "node_path": "HUD", "fail_on": ["overlap", "zero_size", "offscreen"]}
+    {
+      "type": "set_property",
+      "node_path": "Player",
+      "property": "global_position",
+      "value": {
+        "__type": "Vector2",
+        "x": 2080.0,
+        "y": 384.0
+      }
+    },
+    {
+      "type": "wait_frames",
+      "frames": 9
+    },
+    {
+      "type": "ui_report",
+      "label": "completion-hud",
+      "node_path": "HUD",
+      "fail_on": [
+        "overlap",
+        "zero_size",
+        "offscreen"
+      ]
+    }
   ],
   "assertions": [
-    {"assertion": "property", "node_path": "DeathMenu/Overlay/Center/DeathPanel/Content/TitleLabel", "property": "text", "operator": "equals", "expected": "ROUTE COMPLETE"}
+    {
+      "assertion": "property",
+      "node_path": "DeathMenu/Overlay/Center/DeathPanel/Content/TitleLabel",
+      "property": "text",
+      "operator": "equals",
+      "expected": "ROUTE COMPLETE"
+    }
   ]
 }

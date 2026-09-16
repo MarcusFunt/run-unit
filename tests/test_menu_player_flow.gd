@@ -22,7 +22,7 @@ func test_level_selector_marks_only_the_authored_route_playable() -> void:
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
 	assert_true(selector.selected_sector.text.contains("FINAL INSPECTION"), "The playable route should use the current factory narrative")
-	assert_true(selector.description.text.contains("stalled transfer line"), "Route briefing should explain the broken factory transfer")
+	assert_true(selector.description.text.contains("mobility, spring, and clearance"), "Route briefing should describe the calibration checks actually in the tutorial")
 	assert_false(selector.description.text.contains("Solar Ignition Core"), "Retired Last Light Protocol copy must not return")
 
 func test_player_options_list_only_live_gameplay_actions() -> void:

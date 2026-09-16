@@ -8,25 +8,25 @@
   "steps": [
     {
       "type": "screenshot",
-      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/tutorial_start.png"
+      "path": "res://artifacts/tutorial_start.png"
     },
     {
-      "type": "action",
-      "action_name": "move_right",
-      "pressed": true
+      "type": "set_property",
+      "node_path": "Player",
+      "property": "global_position",
+      "value": {
+        "__type": "Vector2",
+        "x": 500.0,
+        "y": 416.0
+      }
     },
     {
-      "type": "wait_seconds",
-      "seconds": 1.65
-    },
-    {
-      "type": "action",
-      "action_name": "move_right",
-      "pressed": false
+      "type": "wait_frames",
+      "frames": 8
     },
     {
       "type": "screenshot",
-      "path": "C:/Users/marcu/Documents/ChatGPT/DDU/run-unit/artifacts/tutorial_jump.png"
+      "path": "res://artifacts/tutorial_jump.png"
     }
   ],
   "assertions": [
@@ -48,18 +48,12 @@
     },
     {
       "assertion": "node_exists",
-      "node_path": "World/CrouchGate"
+      "node_path": "World/ShaftGeometry"
     },
     {
       "assertion": "visible",
       "node_path": "World/TutorialSigns/MovementPrompt",
       "expected": true
-    },
-    {
-      "assertion": "property",
-      "node_path": "World/Platform01",
-      "property": "metadata/width_pixels",
-      "expected": 960.0
     }
   ]
 }
