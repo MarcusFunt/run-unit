@@ -6,6 +6,7 @@
 *.godot text eol=lf
 *.json text eol=lf
 *.tsj text eol=lf
+*.tmj text eol=lf
 *.md text eol=lf
 *.cfg text eol=lf
 *.svg text eol=lf
