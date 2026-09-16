@@ -9,6 +9,8 @@ extends Node2D
 
 const UPPER_LINK_LENGTH: float = 110.0
 const LOWER_LINK_LENGTH: float = 145.0
+## Visible outside radius of the wheel artwork, in source SVG pixels.
+const WHEEL_RADIUS_SOURCE_PX: float = 70.0
 
 @onready var body_pivot: Node2D = $BodyPivot
 @onready var upper_link_pivot: Node2D = $UpperLinkPivot
@@ -42,7 +44,7 @@ func _process(delta: float) -> void:
 	scale.x = 1.0 if _facing_left else -1.0
 	_jump_extension = maxf(_jump_extension - delta * 3.7, 0.0)
 	_landing_compression = maxf(_landing_compression - delta * 3.4, 0.0)
-	_wheel_spin += player.velocity.x * delta / 18.0
+	_update_wheel_spin(delta)
 
 	# Authored left-facing driving stance. Flipping RobotVisual on X gives the
 	# mirrored right-driving pose without detaching the linkage from the body.
@@ -72,6 +74,28 @@ func _process(delta: float) -> void:
 	else:
 		body_lean += bob
 	_apply_pose(upper_degrees, knee_degrees, body_lean, _wheel_spin)
+
+func get_wheel_radius_world() -> float:
+	return WHEEL_RADIUS_SOURCE_PX * art_scale
+
+## World-space forward speed expressed in the authored left-facing frame:
+## positive means travelling in whichever world direction the rig is
+## currently facing, regardless of mirroring.
+func _forward_velocity() -> float:
+	if player == null:
+		return 0.0
+	var facing_world_sign: float = -1.0 if _facing_left else 1.0
+	return player.velocity.x * facing_world_sign
+
+func _update_wheel_spin(delta: float) -> void:
+	var radius: float = get_wheel_radius_world()
+	if radius <= 0.001:
+		return
+	var angular_delta: float = _forward_velocity() * delta / radius
+	# fmod (not fposmod) keeps the sign of the accumulator so a short burst of
+	# forward travel always yields a spin magnitude equal to the angle rolled,
+	# rather than wrapping into the [0, TAU) range and inflating the magnitude.
+	_wheel_spin = fmod(_wheel_spin - angular_delta, TAU)
 
 func _apply_pose(upper_degrees: float, knee_degrees: float, body_lean: float, wheel_spin: float) -> void:
 	var lower_world_degrees: float = upper_degrees + knee_degrees
@@ -107,3 +131,12 @@ func get_visual_wheel_anchor() -> Vector2:
 
 func apply_pose_for_test(upper_degrees: float, knee_degrees: float, body_lean: float, wheel_spin: float) -> void:
 	_apply_pose(upper_degrees, knee_degrees, body_lean, wheel_spin)
+
+func set_facing_left_for_test(value: bool) -> void:
+	_facing_left = value
+
+func update_wheel_for_test(delta: float) -> void:
+	_update_wheel_spin(delta)
+
+func get_wheel_spin_for_test() -> float:
+	return _wheel_spin
