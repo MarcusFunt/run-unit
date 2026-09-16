@@ -1,0 +1,12 @@
+{
+  "projectName": "RUN//UNIT",
+  "description": "A Godot 4.7 platformer game with AI/agent capabilities",
+  "agents": [
+    {
+      "name": "awesome-gamedev-agent-skills",
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "enabled": true
+    }
+  ],
+  "permissionsMode": "default"
+}
