@@ -2,10 +2,14 @@ class_name RunUnitRobotVisual
 extends Node2D
 
 ## Transform-only presentation rig for the articulated single-wheel player.
-@export var art_scale: float = 0.36
-@export var body_to_wheel_offset: Vector2 = Vector2(-7.0, -43.5)
+## Scaled so the wheel's visual diameter (WHEEL_RADIUS_SOURCE_PX * 2 *
+## art_scale) matches the 24 px collision body's width -- the art was
+## previously drawn nearly 2x oversized for the 32 px tile grid, making
+## ceilings and the crouch gate look far too tight for the robot's silhouette.
+@export var art_scale: float = 0.171429
+@export var body_to_wheel_offset: Vector2 = Vector2(-1.448, -12.857)
 ## The wheel's visual bottom matches the 30 px player collision body's bottom.
-@export var wheel_anchor: Vector2 = Vector2(3.6, -10.2)
+@export var wheel_anchor: Vector2 = Vector2(3.6, 3.0)
 
 @export_category("Idle")
 @export_range(0.2, 1.5, 0.05) var idle_frequency_hz: float = 0.70

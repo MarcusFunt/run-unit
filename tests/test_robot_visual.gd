@@ -48,7 +48,7 @@ func test_wheel_radius_comes_from_source_geometry() -> void:
 
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 
-	assert_almost_eq(visual.get_wheel_radius_world(), 25.2, 0.001)
+	assert_almost_eq(visual.get_wheel_radius_world(), 12.0, 0.001)
 
 
 func test_wheel_spin_matches_linear_travel() -> void:
@@ -57,7 +57,7 @@ func test_wheel_spin_matches_linear_travel() -> void:
 
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 
-	player.velocity.x = -252.0
+	player.velocity.x = -120.0
 	visual.set_facing_left_for_test(true)
 	visual.update_wheel_for_test(0.1)
 
