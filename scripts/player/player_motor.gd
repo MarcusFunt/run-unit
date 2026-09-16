@@ -45,6 +45,11 @@ var _standing_collision_position: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	var rectangle: RectangleShape2D = _collision_shape.shape as RectangleShape2D
 	if rectangle != null:
+		# The .tscn sub-resource is shared across every instance of this scene;
+		# without duplicating it, one player's crouch resize would mutate the
+		# collision shape of every other Player instance in the process.
+		rectangle = rectangle.duplicate()
+		_collision_shape.shape = rectangle
 		_standing_collision_height = rectangle.size.y
 		_standing_collision_position = _collision_shape.position
 
