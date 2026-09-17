@@ -104,7 +104,7 @@ godot --headless --path . --export-release "Windows Desktop" build/RUN_UNIT.exe
 
 The numerical observation contains normalized player velocity, on-floor state, and relative information for upcoming platforms. Current-platform tracing uses the player position, not X alone, so vertically overlapping platforms can be distinguished.
 
-Reward remains newly achieved maximum forward distance in metres, with a `-1` terminal penalty after a failed run. The authored route itself is static; difficulty is a progress metric rather than a terrain-generation input.
+Reward remains newly achieved maximum forward distance in metres, with a one-off `-1` terminal penalty on the transition into a failed run; polling the reward again after that returns `0`. The authored route itself is static; difficulty is a progress metric rather than a terrain-generation input.
 
 ## Narrative source
 

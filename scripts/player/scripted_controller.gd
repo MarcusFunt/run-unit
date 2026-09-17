@@ -34,7 +34,7 @@ func _should_charge() -> bool:
 	var platform: Dictionary = _world.get_platform_below(_motor.global_position.x)
 	if platform.is_empty():
 		return false
-	var end_world_x: float = (float(platform.get("end_x", 0)) + 0.5) * _world.tile_size
+	var end_world_x: float = _world.to_global(Vector2((float(platform.get("end_x", 0)) + 0.5) * _world.tile_size, 0.0)).x
 	if not _jump_held_last_frame:
 		return _motor.global_position.x > end_world_x - 125.0
 	return _motor.global_position.x < end_world_x - 45.0 and _motor.charge_ratio < 0.70

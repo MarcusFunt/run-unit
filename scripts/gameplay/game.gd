@@ -15,6 +15,10 @@ extends Node2D
 @onready var elevator_exit: RunUnitTutorialElevatorExit = $World/ElevatorExit
 
 const PLAYABLE_LEVEL_INDEX: int = 0
+## The traversal trace exists to explain a run afterwards, not to replay it
+## frame by frame, so it is sampled on a fixed wall-clock cadence instead of
+## once per physics frame.
+const TRACE_SAMPLE_INTERVAL: float = 0.1
 
 enum RunState { ACTIVE, FAILED, COMPLETED }
 
@@ -23,6 +27,9 @@ var _run_started: bool = false
 var _bot_enabled: bool = false
 var _external_control: bool = false
 var _last_reward_distance: float = 0.0
+var _terminal_penalty_paid: bool = false
+var _trace_sample_countdown: float = 0.0
+var _last_status_text: String = ""
 var _selected_level_index: int = 0
 var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 
@@ -40,7 +47,7 @@ func _ready() -> void:
 	reset_run(0)
 	_run_started = true
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not _run_started:
 		return
 	if is_terminal():
@@ -52,12 +59,18 @@ func _physics_process(_delta: float) -> void:
 		return
 	var current_distance: float = score_manager.record_position(player.global_position.x)
 	RunUnitSession.record_best_distance(score_manager.best_distance)
-	var current_platform: Dictionary = world.get_platform_below_position(player.global_position)
-	_trace.record("sample", player.global_position, player.velocity, int(current_platform.get("platform_id", -1)))
+	_trace_sample_countdown -= delta
+	if _trace_sample_countdown <= 0.0:
+		_trace_sample_countdown = TRACE_SAMPLE_INTERVAL
+		var current_platform: Dictionary = world.get_platform_below_position(player.global_position)
+		_trace.record_sample(player.global_position, player.velocity, int(current_platform.get("platform_id", -1)))
 	world.set_progress(current_distance)
 	hud.set_scores(current_distance, score_manager.best_distance)
 	var controller_name: String = "BOT" if _bot_enabled else ("AI" if _external_control else "HUMAN")
-	hud.set_status("%s  //  A/D MOVE  //  SPACE JUMP  //  R RESTART" % controller_name)
+	var status_text: String = "%s  //  A/D MOVE  //  SPACE JUMP  //  R RESTART" % controller_name
+	if status_text != _last_status_text:
+		_last_status_text = status_text
+		hud.set_status(status_text)
 	_update_debug(current_distance)
 	if player.global_position.y > world.death_y:
 		_fail_run()
@@ -85,6 +98,9 @@ func reset_run(run_seed: int) -> void:
 	var spawn_position: Vector2 = world.get_spawn_position()
 	score_manager.reset(spawn_position.x, RunUnitSession.best_distance)
 	_last_reward_distance = 0.0
+	_terminal_penalty_paid = false
+	_trace_sample_countdown = 0.0
+	_last_status_text = ""
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
 	world.reset(run_seed)
@@ -117,10 +133,9 @@ func get_observation() -> Dictionary:
 	for index: int in range(0, 3):
 		if index < platforms.size():
 			var platform: Dictionary = platforms[index]
-			var centre_x: float = (float(platform.get("start_x", 0)) + float(platform.get("width", 0)) * 0.5) * world.tile_size
-			var surface_y: float = float(platform.get("height", 0)) * world.tile_size
-			values.append(clampf((centre_x - player.global_position.x) / 640.0, -1.0, 1.0))
-			values.append(clampf((surface_y - player.global_position.y) / 320.0, -1.0, 1.0))
+			var surface: Vector2 = world.get_platform_surface_position(platform)
+			values.append(clampf((surface.x - player.global_position.x) / 640.0, -1.0, 1.0))
+			values.append(clampf((surface.y - player.global_position.y) / 320.0, -1.0, 1.0))
 			values.append(clampf(float(platform.get("width", 0)) / 14.0, 0.0, 1.0))
 		else:
 			values.append(0.0)
@@ -131,7 +146,11 @@ func get_observation() -> Dictionary:
 func consume_reward() -> float:
 	var reward: float = score_manager.distance - _last_reward_distance
 	_last_reward_distance = score_manager.distance
-	if _run_state == RunState.FAILED:
+	# The failure penalty is part of the terminal transition, so it is paid
+	# exactly once. Polling the reward after a run ended used to charge -1 on
+	# every call, which silently skews any agent that reads past terminal.
+	if _run_state == RunState.FAILED and not _terminal_penalty_paid:
+		_terminal_penalty_paid = true
 		reward -= 1.0
 	return reward
 
