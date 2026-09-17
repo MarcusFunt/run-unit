@@ -84,6 +84,20 @@ func test_level_selector_previews_locked_campaign_routes() -> void:
 	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "Leaving a locked route should restore the deployable briefing")
 	assert_eq(RunUnitSession.selected_level_index, RunUnitCampaign.PLAYABLE_INDEX, "Previewing a locked route must not arm it for deployment")
 
+func test_project_theme_focus_label_differs_from_hover_label() -> void:
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	var sector_grid: GridContainer = selector.get_node_or_null("Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout/SectorGrid") as GridContainer
+	assert_not_null(sector_grid, "The route grid should be present")
+	var route_button: Button = sector_grid.get_child(0) as Button
+	assert_not_null(route_button, "The route grid should contain a themed button")
+	var focus_color: Color = route_button.get_theme_color("font_focus_color")
+	var hover_color: Color = route_button.get_theme_color("font_hover_color")
+	assert_ne(focus_color, hover_color, "Keyboard/controller focus must read differently from mouse hover")
+	var project_theme: Theme = load(ProjectSettings.get_setting("gui/theme/custom")) as Theme
+	assert_not_null(project_theme, "The project-wide theme should load")
+	assert_ne(project_theme.get_color("font_focus_color", "Button"), project_theme.get_color("font_hover_color", "Button"), "Project theme focus and hover labels must stay distinct for the pause menu and windows")
+
 func test_player_options_list_only_live_gameplay_actions() -> void:
 	var options: TabContainer = autofree(OPTIONS_SCENE.instantiate()) as TabContainer
 	assert_not_null(options, "The options menu should instantiate")
