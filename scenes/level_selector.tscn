@@ -112,7 +112,7 @@ text = "ROUTE DEPLOYMENT"
 [node name="Caption" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.63, 0.68, 1)
-text = "Campaign order. Calibration is playable in this build; later routes are still in development."
+text = "Campaign order. Calibration and Factory Escape are playable; later routes are still in development."
 autowrap_mode = 2
 
 [node name="SectorGrid" type="GridContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]

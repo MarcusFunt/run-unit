@@ -1,0 +1,404 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://assets/tiled/levels/level_01_factory.tmj" id="2_level"]
+[ext_resource type="PackedScene" path="res://scenes/player_robot_visual.tscn" id="3_robot"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/box.png" id="4_box"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="5_door"]
+
+[node name="Level01Factory" type="Node2D"]
+script = ExtResource("1_world")
+death_y = 1180.0
+
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -20
+color = Color(0.012, 0.028, 0.043, 1)
+polygon = PackedVector2Array(-256, -1024, 7680, -1024, 7680, 1280, -256, 1280)
+
+[node name="WarehouseHaze" type="Polygon2D" parent="."]
+z_index = -18
+color = Color(0.03, 0.1, 0.12, 0.6)
+polygon = PackedVector2Array(3040, 128, 6240, 128, 6240, 1180, 3040, 1180)
+
+[node name="WarehouseHazeFade" type="Polygon2D" parent="."]
+z_index = -18
+polygon = PackedVector2Array(2656, 128, 3040, 128, 3040, 1180, 2656, 1180)
+vertex_colors = PackedColorArray(0.03, 0.1, 0.12, 0, 0.03, 0.1, 0.12, 0.6, 0.03, 0.1, 0.12, 0.6, 0.03, 0.1, 0.12, 0)
+
+[node name="ExteriorSky" type="Polygon2D" parent="."]
+z_index = -17
+polygon = PackedVector2Array(6240, 64, 7680, 64, 7680, 1180, 6240, 1180)
+vertex_colors = PackedColorArray(0.1, 0.3, 0.38, 1, 0.14, 0.42, 0.5, 1, 0.03, 0.09, 0.12, 1, 0.02, 0.06, 0.08, 1)
+
+[node name="ExteriorSkyline" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.02, 0.07, 0.09, 1)
+polygon = PackedVector2Array(6240, 1180, 6240, 720, 6320, 720, 6320, 668, 6368, 668, 6368, 700, 6440, 700, 6440, 612, 6472, 596, 6504, 612, 6504, 690, 6590, 690, 6590, 640, 6660, 640, 6660, 700, 6760, 700, 6760, 580, 6800, 580, 6800, 660, 6900, 660, 6900, 620, 6990, 620, 6990, 700, 7120, 700, 7120, 600, 7200, 600, 7200, 690, 7380, 690, 7380, 640, 7440, 640, 7440, 700, 7680, 700, 7680, 1180)
+
+[node name="StorageUnits" type="Node2D" parent="."]
+z_index = -6
+modulate = Color(0.42, 0.62, 0.68, 0.85)
+
+[node name="Unit01" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3136, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit02" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3200, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit03" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3264, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit04" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3136, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit05" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3200, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit06" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3264, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit07" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3392, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit08" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3456, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit09" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3520, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit10" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3648, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit11" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3712, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit12" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3776, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit13" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3904, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit14" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3968, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit15" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4032, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit16" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3904, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit17" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(3968, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit18" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4032, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit19" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4160, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit20" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4224, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit21" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4288, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit22" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4160, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit23" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4224, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit24" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4288, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit25" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4672, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit26" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4736, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit27" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4800, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit28" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4672, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit29" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4736, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit30" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4800, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit31" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4928, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit32" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4992, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit33" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5056, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit34" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4928, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit35" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(4992, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit36" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5056, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit37" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5184, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit38" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5248, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit39" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5312, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit40" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5440, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit41" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5504, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit42" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5568, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit43" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5696, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit44" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5760, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit45" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5824, 334)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit46" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5696, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit47" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5760, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="Unit48" parent="StorageUnits" instance=ExtResource("3_robot")]
+position = Vector2(5824, 494)
+scale = Vector2(0.55, 0.55)
+
+[node name="StorageCrates" type="Node2D" parent="."]
+z_index = -6
+modulate = Color(0.24, 0.32, 0.36, 1)
+
+[node name="Crate01" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(3392, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate02" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(3456, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate03" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(3520, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate04" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(3648, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate05" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(3712, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate06" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(3776, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate07" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(4416, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate08" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(4480, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate09" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(4544, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate10" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(4416, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate11" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(4480, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate12" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(4544, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate13" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(5184, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate14" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(5248, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate15" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(5312, 323)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate16" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(5440, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate17" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(5504, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="Crate18" type="Sprite2D" parent="StorageCrates"]
+position = Vector2(5568, 483)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_box")
+
+[node name="FactoryGeometry" parent="." instance=ExtResource("2_level")]
+
+[node name="EntryLift" type="Node2D" parent="."]
+position = Vector2(64, 448)
+
+[node name="Interior" type="Polygon2D" parent="EntryLift"]
+z_index = -1
+color = Color(0.008, 0.014, 0.022, 1)
+polygon = PackedVector2Array(-50, -190, 50, -190, 50, 0, -50, 0)
+
+[node name="DoorFrame" type="Sprite2D" parent="EntryLift"]
+position = Vector2(0, -104.4)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("5_door")
+
+[node name="FactorySigns" type="Node2D" parent="."]
+z_index = 4
+
+[node name="LiftSign" type="Label" parent="FactorySigns"]
+offset_left = -56.0
+offset_top = 224.0
+offset_right = 184.0
+offset_bottom = 250.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
+theme_override_font_sizes/font_size = 12
+text = "TRANSFER LIFT 01 // ARRIVAL"
+horizontal_alignment = 1
+
+[node name="JamSign" type="Label" parent="FactorySigns"]
+offset_left = 760.0
+offset_top = 300.0
+offset_right = 980.0
+offset_bottom = 326.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "LINE 03 JAM // CROUCH"
+horizontal_alignment = 1
+
+[node name="TransferSign" type="Label" parent="FactorySigns"]
+offset_left = 1500.0
+offset_top = 224.0
+offset_right = 1880.0
+offset_bottom = 250.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "TRANSFER LINE 03 // OFFLINE"
+horizontal_alignment = 1
+
+[node name="CollapseSign" type="Label" parent="FactorySigns"]
+offset_left = 2780.0
+offset_top = 290.0
+offset_right = 3060.0
+offset_bottom = 316.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "FLOOR FAILURE // DROP ZONE"
+horizontal_alignment = 1
+
+[node name="StorageSign" type="Label" parent="FactorySigns"]
+offset_left = 3200.0
+offset_top = 590.0
+offset_right = 3660.0
+offset_bottom = 616.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
+theme_override_font_sizes/font_size = 12
+text = "STORAGE ARRAY // UNIT INVENTORY"
+horizontal_alignment = 1
+
+[node name="BreachSign" type="Label" parent="FactorySigns"]
+offset_left = 6250.0
+offset_top = 330.0
+offset_right = 6710.0
+offset_bottom = 356.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "EXTERIOR WALL // STRUCTURAL FAILURE"
+horizontal_alignment = 1

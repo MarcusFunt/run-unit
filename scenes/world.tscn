@@ -209,7 +209,7 @@ offset_right = 570.0
 offset_bottom = 138.0
 theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
 theme_override_font_sizes/font_size = 12
-text = "CALIBRATION // FINAL INSPECTION"
+text = "CALIBRATION // MOVEMENT TEST"
 horizontal_alignment = 1
 
 [node name="CompletionLabel" type="Label" parent="."]

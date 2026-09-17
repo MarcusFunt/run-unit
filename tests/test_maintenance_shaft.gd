@@ -12,6 +12,37 @@ const DECK_Y: float = 416.0          # Platform03/04 surface the gate sits over
 const GATE_LEFT_X: float = 1920.0    # jammed elevator door spans tiles 60-62
 const GATE_RIGHT_X: float = 2016.0
 
+## Every retired route name, so in-world signage cannot drift back to the
+## storyline StorylineSketch.md replaced.
+const RETIRED_SIGNAGE: Array[String] = ["FINAL INSPECTION", "MAINTENANCE SHAFT", "SOLAR IGNITION CORE"]
+
+
+func test_tutorial_signage_uses_the_current_storyline() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var title: Label = world.get_node_or_null("ShaftTitle") as Label
+	assert_not_null(title, "The tutorial keeps a facility title sign")
+	if title == null:
+		return
+	assert_true(title.text.begins_with("CALIBRATION"), "The tutorial is the Calibration route, got '%s'" % title.text)
+	var signage: PackedStringArray = PackedStringArray()
+	for label: Label in _find_labels(world):
+		signage.append(label.text.to_upper())
+	var all_signage: String = "\n".join(signage)
+	for retired: String in RETIRED_SIGNAGE:
+		assert_false(all_signage.contains(retired), "Retired name '%s' must not return to tutorial signage" % retired)
+
+
+func _find_labels(node: Node) -> Array[Label]:
+	var labels: Array[Label] = []
+	var label: Label = node as Label
+	if label != null:
+		labels.append(label)
+	for child: Node in node.get_children():
+		labels.append_array(_find_labels(child))
+	return labels
+
+
 
 func _standing_action(movement: float, crouch: bool) -> RunUnitPlayerAction:
 	var action: RunUnitPlayerAction = RunUnitPlayerAction.new()

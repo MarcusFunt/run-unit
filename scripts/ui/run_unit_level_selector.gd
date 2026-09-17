@@ -3,9 +3,9 @@ extends Control
 ## Campaign route selector.
 ##
 ## Route names, briefings, and lock states come from RunUnitCampaign, which
-## mirrors the campaign structure in StorylineSketch.md. Only the authored
-## Calibration tutorial ships in this build; the remaining campaign routes are
-## listed in story order so the player can read the shape of the campaign.
+## mirrors the campaign structure in StorylineSketch.md. Routes are listed in
+## story order; the ones without an authored world yet are shown as locked so
+## the player can still read the shape of the campaign.
 
 @export_file("*.tscn") var game_scene_path: String = "res://scenes/game.tscn"
 
@@ -42,8 +42,9 @@ func _ready() -> void:
 		_sector_buttons.append(sector_button)
 	back_button.pressed.connect(_on_back_pressed)
 	deploy_button.pressed.connect(_on_deploy_pressed)
-	_select_sector(RunUnitCampaign.PLAYABLE_INDEX)
-	call_deferred("_focus_first_sector")
+	var initial_index: int = RunUnitSession.selected_level_index if _is_route_available(RunUnitSession.selected_level_index) else RunUnitCampaign.PLAYABLE_INDEX
+	_select_sector(initial_index)
+	call_deferred("_focus_selected_sector")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -65,9 +66,11 @@ func _input(event: InputEvent) -> void:
 		_sector_buttons[next_index].grab_focus()
 		get_viewport().set_input_as_handled()
 
-func _focus_first_sector() -> void:
-	if not _sector_buttons.is_empty():
-		_sector_buttons[RunUnitCampaign.PLAYABLE_INDEX].grab_focus()
+## Opens on the route the session last selected, so returning from a run lands
+## on the route that was just played rather than always on the tutorial.
+func _focus_selected_sector() -> void:
+	if _selected_index < _sector_buttons.size():
+		_sector_buttons[_selected_index].grab_focus()
 
 func _on_sector_focused(level_index: int) -> void:
 	if _is_route_available(level_index):

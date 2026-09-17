@@ -34,7 +34,7 @@ func open_with_scores(distance: float, best: float) -> void:
 
 func open_completed_with_scores(distance: float, best: float) -> void:
 	title_label.text = "ROUTE COMPLETE"
-	description_label.text = "%s CERTIFIED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nRoute traversal complete." % [_get_route_title(), int(distance), int(best)]
+	description_label.text = "%s CERTIFIED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\n%s" % [_get_route_title(), int(distance), int(best), RunUnitCampaign.get_completion(RunUnitSession.selected_level_index)]
 	restart_button.text = "REDEPLOY ROUTE"
 	main_menu_button.text = "SECTOR SELECT"
 	_open()

@@ -5,6 +5,14 @@ const LEVEL_SELECTOR_SCENE: PackedScene = preload("res://scenes/level_selector.t
 const MAIN_MENU_SCENE: PackedScene = preload("res://scenes/main_menu.tscn")
 const OPTIONS_SCENE: PackedScene = preload("res://menus/scenes/menus/options_menu/master_options_menu_with_tabs.tscn")
 
+## The selector opens on RunUnitSession.selected_level_index, so each test
+## starts from the tutorial unless it says otherwise.
+func before_each() -> void:
+	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
+
+func after_each() -> void:
+	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
+
 func test_main_menu_has_drifting_city_parallax_background() -> void:
 	var menu: Node = autofree(MAIN_MENU_SCENE.instantiate()) as Node
 	assert_not_null(menu, "The main menu should instantiate")
@@ -56,22 +64,44 @@ func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 	var expected_names: Array[String] = ["CALIBRATION", "FACTORY ESCAPE", "RECOVERY", "BEACON 9"]
 	for index: int in sector_buttons.size():
 		assert_true(sector_buttons[index].text.contains(expected_names[index]), "Route %d should be %s in campaign order" % [index, expected_names[index]])
-	assert_false(sector_buttons[0].disabled, "Calibration is the authored playable route")
-	for index: int in range(1, sector_buttons.size()):
-		assert_true(sector_buttons[index].disabled, "Campaign route %s should be clearly unavailable" % expected_names[index])
-		assert_true(sector_buttons[index].text.contains("LOCKED"), "Unavailable routes should read as locked rather than offline sector slots")
+	assert_false(sector_buttons[0].disabled, "Calibration is authored and playable")
+	assert_false(sector_buttons[1].disabled, "Factory Escape is authored and playable")
+	for index: int in range(2, sector_buttons.size()):
+		assert_true(sector_buttons[index].disabled, "Campaign route %s has no authored world yet" % expected_names[index])
+		assert_true(sector_buttons[index].text.contains("LOCKED"), "Unbuilt routes should read as locked rather than offline sector slots")
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
 
 func test_level_selector_briefs_the_calibration_tutorial() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	add_child_autofree(selector)
-	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "The playable route should be the Calibration tutorial")
+	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "The selector should open on the Calibration tutorial")
 	assert_false(selector.selected_sector.text.contains("FINAL INSPECTION"), "Retired Final Inspection route naming must not return")
 	assert_true(selector.description.text.contains("mobility, hop, spring-load, and clearance"), "Route briefing should describe the calibration checks actually in the tutorial")
 	assert_false(selector.description.text.contains("Solar Ignition Core"), "Retired Last Light Protocol copy must not return")
 	assert_eq(selector.difficulty_label.text, "EST. RUNTIME  //  1-2 MIN", "The briefing should carry the storyline's target first-play runtime")
 	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
+
+func test_level_selector_briefs_factory_escape() -> void:
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+
+	selector._on_sector_focused(1)
+
+	assert_eq(RunUnitSession.selected_level_index, 1, "Focusing Factory Escape should select it for deployment")
+	assert_eq(selector.selected_sector.text, "01  FACTORY ESCAPE")
+	assert_eq(selector.difficulty_label.text, "EST. RUNTIME  //  5-7 MIN")
+	assert_true(selector.description.text.contains("breach"), "Factory Escape's briefing should describe Level 1")
+	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
+
+	selector._on_sector_focused(3)
+	assert_eq(RunUnitSession.selected_level_index, 1, "A locked route must not steal the selection")
+
+func test_level_selector_reopens_on_the_last_selected_route() -> void:
+	RunUnitSession.selected_level_index = 1
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	assert_eq(selector.selected_sector.text, "01  FACTORY ESCAPE", "Returning from a run should land on the route that was just played")
 
 func test_level_selector_previews_locked_campaign_routes() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector

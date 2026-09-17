@@ -25,7 +25,9 @@ If Godot is not on `PATH`, use `python tools/run_gut.py --godot <path>`.
 
 ## Authored world contract
 
-`assets/tiled/levels/maintenance_shaft.tmj` is the current playable map despite its legacy filename. Its external semantic tileset is `assets/tiled/semantic/semantic_layer.tsj`. `scenes/world.tscn` wraps the imported map; do not move authored platform geometry back into hand-maintained Godot collision nodes.
+`assets/tiled/levels/maintenance_shaft.tmj` (the Calibration tutorial, despite its legacy filename) and `assets/tiled/levels/level_01_factory.tmj` (Factory Escape) are the playable maps. Their external semantic tileset is `assets/tiled/semantic/semantic_layer.tsj`. `scenes/world.tscn` and `scenes/levels/level_01_factory.tscn` wrap the imported maps; do not move authored platform geometry back into hand-maintained Godot collision nodes.
+
+`scripts/gameplay/campaign_routes.gd` (`RunUnitCampaign`) is the single source of route copy and world-scene paths, mirroring the campaign in `StorylineSketch.md`. A new level is added by authoring its map and filling in that route's `world_scene`; a route with an empty `world_scene` shows as locked in the selector.
 
 After any `.tmj` or `.tsj` change, use `tools/run_gut.py`. Godot/YATI may otherwise reuse a stale `.tmj` cache when only the external `.tsj` changed.
 
