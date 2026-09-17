@@ -165,6 +165,18 @@ class DifficultyAnalysisTests(unittest.TestCase):
         detail = move_difficulty(move, ledge, physics, level)
         self.assertEqual(detail["rating"], "near_perfect")
 
+    def test_margin_changes_runup_classification(self) -> None:
+        move = {"from": 0, "to": 1, "charge": 0.5, "direction": 1}
+        ledge = SimpleNamespace(index=0, width=2)
+        physics = SimpleNamespace(body_width=50.0, max_run_speed=285.0, ground_acceleration=2200.0)
+        level = SimpleNamespace(tilewidth=32)
+        strict = move_difficulty(move, ledge, physics, level, margin=0.1)
+        lenient = move_difficulty(move, ledge, physics, level, margin=0.2)
+        disabled = move_difficulty(move, ledge, physics, level, margin=0.0)
+        self.assertEqual(strict["rating"], "near_perfect")
+        self.assertEqual(lenient["rating"], "tight")
+        self.assertEqual(disabled["rating"], "comfortable")
+
     def test_real_check_exposes_structured_difficulty_fields(self) -> None:
         report = level_kit.check_level(level_kit.LevelMap.load(TUTORIAL))
         self.assertTrue(report.ok, report.errors)
