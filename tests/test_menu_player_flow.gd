@@ -14,6 +14,33 @@ func test_main_menu_has_drifting_city_parallax_background() -> void:
 		assert_true(background.has_method("_process"), "The menu background should drive continuous drift")
 		assert_gt(float(background.get("drift_pixels_per_second")), 0.0, "The city should drift automatically")
 
+func test_main_menu_uses_refined_thin_terminal_buttons() -> void:
+	var menu: Node = autofree(MAIN_MENU_SCENE.instantiate()) as Node
+	assert_not_null(menu, "The main menu should instantiate")
+	add_child_autofree(menu)
+	var button_path := "MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/NewGameButton"
+	var button: Button = menu.get_node_or_null(button_path) as Button
+	assert_not_null(button, "The primary menu button should exist")
+	if button == null:
+		return
+	var normal_style: StyleBoxFlat = button.get_theme_stylebox("normal") as StyleBoxFlat
+	var focus_style: StyleBoxFlat = button.get_theme_stylebox("focus") as StyleBoxFlat
+	assert_not_null(normal_style, "Thin Terminal should use a programmatic StyleBoxFlat")
+	assert_not_null(focus_style, "Thin Terminal should expose an amber focus rail")
+	if normal_style != null:
+		assert_eq(normal_style.border_width_left, 1, "Idle Thin Terminal border should stay visually light")
+		assert_true(normal_style.bg_color.a < 0.70, "Idle button should preserve the glass/translucent treatment")
+		assert_true(normal_style.border_color.b > normal_style.border_color.r, "Idle border should remain cyan/blue")
+	if focus_style != null:
+		assert_eq(focus_style.border_width_left, 3, "Controller focus should use a narrow left-side status rail")
+		assert_eq(focus_style.border_width_top, 0, "Focus should not draw a full amber box")
+		assert_true(focus_style.border_color.r > focus_style.border_color.b, "Focus rail should be amber")
+	assert_eq(button.custom_minimum_size, Vector2(280.0, 50.0), "Thin Terminal buttons should be lower and slightly wider")
+	var box: BoxContainer = menu.get_node("MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer") as BoxContainer
+	assert_eq(box.get_theme_constant("separation"), 10, "Terminal controls should use tighter vertical spacing")
+	assert_almost_eq(box.anchor_left, 0.45, 0.001, "Thin Terminal controls should sit slightly left of screen center")
+	assert_almost_eq(box.anchor_right, 0.45, 0.001, "Thin Terminal controls should preserve their width while shifted left")
+
 func test_level_selector_marks_only_the_authored_route_playable() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	assert_not_null(selector, "The route selector should instantiate")
