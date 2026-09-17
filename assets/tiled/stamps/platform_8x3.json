@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "name": "platform_8x3",
+  "width": 8,
+  "height": 3,
+  "layers": {
+    "ArtDeck": [
+      {"tileset": "industrial_zone.tsj", "local_id": 54},
+      {"tileset": "industrial_zone.tsj", "local_id": 55},
+      {"tileset": "industrial_zone.tsj", "local_id": 55},
+      {"tileset": "industrial_zone.tsj", "local_id": 55},
+      {"tileset": "industrial_zone.tsj", "local_id": 55},
+      {"tileset": "industrial_zone.tsj", "local_id": 55},
+      {"tileset": "industrial_zone.tsj", "local_id": 55},
+      {"tileset": "industrial_zone.tsj", "local_id": 56},
+      {"tileset": "industrial_zone.tsj", "local_id": 57},
+      {"tileset": "industrial_zone.tsj", "local_id": 58},
+      {"tileset": "industrial_zone.tsj", "local_id": 59},
+      {"tileset": "industrial_zone.tsj", "local_id": 57},
+      {"tileset": "industrial_zone.tsj", "local_id": 58},
+      {"tileset": "industrial_zone.tsj", "local_id": 59},
+      {"tileset": "industrial_zone.tsj", "local_id": 57},
+      {"tileset": "industrial_zone.tsj", "local_id": 58},
+      {"tileset": "industrial_zone.tsj", "local_id": 66},
+      {"tileset": "industrial_zone.tsj", "local_id": 67},
+      {"tileset": "industrial_zone.tsj", "local_id": 68},
+      {"tileset": "industrial_zone.tsj", "local_id": 66},
+      {"tileset": "industrial_zone.tsj", "local_id": 67},
+      {"tileset": "industrial_zone.tsj", "local_id": 68},
+      {"tileset": "industrial_zone.tsj", "local_id": 66},
+      {"tileset": "industrial_zone.tsj", "local_id": 67}
+    ]
+  },
+  "source": "starter library: industrial deck trim"
+}
