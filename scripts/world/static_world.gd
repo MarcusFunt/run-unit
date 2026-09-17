@@ -19,6 +19,7 @@ const TILE_SIZE: float = 32.0
 const SEMANTIC_EMPTY: int = 0
 const SEMANTIC_SOLID: int = 1
 const SEMANTIC_ONE_WAY: int = 2
+const SEMANTIC_HAZARD: int = 3
 
 ## Used only when a level ships without a Spawn marker, so a malformed map
 ## still starts somewhere sane instead of dropping the player at the origin.
@@ -53,6 +54,7 @@ func _ready() -> void:
 	_goal_marker = _find_marker(&"Goal")
 	_collect_checkpoints()
 	_load_platforms_from_tilemap()
+	_load_semantic_hazards_from_tilemap()
 	_update_metrics()
 	_ensure_completion_trigger()
 
@@ -307,6 +309,70 @@ func _load_platforms_from_tilemap() -> void:
 	for index: int in range(found.size()):
 		found[index]["platform_id"] = index + 1
 	_platforms = found
+
+## Semantic value 3 is gameplay-only danger, not route geometry. Materialize
+## each horizontal run as one non-solid lethal Area2D while preserving the
+## Semantic layer's transform so authored Tiled placement remains authoritative.
+func _load_semantic_hazards_from_tilemap() -> void:
+	if _semantic_layer == null:
+		return
+
+	var existing: Node = get_node_or_null("SemanticHazards")
+	if existing != null:
+		existing.free()
+
+	var container: Node2D = Node2D.new()
+	container.name = "SemanticHazards"
+	add_child(container)
+	container.global_transform = _semantic_layer.global_transform
+
+	var rows: Dictionary = {}
+	for cell: Vector2i in _semantic_layer.get_used_cells():
+		if _cell_semantic(cell) != SEMANTIC_HAZARD:
+			continue
+		if not rows.has(cell.y):
+			rows[cell.y] = []
+		var x_values: Array = rows[cell.y]
+		x_values.append(cell.x)
+
+	var row_keys: Array = rows.keys()
+	row_keys.sort()
+	for y: int in row_keys:
+		var x_values: Array = rows[y]
+		x_values.sort()
+		if x_values.is_empty():
+			continue
+		var start_x: int = int(x_values[0])
+		var end_x: int = start_x
+		for index: int in range(1, x_values.size()):
+			var next_x: int = int(x_values[index])
+			if next_x == end_x + 1:
+				end_x = next_x
+				continue
+			_create_semantic_hazard_run(container, y, start_x, end_x)
+			start_x = next_x
+			end_x = next_x
+		_create_semantic_hazard_run(container, y, start_x, end_x)
+
+func _create_semantic_hazard_run(container: Node2D, y: int, start_x: int, end_x: int) -> void:
+	var hazard: RunUnitHazardArea = RunUnitHazardArea.new()
+	hazard.name = "Hazard_%d_%d_%d" % [y, start_x, end_x]
+	hazard.lethal = true
+	hazard.collision_layer = 0
+	hazard.collision_mask = 1
+
+	var collision: CollisionShape2D = CollisionShape2D.new()
+	collision.name = "CollisionShape2D"
+	var rectangle: RectangleShape2D = RectangleShape2D.new()
+	var layer_tile_size: Vector2i = _semantic_layer.tile_set.tile_size
+	rectangle.size = Vector2(float((end_x - start_x + 1) * layer_tile_size.x), float(layer_tile_size.y))
+	collision.shape = rectangle
+	hazard.add_child(collision)
+
+	var first_center: Vector2 = _semantic_layer.map_to_local(Vector2i(start_x, y))
+	var last_center: Vector2 = _semantic_layer.map_to_local(Vector2i(end_x, y))
+	hazard.position = (first_center + last_center) * 0.5
+	container.add_child(hazard)
 
 func _update_metrics() -> void:
 	_metrics = {
