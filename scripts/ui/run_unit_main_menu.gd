@@ -3,6 +3,7 @@ extends MainMenu
 
 const THIN_TERMINAL_THEME: Theme = preload("res://theme/thin_terminal_button_theme.tres")
 const TERMINAL_BUTTON_SIZE := Vector2(280.0, 50.0)
+const TERMINAL_BUTTON_ANCHOR_X := 0.45
 const PRESSED_SCALE := Vector2(0.985, 0.985)
 
 func _ready() -> void:
@@ -13,6 +14,8 @@ func _ready() -> void:
 	var button_box: BoxContainer = new_game_button.get_parent() as BoxContainer
 	if button_box != null:
 		button_box.add_theme_constant_override("separation", 10)
+		button_box.anchor_left = TERMINAL_BUTTON_ANCHOR_X
+		button_box.anchor_right = TERMINAL_BUTTON_ANCHOR_X
 	new_game_button.text = "START NEW RUN"
 	options_button.text = "SYSTEM SETTINGS"
 	credits_button.text = "CREDITS / INTEL"
