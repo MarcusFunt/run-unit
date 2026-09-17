@@ -72,7 +72,7 @@ text = "RUN//UNIT"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_font_sizes/font_size = 13
-text = "SECTOR ROUTE SELECTOR  //  MUNICIPAL CORE"
+text = "CAMPAIGN ROUTE SELECTOR  //  UNIT-07"
 
 [node name="Status" type="Label" parent="Margin/Layout/Header"]
 layout_mode = 2
@@ -112,7 +112,7 @@ text = "ROUTE DEPLOYMENT"
 [node name="Caption" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.63, 0.68, 1)
-text = "Select an available route. Offline routes will unlock in a future build."
+text = "Campaign order. Calibration and Factory Escape are playable; later routes are still in development."
 autowrap_mode = 2
 
 [node name="SectorGrid" type="GridContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
@@ -121,7 +121,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 7
-columns = 2
+columns = 1
 
 [node name="BriefingPanel" type="PanelContainer" parent="Margin/Layout/Body"]
 custom_minimum_size = Vector2(276, 0)
@@ -149,7 +149,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.98, 0.95, 1)
 theme_override_font_sizes/font_size = 18
-text = "01  MAINTENANCE SHAFT"
+text = "TUT  CALIBRATION"
 autowrap_mode = 2
 
 [node name="Rule" type="HSeparator" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
@@ -161,7 +161,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.69, 0.8, 0.81, 1)
 theme_override_font_sizes/font_size = 14
-text = "FINAL WORK ORDER 09-441\nCarry the Solar Ignition Core to Beacon 9.\n\nCurrent playable route: service tunnels beneath the municipal core."
+text = "CALIBRATION SEQUENCE ACTIVE\nUNIT-07 clears the mobility, hop, spring-load, and clearance checks.\n\nTransfer lift 01 has faulted. Pass beneath the door to leave calibration."
 autowrap_mode = 2
 
 [node name="SeedLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
@@ -176,7 +176,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_font_sizes/font_size = 13
-text = "THREAT  //  LOW"
+text = "EST. RUNTIME  //  1-2 MIN"
 
 [node name="RouteStatus" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 unique_name_in_owner = true

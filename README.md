@@ -1,12 +1,12 @@
 # RUN//UNIT v0.1
 
-RUN//UNIT is a small 2D platformer made with Godot 4.7. The current school-project slice follows a manufactured robot through Calibration, Final Inspection, a stalled factory transfer line, and toward storage after the facility automation fails.
+RUN//UNIT is a small 2D platformer made with Godot 4.7. The campaign in `StorylineSketch.md` runs Calibration -> Factory Escape -> Recovery -> Beacon 9; the current school-project slice ships the first two. The manufactured robot UNIT-07 clears its factory movement checks, then crosses the stalled production line and the storage warehouse to escape the factory as the facility automation fails around it.
 
 ## Run and controls
 
 Open `project.godot` in Godot 4.7.1 (or a compatible Godot 4.x release) and run the project.
 
-Select **START NEW RUN** and deploy to **FINAL INSPECTION**. Future route slots are deliberately disabled in the current build.
+Select **START NEW RUN**, then deploy to **CALIBRATION** (the tutorial) or **FACTORY ESCAPE** (Level 1). The selector lists the campaign in story order; Recovery and Beacon 9 have no authored world yet and show as locked.
 
 - A / D or Left / Right: move
 - Space / Up Arrow: hold to charge the spring crouch, then release to jump
@@ -19,12 +19,48 @@ Route distance is measured from the authored Spawn marker. The HUD maximum uses 
 
 The playable geometry is authored in Tiled and imported through YATI:
 
-- `assets/tiled/levels/maintenance_shaft.tmj` — current level map (legacy filename)
+- `assets/tiled/levels/maintenance_shaft.tmj` — Calibration tutorial map (legacy filename)
+- `assets/tiled/levels/level_01_factory.tmj` — Factory Escape map
 - `assets/tiled/semantic/semantic_layer.tsj` — semantic/collision tileset
-- `scenes/world.tscn` — Godot wrapper that instances the imported level and runtime art
+- `scenes/world.tscn` — Godot wrapper that instances the tutorial map and its runtime art
+- `scenes/levels/level_01_factory.tscn` — the same wrapper for Factory Escape
+- `scripts/gameplay/campaign_routes.gd` — the campaign route table the selector, game, and results menu all read
 - `scripts/world/static_world.gd` — indexes imported semantic tiles and authored markers
 
 `Semantic` owns route collision, `Obstacles` owns non-platform blockers such as the crouch gate, `ArtFill` / `ArtDeck` are decoration-only, and `Markers` supplies Spawn/Goal points.
+
+## Level kit
+
+`tools/level_kit.py` is the fast path for building and changing routes. It reads and writes the same `.tmj` files Tiled does, so it can be used instead of Tiled or alongside it.
+
+```sh
+# Start a new level from a blank floor, spawn and goal
+python tools/level_kit.py new --out route.sketch --width 90 --height 29
+
+# Or open an existing level as an editable text grid
+python tools/level_kit.py sketch assets/tiled/levels/maintenance_shaft.tmj --out route.sketch
+
+# Edit route.sketch in any text editor, then rebuild and validate in one step
+python tools/level_kit.py build route.sketch --out assets/tiled/levels/maintenance_shaft.tmj --check
+
+# `build` keeps the template's tilesets and art, so a new map inherits both
+python tools/level_kit.py build route.sketch --out assets/tiled/levels/transfer_line.tmj --check
+
+# Redraw the decorative deck trim and tunnel shell from the new geometry
+python tools/level_kit.py autoart assets/tiled/levels/maintenance_shaft.tmj
+
+# Validate any map on its own
+python tools/level_kit.py check assets/tiled/levels/maintenance_shaft.tmj
+```
+
+A sketch is one character per cell — `#` solid, `=` one-way, `^` hazard, `>` conveyor, `*` foreground, `T` crouch gate, `S` Spawn, `G` Goal — plus `@` directives that carry the map size and exact marker positions. A level that is only re-sketched and rebuilt comes back byte-identical, and the decorative layers of the template survive every rebuild.
+
+`check` validates two different things:
+
+- **The contract.** Layer names `static_world.gd` looks up, 32px tiles, a finite map, tile ids that resolve to a declared tileset, `data_semantic` on every `Semantic` tile, and decoration that would otherwise create collision.
+- **The route.** It replays `RunUnitPlayerMotor`'s own integration step — using the constants read straight out of `scripts/player/player_motor.gd` and `scenes/player.tscn` — to work out which ledges connect, then reports whether the Goal can actually be reached from the Spawn. Gaps that are too wide, overhangs too low to crouch under, stranded platforms, and jumps that only clear at a perfect full-speed takeoff all come back as errors or warnings in well under a second, without opening Godot.
+
+`python -m unittest discover -s tools/tests` runs `check` against the shipped level, so an unfinishable route fails CI.
 
 ## Tests
 
@@ -71,7 +107,7 @@ godot --headless --path . --export-release "Windows Desktop" build/RUN_UNIT.exe
 
 The numerical observation contains normalized player velocity, on-floor state, and relative information for upcoming platforms. Current-platform tracing uses the player position, not X alone, so vertically overlapping platforms can be distinguished.
 
-Reward remains newly achieved maximum forward distance in metres, with a `-1` terminal penalty after a failed run. The authored route itself is static; difficulty is a progress metric rather than a terrain-generation input.
+Reward remains newly achieved maximum forward distance in metres, with a one-off `-1` terminal penalty on the transition into a failed run; polling the reward again after that returns `0`. The authored route itself is static; difficulty is a progress metric rather than a terrain-generation input.
 
 ## Narrative source
 
