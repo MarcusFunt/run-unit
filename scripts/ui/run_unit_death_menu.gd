@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func open_with_scores(distance: float, best: float) -> void:
 	title_label.text = "UNIT OFFLINE"
-	description_label.text = "ROUTE %02d TERMINATED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nSelect a recovery action." % [RunUnitSession.selected_level_index + 1, int(distance), int(best)]
+	description_label.text = "%s TERMINATED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nSelect a recovery action." % [_get_route_title(), int(distance), int(best)]
 	restart_button.text = "RETRY ROUTE"
 	main_menu_button.text = "SECTOR SELECT"
 	show()
@@ -22,7 +22,7 @@ func open_with_scores(distance: float, best: float) -> void:
 
 func open_completed_with_scores(distance: float, best: float) -> void:
 	title_label.text = "ROUTE COMPLETE"
-	description_label.text = "ROUTE %02d CERTIFIED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nMaintenance Shaft traversal complete." % [RunUnitSession.selected_level_index + 1, int(distance), int(best)]
+	description_label.text = "%s CERTIFIED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nRoute traversal complete." % [_get_route_title(), int(distance), int(best)]
 	restart_button.text = "REDEPLOY ROUTE"
 	main_menu_button.text = "SECTOR SELECT"
 	show()
@@ -31,6 +31,9 @@ func open_completed_with_scores(distance: float, best: float) -> void:
 
 func close() -> void:
 	hide()
+
+func _get_route_title() -> String:
+	return RunUnitCampaign.get_title(RunUnitSession.selected_level_index)
 
 func _on_restart_pressed() -> void:
 	get_tree().paused = false

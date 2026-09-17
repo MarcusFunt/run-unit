@@ -1,12 +1,12 @@
 # RUN//UNIT v0.1
 
-RUN//UNIT is a small 2D platformer made with Godot 4.7. The current school-project slice follows a manufactured robot through Calibration, Final Inspection, a stalled factory transfer line, and toward storage after the facility automation fails.
+RUN//UNIT is a small 2D platformer made with Godot 4.7. The campaign in `StorylineSketch.md` runs Calibration -> Factory Escape -> Recovery -> Beacon 9; the current school-project slice ships the Calibration tutorial, in which the manufactured robot UNIT-07 clears its factory movement checks while the facility automation fails around it.
 
 ## Run and controls
 
 Open `project.godot` in Godot 4.7.1 (or a compatible Godot 4.x release) and run the project.
 
-Select **START NEW RUN** and deploy to **FINAL INSPECTION**. Future route slots are deliberately disabled in the current build.
+Select **START NEW RUN** and deploy to **CALIBRATION**. The route selector lists the rest of the campaign (Factory Escape, Recovery, Beacon 9) in story order, but those routes are locked in the current build.
 
 - A / D or Left / Right: move
 - Space / Up Arrow: hold to charge the spring crouch, then release to jump

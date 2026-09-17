@@ -41,7 +41,7 @@ func test_main_menu_uses_refined_thin_terminal_buttons() -> void:
 	assert_almost_eq(box.anchor_left, 0.45, 0.001, "Thin Terminal controls should sit slightly left of screen center")
 	assert_almost_eq(box.anchor_right, 0.45, 0.001, "Thin Terminal controls should preserve their width while shifted left")
 
-func test_level_selector_marks_only_the_authored_route_playable() -> void:
+func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	assert_not_null(selector, "The route selector should instantiate")
 	add_child_autofree(selector)
@@ -52,15 +52,37 @@ func test_level_selector_marks_only_the_authored_route_playable() -> void:
 		var sector_button: Button = child as Button
 		if sector_button != null:
 			sector_buttons.append(sector_button)
-	assert_eq(sector_buttons.size(), 8, "The selector should show the available route and future route slots")
-	assert_false(sector_buttons[0].disabled, "The authored route should be playable")
+	assert_eq(sector_buttons.size(), 4, "The selector should list the four campaign routes from StorylineSketch.md")
+	var expected_names: Array[String] = ["CALIBRATION", "FACTORY ESCAPE", "RECOVERY", "BEACON 9"]
+	for index: int in sector_buttons.size():
+		assert_true(sector_buttons[index].text.contains(expected_names[index]), "Route %d should be %s in campaign order" % [index, expected_names[index]])
+	assert_false(sector_buttons[0].disabled, "Calibration is the authored playable route")
 	for index: int in range(1, sector_buttons.size()):
-		assert_true(sector_buttons[index].disabled, "Future route %d should be clearly unavailable" % (index + 1))
+		assert_true(sector_buttons[index].disabled, "Campaign route %s should be clearly unavailable" % expected_names[index])
+		assert_true(sector_buttons[index].text.contains("LOCKED"), "Unavailable routes should read as locked rather than offline sector slots")
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
-	assert_true(selector.selected_sector.text.contains("FINAL INSPECTION"), "The playable route should use the current factory narrative")
-	assert_true(selector.description.text.contains("mobility, spring, and clearance"), "Route briefing should describe the calibration checks actually in the tutorial")
+
+func test_level_selector_briefs_the_calibration_tutorial() -> void:
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "The playable route should be the Calibration tutorial")
+	assert_false(selector.selected_sector.text.contains("FINAL INSPECTION"), "Retired Final Inspection route naming must not return")
+	assert_true(selector.description.text.contains("mobility, hop, spring-load, and clearance"), "Route briefing should describe the calibration checks actually in the tutorial")
 	assert_false(selector.description.text.contains("Solar Ignition Core"), "Retired Last Light Protocol copy must not return")
+	assert_eq(selector.difficulty_label.text, "EST. RUNTIME  //  1-2 MIN", "The briefing should carry the storyline's target first-play runtime")
+	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
+
+func test_level_selector_previews_locked_campaign_routes() -> void:
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	selector._on_sector_hovered(3)
+	assert_true(selector.selected_sector.text.contains("BEACON 9"), "Hovering a locked route should preview it")
+	assert_eq(selector.seed_label.text, "ROUTE LOCKED  //  NOT IN THIS BUILD")
+	assert_eq(selector.route_status.text, "CAMPAIGN ROUTE  //  IN DEVELOPMENT")
+	selector._on_sector_unhovered()
+	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "Leaving a locked route should restore the deployable briefing")
+	assert_eq(RunUnitSession.selected_level_index, RunUnitCampaign.PLAYABLE_INDEX, "Previewing a locked route must not arm it for deployment")
 
 func test_player_options_list_only_live_gameplay_actions() -> void:
 	var options: TabContainer = autofree(OPTIONS_SCENE.instantiate()) as TabContainer
