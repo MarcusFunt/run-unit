@@ -1,0 +1,130 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://assets/tiled/levels/level_01_factory.tmj" id="2_level"]
+[ext_resource type="PackedScene" path="res://scenes/robot_preview.tscn" id="3_robot"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/box.png" id="4_box"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="5_door"]
+
+[node name="Level01Factory" type="Node2D"]
+script = ExtResource("1_world")
+death_y = 1180.0
+
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -20
+color = Color(0.012, 0.028, 0.043, 1)
+polygon = PackedVector2Array(-256, -1024, 7168, -1024, 7168, 1280, -256, 1280)
+
+[node name="WarehouseHaze" type="Polygon2D" parent="."]
+z_index = -18
+color = Color(0.025, 0.12, 0.14, 0.24)
+polygon = PackedVector2Array(2944, 448, 7168, 448, 7168, 1180, 2944, 1180)
+
+[node name="BreachGlow" type="Polygon2D" parent="."]
+z_index = -17
+color = Color(0.3, 0.82, 0.9, 0.16)
+polygon = PackedVector2Array(6272, 256, 7168, 128, 7168, 960, 6272, 800)
+
+[node name="FactoryGeometry" parent="." instance=ExtResource("2_level")]
+
+[node name="EntryLift" type="Node2D" parent="."]
+position = Vector2(48, 416)
+z_index = 2
+
+[node name="Door" type="Sprite2D" parent="EntryLift"]
+texture = ExtResource("5_door")
+position = Vector2(0, -104)
+scale = Vector2(0.42, 0.42)
+
+[node name="Label" type="Label" parent="EntryLift"]
+offset_left = 82.0
+offset_top = -210.0
+offset_right = 322.0
+offset_bottom = -184.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
+theme_override_font_sizes/font_size = 11
+text = "TRANSFER LIFT 01 // ARRIVAL"
+
+[node name="WarehouseCopies" type="Node2D" parent="."]
+z_index = -1
+
+[node name="UnitA" parent="WarehouseCopies" instance=ExtResource("3_robot")]
+position = Vector2(3260, 620)
+scale = Vector2(0.32, 0.32)
+modulate = Color(0.45, 0.72, 0.74, 0.38)
+
+[node name="UnitB" parent="WarehouseCopies" instance=ExtResource("3_robot")]
+position = Vector2(3520, 700)
+scale = Vector2(-0.30, 0.30)
+modulate = Color(0.42, 0.68, 0.7, 0.34)
+
+[node name="UnitC" parent="WarehouseCopies" instance=ExtResource("3_robot")]
+position = Vector2(3940, 590)
+scale = Vector2(0.28, 0.28)
+modulate = Color(0.45, 0.72, 0.74, 0.32)
+
+[node name="UnitD" parent="WarehouseCopies" instance=ExtResource("3_robot")]
+position = Vector2(4380, 690)
+scale = Vector2(-0.31, 0.31)
+modulate = Color(0.42, 0.68, 0.7, 0.34)
+
+[node name="UnitE" parent="WarehouseCopies" instance=ExtResource("3_robot")]
+position = Vector2(4840, 590)
+scale = Vector2(0.29, 0.29)
+modulate = Color(0.45, 0.72, 0.74, 0.30)
+
+[node name="UnitF" parent="WarehouseCopies" instance=ExtResource("3_robot")]
+position = Vector2(5280, 700)
+scale = Vector2(-0.30, 0.30)
+modulate = Color(0.42, 0.68, 0.7, 0.30)
+
+[node name="WarehouseProps" type="Node2D" parent="."]
+z_index = 1
+
+[node name="BoxA" type="Sprite2D" parent="WarehouseProps"]
+texture = ExtResource("4_box")
+position = Vector2(3650, 684)
+scale = Vector2(0.16, 0.16)
+
+[node name="BoxB" type="Sprite2D" parent="WarehouseProps"]
+texture = ExtResource("4_box")
+position = Vector2(4490, 622)
+scale = Vector2(0.15, 0.15)
+
+[node name="BoxC" type="Sprite2D" parent="WarehouseProps"]
+texture = ExtResource("4_box")
+position = Vector2(5480, 654)
+scale = Vector2(0.17, 0.17)
+
+[node name="FactorySigns" type="Node2D" parent="."]
+z_index = 4
+
+[node name="TransferSign" type="Label" parent="FactorySigns"]
+offset_left = 420.0
+offset_top = 250.0
+offset_right = 800.0
+offset_bottom = 278.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "TRANSFER LINE 03 // OFFLINE"
+horizontal_alignment = 1
+
+[node name="StorageSign" type="Label" parent="FactorySigns"]
+offset_left = 3150.0
+offset_top = 535.0
+offset_right = 3700.0
+offset_bottom = 565.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.84)
+theme_override_font_sizes/font_size = 12
+text = "STORAGE ARRAY // UNIT INVENTORY"
+horizontal_alignment = 1
+
+[node name="BreachSign" type="Label" parent="FactorySigns"]
+offset_left = 6100.0
+offset_top = 485.0
+offset_right = 6660.0
+offset_bottom = 515.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "EXTERIOR WALL // STRUCTURAL FAILURE"
+horizontal_alignment = 1
