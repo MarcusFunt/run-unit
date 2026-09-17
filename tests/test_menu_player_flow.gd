@@ -2,7 +2,17 @@ extends GutTest
 
 const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
 const LEVEL_SELECTOR_SCENE: PackedScene = preload("res://scenes/level_selector.tscn")
+const MAIN_MENU_SCENE: PackedScene = preload("res://scenes/main_menu.tscn")
 const OPTIONS_SCENE: PackedScene = preload("res://menus/scenes/menus/options_menu/master_options_menu_with_tabs.tscn")
+
+func test_main_menu_has_drifting_city_parallax_background() -> void:
+	var menu: Node = autofree(MAIN_MENU_SCENE.instantiate()) as Node
+	assert_not_null(menu, "The main menu should instantiate")
+	var background: Node = menu.get_node_or_null("MenuBackground")
+	assert_not_null(background, "The menu should mount the generated city parallax background")
+	if background != null:
+		assert_true(background.has_method("_process"), "The menu background should drive continuous drift")
+		assert_gt(float(background.get("drift_pixels_per_second")), 0.0, "The city should drift automatically")
 
 func test_level_selector_marks_only_the_authored_route_playable() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector

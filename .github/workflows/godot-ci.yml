@@ -27,6 +27,9 @@ jobs:
           godot --version
           python3 --version
 
+      - name: Install Python tooling dependencies
+        run: python3 -m pip install --disable-pip-version-check -r tools/requirements.txt
+
       - name: Test Python tooling
         run: python3 -m unittest discover -s tools/tests -v
 

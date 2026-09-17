@@ -22,7 +22,7 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parent
@@ -297,6 +297,58 @@ def parallax_scene(target: Path, layer_paths: list[str], scrolls: list[float] | 
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
+
+def draw_menu_megastructure(canvas: Image.Image, center_x: int, base_y: int) -> tuple[int, int, int, int]:
+    """Draw the distant RUN//UNIT landmark into a native parallax layer."""
+    draw = ImageDraw.Draw(canvas)
+    height = min(214, base_y - 12)
+    top = base_y - height
+    left, right = center_x - 58, center_x + 58
+    shadow = hex_rgba(RUN_UNIT_PALETTE["shadow"])
+    steel = hex_rgba(RUN_UNIT_PALETTE["steel"])
+    detail = hex_rgba(RUN_UNIT_PALETTE["detail"])
+    teal_dark = hex_rgba(RUN_UNIT_PALETTE["teal_dark"])
+    teal = hex_rgba(RUN_UNIT_PALETTE["teal"])
+    highlight = hex_rgba(RUN_UNIT_PALETTE["highlight"])
+    warning = hex_rgba(RUN_UNIT_PALETTE["warning"])
+
+    draw.rectangle((left, base_y - 24, right, base_y), fill=shadow)
+    draw.polygon([(center_x - 54, base_y - 24), (center_x - 41, base_y - 24),
+                  (center_x - 12, top + 72), (center_x - 20, top + 72)], fill=steel)
+    draw.polygon([(center_x + 54, base_y - 24), (center_x + 41, base_y - 24),
+                  (center_x + 12, top + 72), (center_x + 20, top + 72)], fill=steel)
+    draw.line((center_x - 49, base_y - 21, center_x - 16, top + 76), fill=detail, width=2)
+    draw.line((center_x + 49, base_y - 21, center_x + 16, top + 76), fill=detail, width=2)
+
+    for half_width, rise in ((48, 44), (40, 68), (33, 96), (26, 126), (18, 158), (11, 194)):
+        y0 = base_y - rise
+        draw.rectangle((center_x - half_width, y0, center_x + half_width, base_y - 24), fill=shadow)
+        draw.line((center_x - half_width, y0, center_x - half_width, base_y - 24), fill=detail)
+        draw.line((center_x + half_width, y0, center_x + half_width, base_y - 24), fill=detail)
+
+    draw.rectangle((center_x - 7, top + 8, center_x + 7, base_y - 16), fill=shadow)
+    draw.rectangle((center_x - 4, top + 11, center_x + 4, base_y - 18), fill=teal_dark)
+    draw.rectangle((center_x - 2, top + 12, center_x + 2, base_y - 19), fill=teal)
+    draw.line((center_x, top + 13, center_x, base_y - 20), fill=highlight)
+
+    for y in range(top + 24, base_y - 24, 12):
+        draw.line((center_x - 7, y, center_x + 7, y + 7), fill=detail)
+        draw.line((center_x + 7, y, center_x - 7, y + 7), fill=detail)
+
+    ring_y = top + 47
+    draw.ellipse((center_x - 34, ring_y - 6, center_x + 34, ring_y + 6), outline=detail, width=2)
+    draw.line((center_x - 32, ring_y + 2, center_x + 32, ring_y + 2), fill=teal)
+
+    draw.rectangle((center_x - 5, top + 2, center_x + 5, top + 15), fill=steel)
+    draw.rectangle((center_x - 2, top, center_x + 2, top + 10), fill=detail)
+    draw.point((center_x, top), fill=highlight)
+
+    for y in range(base_y - 31, top + 55, -16):
+        span = max(12, min(35, (base_y - y) // 3))
+        draw.rectangle((center_x - span, y, center_x - span + 1, y + 1), fill=warning)
+        draw.rectangle((center_x + span - 1, y, center_x + span, y + 1), fill=warning)
+
+    return max(0, left), max(0, top), min(canvas.width, right + 1), min(canvas.height, base_y + 1)
 
 # --- Horizontal sprite-strip frame inference --------------------------------
 # Industrial Zone's "4 Animated objects" sheets are horizontal strips whose
@@ -663,6 +715,45 @@ def main() -> None:
         "layers": [{"index": i, "source_pack": "dark_city", "source_path": f"blue/paralax{i}.png",
                     "path": f"assets/generated/converted/city_parallax/city_layer_{i}.png", "scroll_scale": scale}
                    for i, scale in enumerate([0.30, 0.18, 0.10, 0.05, 0.02], start=1)]})
+
+    # --- Main-menu city: reuse the city layers and add the landmark to the far sky.
+    menu_city_dir = converted / "menu_city_parallax"
+    menu_city_targets = []
+    landmark_bounds = None
+    for index, target in enumerate(city_targets, start=1):
+        layer = png(target)
+        if index == 4:
+            landmark_bounds = draw_menu_megastructure(
+                layer, center_x=int(layer.width * 0.74), base_y=int(layer.height * 0.96)
+            )
+        menu_target = menu_city_dir / f"menu_city_layer_{index}.png"
+        menu_target.parent.mkdir(parents=True, exist_ok=True)
+        layer.save(menu_target)
+        menu_city_targets.append(menu_target)
+
+    menu_city_composite = Image.new("RGBA", png(menu_city_targets[0]).size)
+    for target in reversed(menu_city_targets):
+        menu_city_composite.alpha_composite(png(target))
+    menu_city_composite.save(menu_city_dir / "menu_city_composite_480x270.png")
+    menu_city_composite.resize((960, 540), Image.Resampling.NEAREST).save(
+        menu_city_dir / "menu_city_composite_960x540.png"
+    )
+    parallax_scene(
+        godot / "parallax" / "menu_city_run_unit.tscn",
+        [f"res://assets/generated/converted/menu_city_parallax/menu_city_layer_{i}.png" for i in range(1, 6)],
+    )
+    write_json(metadata_dir / "menu_city_parallax.json", {
+        "source": "city_parallax",
+        "native_size": [480, 270],
+        "viewport_size": [960, 540],
+        "landmark": {"name": "megastructure", "layer": 4, "bounds": list(landmark_bounds)},
+        "layers": [
+            {"index": i,
+             "path": f"assets/generated/converted/menu_city_parallax/menu_city_layer_{i}.png",
+             "scroll_scale": scale}
+            for i, scale in enumerate([0.30, 0.18, 0.10, 0.05, 0.02], start=1)
+        ],
+    })
 
     # --- Industrial skyline: normalise its uneven source layers to one canvas.
     industrial_parallax_root = roots["industrial_parallax"]

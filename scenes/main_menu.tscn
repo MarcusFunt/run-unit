@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dplsy8exrhypp" path="res://scripts/ui/run_unit_main_menu.gd" id="2_script"]
 [ext_resource type="PackedScene" uid="uid://dum2pujhh1w4g" path="res://menus/scenes/windows/main_menu_options_window.tscn" id="3_options"]
 [ext_resource type="PackedScene" uid="uid://c5pfkjxskjc60" path="res://menus/scenes/windows/main_menu_credits_window.tscn" id="4_credits"]
+[ext_resource type="PackedScene" path="res://scenes/ui/menu_city_background.tscn" id="5_background"]
 
 [sub_resource type="StyleBoxFlat" id="HeaderPanel"]
 bg_color = Color(0.02, 0.1, 0.13, 0.88)
@@ -25,7 +26,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.004, 0.018, 0.03, 1)
+color = Color(0.004, 0.018, 0.03, 0.52)
+
+[node name="MenuBackground" parent="." index="1" instance=ExtResource("5_background")]
 
 [node name="TelemetryRail" type="ColorRect" parent="." index="1" unique_id=1593584625]
 show_behind_parent = true
