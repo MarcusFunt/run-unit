@@ -3,6 +3,7 @@ extends MainMenu
 
 const THIN_TERMINAL_THEME: Theme = preload("res://theme/thin_terminal_button_theme.tres")
 const TERMINAL_BUTTON_SIZE := Vector2(280.0, 50.0)
+# Slightly left-of-center keeps the controls out of the landmark-heavy skyline.
 const TERMINAL_BUTTON_ANCHOR_X := 0.45
 const PRESSED_SCALE := Vector2(0.985, 0.985)
 
