@@ -18,7 +18,7 @@ func test_campaign_follows_the_storyline_order() -> void:
 
 func test_routes_are_available_exactly_when_they_have_an_authored_world() -> void:
 	assert_eq(RunUnitCampaign.PLAYABLE_INDEX, 0, "Calibration is the route the selector opens on")
-	var expected_available: Array[bool] = [true, true, false, false]
+	var expected_available: Array[bool] = [true, true, true, false]
 	for index: int in RunUnitCampaign.route_count():
 		var route_name: String = RunUnitCampaign.get_route_name(index)
 		assert_eq(RunUnitCampaign.is_available(index), expected_available[index], "%s availability" % route_name)

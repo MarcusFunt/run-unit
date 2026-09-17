@@ -35,11 +35,11 @@ const ROUTES: Array[Dictionary] = [
 	{
 		"code": "02",
 		"name": "RECOVERY",
-		"world_scene": "",
+		"world_scene": "res://scenes/levels/level_02_recovery.tscn",
 		"runtime": "7-9 MIN",
 		"summary": "Cross the exterior service district and reach Reserve Depot 03.",
 		"briefing": "CRITICAL REPLACEMENT ASSEMBLY\nRESERVE DEPOT 03\n\nCross the exterior service district and recover the assembly held inside the reserve facility.",
-		"completion": "Replacement assembly recovered.",
+		"completion": "Replacement ignition module recovered. Target system: Beacon 9.",
 	},
 	{
 		"code": "03",

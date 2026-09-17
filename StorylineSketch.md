@@ -134,6 +134,26 @@ The messaging should remain terse, for example:
 
 Beacon 9 remains visible as the larger, unexplained landmark beyond the immediate objective.
 
+#### Beacon 9's silhouette
+
+Beacon 9 is one structure, not a generic tower, and it should read the same
+everywhere it appears. It is a vast stepped ziggurat: a wide terraced base
+crossed by long diagonal buttress ramps, ranks of spiked corner piers rising
+with each terrace, and a central mast carrying a vertical ignition column up
+to a single spire, encircled near the top by an orbital ring.
+
+Its condition tells the story of the game:
+
+- **Levels 2 and 3 (offline).** The mast stands dark, the orbital ring is
+  broken with pieces hanging loose or drifting free, and only a few segments
+  of the ignition column still carry a faint blue light.
+- **After the final installation.** The ignition column runs bright and
+  unbroken, the ring is whole and lit, and the terraces carry running lights.
+
+`scenes/props/beacon_9_skyline.tscn` is the authored offline silhouette, drawn
+so it can be dropped into any level's sky at whatever parallax depth and scale
+that level needs. Reuse it rather than redrawing the landmark per level.
+
 ### 4. Facility approach
 
 The obvious entrance to the reserve facility is unavailable. UNIT-07 reaches the building through exterior maintenance infrastructure: rooftop machinery, service platforms, damaged access routes, or a broken maintenance opening.

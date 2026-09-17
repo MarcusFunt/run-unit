@@ -1,12 +1,12 @@
 # RUN//UNIT v0.1
 
-RUN//UNIT is a small 2D platformer made with Godot 4.7. The campaign in `StorylineSketch.md` runs Calibration -> Factory Escape -> Recovery -> Beacon 9; the current school-project slice ships the first two. The manufactured robot UNIT-07 clears its factory movement checks, then crosses the stalled production line and the storage warehouse to escape the factory as the facility automation fails around it.
+RUN//UNIT is a small 2D platformer made with Godot 4.7. The campaign in `StorylineSketch.md` runs Calibration -> Factory Escape -> Recovery -> Beacon 9; the current school-project slice ships the first three. The manufactured robot UNIT-07 clears its factory movement checks, crosses the stalled production line and the storage warehouse to escape the factory, then crosses the exterior service district into Reserve Depot 03 to recover the replacement ignition module that Beacon 9 needs.
 
 ## Run and controls
 
 Open `project.godot` in Godot 4.7.1 (or a compatible Godot 4.x release) and run the project.
 
-Select **START NEW RUN**, then deploy to **CALIBRATION** (the tutorial) or **FACTORY ESCAPE** (Level 1). The selector lists the campaign in story order; Recovery and Beacon 9 have no authored world yet and show as locked.
+Select **START NEW RUN**, then deploy to **CALIBRATION** (the tutorial) **FACTORY ESCAPE** (Level 1), or **RECOVERY** (Level 2). The selector lists the campaign in story order; Beacon 9 has no authored world yet and shows as locked.
 
 - A / D or Left / Right: move
 - Space / Up Arrow: hold to charge the spring crouch, then release to jump
@@ -21,9 +21,11 @@ The playable geometry is authored in Tiled and imported through YATI:
 
 - `assets/tiled/levels/maintenance_shaft.tmj` — Calibration tutorial map (legacy filename)
 - `assets/tiled/levels/level_01_factory.tmj` — Factory Escape map
+- `assets/tiled/levels/level_02_recovery.tmj` — Recovery map
 - `assets/tiled/semantic/semantic_layer.tsj` — semantic/collision tileset
 - `scenes/world.tscn` — Godot wrapper that instances the tutorial map and its runtime art
 - `scenes/levels/level_01_factory.tscn` — the same wrapper for Factory Escape
+- `scenes/levels/level_02_recovery.tscn` — the Recovery wrapper, including the Beacon 9 skyline and the module cradle (`scripts/world/recovery_module_cradle.gd`)
 - `scripts/gameplay/campaign_routes.gd` — the campaign route table the selector, game, and results menu all read
 - `scripts/world/static_world.gd` — indexes imported semantic tiles and authored markers
 

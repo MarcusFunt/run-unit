@@ -66,7 +66,8 @@ func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 		assert_true(sector_buttons[index].text.contains(expected_names[index]), "Route %d should be %s in campaign order" % [index, expected_names[index]])
 	assert_false(sector_buttons[0].disabled, "Calibration is authored and playable")
 	assert_false(sector_buttons[1].disabled, "Factory Escape is authored and playable")
-	for index: int in range(2, sector_buttons.size()):
+	assert_false(sector_buttons[2].disabled, "Recovery is authored and playable")
+	for index: int in range(3, sector_buttons.size()):
 		assert_true(sector_buttons[index].disabled, "Campaign route %s has no authored world yet" % expected_names[index])
 		assert_true(sector_buttons[index].text.contains("LOCKED"), "Unbuilt routes should read as locked rather than offline sector slots")
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
