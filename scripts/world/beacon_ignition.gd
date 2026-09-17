@@ -7,9 +7,9 @@ extends RunUnitRouteExit
 ## UNIT-07 seats the module it has carried since Level 2, and after a beat the
 ## activation propagates outward one stage at a time -- interface, conduits,
 ## chamber machinery, the beacon's internal systems, its exterior structure,
-## and finally the city through the chamber window. The game then holds on the
-## restored beacon rather than cutting away. The module is consumed here;
-## nothing about it is reusable.
+## and finally the city through the chamber window. The game holds on the
+## restored beacon before fading to the ending screen. The module is consumed
+## here; nothing about it is reusable.
 
 signal module_installed
 

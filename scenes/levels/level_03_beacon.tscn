@@ -108,6 +108,7 @@ position = Vector2(15600, 160)
 script = ExtResource("4_ignition")
 carried_module_path = NodePath("../CarriedModule")
 stage_paths = [NodePath("Stage1Interface"), NodePath("Stage2Conduits"), NodePath("Stage3Chamber"), NodePath("Stage4Interior"), NodePath("Stage5Column"), NodePath("Stage6City")]
+next_scene_path = "res://scenes/ending.tscn"
 
 [node name="Window" type="Node2D" parent="IgnitionChamber"]
 z_index = 2

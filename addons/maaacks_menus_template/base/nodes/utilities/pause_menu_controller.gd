@@ -28,4 +28,15 @@ func _unhandled_input(event : InputEvent) -> void:
 func _ready() -> void:
 	pause_menu = pause_menu_packed.instantiate()
 	pause_menu.hide()
-	get_tree().current_scene.call_deferred("add_child", pause_menu)
+	# The pause menu is a Control that anchors itself to the center of its
+	# parent's rect. Godot only resolves that anchor against the real
+	# viewport rect when the parent is a Control/CanvasLayer; a bare Node2D
+	# scene root (like this game's) reads as a (0, 0) rect instead, so the
+	# menu opened off-screen. Reparenting into a fresh CanvasLayer keeps the
+	# global position "fixed" (reparent's default keep_global_transform),
+	# so it must already be correct at the moment this node first enters
+	# the tree.
+	var pause_menu_layer := CanvasLayer.new()
+	pause_menu_layer.name = "PauseMenuLayer"
+	pause_menu_layer.add_child(pause_menu)
+	get_tree().current_scene.call_deferred("add_child", pause_menu_layer)

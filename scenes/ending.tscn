@@ -1,0 +1,143 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/run_unit_ending.gd" id="1_ending"]
+[ext_resource type="Texture2D" path="res://assets/images/ending_beacon_vista.png" id="2_vista"]
+[ext_resource type="Theme" path="res://theme/run_unit_menu_theme.tres" id="3_theme"]
+
+[sub_resource type="Gradient" id="TopScrim"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.004, 0.02, 0.035, 0.85, 0.004, 0.02, 0.035, 0)
+
+[sub_resource type="GradientTexture2D" id="TopScrimTexture"]
+gradient = SubResource("TopScrim")
+width = 16
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="BottomScrim"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.004, 0.02, 0.035, 0, 0.004, 0.02, 0.035, 0.9)
+
+[sub_resource type="GradientTexture2D" id="BottomScrimTexture"]
+gradient = SubResource("BottomScrim")
+width = 16
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="EndingPanel"]
+bg_color = Color(0.01, 0.05, 0.07, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.72, 0.72, 0.5)
+content_margin_left = 28.0
+content_margin_top = 18.0
+content_margin_right = 28.0
+content_margin_bottom = 18.0
+
+[node name="Ending" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_ending")
+
+[node name="Vista" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(480, 270)
+mouse_filter = 2
+texture = ExtResource("2_vista")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TopScrim" type="TextureRect" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 186.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = SubResource("TopScrimTexture")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="BottomScrim" type="TextureRect" parent="UI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -230.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = SubResource("BottomScrimTexture")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="StatusLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 118.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.45, 0.92, 0.95, 0.95)
+theme_override_colors/font_outline_color = Color(0.004, 0.04, 0.06, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 17
+text = "BEACON 9 ONLINE
+IGNITION ASSEMBLY RESTORED"
+horizontal_alignment = 1
+
+[node name="ThanksLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 116.0
+offset_bottom = 172.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.74, 0.38, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 40
+text = "THANK YOU FOR PLAYING"
+horizontal_alignment = 1
+
+[node name="Buttons" type="PanelContainer" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -138.0
+offset_right = 160.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("EndingPanel")
+
+[node name="Content" type="VBoxContainer" parent="UI/Buttons"]
+theme_override_constants/separation = 10
+
+[node name="SectorButton" type="Button" parent="UI/Buttons/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+text = "SECTOR SELECT"
+
+[node name="MenuButton" type="Button" parent="UI/Buttons/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+text = "MAIN MENU"

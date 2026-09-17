@@ -259,6 +259,8 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
 	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
 	var carried: RunUnitCarriedModule = game.world.get_node("CarriedModule") as RunUnitCarriedModule
+	# Keep the ending inside the game scene; the hand-off has its own test.
+	ignition.next_scene_path = ""
 	ignition.install_delay = 0.1
 	ignition.stage_interval = 0.1
 	ignition.hold_after_activation = 0.1
@@ -277,10 +279,17 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	assert_true(ignition.seated_module.visible, "The module is visible in the interface afterwards")
 	assert_eq(ignition.lit_stages, ignition.stage_paths.size(), "Activation propagates through every stage")
 	assert_eq(RunUnitSession.last_run_outcome, "completed")
-	assert_true(ignition.next_scene_path.is_empty(), "The ending stays in the game rather than cutting to another scene")
-	assert_eq(ignition.blackout.color.a, 0.0, "With nothing to cut to, the ending holds on the restored beacon")
-	assert_true(game.death_menu.visible, "The run finishes on the results screen")
+	assert_eq(ignition.blackout.color.a, 0.0, "With no scene to cut to, the ending holds on the restored beacon")
+	assert_true(game.death_menu.visible, "Without a hand-off the run finishes on the results screen")
 	assert_true(game.death_menu.description_label.text.contains("Beacon 9 ignition restored"), "Results copy should come from Level 3")
+
+
+func test_level_3_hands_off_to_the_ending_screen() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var ignition: RunUnitBeaconIgnition = world.get_node("IgnitionChamber") as RunUnitBeaconIgnition
+
+	assert_eq(ignition.next_scene_path, "res://scenes/ending.tscn", "Installing the module ends the game on the ending screen")
+	assert_true(ResourceLoader.exists(ignition.next_scene_path), "The ending screen ships with the project")
 
 
 func test_restarting_level_3_puts_the_module_back_on_the_robot() -> void:

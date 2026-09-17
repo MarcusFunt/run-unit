@@ -31,6 +31,7 @@ The playable geometry is authored in Tiled and imported through YATI:
 - `scenes/levels/level_02_recovery.tscn` — the Recovery wrapper, including the Beacon 9 skyline and the module cradle (`scripts/world/recovery_module_cradle.gd`)
 - `scenes/levels/level_03_beacon.tscn` — the Beacon 9 wrapper, including the carried module and the ignition chamber that ends the game (`scripts/world/beacon_ignition.gd`)
 - `scenes/props/beacon_9_skyline.tscn` — the Beacon 9 landmark, shared by the levels that show it
+- `scenes/ending.tscn` — the ending screen Level 3 hands off to, over `assets/images/ending_beacon_vista.png`
 - `scripts/gameplay/campaign_routes.gd` — the campaign route table the selector, game, and results menu all read
 - `scripts/world/static_world.gd` — indexes imported semantic tiles and authored markers
 
