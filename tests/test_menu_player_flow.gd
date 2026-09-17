@@ -38,6 +38,8 @@ func test_main_menu_uses_refined_thin_terminal_buttons() -> void:
 	assert_eq(button.custom_minimum_size, Vector2(280.0, 50.0), "Thin Terminal buttons should be lower and slightly wider")
 	var box: BoxContainer = menu.get_node("MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer") as BoxContainer
 	assert_eq(box.get_theme_constant("separation"), 10, "Terminal controls should use tighter vertical spacing")
+	assert_almost_eq(box.anchor_left, 0.45, 0.001, "Thin Terminal controls should sit slightly left of screen center")
+	assert_almost_eq(box.anchor_right, 0.45, 0.001, "Thin Terminal controls should preserve their width while shifted left")
 
 func test_level_selector_marks_only_the_authored_route_playable() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
