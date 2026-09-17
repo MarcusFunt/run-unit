@@ -259,8 +259,6 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
 	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
 	var carried: RunUnitCarriedModule = game.world.get_node("CarriedModule") as RunUnitCarriedModule
-	# The ending would otherwise take the player out of the game scene.
-	ignition.next_scene_path = ""
 	ignition.install_delay = 0.1
 	ignition.stage_interval = 0.1
 	ignition.hold_after_activation = 0.1
@@ -279,6 +277,10 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	assert_true(ignition.seated_module.visible, "The module is visible in the interface afterwards")
 	assert_eq(ignition.lit_stages, ignition.stage_paths.size(), "Activation propagates through every stage")
 	assert_eq(RunUnitSession.last_run_outcome, "completed")
+	assert_true(ignition.next_scene_path.is_empty(), "The ending stays in the game rather than cutting to another scene")
+	assert_eq(ignition.blackout.color.a, 0.0, "With nothing to cut to, the ending holds on the restored beacon")
+	assert_true(game.death_menu.visible, "The run finishes on the results screen")
+	assert_true(game.death_menu.description_label.text.contains("Beacon 9 ignition restored"), "Results copy should come from Level 3")
 
 
 func test_restarting_level_3_puts_the_module_back_on_the_robot() -> void:

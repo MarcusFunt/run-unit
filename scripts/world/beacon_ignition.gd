@@ -7,8 +7,9 @@ extends RunUnitRouteExit
 ## UNIT-07 seats the module it has carried since Level 2, and after a beat the
 ## activation propagates outward one stage at a time -- interface, conduits,
 ## chamber machinery, the beacon's internal systems, its exterior structure,
-## and finally the city through the chamber window -- before the fade to the
-## credits. The module is consumed here; nothing about it is reusable.
+## and finally the city through the chamber window. The game then holds on the
+## restored beacon rather than cutting away. The module is consumed here;
+## nothing about it is reusable.
 
 signal module_installed
 
@@ -19,6 +20,8 @@ signal module_installed
 @export_range(0.1, 3.0, 0.05) var install_delay: float = 0.8
 @export_range(0.1, 2.0, 0.05) var stage_interval: float = 0.5
 @export_range(0.0, 5.0, 0.1) var hold_after_activation: float = 2.0
+## Only used when this exit hands off to another scene: with nothing to cut to,
+## the ending stays on the lit chamber instead of fading out to black.
 @export_range(0.1, 3.0, 0.05) var fade_duration: float = 1.1
 
 @onready var seated_module: Node2D = $SeatedModule
@@ -57,7 +60,8 @@ func begin_transition() -> void:
 		_sequence.tween_interval(stage_interval)
 		_sequence.tween_callback(_light_stage.bind(index))
 	_sequence.tween_interval(hold_after_activation)
-	_sequence.tween_property(blackout, "color:a", 1.0, fade_duration)
+	if not next_scene_path.is_empty():
+		_sequence.tween_property(blackout, "color:a", 1.0, fade_duration)
 	_sequence.tween_callback(finish_transition)
 
 ## The module leaves UNIT-07 for good and seats into the interface.
