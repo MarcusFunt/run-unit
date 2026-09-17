@@ -87,7 +87,7 @@ class StampTests(unittest.TestCase):
         target_data = copy.deepcopy(level.data)
         deck = next(layer for layer in target_data["layers"] if layer.get("name") == "ArtDeck")
         existing_gid = next(gid for gid in deck["data"] if gid)
-        deck[10 * level.width + 10] = existing_gid
+        deck["data"][10 * level.width + 10] = existing_gid
         target = level_kit.LevelMap(path=level.path, data=target_data, index=level.index)
         tiled_workbench.place_stamp(target, stamp, 10, 10)
         self.assertEqual(target.layer("ArtDeck")["data"][10 * level.width + 10], existing_gid)
