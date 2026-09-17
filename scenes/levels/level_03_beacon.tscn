@@ -1,0 +1,395 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://assets/tiled/levels/level_03_beacon.tmj" id="2_level"]
+[ext_resource type="Script" path="res://scripts/world/carried_module.gd" id="3_carried"]
+[ext_resource type="Script" path="res://scripts/world/beacon_ignition.gd" id="4_ignition"]
+[ext_resource type="Script" path="res://scripts/world/beacon_approach.gd" id="5_approach"]
+[ext_resource type="Texture2D" path="res://assets/generated/atlases/battery_charge_cyan_18x25.png" id="6_module"]
+[ext_resource type="PackedScene" path="res://scenes/props/beacon_9_skyline.tscn" id="7_beacon"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_4.png" id="8_city4"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_3.png" id="9_city3"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_2.png" id="10_city2"]
+
+[node name="Level03Beacon" type="Node2D"]
+script = ExtResource("1_world")
+death_y = 1000.0
+
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -30
+color = Color(0.012, 0.028, 0.043, 1)
+polygon = PackedVector2Array(-512, -1400, 16800, -1400, 16800, 1536, -512, 1536)
+
+[node name="Sky" type="Polygon2D" parent="."]
+z_index = -29
+polygon = PackedVector2Array(-512, -1400, 16800, -1400, 16800, 1100, -512, 1100)
+vertex_colors = PackedColorArray(0.04, 0.13, 0.19, 1, 0.04, 0.13, 0.19, 1, 0.1, 0.28, 0.34, 1, 0.1, 0.28, 0.34, 1)
+
+[node name="BeaconParallax" type="Parallax2D" parent="."]
+z_index = -28
+scroll_scale = Vector2(0.02, 0.1)
+scroll_offset = Vector2(700, 430)
+script = ExtResource("5_approach")
+start_x = 0.0
+end_x = 9200.0
+start_scale = 0.42
+end_scale = 1.9
+start_offset = Vector2(700, 430)
+end_offset = Vector2(640, 940)
+fade_from = 0.88
+
+[node name="Beacon9" parent="BeaconParallax" instance=ExtResource("7_beacon")]
+scale = Vector2(0.42, 0.42)
+
+[node name="CityFar" type="Parallax2D" parent="."]
+z_index = -27
+scroll_scale = Vector2(0.08, 0.1)
+scroll_offset = Vector2(0, -1)
+repeat_size = Vector2(960, 0)
+repeat_times = 24
+
+[node name="Sprite" type="Sprite2D" parent="CityFar"]
+modulate = Color(0.62, 0.72, 0.78, 1)
+texture = ExtResource("8_city4")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="CityMid" type="Parallax2D" parent="."]
+z_index = -26
+scroll_scale = Vector2(0.16, 0.1)
+scroll_offset = Vector2(0, 60)
+repeat_size = Vector2(960, 0)
+repeat_times = 24
+
+[node name="Sprite" type="Sprite2D" parent="CityMid"]
+modulate = Color(0.7, 0.78, 0.82, 1)
+texture = ExtResource("9_city3")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="CityNear" type="Parallax2D" parent="."]
+z_index = -25
+scroll_scale = Vector2(0.26, 0.1)
+scroll_offset = Vector2(0, 157)
+repeat_size = Vector2(960, 0)
+repeat_times = 24
+
+[node name="Sprite" type="Sprite2D" parent="CityNear"]
+modulate = Color(0.4, 0.46, 0.5, 1)
+texture = ExtResource("10_city2")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="StreetHaze" type="Polygon2D" parent="."]
+z_index = -22
+polygon = PackedVector2Array(-512, 600, 9200, 600, 9200, 1100, -512, 1100)
+vertex_colors = PackedColorArray(0.02, 0.07, 0.09, 0, 0.02, 0.07, 0.09, 0, 0.02, 0.06, 0.08, 0.95, 0.02, 0.06, 0.08, 0.95)
+
+[node name="BeaconInteriorFill" type="Polygon2D" parent="."]
+z_index = -20
+color = Color(0.022, 0.055, 0.075, 1)
+polygon = PackedVector2Array(14128, 72, 15030, 72, 15030, -900, 16250, -900, 16250, 1100, 14128, 1100)
+
+[node name="BeaconGeometry" parent="." instance=ExtResource("2_level")]
+
+[node name="CarriedModule" type="Node2D" parent="."]
+script = ExtResource("3_carried")
+
+[node name="ModuleTemplate" type="Sprite2D" parent="CarriedModule"]
+visible = false
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("6_module")
+hframes = 10
+vframes = 6
+frame = 14
+
+[node name="IgnitionChamber" type="Node2D" parent="."]
+position = Vector2(15600, 160)
+script = ExtResource("4_ignition")
+carried_module_path = NodePath("../CarriedModule")
+stage_paths = [NodePath("Stage1Interface"), NodePath("Stage2Conduits"), NodePath("Stage3Chamber"), NodePath("Stage4Interior"), NodePath("Stage5Column"), NodePath("Stage6City")]
+next_scene_path = "res://scenes/ending.tscn"
+
+[node name="Window" type="Node2D" parent="IgnitionChamber"]
+z_index = 2
+
+[node name="Opening" type="Polygon2D" parent="IgnitionChamber/Window"]
+polygon = PackedVector2Array(140, -164, 436, -164, 436, -28, 140, -28)
+vertex_colors = PackedColorArray(0.04, 0.13, 0.19, 1, 0.04, 0.13, 0.19, 1, 0.08, 0.22, 0.28, 1, 0.08, 0.22, 0.28, 1)
+
+[node name="DistantCity" type="Polygon2D" parent="IgnitionChamber/Window"]
+color = Color(0.02, 0.07, 0.09, 1)
+polygon = PackedVector2Array(140, -28, 140, -62, 166, -62, 166, -80, 192, -80, 192, -54, 222, -54, 222, -96, 248, -96, 248, -66, 278, -66, 278, -86, 310, -86, 310, -58, 342, -58, 342, -92, 368, -92, 368, -62, 400, -62, 400, -76, 436, -76, 436, -28)
+
+[node name="Frame" type="Polygon2D" parent="IgnitionChamber/Window"]
+color = Color(0.09, 0.2, 0.24, 1)
+polygon = PackedVector2Array(132, -172, 444, -172, 444, -20, 132, -20, 132, -172, 140, -164, 140, -28, 436, -28, 436, -164, 132, -164)
+
+[node name="Mullion" type="Polygon2D" parent="IgnitionChamber/Window"]
+color = Color(0.09, 0.2, 0.24, 1)
+polygon = PackedVector2Array(284, -164, 292, -164, 292, -28, 284, -28)
+
+[node name="Interface" type="Node2D" parent="IgnitionChamber"]
+z_index = 1
+
+[node name="Plinth" type="Polygon2D" parent="IgnitionChamber/Interface"]
+color = Color(0.07, 0.17, 0.21, 1)
+polygon = PackedVector2Array(-34, 0, 34, 0, 26, -34, -26, -34)
+
+[node name="Socket" type="Polygon2D" parent="IgnitionChamber/Interface"]
+color = Color(0.03, 0.09, 0.12, 1)
+polygon = PackedVector2Array(-20, -34, 20, -34, 20, -78, -20, -78)
+
+[node name="Clamp" type="Polygon2D" parent="IgnitionChamber/Interface"]
+color = Color(0.12, 0.28, 0.33, 1)
+polygon = PackedVector2Array(-26, -78, -18, -78, -18, -34, -26, -34, -26, -78, 26, -78, 26, -34, 18, -34, 18, -78)
+
+[node name="SeatedModule" type="Sprite2D" parent="IgnitionChamber"]
+visible = false
+z_index = 1
+position = Vector2(0, -56)
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("6_module")
+hframes = 10
+vframes = 6
+frame = 3
+
+[node name="Stage1Interface" type="Node2D" parent="IgnitionChamber"]
+visible = false
+z_index = 2
+
+[node name="SocketGlow" type="Polygon2D" parent="IgnitionChamber/Stage1Interface"]
+color = Color(0.45, 0.9, 1, 0.42)
+polygon = PackedVector2Array(-42, -2, 42, -2, 32, -96, -32, -96)
+
+[node name="Stage2Conduits" type="Node2D" parent="IgnitionChamber"]
+visible = false
+z_index = 2
+
+[node name="FloorRunLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+color = Color(0.4, 0.85, 0.95, 0.5)
+polygon = PackedVector2Array(-430, -10, -40, -10, -40, -2, -430, -2)
+
+[node name="FloorRunRight" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+color = Color(0.4, 0.85, 0.95, 0.5)
+polygon = PackedVector2Array(40, -10, 430, -10, 430, -2, 40, -2)
+
+[node name="RiserLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+color = Color(0.4, 0.85, 0.95, 0.4)
+polygon = PackedVector2Array(-430, -10, -422, -10, -422, -150, -430, -150)
+
+[node name="RiserRight" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+color = Color(0.4, 0.85, 0.95, 0.4)
+polygon = PackedVector2Array(422, -10, 430, -10, 430, -150, 422, -150)
+
+[node name="Stage3Chamber" type="Node2D" parent="IgnitionChamber"]
+visible = false
+z_index = 2
+
+[node name="AssemblyLight" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber"]
+color = Color(0.35, 0.8, 0.92, 0.16)
+polygon = PackedVector2Array(-116, -164, 116, -164, 116, -4, -116, -4)
+
+[node name="AssemblyBands" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber"]
+color = Color(0.5, 0.92, 1, 0.55)
+polygon = PackedVector2Array(-108, -60, 108, -60, 108, -52, -108, -52)
+
+[node name="AssemblyBands2" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber"]
+color = Color(0.5, 0.92, 1, 0.4)
+polygon = PackedVector2Array(-108, -116, 108, -116, 108, -108, -108, -108)
+
+[node name="Stage4Interior" type="Node2D" parent="IgnitionChamber"]
+visible = false
+z_index = 2
+
+[node name="CorridorSpill" type="Polygon2D" parent="IgnitionChamber/Stage4Interior"]
+polygon = PackedVector2Array(-1460, -170, -120, -170, -120, -2, -1460, -2)
+vertex_colors = PackedColorArray(0.3, 0.75, 0.88, 0, 0.3, 0.75, 0.88, 0.3, 0.3, 0.75, 0.88, 0.3, 0.3, 0.75, 0.88, 0)
+
+[node name="Stage5Column" type="Node2D" parent="IgnitionChamber"]
+visible = false
+z_index = 2
+
+[node name="ColumnCore" type="Polygon2D" parent="IgnitionChamber/Stage5Column"]
+color = Color(0.72, 0.96, 1, 0.85)
+polygon = PackedVector2Array(-14, -1200, 14, -1200, 14, 840, -14, 840)
+
+[node name="ColumnGlow" type="Polygon2D" parent="IgnitionChamber/Stage5Column"]
+color = Color(0.4, 0.85, 1, 0.22)
+polygon = PackedVector2Array(-54, -1200, 54, -1200, 54, 840, -54, 840)
+
+[node name="Stage6City" type="Node2D" parent="IgnitionChamber"]
+visible = false
+z_index = 3
+
+[node name="Light01" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.71)
+polygon = PackedVector2Array(152, -56, 157, -56, 157, -51, 152, -51)
+
+[node name="Light02" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.68)
+polygon = PackedVector2Array(170, -74, 175, -74, 175, -69, 170, -69)
+
+[node name="Light03" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.60)
+polygon = PackedVector2Array(186, -48, 191, -48, 191, -43, 186, -43)
+
+[node name="Light04" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.85)
+polygon = PackedVector2Array(198, -66, 203, -66, 203, -61, 198, -61)
+
+[node name="Light05" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.55)
+polygon = PackedVector2Array(214, -84, 219, -84, 219, -79, 214, -79)
+
+[node name="Light06" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.73)
+polygon = PackedVector2Array(228, -58, 233, -58, 233, -53, 228, -53)
+
+[node name="Light07" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.86)
+polygon = PackedVector2Array(240, -76, 245, -76, 245, -71, 240, -71)
+
+[node name="Light08" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.58)
+polygon = PackedVector2Array(256, -50, 261, -50, 261, -45, 256, -45)
+
+[node name="Light09" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.74)
+polygon = PackedVector2Array(268, -88, 273, -88, 273, -83, 268, -83)
+
+[node name="Light10" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.77)
+polygon = PackedVector2Array(300, -62, 305, -62, 305, -57, 300, -57)
+
+[node name="Light11" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.56)
+polygon = PackedVector2Array(314, -80, 319, -80, 319, -75, 314, -75)
+
+[node name="Light12" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.68)
+polygon = PackedVector2Array(330, -54, 335, -54, 335, -49, 330, -49)
+
+[node name="Light13" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.80)
+polygon = PackedVector2Array(346, -84, 351, -84, 351, -79, 346, -79)
+
+[node name="Light14" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.71)
+polygon = PackedVector2Array(360, -68, 365, -68, 365, -63, 360, -63)
+
+[node name="Light15" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.80)
+polygon = PackedVector2Array(374, -56, 379, -56, 379, -51, 374, -51)
+
+[node name="Light16" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.61)
+polygon = PackedVector2Array(392, -78, 397, -78, 397, -73, 392, -73)
+
+[node name="Light17" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.63)
+polygon = PackedVector2Array(406, -60, 411, -60, 411, -55, 406, -55)
+
+[node name="Light18" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.45, 0.9, 1, 0.59)
+polygon = PackedVector2Array(420, -70, 425, -70, 425, -65, 420, -65)
+
+
+[node name="Glow" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+color = Color(0.35, 0.8, 0.95, 0.16)
+polygon = PackedVector2Array(140, -164, 436, -164, 436, -28, 140, -28)
+
+[node name="BlackoutLayer" type="CanvasLayer" parent="IgnitionChamber"]
+layer = 100
+
+[node name="Blackout" type="ColorRect" parent="IgnitionChamber/BlackoutLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0)
+mouse_filter = 2
+
+[node name="BeaconSigns" type="Node2D" parent="."]
+z_index = 4
+
+[node name="MissionSign" type="Label" parent="BeaconSigns"]
+offset_left = 40.0
+offset_top = 240.0
+offset_right = 480.0
+offset_bottom = 320.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.92)
+theme_override_font_sizes/font_size = 13
+text = "BEACON 9
+IGNITION ASSEMBLY OFFLINE
+REPLACEMENT DETECTED"
+horizontal_alignment = 1
+
+[node name="RooftopSign" type="Label" parent="BeaconSigns"]
+offset_left = 1700.0
+offset_top = 352.0
+offset_right = 2140.0
+offset_bottom = 378.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
+theme_override_font_sizes/font_size = 12
+text = "ROOFTOP SERVICE RUN // DISTRICT 6"
+horizontal_alignment = 1
+
+[node name="ViaductSign" type="Label" parent="BeaconSigns"]
+offset_left = 4700.0
+offset_top = 432.0
+offset_right = 5140.0
+offset_bottom = 458.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "TRANSIT VIADUCT 7 // LINE HALTED"
+horizontal_alignment = 1
+
+[node name="CanyonSign" type="Label" parent="BeaconSigns"]
+offset_left = 7400.0
+offset_top = 560.0
+offset_right = 7900.0
+offset_bottom = 586.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "UTILITY CANYON // COLLAPSED SERVICE RUN"
+horizontal_alignment = 1
+
+[node name="PerimeterSign" type="Label" parent="BeaconSigns"]
+offset_left = 9300.0
+offset_top = 688.0
+offset_right = 9800.0
+offset_bottom = 714.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
+theme_override_font_sizes/font_size = 12
+text = "BEACON 9 // MAINTENANCE PERIMETER"
+horizontal_alignment = 1
+
+[node name="AscentSign" type="Label" parent="BeaconSigns"]
+offset_left = 12200.0
+offset_top = 384.0
+offset_right = 12700.0
+offset_bottom = 410.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "IGNITION ACCESS // EXTERIOR GANTRIES"
+horizontal_alignment = 1
+
+[node name="InteriorSign" type="Label" parent="BeaconSigns"]
+offset_left = 14200.0
+offset_top = 64.0
+offset_right = 14640.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
+theme_override_font_sizes/font_size = 12
+text = "BEACON 9 // MAINTENANCE INTERIOR"
+horizontal_alignment = 1
+
+[node name="ChamberSign" type="Label" parent="BeaconSigns"]
+offset_left = 15180.0
+offset_top = 24.0
+offset_right = 15560.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.92)
+theme_override_font_sizes/font_size = 12
+text = "IGNITION CHAMBER"
+horizontal_alignment = 1

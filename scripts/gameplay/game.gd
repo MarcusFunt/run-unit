@@ -12,9 +12,9 @@ extends Node2D
 @onready var hud: RunUnitHud = $HUD
 @onready var debug_overlay: RunUnitDebugOverlay = $DebugOverlay
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
-## Only the tutorial world has a lift to leave through; other routes finish on
-## the results menu.
-@onready var elevator_exit: RunUnitTutorialElevatorExit = get_node_or_null("World/ElevatorExit") as RunUnitTutorialElevatorExit
+## A level may own its ending (the tutorial's lift, Beacon 9's ignition
+## chamber). Routes without one finish on the results menu.
+@onready var route_exit: RunUnitRouteExit = _find_route_exit()
 
 ## The traversal trace exists to explain a run afterwards, not to replay it
 ## frame by frame, so it is sampled on a fixed wall-clock cadence instead of
@@ -33,6 +33,9 @@ var _trace_sample_countdown: float = 0.0
 var _last_status_text: String = ""
 var _selected_level_index: int = 0
 var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
+## Authored respawn points, in route order, and the next one still ahead.
+var _checkpoints: Array[Vector2] = []
+var _next_checkpoint: int = 0
 
 ## Swaps in the selected route's world before any child is ready, so the
 ## controllers' world_path and this node's @onready references all resolve to
@@ -62,6 +65,7 @@ func _ready() -> void:
 	if not world.route_completed.is_connected(_on_route_completed):
 		world.route_completed.connect(_on_route_completed)
 	hud.set_level_length(world.get_traversal_length())
+	_checkpoints = world.get_checkpoint_positions()
 	reset_run(0)
 	_run_started = true
 
@@ -77,6 +81,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var current_distance: float = score_manager.record_position(player.global_position.x)
 	RunUnitSession.record_best_distance(score_manager.best_distance)
+	_record_passed_checkpoints()
 	_trace_sample_countdown -= delta
 	if _trace_sample_countdown <= 0.0:
 		_trace_sample_countdown = TRACE_SAMPLE_INTERVAL
@@ -114,6 +119,9 @@ func reset_run(run_seed: int) -> void:
 	scripted_controller.active = false
 	scripted_controller.reset_controller()
 	var spawn_position: Vector2 = world.get_spawn_position()
+	# Distance is always measured from the route's spawn, even when a retry
+	# resumes at a checkpoint, so progress reads the same either way.
+	var resume_position: Vector2 = RunUnitSession.get_resume_position(_selected_level_index, spawn_position)
 	score_manager.reset(spawn_position.x, RunUnitSession.best_distance)
 	_last_reward_distance = 0.0
 	_terminal_penalty_paid = false
@@ -125,12 +133,14 @@ func reset_run(run_seed: int) -> void:
 	RunUnitSession.run_seed = run_seed
 	RunUnitSession.set_run_outcome("active")
 	_trace.begin(run_seed)
-	player.global_position = spawn_position
+	player.global_position = resume_position
+	_next_checkpoint = 0
+	_record_passed_checkpoints()
 	player.reset_motor()
 	player.set_physics_process(true)
 	death_menu.close()
-	if elevator_exit != null:
-		elevator_exit.reset_transition()
+	if route_exit != null:
+		route_exit.reset_transition()
 	hud.set_scores(0.0, score_manager.best_distance)
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
@@ -192,6 +202,9 @@ func _finish_run(result: int) -> void:
 	RunUnitSession.record_best_distance(score_manager.best_distance)
 	hud.set_scores(current_distance, score_manager.best_distance)
 	var outcome: String = "failed" if result == RunState.FAILED else "completed"
+	if result == RunState.COMPLETED:
+		# The route is done; a redeploy starts it from the beginning again.
+		RunUnitSession.clear_checkpoint()
 	if result == RunState.FAILED:
 		player_feedback.play_game_over_feedback()
 	_trace.record(outcome, player.global_position, player.velocity)
@@ -199,16 +212,22 @@ func _finish_run(result: int) -> void:
 	RunUnitSession.set_run_outcome(outcome)
 	if result == RunState.FAILED:
 		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
-	elif elevator_exit != null:
-		if not elevator_exit.transition_finished.is_connected(_on_elevator_transition_finished):
-			elevator_exit.transition_finished.connect(_on_elevator_transition_finished)
-		elevator_exit.begin_transition()
+	elif route_exit != null:
+		if not route_exit.transition_finished.is_connected(_on_route_exit_finished):
+			route_exit.transition_finished.connect(_on_route_exit_finished)
+		route_exit.begin_transition()
 	else:
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
 
-func _on_elevator_transition_finished() -> void:
-	if elevator_exit.next_scene_path.is_empty():
+func _on_route_exit_finished() -> void:
+	if route_exit.next_scene_path.is_empty():
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
+
+func _find_route_exit() -> RunUnitRouteExit:
+	for child: Node in world.get_children():
+		if child is RunUnitRouteExit:
+			return child as RunUnitRouteExit
+	return null
 
 func _update_debug(current_distance: float) -> void:
 	if not debug_overlay.visible:
@@ -231,6 +250,13 @@ func _on_obstacle_triggered(obstacle_type: String, platform_id: int) -> void:
 		return
 	_trace.record("obstacle:%s" % obstacle_type, player.global_position, player.velocity, platform_id)
 	_fail_run()
+
+## Remembers every checkpoint the player has already driven past, so a retry
+## resumes from the furthest one instead of replaying the whole route.
+func _record_passed_checkpoints() -> void:
+	while _next_checkpoint < _checkpoints.size() and player.global_position.x >= _checkpoints[_next_checkpoint].x:
+		RunUnitSession.record_checkpoint(_selected_level_index, _checkpoints[_next_checkpoint])
+		_next_checkpoint += 1
 
 func _on_route_completed() -> void:
 	_complete_run()

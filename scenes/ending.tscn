@@ -1,0 +1,260 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/run_unit_ending.gd" id="1_ending"]
+[ext_resource type="Texture2D" path="res://assets/generated/converted/ending/ending_beacon_vista_320x180.png" id="2_vista"]
+[ext_resource type="PackedScene" path="res://scenes/player_robot_visual.tscn" id="3_robot"]
+[ext_resource type="Theme" path="res://theme/run_unit_menu_theme.tres" id="4_theme"]
+
+[sub_resource type="Gradient" id="SparkGradient"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="SparkTexture"]
+gradient = SubResource("SparkGradient")
+width = 3
+height = 3
+
+[sub_resource type="Gradient" id="PuffGradient"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(1, 1, 1, 0.55, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="PuffTexture"]
+gradient = SubResource("PuffGradient")
+width = 24
+height = 24
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="TopScrim"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.004, 0.02, 0.035, 0.8, 0.004, 0.02, 0.035, 0)
+
+[sub_resource type="GradientTexture2D" id="TopScrimTexture"]
+gradient = SubResource("TopScrim")
+width = 16
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="BottomScrim"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.004, 0.02, 0.035, 0, 0.004, 0.02, 0.035, 0.88)
+
+[sub_resource type="GradientTexture2D" id="BottomScrimTexture"]
+gradient = SubResource("BottomScrim")
+width = 16
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="EndingPanel"]
+bg_color = Color(0.01, 0.05, 0.07, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.72, 0.72, 0.5)
+content_margin_left = 28.0
+content_margin_top = 16.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+
+[node name="Ending" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_theme")
+script = ExtResource("1_ending")
+
+[node name="Vista" type="TextureRect" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(480, 270)
+mouse_filter = 2
+texture = ExtResource("2_vista")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BeaconHalo" type="Polygon2D" parent="Vista"]
+unique_name_in_owner = true
+color = Color(0.4, 0.85, 1, 0.09)
+polygon = PackedVector2Array(672, 40, 768, 40, 812, 446, 628, 446)
+
+[node name="BeaconColumn" type="Polygon2D" parent="Vista"]
+unique_name_in_owner = true
+color = Color(0.82, 0.97, 1, 0.22)
+polygon = PackedVector2Array(712, 52, 728, 52, 730, 440, 710, 440)
+
+[node name="BeaconRing" type="Polygon2D" parent="Vista"]
+unique_name_in_owner = true
+color = Color(0.45, 0.9, 1, 0.3)
+polygon = PackedVector2Array(652, 124, 788, 124, 788, 134, 652, 134)
+
+[node name="Twinkles" type="Node2D" parent="Vista"]
+unique_name_in_owner = true
+
+[node name="T1" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(1, 0.72, 0.3, 0.85)
+polygon = PackedVector2Array(186, 298, 192, 298, 192, 304, 186, 304)
+
+[node name="T2" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(0.4, 0.88, 1, 0.8)
+polygon = PackedVector2Array(322, 268, 328, 268, 328, 274, 322, 274)
+
+[node name="T3" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(1, 0.72, 0.3, 0.85)
+polygon = PackedVector2Array(430, 322, 436, 322, 436, 328, 430, 328)
+
+[node name="T4" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(0.4, 0.88, 1, 0.8)
+polygon = PackedVector2Array(560, 286, 566, 286, 566, 292, 560, 292)
+
+[node name="T5" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(1, 0.72, 0.3, 0.85)
+polygon = PackedVector2Array(852, 256, 858, 256, 858, 262, 852, 262)
+
+[node name="T6" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(0.4, 0.88, 1, 0.8)
+polygon = PackedVector2Array(906, 330, 912, 330, 912, 336, 906, 336)
+
+[node name="T7" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(1, 0.72, 0.3, 0.85)
+polygon = PackedVector2Array(96, 344, 102, 344, 102, 350, 96, 350)
+
+[node name="T8" type="Polygon2D" parent="Vista/Twinkles"]
+color = Color(0.4, 0.88, 1, 0.8)
+polygon = PackedVector2Array(636, 372, 642, 372, 642, 378, 636, 378)
+
+[node name="Steam" type="CPUParticles2D" parent="Vista"]
+unique_name_in_owner = true
+position = Vector2(300, 430)
+amount = 14
+lifetime = 9.0
+preprocess = 6.0
+lifetime_randomness = 0.4
+texture = SubResource("PuffTexture")
+emission_shape = 3
+emission_rect_extents = Vector2(300, 12)
+direction = Vector2(0, -1)
+spread = 12.0
+gravity = Vector2(3, -7)
+initial_velocity_min = 3.0
+initial_velocity_max = 9.0
+scale_amount_min = 0.7
+scale_amount_max = 2.2
+color = Color(0.55, 0.78, 0.92, 0.14)
+
+[node name="Embers" type="CPUParticles2D" parent="Vista"]
+unique_name_in_owner = true
+position = Vector2(480, 520)
+amount = 34
+lifetime = 7.0
+preprocess = 4.0
+lifetime_randomness = 0.5
+texture = SubResource("SparkTexture")
+emission_shape = 3
+emission_rect_extents = Vector2(470, 30)
+direction = Vector2(0, -1)
+spread = 22.0
+gravity = Vector2(5, -11)
+initial_velocity_min = 6.0
+initial_velocity_max = 20.0
+scale_amount_min = 0.6
+scale_amount_max = 1.4
+color = Color(1, 0.76, 0.38, 0.7)
+
+[node name="Unit07" parent="Vista" instance=ExtResource("3_robot")]
+unique_name_in_owner = true
+modulate = Color(0.62, 0.72, 0.8, 1)
+position = Vector2(214, 415)
+scale = Vector2(-0.85, 0.85)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TopScrim" type="TextureRect" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = SubResource("TopScrimTexture")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="BottomScrim" type="TextureRect" parent="UI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -210.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = SubResource("BottomScrimTexture")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="StatusLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 34.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.45, 0.92, 0.95, 0.95)
+theme_override_colors/font_outline_color = Color(0.004, 0.04, 0.06, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 17
+text = "BEACON 9 ONLINE
+IGNITION ASSEMBLY RESTORED"
+horizontal_alignment = 1
+
+[node name="ThanksLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 110.0
+offset_bottom = 166.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.74, 0.38, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 40
+text = "THANK YOU FOR PLAYING"
+horizontal_alignment = 1
+
+[node name="Buttons" type="PanelContainer" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -128.0
+offset_right = 150.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("EndingPanel")
+
+[node name="Content" type="VBoxContainer" parent="UI/Buttons"]
+theme_override_constants/separation = 8
+
+[node name="SectorButton" type="Button" parent="UI/Buttons/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+text = "SECTOR SELECT"
+
+[node name="MenuButton" type="Button" parent="UI/Buttons/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+text = "MAIN MENU"

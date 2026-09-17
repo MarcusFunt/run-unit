@@ -9,10 +9,6 @@ extends Area2D
 
 signal module_acquired
 
-## Where the module sits on the robot's back, in BodyPivot space (source-art
-## pixels, authored facing left, so +x is behind the robot).
-@export var mount_offset: Vector2 = Vector2(165.0, -30.0)
-@export var mount_scale: float = 4.4
 ## Nodes that only exist once the reserve component has been removed.
 @export var shutdown_nodes: Array[NodePath] = []
 
@@ -32,9 +28,7 @@ func _ready() -> void:
 ## Called by RunUnitStaticWorld.reset() whenever a run (re)starts.
 func reset_level_state() -> void:
 	acquired = false
-	if is_instance_valid(_mounted_module):
-		_mounted_module.get_parent().remove_child(_mounted_module)
-		_mounted_module.free()
+	RunUnitModuleMount.clear(_mounted_module)
 	_mounted_module = null
 	cradle_module.visible = true
 	acquisition_readout.visible = false
@@ -48,21 +42,7 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 		return
 	acquired = true
 	cradle_module.visible = false
-	var module: Node2D = cradle_module.duplicate() as Node2D
-	module.name = "MountedModule"
-	module.visible = true
-	# Behind the body so the robot reads as carrying it, not wearing it.
-	module.z_index = -1
-	var mount_parent: Node2D = player.get_node_or_null("RobotVisual/BodyPivot") as Node2D
-	if mount_parent == null:
-		mount_parent = player
-		module.position = Vector2(0.0, -40.0)
-		module.scale = Vector2.ONE
-	else:
-		module.position = mount_offset
-		module.scale = Vector2.ONE * mount_scale
-	mount_parent.add_child(module)
-	_mounted_module = module
+	_mounted_module = RunUnitModuleMount.mount(player, cradle_module)
 	acquisition_readout.visible = true
 	_set_shutdown(true)
 	module_acquired.emit()

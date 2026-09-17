@@ -22,7 +22,7 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageEnhance
 
 
 ROOT = Path(__file__).resolve().parent
@@ -173,6 +173,43 @@ def convert_palette(image: Image.Image) -> Image.Image:
         converted.append((color[0], color[1], color[2], alpha))
     result.putdata(converted)
     return result
+
+
+def pixelize_source(source: Path, target: Path, size: tuple[int, int],
+                    saturation: float = 1.15, contrast: float = 1.08) -> dict[str, object]:
+    """Downsample a rendered illustration to the game's own pixel resolution.
+
+    Hand-made illustrations arrive far denser than RUN//UNIT's 32 px tile art,
+    which reads as a different game the moment the two sit side by side. The
+    image is cropped to the target aspect first so nothing is squashed, then
+    box-filtered down: averaging whole blocks keeps the lights and the haze
+    that nearest-neighbour sampling drops. Drawn back up with nearest
+    filtering, the result is chunky in the same way the rest of the game is.
+    """
+    image = png(source)
+    width, height = image.size
+    target_ratio = size[0] / size[1]
+    if width / height > target_ratio:
+        cropped_width = round(height * target_ratio)
+        left = (width - cropped_width) // 2
+        image = image.crop((left, 0, left + cropped_width, height))
+    else:
+        cropped_height = round(width / target_ratio)
+        top = (height - cropped_height) // 2
+        image = image.crop((0, top, width, top + cropped_height))
+    small = image.resize(size, Image.BOX)
+    small = ImageEnhance.Color(small).enhance(saturation)
+    small = ImageEnhance.Contrast(small).enhance(contrast)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    small.save(target)
+    return {
+        "source_path": source.name,
+        # Callable outside a full compile, where the target is not under the
+        # install tree, so the provenance path falls back to the plain one.
+        "output_path": rel_out(target) if target.is_absolute() and target.is_relative_to(INSTALL_BASE) else target.as_posix(),
+        "size": list(size),
+        "source_size": [width, height],
+    }
 
 
 def save_converted(pack_key: str, pack_root: Path, source: Path, target: Path) -> dict[str, object]:

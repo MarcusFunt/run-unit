@@ -20,6 +20,13 @@ var best_distance: float:
 	set(value):
 		_best_distances_by_level[selected_level_index] = maxf(value, 0.0)
 
+## Furthest checkpoint the player reached on the route they are running. It
+## lives here rather than in RunUnitGame because retrying reloads the game
+## scene, and a long route should not be replayed from the start after one
+## mistake. Deploying a route from the selector and finishing it both clear it.
+var checkpoint_level_index: int = -1
+var checkpoint_position: Vector2 = Vector2.ZERO
+
 func begin_run(level_index: int, seed_value: int, mode: String, version: String, config_hash: String) -> void:
 	selected_level_index = level_index
 	run_seed = seed_value
@@ -41,3 +48,19 @@ func record_best_distance(distance_value: float) -> void:
 
 func set_run_outcome(outcome: String) -> void:
 	last_run_outcome = outcome
+
+func record_checkpoint(level_index: int, position: Vector2) -> void:
+	checkpoint_level_index = level_index
+	checkpoint_position = position
+
+func has_checkpoint(level_index: int) -> bool:
+	return checkpoint_level_index == level_index
+
+## The position a retry should resume from: the reached checkpoint, or the
+## route's own spawn when the player has not passed one yet.
+func get_resume_position(level_index: int, spawn_position: Vector2) -> Vector2:
+	return checkpoint_position if has_checkpoint(level_index) else spawn_position
+
+func clear_checkpoint() -> void:
+	checkpoint_level_index = -1
+	checkpoint_position = Vector2.ZERO

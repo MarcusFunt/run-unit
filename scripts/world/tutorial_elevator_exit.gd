@@ -1,9 +1,6 @@
 class_name RunUnitTutorialElevatorExit
-extends Node2D
+extends RunUnitRouteExit
 
-signal transition_finished
-
-@export_file("*.tscn") var next_scene_path: String = ""
 ## Leaf centre while jammed: its bottom edge sits 102 px above the deck, just
 ## clear of the crouched robot's body but below a standing robot's.
 @export var jammed_leaf_y: float = -189.75
@@ -18,17 +15,13 @@ signal transition_finished
 @onready var closed_door: Sprite2D = $ClosedDoor
 @onready var blackout: ColorRect = $BlackoutLayer/Blackout
 
-var transition_started: bool = false
 var door_slammed: bool = false
 var _transition_tween: Tween
 
-func _ready() -> void:
-	reset_transition()
-
 func reset_transition() -> void:
+	super()
 	if _transition_tween != null and _transition_tween.is_valid():
 		_transition_tween.kill()
-	transition_started = false
 	door_slammed = false
 	door_leaf.position.y = jammed_leaf_y
 	door_leaf.visible = true
@@ -54,11 +47,4 @@ func _on_door_slammed() -> void:
 	closed_door.visible = true
 
 func _on_transition_finished() -> void:
-	transition_finished.emit()
-	if next_scene_path.is_empty():
-		return
-	var scene_loader: Node = get_node_or_null("/root/SceneLoader")
-	if scene_loader != null and scene_loader.has_method("load_scene"):
-		scene_loader.call("load_scene", next_scene_path)
-	else:
-		get_tree().change_scene_to_file(next_scene_path)
+	finish_transition()
