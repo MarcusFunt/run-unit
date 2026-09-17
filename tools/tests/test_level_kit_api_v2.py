@@ -38,6 +38,15 @@ class UnifiedStampTests(unittest.TestCase):
         self.assertNotIn(level_kit.SEMANTIC_LAYER, stamp["layers"])
         self.assertNotIn(level_kit.OBSTACLE_LAYER, stamp["layers"])
 
+    def test_public_capture_can_include_gameplay_explicitly(self) -> None:
+        stamp = level_kit.capture_stamp(
+            self.level,
+            (0, 13, 8, 3),
+            "gameplay_piece",
+            include_gameplay=True,
+        )
+        self.assertIn(level_kit.SEMANTIC_LAYER, stamp["layers"])
+
     def test_flip_x_moves_cells_and_toggles_tile_flag(self) -> None:
         target = self._blank_target()
         stamp = {
@@ -87,6 +96,22 @@ class UnifiedStampTests(unittest.TestCase):
         self.assertIn("ArtDeck", info["layers"])
         self.assertIn("industrial_zone.tsj", info["tilesets"])
         self.assertFalse(info["includes_gameplay"])
+
+    def test_place_does_not_clear_existing_tiles_for_empty_stamp_cells(self) -> None:
+        target = self._blank_target()
+        deck = target.layer("ArtDeck")
+        existing_gid = self.entry.firstgid + 54
+        deck["data"][10 * target.width + 10] = existing_gid
+        stamp = {
+            "version": 1,
+            "name": "empty",
+            "width": 1,
+            "height": 1,
+            "layers": {"ArtDeck": [None]},
+        }
+        changed = level_kit.place_stamp(target, stamp, 10, 10)
+        self.assertEqual(changed, 0)
+        self.assertEqual(deck["data"][10 * target.width + 10], existing_gid)
 
     def test_batch_plan_applies_multiple_transformed_stamps(self) -> None:
         target = self._blank_target()
@@ -166,6 +191,13 @@ class CheckAllTests(unittest.TestCase):
 
     def test_check_all_reports_invalid_map_without_crashing(self) -> None:
         source = json.loads(TUTORIAL.read_text(encoding="utf-8"))
+        # The fixture is moved outside the repository, so preserve the original
+        # tileset resolution with absolute source paths. The failure under test
+        # must be the malformed grid, not a deliberately broken dependency.
+        for declared in source.get("tilesets", []):
+            relative = declared.get("source")
+            if relative:
+                declared["source"] = str((TUTORIAL.parent / relative).resolve())
         semantic = next(layer for layer in source["layers"] if layer.get("name") == level_kit.SEMANTIC_LAYER)
         semantic["data"] = semantic["data"][:-1]
         with tempfile.TemporaryDirectory() as directory:
