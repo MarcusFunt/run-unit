@@ -4,13 +4,17 @@ extends Node2D
 signal transition_finished
 
 @export_file("*.tscn") var next_scene_path: String = ""
-@export var jammed_leaf_y: float = -143.75
-@export var closed_leaf_y: float = -87.75
+## Leaf centre while jammed: its bottom edge sits 102 px above the deck, just
+## clear of the crouched robot's body but below a standing robot's.
+@export var jammed_leaf_y: float = -189.75
+## Leaf centre when shut, matching the panel inside ClosedDoor so the swap
+## after the slam doesn't jump.
+@export var closed_leaf_y: float = -103.05
 @export_range(0.05, 0.5, 0.01) var close_duration: float = 0.12
 @export_range(0.0, 0.3, 0.01) var blackout_delay: float = 0.06
 @export_range(0.05, 0.5, 0.01) var fade_duration: float = 0.18
 
-@onready var door_leaf: Sprite2D = $DoorLeaf
+@onready var door_leaf: Sprite2D = $LeafMask/DoorLeaf
 @onready var closed_door: Sprite2D = $ClosedDoor
 @onready var blackout: ColorRect = $BlackoutLayer/Blackout
 

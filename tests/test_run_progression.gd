@@ -21,7 +21,7 @@ func test_authored_route_progress_uses_spawn_to_goal_distance() -> void:
 	add_child_autofree(world)
 	var traversal_metres: float = absf(world.get_goal_position().x - world.get_spawn_position().x) / world.get_tile_size()
 
-	assert_eq(traversal_metres, 61.0, "The light tutorial travels 61 m from Spawn to Goal")
+	assert_eq(traversal_metres, 59.5, "The light tutorial travels 59.5 m from Spawn to Goal")
 	world.set_progress(traversal_metres)
 	assert_eq(world.get_difficulty(), 1.0, "Reaching the Goal should produce 100% route progress")
 

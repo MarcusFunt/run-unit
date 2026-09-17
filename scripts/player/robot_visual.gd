@@ -35,10 +35,6 @@ extends Node2D
 @export_range(0.1, 2.0, 0.05) var antenna_idle_sway_hz: float = 0.55
 @export_range(30.0, 88.0, 1.0) var antenna_contact_max_fold_deg: float = 76.0
 
-@export_category("Crouch Presentation")
-@export_range(0.65, 1.0, 0.01) var crouch_body_y_scale: float = 0.82
-@export_range(0.0, 40.0, 1.0) var crouch_body_drop: float = 35.5
-
 const UPPER_LINK_LENGTH: float = 110.0
 const LOWER_LINK_LENGTH: float = 145.0
 ## Visible outside radius of the wheel artwork, in source SVG pixels.
@@ -105,7 +101,6 @@ func _process(delta: float) -> void:
 	_update_eye()
 
 	_apply_pose(pose["upper_deg"], pose["knee_deg"], pose["body_lean"], _wheel_spin)
-	_apply_crouch_body_presentation()
 	_apply_antenna_overhead_contact()
 
 func _update_facing() -> void:
@@ -255,11 +250,6 @@ func _update_antenna_motion(delta: float) -> void:
 	var local_forward_accel: float = _local_forward_acceleration(acceleration_x)
 	var target: float = _antenna_target(local_forward_accel, _idle_weight())
 	_update_antenna(target, delta)
-
-func _apply_crouch_body_presentation() -> void:
-	var crouch: float = clampf(player.crouch_ratio if player != null else 0.0, 0.0, 1.0)
-	body_pivot.scale = Vector2(art_scale, art_scale * lerpf(1.0, crouch_body_y_scale, crouch))
-	body_pivot.position.y += crouch_body_drop * crouch
 
 func _antenna_hits_world(angle: float) -> bool:
 	if player == null or not player.is_inside_tree():
