@@ -1,0 +1,32 @@
+name: Level Kit facade migration
+
+on:
+  push:
+    branches:
+      - feature/tiled-workbench-stamps
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tiled-workbench-stamps
+          fetch-depth: 0
+      - name: Install facade hook
+        run: python3 tools/_install_level_kit_extensions.py
+      - name: Commit migration if needed
+        shell: bash
+        run: |
+          if git diff --quiet -- tools/level_kit.py; then
+            echo "Facade already migrated."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/level_kit.py
+          git commit -m "refactor: make level_kit the stable facade"
+          git push origin HEAD:feature/tiled-workbench-stamps
