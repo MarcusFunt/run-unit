@@ -163,8 +163,14 @@ func _finish_run(result: int) -> void:
 	if result == RunState.FAILED:
 		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
 	elif elevator_exit != null:
+		if not elevator_exit.transition_finished.is_connected(_on_elevator_transition_finished):
+			elevator_exit.transition_finished.connect(_on_elevator_transition_finished)
 		elevator_exit.begin_transition()
 	else:
+		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
+
+func _on_elevator_transition_finished() -> void:
+	if elevator_exit.next_scene_path.is_empty():
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
 
 func _update_debug(current_distance: float) -> void:

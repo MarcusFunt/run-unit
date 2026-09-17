@@ -47,6 +47,10 @@ const WHEEL_RADIUS_SOURCE_PX: float = 70.0
 ## frame-time spike (a hitch, a debugger pause) can't destabilize it.
 const ANTENNA_MAX_SUBSTEP: float = 1.0 / 120.0
 const ANTENNA_TIP_SOURCE: Vector2 = Vector2(12.0, -60.0)
+## Bisection in _apply_antenna_overhead_contact() stops once the candidate
+## angle is within this tolerance of the true contact point -- the antenna is
+## cosmetic, so sub-degree precision isn't worth the extra physics queries.
+const ANTENNA_FOLD_ANGLE_TOLERANCE: float = 0.035 # ~2 degrees
 
 @onready var body_pivot: Node2D = $BodyPivot
 @onready var upper_link_pivot: Node2D = $UpperLinkPivot
@@ -297,6 +301,8 @@ func _apply_antenna_overhead_contact() -> void:
 	var colliding_angle: float = free_angle
 	var clear_angle: float = folded_angle
 	for iteration: int in range(9):
+		if absf(clear_angle - colliding_angle) <= ANTENNA_FOLD_ANGLE_TOLERANCE:
+			break
 		var candidate: float = (colliding_angle + clear_angle) * 0.5
 		if _antenna_hits_world(candidate):
 			colliding_angle = candidate
