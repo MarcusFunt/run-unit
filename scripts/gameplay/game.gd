@@ -5,6 +5,7 @@ extends Node2D
 
 @onready var world: RunUnitStaticWorld = $World
 @onready var player: RunUnitPlayerMotor = $Player
+@onready var player_health: RunUnitPlayerHealth = $Player/Health
 @onready var player_feedback: RunUnitPlayerFeedback = $Player/Feedback
 @onready var human_controller: RunUnitHumanController = $HumanController
 @onready var scripted_controller: RunUnitScriptedController = $ScriptedController
@@ -64,6 +65,10 @@ func _ready() -> void:
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
 	if not world.route_completed.is_connected(_on_route_completed):
 		world.route_completed.connect(_on_route_completed)
+	if not player_health.damaged.is_connected(_on_player_damaged):
+		player_health.damaged.connect(_on_player_damaged)
+	if not player_health.depleted.is_connected(_on_player_depleted):
+		player_health.depleted.connect(_on_player_depleted)
 	hud.set_level_length(world.get_traversal_length())
 	_checkpoints = world.get_checkpoint_positions()
 	reset_run(0)
@@ -137,11 +142,13 @@ func reset_run(run_seed: int) -> void:
 	_next_checkpoint = 0
 	_record_passed_checkpoints()
 	player.reset_motor()
+	player_health.reset_health()
 	player.set_physics_process(true)
 	death_menu.close()
 	if route_exit != null:
 		route_exit.reset_transition()
 	hud.set_scores(0.0, score_manager.best_distance)
+	hud.set_health(player_health.current_health, player_health.max_health)
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
 	if is_terminal():
@@ -244,6 +251,13 @@ func _update_debug(current_distance: float) -> void:
 
 func _on_world_metrics_updated(metrics: Dictionary) -> void:
 	RunUnitSession.set_world_metrics(metrics)
+
+func _on_player_damaged(current_health: int, max_health: int) -> void:
+	hud.set_health(current_health, max_health)
+	player_feedback.play_damage_feedback()
+
+func _on_player_depleted() -> void:
+	_fail_run()
 
 func _on_obstacle_triggered(obstacle_type: String, platform_id: int) -> void:
 	if is_terminal():
