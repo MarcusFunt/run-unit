@@ -24,6 +24,8 @@ const SEMANTIC_ONE_WAY: int = 2
 ## still starts somewhere sane instead of dropping the player at the origin.
 const FALLBACK_SPAWN_POSITION: Vector2 = Vector2(128.0, 385.0)
 const COMPLETION_TRIGGER_SIZE: Vector2 = Vector2(64.0, 128.0)
+## Markers named like this are respawn points rather than route geometry.
+const CHECKPOINT_PREFIX: String = "Checkpoint"
 ## Smallest route-progress change that is worth re-publishing to listeners.
 const DIFFICULTY_PUBLISH_STEP: float = 0.005
 
@@ -39,6 +41,7 @@ var _semantic_layer: TileMapLayer = null
 var _spawn_marker: Marker2D = null
 var _goal_marker: Marker2D = null
 var _completion_trigger: Area2D = null
+var _checkpoints: Array[Vector2] = []
 
 func _ready() -> void:
 	_semantic_layer = _find_layer(&"Semantic")
@@ -48,6 +51,7 @@ func _ready() -> void:
 	if _spawn_marker == null:
 		push_warning("RunUnitStaticWorld: no 'Spawn' marker in the level; falling back to %s." % FALLBACK_SPAWN_POSITION)
 	_goal_marker = _find_marker(&"Goal")
+	_collect_checkpoints()
 	_load_platforms_from_tilemap()
 	_update_metrics()
 	_ensure_completion_trigger()
@@ -166,6 +170,21 @@ func get_spawn_position() -> Vector2:
 	if _spawn_marker == null:
 		return FALLBACK_SPAWN_POSITION
 	return _spawn_marker.global_position
+
+## Authored respawn points in route order. Levels short enough to replay from
+## the start simply ship none.
+func get_checkpoint_positions() -> Array[Vector2]:
+	return _checkpoints.duplicate()
+
+func _collect_checkpoints() -> void:
+	_checkpoints.clear()
+	var pending: Array[Node] = [self]
+	while not pending.is_empty():
+		var node: Node = pending.pop_back()
+		pending.append_array(node.get_children())
+		if node is Marker2D and String(node.name).begins_with(CHECKPOINT_PREFIX):
+			_checkpoints.append((node as Marker2D).global_position)
+	_checkpoints.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.x < b.x)
 
 func has_goal() -> bool:
 	return _goal_marker != null

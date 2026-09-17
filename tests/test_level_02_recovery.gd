@@ -258,7 +258,7 @@ func test_deploying_recovery_plays_level_2() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
 
 	assert_eq(game.world.scene_file_path, "res://scenes/levels/level_02_recovery.tscn", "Recovery should load the Level 2 world")
-	assert_null(game.elevator_exit, "Level 2 has no tutorial lift exit")
+	assert_null(game.route_exit, "Level 2 has no ending of its own")
 	assert_eq(game.player.global_position, Vector2(160.0, 321.0), "The run should start at Level 2's Spawn marker")
 	assert_eq(RunUnitSession.selected_level_index, LEVEL_2_INDEX, "The session should remember the deployed route for retries")
 	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()

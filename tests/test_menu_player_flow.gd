@@ -65,11 +65,9 @@ func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 	for index: int in sector_buttons.size():
 		assert_true(sector_buttons[index].text.contains(expected_names[index]), "Route %d should be %s in campaign order" % [index, expected_names[index]])
 	assert_false(sector_buttons[0].disabled, "Calibration is authored and playable")
-	assert_false(sector_buttons[1].disabled, "Factory Escape is authored and playable")
-	assert_false(sector_buttons[2].disabled, "Recovery is authored and playable")
-	for index: int in range(3, sector_buttons.size()):
-		assert_true(sector_buttons[index].disabled, "Campaign route %s has no authored world yet" % expected_names[index])
-		assert_true(sector_buttons[index].text.contains("LOCKED"), "Unbuilt routes should read as locked rather than offline sector slots")
+	for index: int in sector_buttons.size():
+		assert_false(sector_buttons[index].disabled, "%s is authored and playable" % expected_names[index])
+		assert_false(sector_buttons[index].text.contains("LOCKED"), "Every campaign route ships an authored world now")
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
 
@@ -96,7 +94,7 @@ func test_level_selector_briefs_factory_escape() -> void:
 	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
 
 	selector._on_sector_focused(3)
-	assert_eq(RunUnitSession.selected_level_index, 1, "A locked route must not steal the selection")
+	assert_eq(RunUnitSession.selected_level_index, 3, "Focusing Beacon 9 should select it for deployment")
 
 func test_level_selector_reopens_on_the_last_selected_route() -> void:
 	RunUnitSession.selected_level_index = 1
@@ -104,16 +102,16 @@ func test_level_selector_reopens_on_the_last_selected_route() -> void:
 	add_child_autofree(selector)
 	assert_eq(selector.selected_sector.text, "01  FACTORY ESCAPE", "Returning from a run should land on the route that was just played")
 
-func test_level_selector_previews_locked_campaign_routes() -> void:
+func test_level_selector_previews_a_route_without_arming_it() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	add_child_autofree(selector)
 	selector._on_sector_hovered(3)
-	assert_true(selector.selected_sector.text.contains("BEACON 9"), "Hovering a locked route should preview it")
-	assert_eq(selector.seed_label.text, "ROUTE LOCKED  //  NOT IN THIS BUILD")
-	assert_eq(selector.route_status.text, "CAMPAIGN ROUTE  //  IN DEVELOPMENT")
+	assert_true(selector.selected_sector.text.contains("BEACON 9"), "Hovering a route should preview it")
+	assert_eq(selector.seed_label.text, "AUTHORED ROUTE  //  AVAILABLE")
+	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
 	selector._on_sector_unhovered()
-	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "Leaving a locked route should restore the deployable briefing")
-	assert_eq(RunUnitSession.selected_level_index, RunUnitCampaign.PLAYABLE_INDEX, "Previewing a locked route must not arm it for deployment")
+	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "Leaving a hovered route should restore the selected briefing")
+	assert_eq(RunUnitSession.selected_level_index, RunUnitCampaign.PLAYABLE_INDEX, "Hovering must not arm a route for deployment")
 
 func test_project_theme_focus_label_differs_from_hover_label() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector

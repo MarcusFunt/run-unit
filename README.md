@@ -1,19 +1,21 @@
 # RUN//UNIT v0.1
 
-RUN//UNIT is a small 2D platformer made with Godot 4.7. The campaign in `StorylineSketch.md` runs Calibration -> Factory Escape -> Recovery -> Beacon 9; the current school-project slice ships the first three. The manufactured robot UNIT-07 clears its factory movement checks, crosses the stalled production line and the storage warehouse to escape the factory, then crosses the exterior service district into Reserve Depot 03 to recover the replacement ignition module that Beacon 9 needs.
+RUN//UNIT is a small 2D platformer made with Godot 4.7. The campaign in `StorylineSketch.md` runs Calibration -> Factory Escape -> Recovery -> Beacon 9; and all four are playable. The manufactured robot UNIT-07 clears its factory movement checks, crosses the stalled production line and the storage warehouse to escape the factory, crosses the exterior service district into Reserve Depot 03 to recover the replacement ignition module, then carries it across the failing city, climbs Beacon 9, and installs it.
 
 ## Run and controls
 
 Open `project.godot` in Godot 4.7.1 (or a compatible Godot 4.x release) and run the project.
 
-Select **START NEW RUN**, then deploy to **CALIBRATION** (the tutorial) **FACTORY ESCAPE** (Level 1), or **RECOVERY** (Level 2). The selector lists the campaign in story order; Beacon 9 has no authored world yet and shows as locked.
+Select **START NEW RUN**, then deploy to **CALIBRATION** (the tutorial) **FACTORY ESCAPE** (Level 1), **RECOVERY** (Level 2), or **BEACON 9** (Level 3). The selector lists the campaign in story order.
 
 - A / D or Left / Right: move
 - Space / Up Arrow: hold to charge the spring crouch, then release to jump
 - Down Arrow: crouch without charging; crouching reduces speed and collision height
-- R: restart the authored route
+- R: restart the authored route, resuming from the last checkpoint reached
 
 Route distance is measured from the authored Spawn marker. The HUD maximum uses the Spawn-to-Goal traversal distance, so reaching the Goal corresponds to 100% route progress.
+
+Longer routes author `Checkpoint...` markers in their Markers layer. Driving past one records it, and restarting resumes there instead of replaying the route; distance is still measured from Spawn. Deploying a route from the selector, or finishing it, starts it clean again. Level 3 ships four; the shorter routes ship none.
 
 ## Authoring source of truth
 
@@ -22,10 +24,13 @@ The playable geometry is authored in Tiled and imported through YATI:
 - `assets/tiled/levels/maintenance_shaft.tmj` — Calibration tutorial map (legacy filename)
 - `assets/tiled/levels/level_01_factory.tmj` — Factory Escape map
 - `assets/tiled/levels/level_02_recovery.tmj` — Recovery map
+- `assets/tiled/levels/level_03_beacon.tmj` — Beacon 9 map
 - `assets/tiled/semantic/semantic_layer.tsj` — semantic/collision tileset
 - `scenes/world.tscn` — Godot wrapper that instances the tutorial map and its runtime art
 - `scenes/levels/level_01_factory.tscn` — the same wrapper for Factory Escape
 - `scenes/levels/level_02_recovery.tscn` — the Recovery wrapper, including the Beacon 9 skyline and the module cradle (`scripts/world/recovery_module_cradle.gd`)
+- `scenes/levels/level_03_beacon.tscn` — the Beacon 9 wrapper, including the carried module and the ignition chamber that ends the game (`scripts/world/beacon_ignition.gd`)
+- `scenes/props/beacon_9_skyline.tscn` — the Beacon 9 landmark, shared by the levels that show it
 - `scripts/gameplay/campaign_routes.gd` — the campaign route table the selector, game, and results menu all read
 - `scripts/world/static_world.gd` — indexes imported semantic tiles and authored markers
 

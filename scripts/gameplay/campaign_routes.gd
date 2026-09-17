@@ -44,7 +44,7 @@ const ROUTES: Array[Dictionary] = [
 	{
 		"code": "03",
 		"name": "BEACON 9",
-		"world_scene": "",
+		"world_scene": "res://scenes/levels/level_03_beacon.tscn",
 		"runtime": "8-11 MIN",
 		"summary": "Carry the recovered assembly across the city to Beacon 9.",
 		"briefing": "BEACON 9\nIGNITION ASSEMBLY OFFLINE\n\nCarry the replacement across the failing city, climb the beacon, and install it.",

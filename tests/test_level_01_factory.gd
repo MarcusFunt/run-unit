@@ -208,7 +208,7 @@ func test_deploying_factory_escape_plays_level_1() -> void:
 	assert_eq(game.world.scene_file_path, "res://scenes/levels/level_01_factory.tscn", "Factory Escape should load the Level 1 world")
 	assert_eq(game.get_children().filter(func(child: Node) -> bool: return child is RunUnitStaticWorld).size(), 1, "Only the selected world should be in the game")
 	assert_eq(game.world.get_parent(), game)
-	assert_null(game.elevator_exit, "Level 1 has no tutorial lift exit")
+	assert_null(game.route_exit, "Level 1 has no ending of its own")
 	assert_eq(game.player.global_position, Vector2(160.0, 385.0), "The run should start at Level 1's Spawn marker")
 	assert_eq(RunUnitSession.selected_level_index, LEVEL_1_INDEX, "The session should remember the deployed route for retries")
 	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()
@@ -219,7 +219,7 @@ func test_deploying_calibration_still_plays_the_tutorial() -> void:
 	var game: RunUnitGame = _instantiate_game_for(0)
 
 	assert_eq(game.world.scene_file_path, "res://scenes/world.tscn")
-	assert_not_null(game.elevator_exit, "The tutorial keeps its lift exit")
+	assert_not_null(game.route_exit, "The tutorial keeps its lift exit")
 
 
 func test_completing_level_1_opens_the_results_menu() -> void:

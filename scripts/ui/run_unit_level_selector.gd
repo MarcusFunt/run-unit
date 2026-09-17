@@ -111,6 +111,8 @@ func _on_deploy_pressed() -> void:
 	if not _is_route_available(_selected_index):
 		return
 	RunUnitSession.selected_level_index = _selected_index
+	# Deploying is always a fresh attempt, never a resume.
+	RunUnitSession.clear_checkpoint()
 	SceneLoader.load_scene(game_scene_path)
 
 func _on_back_pressed() -> void:
