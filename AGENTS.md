@@ -29,6 +29,8 @@ If Godot is not on `PATH`, use `python tools/run_gut.py --godot <path>`.
 
 After any `.tmj` or `.tsj` change, use `tools/run_gut.py`. Godot/YATI may otherwise reuse a stale `.tmj` cache when only the external `.tsj` changed.
 
+`tools/level_kit.py` is the supported way to author route geometry outside Tiled: `sketch` a map into a text grid, `build` it back, `autoart` its decorative layers, and `check` it. `check` validates the semantic-tile contract and replays the player motor to prove the Goal is reachable from the Spawn; run it before `tools/run_gut.py` on any level change, since it answers in under a second.
+
 ## Repository boundaries
 
 - Commit gameplay source, scenes, themes, authored assets/maps, add-ons, tests, export presets, CI, and useful project documentation.
