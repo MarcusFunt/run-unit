@@ -48,8 +48,8 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		_on_back_pressed()
 		get_viewport().set_input_as_handled()
+		_on_back_pressed()
 		return
 	var columns: int = maxi(sector_grid.columns, 1)
 	var next_index: int = -1

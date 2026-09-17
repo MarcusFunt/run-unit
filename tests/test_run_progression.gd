@@ -57,6 +57,30 @@ func test_session_keeps_the_best_distance_between_retries() -> void:
 	RunUnitSession.set("best_distance", previous_best)
 
 
+func test_best_distance_does_not_leak_between_routes() -> void:
+	var previous_selected: int = RunUnitSession.selected_level_index
+	RunUnitSession.selected_level_index = 0
+	var previous_a: Variant = RunUnitSession.get("best_distance")
+	RunUnitSession.set("best_distance", 0.0)
+	RunUnitSession.call("record_best_distance", 59.5)
+
+	RunUnitSession.selected_level_index = 1
+	var previous_b: Variant = RunUnitSession.get("best_distance")
+	RunUnitSession.set("best_distance", 0.0)
+
+	assert_eq(float(RunUnitSession.get("best_distance")), 0.0, "A different route must not inherit another route's best distance")
+	RunUnitSession.call("record_best_distance", 12.0)
+	assert_eq(float(RunUnitSession.get("best_distance")), 12.0, "Each route should track its own best distance")
+
+	RunUnitSession.selected_level_index = 0
+	assert_eq(float(RunUnitSession.get("best_distance")), 59.5, "Switching back to a route should still remember its own best distance")
+
+	RunUnitSession.set("best_distance", previous_a)
+	RunUnitSession.selected_level_index = 1
+	RunUnitSession.set("best_distance", previous_b)
+	RunUnitSession.selected_level_index = previous_selected
+
+
 func test_maintenance_shaft_exposes_a_completion_trigger_and_signal() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
