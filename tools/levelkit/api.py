@@ -221,12 +221,15 @@ def install_into(namespace: dict) -> None:
         if not reachable_finishers:
             return report
 
-        p90 = _clean_physics(actual_physics)
-        p90.max_run_speed = actual_physics.max_run_speed * 0.90
-        edges90 = namespace["RouteGraph"](level, world, p90, ledges).edges()
-        p80 = _clean_physics(actual_physics)
-        p80.max_run_speed = actual_physics.max_run_speed * 0.80
-        edges80 = namespace["RouteGraph"](level, world, p80, ledges).edges()
+        safe_margin = max(float(margin), 0.0)
+        margin_ratio = max(1.0 - safe_margin, 0.05)
+        double_margin_ratio = max(1.0 - 2.0 * safe_margin, 0.05)
+        margin_physics = _clean_physics(actual_physics)
+        margin_physics.max_run_speed = actual_physics.max_run_speed * margin_ratio
+        margin_edges = namespace["RouteGraph"](level, world, margin_physics, ledges).edges()
+        double_margin_physics = _clean_physics(actual_physics)
+        double_margin_physics.max_run_speed = actual_physics.max_run_speed * double_margin_ratio
+        double_margin_edges = namespace["RouteGraph"](level, world, double_margin_physics, ledges).edges()
 
         def classify(move, source_ledge):
             return move_difficulty(
@@ -234,8 +237,9 @@ def install_into(namespace: dict) -> None:
                 source_ledge,
                 actual_physics,
                 level,
-                ninety_percent_edges=edges90,
-                eighty_percent_edges=edges80,
+                margin_edges=margin_edges,
+                double_margin_edges=double_margin_edges,
+                margin=safe_margin,
             )
 
         route = best_route(spawn_ledge.index, reachable_finishers, edges, ledges, classify)
