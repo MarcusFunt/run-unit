@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://tests/fixtures/hazard_semantic_world.tmj" id="2_map"]
+
+[node name="HazardSemanticWorld" type="Node2D"]
+script = ExtResource("1_world")
+death_y = 512.0
+
+[node name="Map" parent="." instance=ExtResource("2_map")]
