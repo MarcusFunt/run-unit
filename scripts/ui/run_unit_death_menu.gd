@@ -6,36 +6,62 @@ extends CanvasLayer
 @onready var restart_button: Button = %RestartButton
 @onready var main_menu_button: Button = %MainMenuButton
 
+## True while this menu is the reason the tree is paused, so closing it never
+## unpauses a pause somebody else (the pause menu) owns.
+var _owns_pause: bool = false
+
 func _ready() -> void:
 	restart_button.pressed.connect(_on_restart_pressed)
 	main_menu_button.pressed.connect(_on_main_menu_pressed)
 	hide()
+
+## The results screen pauses the tree, which stops RunUnitGame from polling
+## input -- so the documented R shortcut has to be read here, on a menu that
+## keeps processing while paused.
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not visible or not InputMap.has_action(&"restart"):
+		return
+	if event.is_action_pressed(&"restart"):
+		get_viewport().set_input_as_handled()
+		_on_restart_pressed()
 
 func open_with_scores(distance: float, best: float) -> void:
 	title_label.text = "UNIT OFFLINE"
 	description_label.text = "ROUTE %02d TERMINATED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nSelect a recovery action." % [RunUnitSession.selected_level_index + 1, int(distance), int(best)]
 	restart_button.text = "RETRY ROUTE"
 	main_menu_button.text = "SECTOR SELECT"
-	show()
-	get_tree().paused = true
-	restart_button.grab_focus()
+	_open()
 
 func open_completed_with_scores(distance: float, best: float) -> void:
 	title_label.text = "ROUTE COMPLETE"
 	description_label.text = "ROUTE %02d CERTIFIED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nMaintenance Shaft traversal complete." % [RunUnitSession.selected_level_index + 1, int(distance), int(best)]
 	restart_button.text = "REDEPLOY ROUTE"
 	main_menu_button.text = "SECTOR SELECT"
-	show()
-	get_tree().paused = true
-	restart_button.grab_focus()
+	_open()
 
 func close() -> void:
 	hide()
+	_release_pause()
+
+func _open() -> void:
+	show()
+	if not get_tree().paused:
+		_owns_pause = true
+	get_tree().paused = true
+	restart_button.grab_focus()
+
+func _release_pause() -> void:
+	if not _owns_pause:
+		return
+	_owns_pause = false
+	get_tree().paused = false
 
 func _on_restart_pressed() -> void:
+	_release_pause()
 	get_tree().paused = false
 	SceneLoader.reload_current_scene()
 
 func _on_main_menu_pressed() -> void:
+	_release_pause()
 	get_tree().paused = false
 	SceneLoader.load_scene("res://scenes/level_selector.tscn")

@@ -24,12 +24,15 @@ const SEMANTIC_ONE_WAY: int = 2
 ## still starts somewhere sane instead of dropping the player at the origin.
 const FALLBACK_SPAWN_POSITION: Vector2 = Vector2(128.0, 385.0)
 const COMPLETION_TRIGGER_SIZE: Vector2 = Vector2(64.0, 128.0)
+## Smallest route-progress change that is worth re-publishing to listeners.
+const DIFFICULTY_PUBLISH_STEP: float = 0.005
 
 @export var death_y: float = 900.0
 
 var tile_size: float = TILE_SIZE
 var _platforms: Array[Dictionary] = []
 var _difficulty: float = 0.0
+var _published_difficulty: float = -1.0
 var _metrics: Dictionary = {}
 var _completion_triggered: bool = false
 var _semantic_layer: TileMapLayer = null
@@ -54,17 +57,28 @@ func set_level_profile(_level_index: int) -> void:
 
 func reset(_run_seed: int = 0, _mode: String = "campaign") -> void:
 	_difficulty = 0.0
+	_published_difficulty = -1.0
 	_completion_triggered = false
 	_update_metrics()
 
+## Called every physics frame with the run's furthest distance. Republishing
+## the metrics dictionary on each of those frames deep-copied it twice a frame
+## for a value nobody samples that finely, so progress is only broadcast once
+## it has moved a visible step.
 func set_progress(max_distance: float) -> void:
 	var traversal_length: float = maxf(get_traversal_length(), 1.0)
 	_difficulty = clampf(max_distance / traversal_length, 0.0, 1.0)
 	_metrics["difficulty"] = _difficulty
+	if absf(_difficulty - _published_difficulty) < DIFFICULTY_PUBLISH_STEP and not is_equal_approx(_difficulty, 1.0):
+		return
+	_published_difficulty = _difficulty
 	world_metrics_updated.emit(_metrics.duplicate(true))
 
+## Every public query takes world-space coordinates and converts them here, so
+## a level instanced under a translated parent answers consistently instead of
+## only working while the World node happens to sit at the origin.
 func get_platform_below(world_x: float) -> Dictionary:
-	var tile_x: int = floori(world_x / tile_size)
+	var tile_x: int = floori(to_local(Vector2(world_x, 0.0)).x / tile_size)
 	for platform: Dictionary in _platforms:
 		if tile_x >= int(platform.get("start_x", 0)) and tile_x <= int(platform.get("end_x", 0)):
 			return platform.duplicate()
@@ -88,13 +102,20 @@ func get_platform_below_position(world_position: Vector2) -> Dictionary:
 
 func get_upcoming_platforms(world_x: float, count: int = 3) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	var tile_x: int = floori(world_x / tile_size)
+	var tile_x: int = floori(to_local(Vector2(world_x, 0.0)).x / tile_size)
 	for platform: Dictionary in _platforms:
 		if int(platform.get("end_x", 0)) >= tile_x:
 			result.append(platform.duplicate())
 			if result.size() >= count:
 				break
 	return result
+
+## World-space centre of a platform's walkable surface, for callers that have
+## to compare platform geometry against a player's global position.
+func get_platform_surface_position(platform: Dictionary) -> Vector2:
+	var centre_x: float = (float(platform.get("start_x", 0)) + float(platform.get("width", 0)) * 0.5) * tile_size
+	var surface_y: float = float(platform.get("height", 0)) * tile_size
+	return to_global(Vector2(centre_x, surface_y))
 
 func get_seed() -> int:
 	return 0
@@ -129,7 +150,9 @@ func get_traversal_length() -> float:
 	# the same authored interval rather than the map's world-space extent.
 	if has_goal():
 		return absf(get_goal_position().x - get_spawn_position().x) / tile_size
-	return maxf(get_route_length() - get_spawn_position().x / tile_size, 0.0)
+	# get_route_length() is measured in the level's own tile space, so the
+	# spawn has to be converted out of world space before subtracting it.
+	return maxf(get_route_length() - to_local(get_spawn_position()).x / tile_size, 0.0)
 
 func is_completion_triggered() -> bool:
 	return _completion_triggered
@@ -176,7 +199,9 @@ func _ensure_completion_trigger() -> void:
 func get_semantic_value(world_x: float, world_y: float) -> int:
 	if _semantic_layer == null:
 		return SEMANTIC_EMPTY
-	var cell: Vector2i = Vector2i(floori(world_x / tile_size), floori(world_y / tile_size))
+	# Resolved through the layer itself so the lookup honours every transform
+	# between it and the viewport, not just this node's.
+	var cell: Vector2i = _semantic_layer.local_to_map(_semantic_layer.to_local(Vector2(world_x, world_y)))
 	var data: TileData = _semantic_layer.get_cell_tile_data(cell)
 	if data == null:
 		return SEMANTIC_EMPTY
