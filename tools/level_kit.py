@@ -1604,5 +1604,9 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
 
+# Internal implementation extensions keep this file as the stable public facade.
+from levelkit.api import install_into as _install_levelkit_extensions
+_install_levelkit_extensions(globals())
+
 if __name__ == "__main__":
     raise SystemExit(main())
