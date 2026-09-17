@@ -214,7 +214,26 @@ func test_body_lean_ramps_smoothly_toward_target_speed_lean() -> void:
 	assert_almost_eq(settled_lean, deg_to_rad(5.5), 0.05)
 
 
-func test_full_crouch_visual_body_fits_low_elevator_opening() -> void:
+func _body_art_top_y(visual: RunUnitRobotVisual) -> float:
+	var body: Sprite2D = visual.get_node("BodyPivot/Body") as Sprite2D
+	var rect: Rect2 = body.get_rect()
+	return minf(body.to_global(rect.position).y, body.to_global(Vector2(rect.end.x, rect.position.y)).y)
+
+
+## Sum of z_index up the tree, which is the order the renderer actually sorts by.
+func _effective_z(item: CanvasItem) -> int:
+	var z: int = 0
+	var current: Node = item
+	while current is CanvasItem:
+		var canvas_item: CanvasItem = current as CanvasItem
+		z += canvas_item.z_index
+		if not canvas_item.z_as_relative:
+			break
+		current = current.get_parent()
+	return z
+
+
+func test_crouch_folds_the_linkage_without_squashing_or_sinking_the_body() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
 	player.global_position = Vector2(400.0, 384.0)
@@ -222,13 +241,51 @@ func test_full_crouch_visual_body_fits_low_elevator_opening() -> void:
 	player.crouch_ratio = 1.0
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 	visual.run_process_for_test(0.016)
-	var body: Sprite2D = visual.get_node("BodyPivot/Body") as Sprite2D
-	var rect: Rect2 = body.get_rect()
-	var top_y: float = body.to_global(rect.position).y
-	var bottom_y: float = body.to_global(rect.position + Vector2(0.0, rect.size.y)).y
+	var body_scale: Vector2 = visual.body_pivot.scale
+	var crouched_mount: Vector2 = visual.get_body_mount_position_for_test()
 
-	assert_gte(top_y, 360.0, "Fully crouched body artwork should sit below the ~56 px jammed-door edge")
-	assert_lte(bottom_y, 416.0, "Crouch presentation should not push the body through the floor")
+	visual.apply_pose_for_test(15.0, 140.0, 0.0, 0.0)
+
+	assert_eq(body_scale, Vector2.ONE * visual.art_scale, "Crouching must not squash the body artwork")
+	assert_almost_eq(crouched_mount.y, visual.get_body_mount_position_for_test().y, 0.001, "The crouched body should sit where the folded linkage puts it, no deeper")
+
+
+func test_jammed_elevator_leaf_clears_a_crouched_robot_but_not_a_standing_one() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	player.global_position = Vector2(1700.0, 384.0)
+	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+	var leaf: Sprite2D = world.get_node("ElevatorExit/LeafMask/DoorLeaf") as Sprite2D
+	var leaf_bottom_y: float = leaf.to_global(leaf.get_rect().end).y
+
+	visual.run_process_for_test(0.016)
+	var standing_top_y: float = _body_art_top_y(visual)
+	player._is_crouching = true
+	player.crouch_ratio = 1.0
+	visual.run_process_for_test(0.016)
+	var crouched_top_y: float = _body_art_top_y(visual)
+
+	assert_gt(crouched_top_y, leaf_bottom_y, "The un-squashed crouched body should pass under the jammed leaf")
+	assert_lt(standing_top_y, leaf_bottom_y, "A standing robot should visibly be too tall for the jammed leaf")
+
+
+func test_robot_draws_in_front_of_elevator_frame_and_behind_its_door() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	var robot_z: Array[int] = []
+	for sprite: Node in player.get_node("RobotVisual").find_children("*", "Sprite2D", true, false):
+		robot_z.append(_effective_z(sprite as CanvasItem))
+	var lowest_robot_z: int = robot_z.min()
+	var highest_robot_z: int = robot_z.max()
+
+	for path: String in ["ElevatorExit/Interior", "ElevatorExit/DoorFrame"]:
+		assert_lt(_effective_z(world.get_node(path) as CanvasItem), lowest_robot_z, "%s must stay behind the robot as it drives through the doorway" % path)
+	for path: String in ["ElevatorExit/LeafMask", "ElevatorExit/ClosedDoor"]:
+		assert_gt(_effective_z(world.get_node(path) as CanvasItem), highest_robot_z, "%s must cover the robot it closes over" % path)
 
 
 func test_antenna_deflects_backward_under_forward_acceleration() -> void:
