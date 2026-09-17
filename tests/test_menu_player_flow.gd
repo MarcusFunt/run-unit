@@ -14,7 +14,8 @@ func test_main_menu_has_drifting_city_parallax_background() -> void:
 		assert_true(background.has_method("_process"), "The menu background should drive continuous drift")
 		assert_gt(float(background.get("drift_pixels_per_second")), 0.0, "The city should drift automatically")
 
-func test_level_selector_marks_only_the_authored_route_playable() -> void:
+func test_level_selector_marks_the_authored_routes_playable() -> void:
+	RunUnitSession.selected_level_index = 0
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	assert_not_null(selector, "The route selector should instantiate")
 	add_child_autofree(selector)
@@ -25,15 +26,34 @@ func test_level_selector_marks_only_the_authored_route_playable() -> void:
 		var sector_button: Button = child as Button
 		if sector_button != null:
 			sector_buttons.append(sector_button)
-	assert_eq(sector_buttons.size(), 8, "The selector should show the available route and future route slots")
-	assert_false(sector_buttons[0].disabled, "The authored route should be playable")
-	for index: int in range(1, sector_buttons.size()):
+	assert_eq(sector_buttons.size(), 8, "The selector should show the available routes and future route slots")
+	assert_false(sector_buttons[0].disabled, "The tutorial route should be playable")
+	assert_false(sector_buttons[1].disabled, "Level 1 should be playable")
+	assert_true(sector_buttons[1].text.contains("TRANSFER & STORAGE"), "Route 02 should be labelled as Level 1")
+	for index: int in range(2, sector_buttons.size()):
 		assert_true(sector_buttons[index].disabled, "Future route %d should be clearly unavailable" % (index + 1))
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
-	assert_true(selector.selected_sector.text.contains("FINAL INSPECTION"), "The playable route should use the current factory narrative")
+	assert_true(selector.selected_sector.text.contains("FINAL INSPECTION"), "The selector should open on the tutorial route")
 	assert_true(selector.description.text.contains("mobility, spring, and clearance"), "Route briefing should describe the calibration checks actually in the tutorial")
 	assert_false(selector.description.text.contains("Solar Ignition Core"), "Retired Last Light Protocol copy must not return")
+
+
+func test_level_selector_selecting_route_02_briefs_level_1() -> void:
+	RunUnitSession.selected_level_index = 0
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+
+	selector._on_sector_focused(1)
+
+	assert_eq(RunUnitSession.selected_level_index, 1, "Focusing route 02 should select it for deployment")
+	assert_eq(selector.selected_sector.text, "02  TRANSFER & STORAGE")
+	assert_eq(selector.difficulty_label.text, "THREAT  //  MODERATE")
+	assert_true(selector.description.text.contains("breach"), "Route 02 briefing should describe Level 1")
+
+	selector._on_sector_focused(5)
+	assert_eq(RunUnitSession.selected_level_index, 1, "An offline slot must not steal the selection")
+	RunUnitSession.selected_level_index = 0
 
 func test_player_options_list_only_live_gameplay_actions() -> void:
 	var options: TabContainer = autofree(OPTIONS_SCENE.instantiate()) as TabContainer

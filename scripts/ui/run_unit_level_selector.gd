@@ -2,10 +2,7 @@ class_name RunUnitLevelSelector
 extends Control
 
 @export_file("*.tscn") var game_scene_path: String = "res://scenes/game.tscn"
-const PLAYABLE_LEVEL_INDEX: int = 0
 const ROUTE_SLOT_COUNT: int = 8
-const PLAYABLE_ROUTE_NAME: String = "FINAL INSPECTION"
-const PLAYABLE_ROUTE_DESCRIPTION: String = "CALIBRATION READY\nComplete mobility, spring, and clearance checks in Final Inspection.\n\nFour checks. One short route."
 
 @onready var sector_grid: GridContainer = %SectorGrid
 @onready var selected_sector: Label = %SelectedSector
@@ -28,15 +25,16 @@ func _ready() -> void:
 		sector_button.focus_mode = Control.FOCUS_ALL if route_available else Control.FOCUS_NONE
 		sector_button.toggle_mode = true
 		sector_button.disabled = not route_available
-		sector_button.tooltip_text = "Review the playable route" if route_available else "This route is not available in the current build."
+		sector_button.tooltip_text = "Review this route" if route_available else "This route is not available in the current build."
 		sector_button.pressed.connect(_on_sector_pressed.bind(level_index))
 		sector_button.focus_entered.connect(_on_sector_focused.bind(level_index))
 		sector_grid.add_child(sector_button)
 		_sector_buttons.append(sector_button)
 	back_button.pressed.connect(_on_back_pressed)
 	deploy_button.pressed.connect(_on_deploy_pressed)
-	_select_sector(PLAYABLE_LEVEL_INDEX)
-	call_deferred("_focus_first_sector")
+	var initial_index: int = RunUnitSession.selected_level_index if _is_route_available(RunUnitSession.selected_level_index) else 0
+	_select_sector(initial_index)
+	call_deferred("_focus_selected_sector")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -57,9 +55,9 @@ func _input(event: InputEvent) -> void:
 		_sector_buttons[next_index].grab_focus()
 		get_viewport().set_input_as_handled()
 
-func _focus_first_sector() -> void:
-	if not _sector_buttons.is_empty():
-		_sector_buttons[0].grab_focus()
+func _focus_selected_sector() -> void:
+	if _selected_index < _sector_buttons.size():
+		_sector_buttons[_selected_index].grab_focus()
 
 func _on_sector_focused(level_index: int) -> void:
 	if _is_route_available(level_index):
@@ -74,14 +72,15 @@ func _on_sector_pressed(level_index: int) -> void:
 func _select_sector(level_index: int) -> void:
 	if not _is_route_available(level_index):
 		return
-	_selected_index = PLAYABLE_LEVEL_INDEX
+	_selected_index = level_index
 	RunUnitSession.selected_level_index = _selected_index
 	for index: int in _sector_buttons.size():
 		_sector_buttons[index].button_pressed = index == _selected_index
-	selected_sector.text = "%02d  %s" % [_selected_index + 1, PLAYABLE_ROUTE_NAME]
-	description.text = PLAYABLE_ROUTE_DESCRIPTION
+	var level: Dictionary = RunUnitLevelCatalog.get_level(_selected_index)
+	selected_sector.text = "%02d  %s" % [_selected_index + 1, level["name"]]
+	description.text = level["description"]
 	seed_label.text = "AUTHORED ROUTE  //  AVAILABLE"
-	difficulty_label.text = "THREAT  //  LOW"
+	difficulty_label.text = "THREAT  //  %s" % level["threat"]
 	route_status.text = "ROUTE ONLINE  //  READY TO DEPLOY"
 
 func _on_deploy_pressed() -> void:
@@ -94,9 +93,9 @@ func _on_back_pressed() -> void:
 	SceneLoader.load_scene("res://scenes/main_menu.tscn")
 
 func _is_route_available(level_index: int) -> bool:
-	return level_index == PLAYABLE_LEVEL_INDEX
+	return RunUnitLevelCatalog.has_level(level_index)
 
 func _get_route_button_text(level_index: int) -> String:
 	if _is_route_available(level_index):
-		return "%02d  %s" % [level_index + 1, PLAYABLE_ROUTE_NAME]
+		return "%02d  %s" % [level_index + 1, RunUnitLevelCatalog.get_level(level_index)["name"]]
 	return "ROUTE %02d  //  OFFLINE" % (level_index + 1)

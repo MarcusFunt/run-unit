@@ -7,6 +7,8 @@ extends GutTest
 
 const LEVEL_SCENE: PackedScene = preload("res://scenes/levels/level_01_factory.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
+const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
+const LEVEL_1_INDEX: int = 1  # route 02 in the selector
 
 const TRANSFER_GATE_LEFT_X: float = 992.0     # jammed conveyor, tiles 31-33 over the row-14 deck
 const TRANSFER_GATE_RIGHT_X: float = 1088.0
@@ -183,3 +185,50 @@ func test_tall_rack_needs_a_charged_jump() -> void:
 	var clear_of_crates: float = STORAGE_GATE_RIGHT_X + 32.0
 	assert_false(await _jump_to_next_platform(LOW_RACK_INDEX, 0, clear_of_crates), "A tap jump must not reach the tall rack")
 	assert_true(await _jump_to_next_platform(LOW_RACK_INDEX, 16, clear_of_crates), "A charged jump must reach the tall rack")
+
+
+func _instantiate_game_for(level_index: int) -> RunUnitGame:
+	RunUnitSession.selected_level_index = level_index
+	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
+	var pause_menu_controller: Node = game.get_node_or_null("PauseMenuController")
+	if pause_menu_controller != null:
+		pause_menu_controller.free()
+	add_child_autofree(game)
+	return game
+
+
+func after_each() -> void:
+	RunUnitSession.selected_level_index = 0
+	get_tree().paused = false
+
+
+func test_deploying_route_02_plays_level_1() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_1_INDEX)
+
+	assert_eq(game.world.scene_file_path, "res://scenes/levels/level_01_factory.tscn", "Route 02 should load the Level 1 world")
+	assert_eq(game.get_children().filter(func(child: Node) -> bool: return child is RunUnitStaticWorld).size(), 1, "Only the selected world should be in the game")
+	assert_eq(game.world.get_parent(), game)
+	assert_null(game.elevator_exit, "Level 1 has no tutorial lift exit")
+	assert_eq(game.player.global_position, Vector2(160.0, 385.0), "The run should start at Level 1's Spawn marker")
+	assert_eq(RunUnitSession.selected_level_index, LEVEL_1_INDEX, "The session should remember the deployed route for retries")
+	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()
+	assert_eq(game.hud.score_progress_bar.max_value, expected_metres, "HUD progress should span Level 1's Spawn to Goal")
+
+
+func test_deploying_route_01_still_plays_the_tutorial() -> void:
+	var game: RunUnitGame = _instantiate_game_for(0)
+
+	assert_eq(game.world.scene_file_path, "res://scenes/world.tscn")
+	assert_not_null(game.elevator_exit, "The tutorial keeps its lift exit")
+
+
+func test_completing_level_1_opens_the_results_menu() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_1_INDEX)
+
+	game.world.route_completed.emit()
+
+	assert_true(game.is_terminal())
+	assert_eq(RunUnitSession.last_run_outcome, "completed")
+	assert_true(game.death_menu.visible, "Without a lift exit, completion should show the results menu")
+	assert_true(game.death_menu.description_label.text.contains("ROUTE 02 CERTIFIED"))
+	assert_true(game.death_menu.description_label.text.contains("Exterior wall breached"), "Results copy should come from Level 1, not the tutorial")

@@ -12,9 +12,9 @@ extends Node2D
 @onready var hud: RunUnitHud = $HUD
 @onready var debug_overlay: RunUnitDebugOverlay = $DebugOverlay
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
-@onready var elevator_exit: RunUnitTutorialElevatorExit = $World/ElevatorExit
-
-const PLAYABLE_LEVEL_INDEX: int = 0
+## Only the tutorial world has a lift to leave through; other routes finish on
+## the results menu.
+@onready var elevator_exit: RunUnitTutorialElevatorExit = get_node_or_null("World/ElevatorExit") as RunUnitTutorialElevatorExit
 
 enum RunState { ACTIVE, FAILED, COMPLETED }
 
@@ -26,12 +26,29 @@ var _last_reward_distance: float = 0.0
 var _selected_level_index: int = 0
 var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 
+## Swaps in the selected route's world before any child is ready, so the
+## controllers' world_path and this node's @onready references all resolve to
+## the level that is actually being played.
+func _enter_tree() -> void:
+	_selected_level_index = RunUnitSession.selected_level_index if RunUnitLevelCatalog.has_level(RunUnitSession.selected_level_index) else 0
+	var world_scene_path: String = RunUnitLevelCatalog.get_level(_selected_level_index)["world_scene"]
+	var current_world: Node = get_node_or_null("World")
+	if current_world == null or current_world.scene_file_path == world_scene_path:
+		return
+	var selected_world: Node = (load(world_scene_path) as PackedScene).instantiate()
+	selected_world.name = "World"
+	var world_index: int = current_world.get_index()
+	remove_child(current_world)
+	current_world.free()
+	add_child(selected_world)
+	move_child(selected_world, world_index)
+
 func _ready() -> void:
 	_ensure_input_map()
-	_selected_level_index = PLAYABLE_LEVEL_INDEX
-	RunUnitSession.selected_level_index = PLAYABLE_LEVEL_INDEX
+	RunUnitSession.selected_level_index = _selected_level_index
 	world.set_level_profile(_selected_level_index)
-	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", "world.tscn")
+	var world_scene_path: String = RunUnitLevelCatalog.get_level(_selected_level_index)["world_scene"]
+	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", world_scene_path.get_file())
 	if not world.obstacle_triggered.is_connected(_on_obstacle_triggered):
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
 	if not world.route_completed.is_connected(_on_route_completed):
