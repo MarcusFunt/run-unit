@@ -5,6 +5,11 @@ extends CanvasLayer
 @onready var best_label: Label = %BestLabel
 @onready var score_progress_bar: ProgressBar = %ScoreProgressBar
 @onready var status_label: Label = %StatusLabel
+@onready var _health_cells: Array[CanvasItem] = [
+	$HealthDisplay/HealthCell1,
+	$HealthDisplay/HealthCell2,
+	$HealthDisplay/HealthCell3,
+]
 
 var _level_length: float = 1.0
 
@@ -23,3 +28,9 @@ func set_level_length(length: float) -> void:
 
 func set_status(text_value: String) -> void:
 	status_label.text = text_value
+
+func set_health(current_health: int, maximum_health: int) -> void:
+	var safe_maximum: int = maxi(maximum_health, 0)
+	var safe_current: int = clampi(current_health, 0, safe_maximum)
+	for index: int in range(_health_cells.size()):
+		_health_cells[index].visible = index < safe_current
