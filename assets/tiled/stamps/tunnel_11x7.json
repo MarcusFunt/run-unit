@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "name": "tunnel_11x7",
+  "width": 11,
+  "height": 7,
+  "layers": {
+    "TunnelShell": [
+      {"tileset": "bulkhead_macro.tsj", "local_id": 0},
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null, null
+    ]
+  },
+  "source": "starter library: bulkhead macro"
+}
