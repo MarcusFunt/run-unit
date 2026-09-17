@@ -1,0 +1,304 @@
+{
+  "compressionlevel": -1,
+  "height": 36,
+  "infinite": false,
+  "layers": [
+    {
+      "height": 36,
+      "id": 1,
+      "name": "Semantic",
+      "opacity": 1.0,
+      "type": "tilelayer",
+      "visible": false,
+      "width": 210,
+      "x": 0,
+      "y": 0,
+      "encoding": "base64",
+      "compression": "zlib",
+      "data": "eNrt2FEKABAQBUDuf2lXUKy1zJTfbdN7Ja0BAAAAAAAAAAAAwL/64rlxL+RzJh87s//iLPRIj/SIej364Y0IAAAAwJrd/1sZuyGX2fmI2PX0nzN1Mx6VoapzI3qEHlWZe+M9o0feiwAAAAAAAAAADONxAis="
+    },
+    {
+      "height": 36,
+      "id": 2,
+      "name": "Obstacles",
+      "opacity": 1.0,
+      "type": "tilelayer",
+      "visible": false,
+      "width": 210,
+      "x": 0,
+      "y": 0,
+      "encoding": "base64",
+      "compression": "zlib",
+      "data": "eNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgMdiAAAQ=="
+    },
+    {
+      "height": 36,
+      "id": 3,
+      "name": "TransferShell",
+      "opacity": 0.92,
+      "type": "tilelayer",
+      "visible": true,
+      "width": 210,
+      "x": 0,
+      "y": 0,
+      "encoding": "base64",
+      "compression": "zlib",
+      "data": "eNrtyiEBAAAMAjBivn+SexIgNr0EAAAAAAAAAAAAaOfOXAAAAAAAAAAAAAAAAAAAAAAAAIBlDwXOAxk="
+    },
+    {
+      "height": 36,
+      "id": 4,
+      "name": "ArtBackground",
+      "opacity": 0.55,
+      "type": "tilelayer",
+      "visible": true,
+      "width": 210,
+      "x": 0,
+      "y": 0,
+      "encoding": "base64",
+      "compression": "zlib",
+      "data": "eNrt07sNgDAQREGnfDJDBvRfJluA5dgnzUgvOGnTaw0AAAAAgJk9Hem0L7FnTT1d6bYvsWdNT3rTZ19iDwAAAADA2OYufeOP3P4IAAAAAAAAAAAAAAAAAACAsR9QMwhN"
+    },
+    {
+      "height": 36,
+      "id": 5,
+      "name": "ArtStructure",
+      "opacity": 0.86,
+      "type": "tilelayer",
+      "visible": true,
+      "width": 210,
+      "x": 0,
+      "y": 0,
+      "encoding": "base64",
+      "compression": "zlib",
+      "data": "eNrt0zEKhDAURVE7yXpsbW3F/a/GWlAhyk+MOaeU8AgzucMAAAAAUMdkN3SXPsx2Q3fpw2I3dJc+rHZDd/mPzZkiZwAAAAAAAAAAAACAOOnk23hxdszYKHW35C/0Lm++p4r3fbvx5jdImXfTUbtvPPcN1X6bd32W6ujJlo7a6ehLb6jVXR3pSEc6Qkc6Qkc60pGOdKQjHelIR+hIRzrSkY50pCMd6UhHOtIRcLQDCsAMmw=="
+    },
+    {
+      "height": 36,
+      "id": 6,
+      "name": "ArtDeck",
+      "opacity": 1.0,
+      "type": "tilelayer",
+      "visible": true,
+      "width": 210,
+      "x": 0,
+      "y": 0,
+      "encoding": "base64",
+      "compression": "zlib",
+      "data": "eNrt2UEOwiAQBVAuplR31fvfR07QGBjqFN9LJmE5tD9sfikAAAAAAAAAAAAA8L9ube6dUxPuVf1S+fwyH5HZ39o82jw7zyXhXqxjNJ9H+YjM/t7m1ebdeS4J92Ido/k8ykdk9jPdGQAAAICcIrqX+sPddIFymSEfW4ntW0a/Qe3YjWtmfGZnPaO/Pto3um8pgffWheQUmfFZnfWs/vrM91tHuLYZvfd+wd0BAAAAAAAAAJjrA17vk40="
+    },
+    {
+      "draworder": "topdown",
+      "id": 7,
+      "name": "Markers",
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0,
+      "objects": [
+        {
+          "id": 1,
+          "name": "Spawn",
+          "type": "",
+          "point": true,
+          "x": 128,
+          "y": 417,
+          "width": 0,
+          "height": 0,
+          "rotation": 0,
+          "visible": true
+        },
+        {
+          "id": 2,
+          "name": "Goal",
+          "type": "",
+          "point": true,
+          "x": 6560,
+          "y": 640,
+          "width": 0,
+          "height": 0,
+          "rotation": 0,
+          "visible": true
+        },
+        {
+          "id": 3,
+          "name": "WarehouseLanding",
+          "type": "",
+          "point": true,
+          "x": 3072,
+          "y": 704,
+          "width": 0,
+          "height": 0,
+          "rotation": 0,
+          "visible": true
+        },
+        {
+          "id": 4,
+          "name": "Breach",
+          "type": "",
+          "point": true,
+          "x": 6464,
+          "y": 640,
+          "width": 0,
+          "height": 0,
+          "rotation": 0,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "draworder": "topdown",
+      "id": 8,
+      "name": "StoryZones",
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": false,
+      "x": 0,
+      "y": 0,
+      "objects": [
+        {
+          "id": 5,
+          "name": "TransferLine",
+          "type": "story_zone",
+          "x": 0,
+          "y": 0,
+          "width": 3072,
+          "height": 640,
+          "rotation": 0,
+          "visible": true,
+          "properties": [
+            {
+              "name": "story_role",
+              "type": "string",
+              "value": "stalled_transfer_line"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Collapse",
+          "type": "story_zone",
+          "x": 2880,
+          "y": 352,
+          "width": 320,
+          "height": 448,
+          "rotation": 0,
+          "visible": true,
+          "properties": [
+            {
+              "name": "story_role",
+              "type": "string",
+              "value": "mandatory_safe_drop"
+            },
+            {
+              "name": "safe_setpiece",
+              "type": "bool",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "WarehouseReveal",
+          "type": "story_zone",
+          "x": 2944,
+          "y": 576,
+          "width": 1024,
+          "height": 544,
+          "rotation": 0,
+          "visible": true,
+          "properties": [
+            {
+              "name": "story_role",
+              "type": "string",
+              "value": "mass_production_reveal"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "WarehouseTraversal",
+          "type": "story_zone",
+          "x": 3200,
+          "y": 512,
+          "width": 3136,
+          "height": 608,
+          "rotation": 0,
+          "visible": true,
+          "properties": [
+            {
+              "name": "story_role",
+              "type": "string",
+              "value": "rack_top_traversal"
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "name": "ExteriorBreach",
+          "type": "story_zone",
+          "x": 6272,
+          "y": 384,
+          "width": 448,
+          "height": 544,
+          "rotation": 0,
+          "visible": true,
+          "properties": [
+            {
+              "name": "story_role",
+              "type": "string",
+              "value": "factory_escape"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "nextlayerid": 9,
+  "nextobjectid": 10,
+  "orientation": "orthogonal",
+  "properties": [
+    {
+      "name": "level_id",
+      "type": "string",
+      "value": "level_01_factory"
+    },
+    {
+      "name": "display_name",
+      "type": "string",
+      "value": "LEVEL 01 // TRANSFER & STORAGE"
+    },
+    {
+      "name": "story_arc",
+      "type": "string",
+      "value": "elevator_arrival -> stalled_transfer -> safe_collapse -> warehouse_reveal -> breach"
+    },
+    {
+      "name": "authoring_note",
+      "type": "string",
+      "value": "Collision lives only on Semantic/Obstacles; art layers are decorative."
+    }
+  ],
+  "renderorder": "right-down",
+  "tiledversion": "1.11",
+  "tileheight": 32,
+  "tilesets": [
+    {
+      "firstgid": 1,
+      "source": "../semantic/semantic_layer.tsj"
+    },
+    {
+      "firstgid": 7,
+      "source": "../../generated/tiled/industrial_zone.tsj"
+    },
+    {
+      "firstgid": 88,
+      "source": "../../generated/tiled/bulkhead_macro.tsj"
+    }
+  ],
+  "tilewidth": 32,
+  "type": "map",
+  "version": "1.10",
+  "width": 210
+}
