@@ -59,6 +59,9 @@ func reset(_run_seed: int = 0, _mode: String = "campaign") -> void:
 	_difficulty = 0.0
 	_published_difficulty = -1.0
 	_completion_triggered = false
+	# Level-owned set pieces (e.g. Level 2's module cradle) return to their
+	# pre-run state alongside the route itself.
+	propagate_call(&"reset_level_state")
 	_update_metrics()
 
 ## Called every physics frame with the run's furthest distance. Republishing

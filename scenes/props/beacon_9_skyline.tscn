@@ -1,0 +1,99 @@
+[gd_scene format=3]
+
+[node name="Beacon9" type="Node2D"]
+
+[node name="Mass" type="Polygon2D" parent="."]
+color = Color(0.05, 0.12, 0.15, 1)
+polygon = PackedVector2Array(-340, 0, -340, -70, -302, -70, -302, -148, -268, -148, -268, -212, -232, -212, -232, -280, -198, -280, -198, -340, -166, -340, -166, -396, -134, -396, -134, -446, -104, -446, -104, -492, -78, -492, -78, -534, -56, -534, -56, -572, -38, -572, -38, -604, -24, -604, -17, -642, -9, -670, 0, -700, 9, -670, 17, -642, 24, -604, 38, -604, 38, -572, 56, -572, 56, -534, 78, -534, 78, -492, 104, -492, 104, -446, 134, -446, 134, -396, 166, -396, 166, -340, 198, -340, 198, -280, 232, -280, 232, -212, 268, -212, 268, -148, 302, -148, 302, -70, 340, -70, 340, 0)
+
+[node name="RampR1" type="Polygon2D" parent="."]
+color = Color(0.085, 0.185, 0.215, 1)
+polygon = PackedVector2Array(322, -40, 322, -92, 96, -470, 96, -418)
+
+[node name="RampL1" type="Polygon2D" parent="."]
+color = Color(0.085, 0.185, 0.215, 1)
+polygon = PackedVector2Array(-96, -418, -96, -470, -322, -92, -322, -40)
+
+[node name="RampR2" type="Polygon2D" parent="."]
+color = Color(0.085, 0.185, 0.215, 1)
+polygon = PackedVector2Array(352, -6, 352, -36, 266, -126, 266, -96)
+
+[node name="RampL2" type="Polygon2D" parent="."]
+color = Color(0.085, 0.185, 0.215, 1)
+polygon = PackedVector2Array(-266, -96, -266, -126, -352, -36, -352, -6)
+
+[node name="RampR3" type="Polygon2D" parent="."]
+color = Color(0.085, 0.185, 0.215, 1)
+polygon = PackedVector2Array(236, -150, 236, -192, 150, -336, 150, -294)
+
+[node name="RampL3" type="Polygon2D" parent="."]
+color = Color(0.085, 0.185, 0.215, 1)
+polygon = PackedVector2Array(-150, -294, -150, -336, -236, -192, -236, -150)
+
+[node name="PierR1" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(272, -40, 302, -40, 302, -172, 272, -172)
+
+[node name="PierL1" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(-272, -172, -302, -172, -302, -40, -272, -40)
+
+[node name="PierR2" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(202, -150, 232, -150, 232, -304, 202, -304)
+
+[node name="PierL2" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(-202, -304, -232, -304, -232, -150, -202, -150)
+
+[node name="PierR3" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(142, -270, 166, -270, 166, -418, 142, -418)
+
+[node name="PierL3" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(-142, -418, -166, -418, -166, -270, -142, -270)
+
+[node name="PierR4" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(86, -360, 104, -360, 104, -514, 86, -514)
+
+[node name="PierL4" type="Polygon2D" parent="."]
+color = Color(0.07, 0.16, 0.19, 1)
+polygon = PackedVector2Array(-86, -514, -104, -514, -104, -360, -86, -360)
+
+[node name="Tower" type="Polygon2D" parent="."]
+color = Color(0.062, 0.145, 0.175, 1)
+polygon = PackedVector2Array(-66, -110, 66, -110, 52, -560, 30, -618, -30, -618, -52, -560)
+
+[node name="Shaft" type="Polygon2D" parent="."]
+color = Color(0.02, 0.06, 0.08, 1)
+polygon = PackedVector2Array(-15, -140, 15, -140, 15, -616, -15, -616)
+
+[node name="ShaftGlow" type="Polygon2D" parent="."]
+color = Color(0.3, 0.72, 0.82, 0.06)
+polygon = PackedVector2Array(-52, -150, 52, -150, 36, -616, -36, -616)
+
+[node name="Ignition1" type="Polygon2D" parent="."]
+color = Color(0.45, 0.85, 0.95, 0.6)
+polygon = PackedVector2Array(-8, -612, 8, -612, 8, -536, -8, -536)
+
+[node name="Ignition2" type="Polygon2D" parent="."]
+color = Color(0.45, 0.85, 0.95, 0.4)
+polygon = PackedVector2Array(-8, -520, 8, -520, 8, -430, -8, -430)
+
+[node name="Ignition3" type="Polygon2D" parent="."]
+color = Color(0.45, 0.85, 0.95, 0.26)
+polygon = PackedVector2Array(-8, -400, 8, -400, 8, -320, -8, -320)
+
+[node name="Ignition4" type="Polygon2D" parent="."]
+color = Color(0.45, 0.85, 0.95, 0.15)
+polygon = PackedVector2Array(-8, -268, 8, -268, 8, -180, -8, -180)
+
+[node name="RingArc" type="Polygon2D" parent="."]
+color = Color(0.1, 0.21, 0.245, 1)
+polygon = PackedVector2Array(16.5, -552, -9.2, -548.8, -34.6, -547, -58.4, -546.7, -79.6, -547.8, -97.4, -550.3, -110.9, -554.1, -119.6, -559, -123.1, -564.9, -121.1, -571.4, -113.9, -578.3, -101.7, -585.3, -85.1, -592, -64.7, -598.2, -41.5, -603.6, -16.5, -608, 9.2, -611.2, 8.3, -600.1, -12.9, -597.5, -33.5, -594.1, -52.6, -590.1, -69.5, -585.7, -83.3, -581, -93.4, -576.3, -99.5, -571.8, -101.2, -567.6, -98.5, -563.9, -91.5, -561, -80.5, -558.9, -66, -557.7, -48.6, -557.5, -29.1, -558.2, -8.3, -559.9, 12.9, -562.5)
+
+[node name="RingBreak" type="Polygon2D" parent="."]
+color = Color(0.1, 0.21, 0.245, 1)
+polygon = PackedVector2Array(120.4, -525.1, 126.8, -521, 132.9, -516.9, 138.8, -512.7, 144.5, -508.5, 149.8, -504.3, 154.9, -500.1, 159.6, -496.1, 163.9, -492.1, 167.9, -488.2, 171.4, -484.5, 174.4, -480.9, 177.1, -477.4, 179.2, -474.2, 180.9, -471.2, 182.1, -468.4, 182.8, -465.8, 164.8, -473.8, 164.1, -475.6, 162.9, -477.5, 161.4, -479.7, 159.5, -482, 157.2, -484.5, 154.6, -487.1, 151.6, -489.9, 148.3, -492.8, 144.7, -495.8, 140.8, -498.9, 136.6, -502.1, 132.2, -505.3, 127.5, -508.5, 122.7, -511.8, 117.7, -515.1, 112.5, -518.4)
