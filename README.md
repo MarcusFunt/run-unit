@@ -31,7 +31,7 @@ The playable geometry is authored in Tiled and imported through YATI:
 
 ## Level kit
 
-`tools/level_kit.py` is the fast path for building and changing routes. It reads and writes the same `.tmj` files Tiled does, so it can be used instead of Tiled or alongside it.
+`tools/level_kit.py` is the fast path for sketching and validating route geometry. It reads and writes the same `.tmj` files Tiled does, so it can be used instead of Tiled or alongside it.
 
 ```sh
 # Start a new level from a blank floor, spawn and goal
@@ -40,27 +40,53 @@ python tools/level_kit.py new --out route.sketch --width 90 --height 29
 # Or open an existing level as an editable text grid
 python tools/level_kit.py sketch assets/tiled/levels/maintenance_shaft.tmj --out route.sketch
 
-# Edit route.sketch in any text editor, then rebuild and validate in one step
-python tools/level_kit.py build route.sketch --out assets/tiled/levels/maintenance_shaft.tmj --check
-
-# `build` keeps the template's tilesets and art, so a new map inherits both
-python tools/level_kit.py build route.sketch --out assets/tiled/levels/transfer_line.tmj --check
-
-# Redraw the decorative deck trim and tunnel shell from the new geometry
-python tools/level_kit.py autoart assets/tiled/levels/maintenance_shaft.tmj
-
 # Validate any map on its own
 python tools/level_kit.py check assets/tiled/levels/maintenance_shaft.tmj
+
+# Redraw the basic decorative deck trim and tunnel shell from geometry
+python tools/level_kit.py autoart assets/tiled/levels/maintenance_shaft.tmj
 ```
 
-A sketch is one character per cell — `#` solid, `=` one-way, `^` hazard, `>` conveyor, `*` foreground, `T` crouch gate, `S` Spawn, `G` Goal — plus `@` directives that carry the map size and exact marker positions. A level that is only re-sketched and rebuilt comes back byte-identical, and the decorative layers of the template survive every rebuild.
+A sketch is one character per cell — `#` solid, `=` one-way, `^` hazard, `>` conveyor, `*` foreground, `T` crouch gate, `S` Spawn, `G` Goal — plus `@` directives that carry the map size and exact marker positions.
 
 `check` validates two different things:
 
 - **The contract.** Layer names `static_world.gd` looks up, 32px tiles, a finite map, tile ids that resolve to a declared tileset, `data_semantic` on every `Semantic` tile, and decoration that would otherwise create collision.
 - **The route.** It replays `RunUnitPlayerMotor`'s own integration step — using the constants read straight out of `scripts/player/player_motor.gd` and `scenes/player.tscn` — to work out which ledges connect, then reports whether the Goal can actually be reached from the Spawn. Gaps that are too wide, overhangs too low to crouch under, stranded platforms, and jumps that only clear at a perfect full-speed takeoff all come back as errors or warnings in well under a second, without opening Godot.
 
-`python -m unittest discover -s tools/tests` runs `check` against the shipped level, so an unfinishable route fails CI.
+## Tiled workbench and reusable stamps
+
+For rich levels such as Factory Escape, use `tools/tiled_workbench.py` for rebuilding and repeated environment chunks. Its `build` command wraps the route builder but preserves custom object groups such as `StoryZones`, top-level map properties, foreground layers and other metadata that the route sketch does not own.
+
+```sh
+# Losslessly rebuild an edited route sketch and immediately validate it
+python tools/tiled_workbench.py build route.sketch \
+  --out assets/tiled/levels/level_01_factory.tmj --check
+
+# See the reusable chunks already in the project
+python tools/tiled_workbench.py stamp list
+
+# Capture a good multi-layer composition from an existing map.
+# Gameplay collision is excluded by default.
+python tools/tiled_workbench.py stamp capture \
+  assets/tiled/levels/level_01_factory.tmj \
+  --rect 96,16,20,12 --name warehouse_section
+
+# Paste that composition somewhere else without clearing art under empty cells
+python tools/tiled_workbench.py stamp place warehouse_section \
+  assets/tiled/levels/level_02_recovery.tmj --at 40,16 --check
+```
+
+Stamps live under `assets/tiled/stamps/`. They store **tileset-local ids** rather than a map's global tile ids, so a stamp remains usable when another map declares the same tilesets at different `firstgid` values. `Semantic` and `Obstacles` are deliberately omitted when capturing; add `--include-gameplay` only when the stamp is intentionally supposed to create collision.
+
+Two starter chunks are included:
+
+- `tunnel_11x7` — one reusable bulkhead tunnel macro.
+- `platform_8x3` — the standard capped industrial platform trim.
+
+The fastest deadline workflow is therefore: **sketch geometry -> `level_kit check` -> safe build -> place/capture stamps -> open in Godot for visual review**. Reuse a composition that already looks good instead of procedurally scattering individual props.
+
+`python -m unittest discover -s tools/tests` runs the route and workbench regressions, including a Factory Escape round-trip that ensures `StoryZones` and foreground art survive the safe build.
 
 ## Tests
 
@@ -97,8 +123,8 @@ godot --headless --path . --export-release "Windows Desktop" build/RUN_UNIT.exe
 - `scripts/world/`: imported-route indexing and traversal support
 - `scripts/ai/`: controller-neutral action/environment interfaces
 - `scripts/gameplay/`: run orchestration, session state, and scoring
-- `assets/tiled/`: authored Tiled maps and semantic tilesets
-- `tools/`: deterministic asset/test tooling
+- `assets/tiled/`: authored Tiled maps, reusable stamps and semantic tilesets
+- `tools/`: deterministic asset/test/level-authoring tooling
 - `tests/`: GUT regression coverage
 
 ## AI interface
