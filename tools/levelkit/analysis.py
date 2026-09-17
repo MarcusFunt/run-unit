@@ -16,10 +16,17 @@ def move_difficulty(
     physics,
     level,
     *,
-    ninety_percent_edges: dict[int, list[dict]] | None = None,
-    eighty_percent_edges: dict[int, list[dict]] | None = None,
+    margin_edges: dict[int, list[dict]] | None = None,
+    double_margin_edges: dict[int, list[dict]] | None = None,
+    margin: float = 0.1,
 ) -> dict:
-    """Classify one graph move by robustness and available takeoff run-up."""
+    """Classify one graph move by robustness and available takeoff run-up.
+
+    ``margin`` keeps the existing ``check --margin`` meaning: a move that fails
+    when run speed is reduced by that fraction is near-perfect. A move that
+    survives one margin but not two is tight. Run-up uses the same setting, so
+    changing ``--margin`` changes both the text warnings and JSON classification.
+    """
     source = int(move.get("from", source_ledge.index))
     target = int(move["to"])
     charge = move.get("charge")
@@ -29,18 +36,18 @@ def move_difficulty(
     attainable = min(float(physics.max_run_speed), math.sqrt(max(2.0 * acceleration * usable_runup, 0.0)))
     runup_ratio = attainable / max(float(physics.max_run_speed), 1e-6)
 
-    survives_90 = True if ninety_percent_edges is None else _transition_exists(ninety_percent_edges, source, target)
-    survives_80 = True if eighty_percent_edges is None else _transition_exists(eighty_percent_edges, source, target)
+    safe_margin = max(float(margin), 0.0)
+    survives_margin = True if margin_edges is None else _transition_exists(margin_edges, source, target)
+    survives_double = True if double_margin_edges is None else _transition_exists(double_margin_edges, source, target)
+    near_runup_threshold = 0.0 if safe_margin <= 0.0 else max(1.0 - safe_margin, 0.0)
+    tight_runup_threshold = 0.0 if safe_margin <= 0.0 else max(1.0 - safe_margin / 2.0, near_runup_threshold)
 
-    if not survives_90 or runup_ratio < 0.90:
+    if not survives_margin or runup_ratio < near_runup_threshold:
         rating = "near_perfect"
-        tightness = 2
-    elif not survives_80 or runup_ratio < 0.98:
+    elif not survives_double or runup_ratio < tight_runup_threshold:
         rating = "tight"
-        tightness = 1
     else:
         rating = "comfortable"
-        tightness = 0
 
     return {
         "from": source + 1,
