@@ -29,8 +29,38 @@ func test_the_ending_shows_the_restored_city() -> void:
 	var ending: RunUnitEnding = _instantiate_ending()
 
 	assert_not_null(ending.vista.texture, "The ending screen shows the restored city")
-	assert_eq(ending.vista.texture.resource_path, "res://assets/images/ending_beacon_vista.png")
+	assert_eq(ending.vista.texture.resource_path, "res://assets/generated/converted/ending/ending_beacon_vista_320x180.png")
 	assert_eq(ending.vista.stretch_mode, TextureRect.STRETCH_KEEP_ASPECT_COVERED, "The vista fills the screen at any window size")
+
+
+## The illustration is drawn at the game's own pixel density and sampled the
+## way the tile art is, so the ending does not read as a different game.
+func test_the_vista_matches_the_games_pixel_density() -> void:
+	var ending: RunUnitEnding = _instantiate_ending()
+
+	assert_eq(ending.vista.texture.get_size(), Vector2(320.0, 180.0), "The vista is authored at a third of the viewport, then drawn up")
+	assert_eq(ending.vista.texture_filter, CanvasItem.TEXTURE_FILTER_NEAREST, "Nearest sampling keeps the pixels square")
+
+
+## A still frame reads as a screenshot, so the scene keeps moving: the beacon
+## breathes, the refinery smokes, and UNIT-07 stands there watching it.
+func test_the_ending_is_not_a_still_frame() -> void:
+	var ending: RunUnitEnding = _instantiate_ending()
+	var steam: CPUParticles2D = ending.get_node("%Steam") as CPUParticles2D
+	var embers: CPUParticles2D = ending.get_node("%Embers") as CPUParticles2D
+
+	assert_true(steam.emitting, "Steam drifts off the refinery")
+	assert_true(embers.emitting, "Embers drift up through the foreground")
+	assert_gt(ending.twinkles.get_child_count(), 0, "Windows blink across the city")
+	assert_not_null(ending.unit_07, "UNIT-07 is in frame for the last shot of the game")
+	assert_lt(ending.unit_07.scale.x, 0.0, "UNIT-07 faces the beacon it just restored")
+
+	var column_alpha: float = ending.beacon_column.modulate.a
+	var unit_y: float = ending.unit_07.position.y
+	await wait_seconds(0.9)
+
+	assert_ne(ending.beacon_column.modulate.a, column_alpha, "The ignition column keeps pulsing")
+	assert_ne(ending.unit_07.position.y, unit_y, "UNIT-07 idles rather than freezing")
 
 
 func test_the_ending_reveals_its_copy_and_then_its_buttons() -> void:
