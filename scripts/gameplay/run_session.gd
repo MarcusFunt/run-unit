@@ -7,8 +7,18 @@ var world_mode: String = "authored"
 var configuration_hash: String = ""
 var last_world_metrics: Dictionary = {}
 var traversal_trace: Dictionary = {}
-var best_distance: float = 0.0
 var last_run_outcome: String = "active"
+
+## Keyed by route index. Routes differ wildly in length, so a single shared
+## best-distance value would carry a meaningless number over when the player
+## switches routes; each route remembers its own record instead.
+var _best_distances_by_level: Dictionary = {}
+
+var best_distance: float:
+	get:
+		return float(_best_distances_by_level.get(selected_level_index, 0.0))
+	set(value):
+		_best_distances_by_level[selected_level_index] = maxf(value, 0.0)
 
 func begin_run(level_index: int, seed_value: int, mode: String, version: String, config_hash: String) -> void:
 	selected_level_index = level_index
