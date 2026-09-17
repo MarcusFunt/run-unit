@@ -1,7 +1,8 @@
 """Compatibility extensions installed into the public ``level_kit`` module.
 
-The public module remains ``tools/level_kit.py``. This file deliberately avoids
-importing it, so the facade can pass its globals here without circular imports.
+``tools/level_kit.py`` remains the stable public module/CLI.  The facade passes
+its globals here so new implementation can stay modular without circular
+imports or breaking existing ``import level_kit`` callers.
 """
 
 from __future__ import annotations
@@ -14,36 +15,28 @@ from collections import Counter
 from pathlib import Path
 
 from .analysis import best_route, difficulty_summary, move_difficulty, route_length_m
-from .stamps import (
-    StampError,
-    apply_stamp_plan,
-    capture_stamp,
-    inspect_stamp,
-    place_stamp,
-    read_stamp,
-    resolve_stamp,
-)
+from .stamps import StampError, apply_stamp_plan, capture_stamp, inspect_stamp, place_stamp, read_stamp, resolve_stamp
 from .tiled import merge_unowned_tiled_content
 
 
 def _parse_rect(value: str) -> tuple[int, int, int, int]:
     try:
-        result = tuple(int(part.strip()) for part in value.split(","))
+        values = tuple(int(part.strip()) for part in value.split(","))
     except ValueError as error:
         raise argparse.ArgumentTypeError("expected x,y,width,height") from error
-    if len(result) != 4:
+    if len(values) != 4:
         raise argparse.ArgumentTypeError("expected x,y,width,height")
-    return result  # type: ignore[return-value]
+    return values  # type: ignore[return-value]
 
 
 def _parse_point(value: str) -> tuple[int, int]:
     try:
-        result = tuple(int(part.strip()) for part in value.split(","))
+        values = tuple(int(part.strip()) for part in value.split(","))
     except ValueError as error:
         raise argparse.ArgumentTypeError("expected x,y") from error
-    if len(result) != 2:
+    if len(values) != 2:
         raise argparse.ArgumentTypeError("expected x,y")
-    return result  # type: ignore[return-value]
+    return values  # type: ignore[return-value]
 
 
 def _subparsers(parser: argparse.ArgumentParser) -> argparse._SubParsersAction:
@@ -54,7 +47,6 @@ def _subparsers(parser: argparse.ArgumentParser) -> argparse._SubParsersAction:
 
 
 def install_into(namespace: dict) -> None:
-    """Install hardened behavior while preserving the existing public API."""
     if namespace.get("_LEVELKIT_EXTENSIONS_INSTALLED"):
         return
     namespace["_LEVELKIT_EXTENSIONS_INSTALLED"] = True
@@ -79,9 +71,12 @@ def install_into(namespace: dict) -> None:
     gameplay_layers = {semantic_layer, obstacle_layer}
     owned_build_layers = {semantic_layer, obstacle_layer, marker_layer}
 
+    # ------------------------------------------------------------------
+    # Structural hardening
+    # ------------------------------------------------------------------
+
     def hardened_check_structure(level, report) -> None:
         original_check_structure(level, report)
-
         for layer in level.tile_layers():
             name = str(layer.get("name", ""))
             width = int(layer.get("width", 0))
@@ -112,23 +107,22 @@ def install_into(namespace: dict) -> None:
             layer = level.layer(layer_name)
             if layer is None or layer.get("type") != "tilelayer":
                 continue
+            width = max(int(layer.get("width", level.width)), 1)
             for cell, raw_gid in enumerate(layer.get("data", [])):
                 gid = int(raw_gid)
                 if not gid or not (gid & flip_diagonal):
                     continue
                 tile = level.index.tile_for(gid)
-                if tile is None or not tile.rects:
-                    continue
-                width = max(int(layer.get("width", level.width)), 1)
-                report.errors.append(
-                    "layer '%s' x=%d y=%d: diagonal flip on collidable tile is unsupported by the Level Kit simulator"
-                    % (layer_name, cell % width, cell // width)
-                )
+                if tile is not None and tile.rects:
+                    report.errors.append(
+                        "layer '%s' x=%d y=%d: diagonal flip on collidable tile is unsupported by the Level Kit simulator"
+                        % (layer_name, cell % width, cell // width)
+                    )
 
     namespace["_check_structure"] = hardened_check_structure
 
     # ------------------------------------------------------------------
-    # Lossless route rebuilding
+    # Lossless route rebuilds
     # ------------------------------------------------------------------
 
     def safe_build_map(sketch, out_path: Path, template):
@@ -149,8 +143,7 @@ def install_into(namespace: dict) -> None:
         out = namespace["_resolve"](args.out)
         template_path = args.template or sketch.template
         template = namespace["LevelMap"].load(namespace["_resolve"](template_path)) if template_path else None
-        data = safe_build_map(sketch, out, template)
-        namespace["write_json"](out, data)
+        namespace["write_json"](out, safe_build_map(sketch, out, template))
         print("wrote %s (%dx%d cells)" % (namespace["_relative_to_project"](out), sketch.width, sketch.height))
         if args.check:
             return namespace["command_check"](argparse.Namespace(level=str(out), json=False, quiet=False, margin=0.1))
@@ -160,13 +153,11 @@ def install_into(namespace: dict) -> None:
     namespace["command_build"] = command_build
 
     # ------------------------------------------------------------------
-    # Difficulty-aware structured route analysis
+    # Difficulty-aware route analysis
     # ------------------------------------------------------------------
 
-    def _physics_with_runup(physics):
-        if hasattr(physics, "ground_acceleration"):
-            return physics
-        acceleration = 2200.0
+    def _ground_acceleration() -> float:
+        value = 2200.0
         motor = project_root / "scripts" / "player" / "player_motor.gd"
         if motor.is_file():
             match = re.search(
@@ -174,18 +165,28 @@ def install_into(namespace: dict) -> None:
                 motor.read_text(encoding="utf-8"),
             )
             if match:
-                acceleration = float(match.group(1))
-        setattr(physics, "ground_acceleration", acceleration)
-        return physics
+                value = float(match.group(1))
+        return value
+
+    def _clean_physics(physics):
+        """Return a PlayerPhysics containing only dataclass fields.
+
+        The legacy checker clones instances through ``PlayerPhysics(**__dict__)``;
+        keeping analysis-only metadata off that object preserves compatibility.
+        """
+        cls = namespace["PlayerPhysics"]
+        return cls(**{name: getattr(physics, name) for name in cls.__dataclass_fields__})
 
     def enhanced_check_level(level, physics=None, margin: float = 0.1):
-        actual_physics = _physics_with_runup(physics or namespace["PlayerPhysics"].load())
-        report = original_check_level(level, actual_physics, margin)
+        core_physics = _clean_physics(physics or namespace["PlayerPhysics"].load())
+        report = original_check_level(level, core_physics, margin)
         if not report.summary.get("checked") or report.errors:
             report.summary.setdefault("route_moves_detail", [])
             report.summary.setdefault("difficulty", difficulty_summary([]))
             return report
 
+        actual_physics = copy.copy(core_physics)
+        setattr(actual_physics, "ground_acceleration", _ground_acceleration())
         world = namespace["CollisionWorld"](namespace["collision_rects"](level), level.tilewidth)
         ledges = namespace["build_ledges"](level, world, actual_physics)
         if not ledges:
@@ -220,10 +221,10 @@ def install_into(namespace: dict) -> None:
         if not reachable_finishers:
             return report
 
-        p90 = copy.copy(actual_physics)
+        p90 = _clean_physics(actual_physics)
         p90.max_run_speed = actual_physics.max_run_speed * 0.90
         edges90 = namespace["RouteGraph"](level, world, p90, ledges).edges()
-        p80 = copy.copy(actual_physics)
+        p80 = _clean_physics(actual_physics)
         p80.max_run_speed = actual_physics.max_run_speed * 0.80
         edges80 = namespace["RouteGraph"](level, world, p80, ledges).edges()
 
@@ -266,12 +267,9 @@ def install_into(namespace: dict) -> None:
                 soft_locks.append(ledge.index + 1)
         report.summary["soft_locks"] = soft_locks
 
-        # Replace the old BFS route prose/tightness warnings with the route that
-        # the difficulty-aware selector actually recommends.
         report.notes = [note for note in report.notes if not note.startswith("route: ")]
         report.warnings = [
-            warning
-            for warning in report.warnings
+            warning for warning in report.warnings
             if "needs a full-charge jump" not in warning and not warning.startswith("tight: ")
         ]
         describe = namespace["_describe_move"]
@@ -292,7 +290,7 @@ def install_into(namespace: dict) -> None:
     namespace["check_level"] = enhanced_check_level
 
     # ------------------------------------------------------------------
-    # Public stamp API + CLI
+    # Portable stamp API
     # ------------------------------------------------------------------
 
     def public_capture_stamp(level, rect, name, include_gameplay=False, layer_names=None):
@@ -361,8 +359,7 @@ def install_into(namespace: dict) -> None:
         rows = []
         if directory.exists():
             for path in sorted(directory.glob("*.json")):
-                stamp = _load_stamp(str(path), directory)
-                rows.append(public_inspect_stamp(stamp))
+                rows.append(public_inspect_stamp(_load_stamp(str(path), directory)))
         if args.json:
             print(json.dumps(rows, indent=2, sort_keys=True))
         else:
@@ -441,11 +438,10 @@ def install_into(namespace: dict) -> None:
         if not paths:
             raise level_error("no .tmj levels found under %s" % root)
         results = []
-        ok = True
+        overall = True
         for path in paths:
             try:
-                level = namespace["LevelMap"].load(path)
-                report = enhanced_check_level(level, margin=args.margin)
+                report = enhanced_check_level(namespace["LevelMap"].load(path), margin=args.margin)
                 item = {
                     "level": namespace["_relative_to_project"](path),
                     "ok": report.ok,
@@ -464,9 +460,9 @@ def install_into(namespace: dict) -> None:
                     "summary": {"checked": False},
                 }
             results.append(item)
-            ok = ok and bool(item["ok"])
+            overall = overall and bool(item["ok"])
         if args.json:
-            print(json.dumps({"ok": ok, "levels": results}, indent=2, sort_keys=True))
+            print(json.dumps({"ok": overall, "levels": results}, indent=2, sort_keys=True))
         else:
             for item in results:
                 print("%-60s %s" % (item["level"], "PASS" if item["ok"] else "FAIL"))
@@ -474,11 +470,11 @@ def install_into(namespace: dict) -> None:
                     print("  ERROR %s" % error)
                 for warning in item["warnings"]:
                     print("  WARN  %s" % warning)
-            print("%s: %d level(s)" % ("PASS" if ok else "FAIL", len(results)))
-        return 0 if ok else 1
+            print("%s: %d level(s)" % ("PASS" if overall else "FAIL", len(results)))
+        return 0 if overall else 1
 
     # ------------------------------------------------------------------
-    # Parser extension. Existing parsers/flags stay untouched.
+    # Parser extension. Existing commands and flags remain unchanged.
     # ------------------------------------------------------------------
 
     def build_parser() -> argparse.ArgumentParser:
@@ -503,11 +499,11 @@ def install_into(namespace: dict) -> None:
         listing.add_argument("--json", action="store_true")
         listing.set_defaults(func=command_stamp_list)
 
-        inspect_parser = stamp_commands.add_parser("inspect", help="describe one saved stamp")
-        inspect_parser.add_argument("stamp")
-        inspect_parser.add_argument("--stamp-dir", default=str(stamp_dir))
-        inspect_parser.add_argument("--json", action="store_true")
-        inspect_parser.set_defaults(func=command_stamp_inspect)
+        inspector = stamp_commands.add_parser("inspect", help="describe one saved stamp")
+        inspector.add_argument("stamp")
+        inspector.add_argument("--stamp-dir", default=str(stamp_dir))
+        inspector.add_argument("--json", action="store_true")
+        inspector.set_defaults(func=command_stamp_inspect)
 
         place = stamp_commands.add_parser("place", help="overlay a saved stamp on a Tiled map")
         place.add_argument("stamp")
@@ -531,12 +527,7 @@ def install_into(namespace: dict) -> None:
         check_all = commands.add_parser("check-all", help="validate every .tmj below a path")
         check_all.add_argument("path", nargs="?", default="assets/tiled/levels")
         check_all.add_argument("--json", action="store_true", help="machine-readable aggregate output")
-        check_all.add_argument(
-            "--margin",
-            type=float,
-            default=0.1,
-            help="takeoff-speed margin used by route difficulty analysis (default 0.1)",
-        )
+        check_all.add_argument("--margin", type=float, default=0.1, help="takeoff-speed margin used by analysis")
         check_all.set_defaults(func=command_check_all)
         return parser
 
