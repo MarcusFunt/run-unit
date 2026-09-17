@@ -3,6 +3,8 @@ extends GutTest
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
 const HUD_SCENE: PackedScene = preload("res://scenes/hud.tscn")
+const HAZARD_SCRIPT_PATH: String = "res://scripts/hazards/hazard_area.gd"
+const TIMED_HAZARD_SCRIPT_PATH: String = "res://scripts/hazards/timed_hazard.gd"
 
 func before_each() -> void:
 	RunUnitSession.selected_level_index = 0
@@ -28,6 +30,27 @@ func _instantiate_game() -> RunUnitGame:
 		pause_menu_controller.free()
 	add_child_autofree(game)
 	return game
+
+func _instantiate_hazard(script_path: String = HAZARD_SCRIPT_PATH) -> Area2D:
+	var hazard_script: Script = load(script_path) as Script
+	assert_not_null(hazard_script, "%s must exist" % script_path)
+	if hazard_script == null:
+		return null
+	var hazard: Area2D = Area2D.new()
+	hazard.set_script(hazard_script)
+	var collision: CollisionShape2D = CollisionShape2D.new()
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = Vector2(96.0, 96.0)
+	collision.shape = shape
+	hazard.add_child(collision)
+	add_child_autofree(hazard)
+	return hazard
+
+func _settle_overlap(player: RunUnitPlayerMotor, hazard: Area2D) -> void:
+	player.set_physics_process(false)
+	player.global_position = hazard.global_position
+	for frame: int in range(3):
+		await get_tree().physics_frame
 
 func test_player_has_three_point_health_component() -> void:
 	var player: RunUnitPlayerMotor = _instantiate_player()
@@ -118,3 +141,80 @@ func test_hud_exposes_three_compact_health_cells() -> void:
 	assert_true((cells[0] as CanvasItem).visible)
 	assert_true((cells[1] as CanvasItem).visible)
 	assert_false((cells[2] as CanvasItem).visible, "The depleted health cell should visibly turn off")
+
+func test_active_hazard_hits_once_for_one_continuous_exposure() -> void:
+	var hazard: Area2D = _instantiate_hazard()
+	if hazard == null:
+		return
+	var player: RunUnitPlayerMotor = _instantiate_player()
+	var health: RunUnitPlayerHealth = _health(player)
+	health.invulnerability_seconds = 0.0
+	await _settle_overlap(player, hazard)
+	assert_eq(health.current_health, 2, "Entering an active hazard costs one HP")
+	for frame: int in range(6):
+		await get_tree().physics_frame
+	assert_eq(health.current_health, 2, "Continuous overlap is still one exposure")
+
+func test_leaving_and_reentering_hazard_creates_a_new_exposure() -> void:
+	var hazard: Area2D = _instantiate_hazard()
+	if hazard == null:
+		return
+	var player: RunUnitPlayerMotor = _instantiate_player()
+	var health: RunUnitPlayerHealth = _health(player)
+	health.invulnerability_seconds = 0.0
+	await _settle_overlap(player, hazard)
+	player.global_position = Vector2(300.0, 0.0)
+	for frame: int in range(3):
+		await get_tree().physics_frame
+	player.global_position = hazard.global_position
+	for frame: int in range(3):
+		await get_tree().physics_frame
+	assert_eq(health.current_health, 1, "Exit and re-entry should create a second hit exposure")
+
+func test_reactivating_hazard_hits_player_who_remains_inside() -> void:
+	var hazard: Area2D = _instantiate_hazard()
+	if hazard == null:
+		return
+	hazard.set("active", false)
+	var player: RunUnitPlayerMotor = _instantiate_player()
+	var health: RunUnitPlayerHealth = _health(player)
+	health.invulnerability_seconds = 0.0
+	await _settle_overlap(player, hazard)
+	assert_eq(health.current_health, 3, "Inactive hazards do not damage on entry")
+	hazard.call("set_active", true)
+	await get_tree().physics_frame
+	assert_eq(health.current_health, 2, "A fresh activation is a new exposure even without body re-entry")
+
+func test_lethal_hazard_depletes_health_immediately() -> void:
+	var hazard: Area2D = _instantiate_hazard()
+	if hazard == null:
+		return
+	hazard.set("lethal", true)
+	var player: RunUnitPlayerMotor = _instantiate_player()
+	await _settle_overlap(player, hazard)
+	assert_eq(_health(player).current_health, 0, "Lethal hazard contact bypasses the three-hit attrition model")
+
+func test_hazard_dispatches_authored_knockback() -> void:
+	var hazard: Area2D = _instantiate_hazard()
+	if hazard == null:
+		return
+	hazard.set("knockback", Vector2(-240.0, -80.0))
+	hazard.set("hitstun_seconds", 0.2)
+	var player: RunUnitPlayerMotor = _instantiate_player()
+	player.set_physics_process(false)
+	await _settle_overlap(player, hazard)
+	assert_eq(player.velocity, Vector2(-240.0, -80.0), "Accepted hazard damage should delegate knockback to the player motor")
+	assert_true(player.is_in_hitstun())
+
+func test_timed_hazard_reset_restores_authored_phase() -> void:
+	var hazard: Area2D = _instantiate_hazard(TIMED_HAZARD_SCRIPT_PATH)
+	if hazard == null:
+		return
+	hazard.set("cycle_seconds", 1.0)
+	hazard.set("active_seconds", 0.25)
+	hazard.set("phase_offset_seconds", 0.5)
+	hazard.call("reset_level_state")
+	assert_false(bool(hazard.get("active")), "A reset into the inactive half of the cycle should be inactive")
+	hazard.set("phase_offset_seconds", 0.1)
+	hazard.call("reset_level_state")
+	assert_true(bool(hazard.get("active")), "A reset into the active window should reproduce the authored phase")
