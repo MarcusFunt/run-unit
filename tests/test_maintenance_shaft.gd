@@ -66,7 +66,7 @@ func test_shipping_level_publishes_spawn_and_goal_markers() -> void:
 
 	assert_eq(world.get_spawn_position(), Vector2(128.0, 385.0), "Spawn comes from the level's Markers layer")
 	assert_true(world.has_goal(), "The shipping level declares a Goal marker")
-	assert_eq(world.get_goal_position(), Vector2(2080.0, 352.0))
+	assert_eq(world.get_goal_position(), Vector2(2032.0, 352.0))
 
 	var trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
 	assert_not_null(trigger, "A completion trigger should be built from the Goal marker")
@@ -105,6 +105,39 @@ func test_shipping_crouch_gate_lets_a_crouched_player_through() -> void:
 func test_shipping_jammed_door_is_lower_than_a_partial_crouch() -> void:
 	var reached_x: float = await _drive_through_gate(true, 48.0)
 	assert_true(reached_x < GATE_LEFT_X, "A 48 px partial crouch must still be blocked by the lower jammed door, got x=%.1f" % reached_x)
+
+
+## The game stops the player the moment the Goal trigger fires and slams the
+## lift door, so the Goal has to sit where the robot is already inside it.
+func test_crouched_robot_is_inside_the_lift_door_when_the_route_completes() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	player.global_position = Vector2(GATE_LEFT_X - 160.0, DECK_Y - 32.0)
+	world.route_completed.connect(func() -> void: player.set_physics_process(false))
+
+	for frame: int in range(300):
+		if world.is_completion_triggered():
+			break
+		player.set_action(_standing_action(1.0, true))
+		await get_tree().physics_frame
+	assert_true(world.is_completion_triggered(), "Driving crouched through the lift should reach the Goal")
+	await get_tree().process_frame
+
+	var door: Sprite2D = world.get_node("ElevatorExit/ClosedDoor") as Sprite2D
+	var door_rect: Rect2 = door.get_rect()
+	var door_left: float = door.to_global(door_rect.position).x
+	var door_right: float = door.to_global(door_rect.end).x
+	for part: String in ["BodyPivot/Body", "UpperLinkPivot/KneePivot/WheelPivot/Wheel"]:
+		var sprite: Sprite2D = player.get_node("RobotVisual/" + part) as Sprite2D
+		var rect: Rect2 = sprite.get_rect()
+		var xs: Array[float] = []
+		for corner: Vector2 in [rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)]:
+			xs.append(sprite.to_global(corner).x)
+		assert_gte(xs.min(), door_left, "%s must not stick out left of the slammed lift door" % part)
+		assert_lte(xs.max(), door_right, "%s must not stick out right of the slammed lift door" % part)
+
 
 func test_short_tap_jump_stays_below_the_charged_jump_pad_height() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
