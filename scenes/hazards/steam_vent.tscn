@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="1_hazard"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_steam"]
+size = Vector2(72, 108)
+
+[node name="SteamVent" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_hazard")
+damage = 1
+knockback = Vector2(180, -260)
+hitstun_seconds = 0.2
+cycle_seconds = 2.6
+active_seconds = 0.9
+phase_offset_seconds = 0.55
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_steam")
+
+[node name="VentBase" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-30, 9, 30, 9, 24, 26, -24, 26)
+color = Color(0.18, 0.23, 0.27, 1)
+
+[node name="VentSlit" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-20, 5, 20, 5, 17, 11, -17, 11)
+color = Color(0.05, 0.08, 0.1, 1)
+
+[node name="ActiveVisual" type="Node2D" parent="."]
+position = Vector2(0, -44)
+
+[node name="Jet" type="Polygon2D" parent="ActiveVisual"]
+polygon = PackedVector2Array(-18, 52, -32, 8, -19, -54, 0, -72, 20, -50, 32, 8, 17, 52)
+color = Color(0.72, 0.9, 0.95, 0.48)
+
+[node name="JetCore" type="Polygon2D" parent="ActiveVisual"]
+polygon = PackedVector2Array(-8, 50, -14, 5, -8, -42, 0, -58, 9, -42, 14, 6, 8, 50)
+color = Color(0.9, 1, 1, 0.55)
