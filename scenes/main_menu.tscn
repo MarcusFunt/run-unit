@@ -57,7 +57,7 @@ grow_horizontal = 2
 mouse_filter = 2
 texture = SubResource("HeaderScrimTexture")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" parent_id_path=PackedInt32Array(556427956) index="0" unique_id=359406872]
 theme_override_colors/font_color = Color(0.73, 0.98, 0.95, 1)
@@ -73,18 +73,6 @@ theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 18
 text = "MUNICIPAL CORE DELIVERY SYSTEM"
 
-[node name="SystemStatus" type="Label" parent="." index="9" unique_id=1399962128]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 106.0
-offset_right = 380.0
-offset_bottom = 130.0
-theme_override_colors/font_color = Color(0.4, 0.72, 0.75, 1)
-theme_override_colors/font_outline_color = Color(0.005, 0.03, 0.045, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 12
-text = "SYSTEM STATUS  //  ONLINE"
-
 [node name="BottomScrim" type="TextureRect" parent="." index="10" unique_id=2210441378]
 show_behind_parent = true
 layout_mode = 1
@@ -98,7 +86,7 @@ grow_vertical = 0
 mouse_filter = 2
 texture = SubResource("FooterScrimTexture")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="FooterHint" type="Label" parent="." index="11" unique_id=1974565844]
 layout_mode = 0

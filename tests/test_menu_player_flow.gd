@@ -46,8 +46,21 @@ func test_main_menu_uses_refined_thin_terminal_buttons() -> void:
 	assert_eq(button.custom_minimum_size, Vector2(280.0, 50.0), "Thin Terminal buttons should be lower and slightly wider")
 	var box: BoxContainer = menu.get_node("MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer") as BoxContainer
 	assert_eq(box.get_theme_constant("separation"), 10, "Terminal controls should use tighter vertical spacing")
-	assert_almost_eq(box.anchor_left, 0.45, 0.001, "Thin Terminal controls should sit slightly left of screen center")
-	assert_almost_eq(box.anchor_right, 0.45, 0.001, "Thin Terminal controls should preserve their width while shifted left")
+	assert_almost_eq(box.anchor_left, 0.5, 0.001, "Thin Terminal controls should be centered on screen")
+	assert_almost_eq(box.anchor_right, 0.5, 0.001, "Thin Terminal controls should preserve their width while centered")
+
+func test_main_menu_scrims_stretch_across_the_full_screen_width() -> void:
+	var menu: Node = autofree(MAIN_MENU_SCENE.instantiate()) as Node
+	assert_not_null(menu, "The main menu should instantiate")
+	add_child_autofree(menu)
+	var header_scrim: TextureRect = menu.get_node_or_null("HeaderScrim") as TextureRect
+	var bottom_scrim: TextureRect = menu.get_node_or_null("BottomScrim") as TextureRect
+	assert_not_null(header_scrim, "The header readability scrim should exist")
+	assert_not_null(bottom_scrim, "The footer readability scrim should exist")
+	if header_scrim != null:
+		assert_eq(header_scrim.stretch_mode, TextureRect.STRETCH_SCALE, "The header scrim must scale to fill its box, not keep the square gradient texture's aspect ratio")
+	if bottom_scrim != null:
+		assert_eq(bottom_scrim.stretch_mode, TextureRect.STRETCH_SCALE, "The footer scrim must scale to fill its box, not keep the square gradient texture's aspect ratio")
 
 func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector

@@ -15,5 +15,9 @@ script = ExtResource("1_hny8b")
 [node name="CreditsLabel" parent="." unique_id=967293869 instance=ExtResource("2_1ldew")]
 unique_name_in_owner = true
 layout_mode = 1
-fit_content = false
-scroll_active = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 0.0
+offset_bottom = 0.0
+auto_update = false
+text = "Made by Marcus Funt 3HP."
