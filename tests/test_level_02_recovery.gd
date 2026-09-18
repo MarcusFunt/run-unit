@@ -162,7 +162,7 @@ func test_only_tile_layers_collide_with_the_player() -> void:
 			continue
 		assert_true(node is Area2D, "%s must not be a physics body" % node.get_path())
 		assert_eq((node as CollisionObject2D).collision_layer, 0, "%s must not occupy a collision layer" % node.get_path())
-		if not node is RunUnitModuleCradle:
+		if str(node.get_path()).contains("/StoryZones/"):
 			story_zone_count += 1
 	assert_eq(story_zone_count, 9, "All nine story zones should import as collision-free areas")
 
@@ -286,3 +286,27 @@ func test_completing_level_2_opens_the_results_menu() -> void:
 	assert_true(game.death_menu.visible, "Without a lift exit, completion should show the results menu")
 	assert_true(game.death_menu.description_label.text.contains("02  RECOVERY"), "Results copy should name the campaign route")
 	assert_true(game.death_menu.description_label.text.contains("Beacon 9"), "Results copy should come from Level 2")
+
+
+func test_recovery_adds_checkpoint_after_the_first_indoor_gate() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var checkpoints: Array[Vector2] = world.get_checkpoint_positions()
+	assert_eq(checkpoints.size(), 1, "The long Recovery route should not replay its whole first half after one mistake")
+	if checkpoints.size() == 1:
+		assert_eq(checkpoints[0], Vector2(4992, 385), "Checkpoint sits just beyond the jammed maintenance hatch")
+
+
+func test_recovery_combines_three_timed_faults_with_existing_platforming() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var faults: Node = world.get_node_or_null("ElectricalFaults")
+	assert_not_null(faults)
+	if faults == null:
+		return
+	assert_eq(faults.get_child_count(), 3)
+	var expected: Array[Vector2] = [Vector2(1680, 480), Vector2(5248, 448), Vector2(6944, 832)]
+	for index: int in range(expected.size()):
+		var hazard: RunUnitTimedHazard = faults.get_child(index) as RunUnitTimedHazard
+		assert_not_null(hazard)
+		if hazard != null:
+			assert_eq(hazard.position, expected[index])
+			assert_false(hazard.lethal)

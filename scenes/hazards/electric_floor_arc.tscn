@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="1_hazard"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arc"]
+size = Vector2(72, 22)
+
+[node name="ElectricFloorArc" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_hazard")
+damage = 1
+lethal = false
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
+cycle_seconds = 2.4
+active_seconds = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_arc")
+
+[node name="WarningPlate" type="Polygon2D" parent="."]
+z_index = 5
+color = Color(0.12, 0.08, 0.045, 0.92)
+polygon = PackedVector2Array(-42, -7, 42, -7, 42, 0, -42, 0)
+[node name="WarningStripe" type="Line2D" parent="."]
+z_index = 6
+points = PackedVector2Array(-36, -4, 36, -4)
+width = 2.0
+default_color = Color(1, 0.55, 0.18, 0.65)
+antialiased = true
+
+[node name="ActiveVisual" type="Node2D" parent="."]
+z_index = 7
+
+[node name="Glow" type="Polygon2D" parent="ActiveVisual"]
+color = Color(1, 0.24, 0.06, 0.32)
+polygon = PackedVector2Array(-40, -22, 40, -22, 40, 0, -40, 0)
+
+[node name="Arc" type="Line2D" parent="ActiveVisual"]
+points = PackedVector2Array(-34, -7, -26, -17, -18, -8, -10, -19, -2, -9, 7, -18, 16, -8, 25, -17, 34, -7)
+width = 3.0
+default_color = Color(1, 0.82, 0.32, 0.96)
+antialiased = true

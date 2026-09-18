@@ -218,3 +218,21 @@ func test_timed_hazard_reset_restores_authored_phase() -> void:
 	hazard.set("phase_offset_seconds", 0.1)
 	hazard.call("reset_level_state")
 	assert_true(bool(hazard.get("active")), "A reset into the active window should reproduce the authored phase")
+
+
+func test_electric_floor_arc_scene_has_persistent_warning_and_switchable_arc() -> void:
+	var scene: PackedScene = load("res://scenes/hazards/electric_floor_arc.tscn") as PackedScene
+	assert_not_null(scene)
+	if scene == null:
+		return
+	var hazard: RunUnitTimedHazard = scene.instantiate() as RunUnitTimedHazard
+	add_child_autofree(hazard)
+	assert_not_null(hazard.get_node_or_null("WarningPlate"), "A safe phase still needs a visible warning plate")
+	var active_visual: CanvasItem = hazard.get_node_or_null("ActiveVisual") as CanvasItem
+	assert_not_null(active_visual, "The powered arc needs an independently switchable visual")
+	assert_false(hazard.lethal, "Floor arcs should cost health, not instantly kill the player")
+	assert_eq(hazard.damage, 1)
+	hazard.set_active(false)
+	assert_false(active_visual.visible, "The electric arc should visibly switch off during the safe timing window")
+	hazard.set_active(true)
+	assert_true(active_visual.visible, "The electric arc should visibly switch on with the damaging phase")
