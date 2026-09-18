@@ -12,11 +12,6 @@ extends Control
 @onready var sector_grid: GridContainer = %SectorGrid
 @onready var selected_sector: Label = %SelectedSector
 @onready var description: Label = %Description
-# Legacy node names: SeedLabel now reports route availability and
-# DifficultyLabel reports the storyline's target first-play runtime.
-@onready var seed_label: Label = %SeedLabel
-@onready var difficulty_label: Label = %DifficultyLabel
-@onready var route_status: Label = %RouteStatus
 @onready var deploy_button: Button = %DeployButton
 @onready var back_button: Button = %BackButton
 var _selected_index: int = RunUnitCampaign.PLAYABLE_INDEX
@@ -100,12 +95,8 @@ func _select_sector(level_index: int) -> void:
 func _show_route_briefing(level_index: int) -> void:
 	if not RunUnitCampaign.has_route(level_index):
 		return
-	var route_available: bool = _is_route_available(level_index)
 	selected_sector.text = RunUnitCampaign.get_title(level_index)
-	description.text = RunUnitCampaign.get_briefing(level_index)
-	seed_label.text = "AUTHORED ROUTE  //  AVAILABLE" if route_available else "ROUTE LOCKED  //  NOT IN THIS BUILD"
-	difficulty_label.text = "EST. RUNTIME  //  %s" % RunUnitCampaign.get_runtime(level_index)
-	route_status.text = "ROUTE ONLINE  //  READY TO DEPLOY" if route_available else "CAMPAIGN ROUTE  //  IN DEVELOPMENT"
+	description.text = RunUnitCampaign.get_summary(level_index)
 
 func _on_deploy_pressed() -> void:
 	if not _is_route_available(_selected_index):

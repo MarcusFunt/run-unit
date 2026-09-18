@@ -74,7 +74,7 @@ func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 		if sector_button != null:
 			sector_buttons.append(sector_button)
 	assert_eq(sector_buttons.size(), 4, "The selector should list the four campaign routes from StorylineSketch.md")
-	var expected_names: Array[String] = ["CALIBRATION", "FACTORY ESCAPE", "RECOVERY", "BEACON 9"]
+	var expected_names: Array[String] = ["TUTORIAL ROUTE", "FACTORY ESCAPE", "RECOVERY", "BEACON 9"]
 	for index: int in sector_buttons.size():
 		assert_true(sector_buttons[index].text.contains(expected_names[index]), "Route %d should be %s in campaign order" % [index, expected_names[index]])
 	assert_false(sector_buttons[0].disabled, "Calibration is authored and playable")
@@ -84,15 +84,23 @@ func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
 	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
 
+func test_level_selector_hides_the_stale_dev_status_chrome() -> void:
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	assert_null(selector.get_node_or_null("Margin/Layout/Header/TitleBlock/Subtitle"), "The 'CAMPAIGN ROUTE SELECTOR // UNIT-07' subtitle should be removed")
+	assert_null(selector.get_node_or_null("Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout/Heading"), "The 'ROUTE DEPLOYMENT' heading should be removed")
+	assert_null(selector.get_node_or_null("Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout/Caption"), "The stale 'still in development' caption should be removed")
+	assert_null(selector.get_node_or_null("Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing/SeedLabel"), "The 'AUTHORED ROUTE // AVAILABLE' label should be removed")
+	assert_null(selector.get_node_or_null("Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing/DifficultyLabel"), "The 'EST. RUNTIME' label should be removed")
+	assert_null(selector.get_node_or_null("Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing/RouteStatus"), "The 'ROUTE ONLINE // READY TO DEPLOY' label should be removed")
+
 func test_level_selector_briefs_the_calibration_tutorial() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	add_child_autofree(selector)
-	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "The selector should open on the Calibration tutorial")
+	assert_true(selector.selected_sector.text.contains("TUTORIAL ROUTE"), "The selector should open on the Calibration tutorial")
 	assert_false(selector.selected_sector.text.contains("FINAL INSPECTION"), "Retired Final Inspection route naming must not return")
-	assert_true(selector.description.text.contains("mobility, hop, spring-load, and clearance"), "Route briefing should describe the calibration checks actually in the tutorial")
+	assert_true(selector.description.text.contains("calibration tunnel"), "Route summary should describe the calibration checks actually in the tutorial")
 	assert_false(selector.description.text.contains("Solar Ignition Core"), "Retired Last Light Protocol copy must not return")
-	assert_eq(selector.difficulty_label.text, "EST. RUNTIME  //  1-2 MIN", "The briefing should carry the storyline's target first-play runtime")
-	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
 
 func test_level_selector_briefs_factory_escape() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
@@ -102,9 +110,7 @@ func test_level_selector_briefs_factory_escape() -> void:
 
 	assert_eq(RunUnitSession.selected_level_index, 1, "Focusing Factory Escape should select it for deployment")
 	assert_eq(selector.selected_sector.text, "01  FACTORY ESCAPE")
-	assert_eq(selector.difficulty_label.text, "EST. RUNTIME  //  5-7 MIN")
 	assert_true(selector.description.text.contains("breach"), "Factory Escape's briefing should describe Level 1")
-	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
 
 	selector._on_sector_focused(3)
 	assert_eq(RunUnitSession.selected_level_index, 3, "Focusing Beacon 9 should select it for deployment")
@@ -120,10 +126,8 @@ func test_level_selector_previews_a_route_without_arming_it() -> void:
 	add_child_autofree(selector)
 	selector._on_sector_hovered(3)
 	assert_true(selector.selected_sector.text.contains("BEACON 9"), "Hovering a route should preview it")
-	assert_eq(selector.seed_label.text, "AUTHORED ROUTE  //  AVAILABLE")
-	assert_eq(selector.route_status.text, "ROUTE ONLINE  //  READY TO DEPLOY")
 	selector._on_sector_unhovered()
-	assert_true(selector.selected_sector.text.contains("CALIBRATION"), "Leaving a hovered route should restore the selected briefing")
+	assert_true(selector.selected_sector.text.contains("TUTORIAL ROUTE"), "Leaving a hovered route should restore the selected briefing")
 	assert_eq(RunUnitSession.selected_level_index, RunUnitCampaign.PLAYABLE_INDEX, "Hovering must not arm a route for deployment")
 
 func test_project_theme_focus_label_differs_from_hover_label() -> void:

@@ -17,10 +17,10 @@ const ROUTES: Array[Dictionary] = [
 	{
 		"code": "TUT",
 		"name": "CALIBRATION",
+		"title": "TUTORIAL ROUTE",
 		"world_scene": "res://scenes/world.tscn",
 		"runtime": "1-2 MIN",
 		"summary": "Clear the factory movement checks and leave the calibration tunnel.",
-		"briefing": "CALIBRATION SEQUENCE ACTIVE\nUNIT-07 clears the mobility, hop, spring-load, and clearance checks.\n\nTransfer lift 01 has faulted. Pass beneath the door to leave calibration.",
 		"completion": "Calibration checks complete.",
 	},
 	{
@@ -29,7 +29,6 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/levels/level_01_factory.tscn",
 		"runtime": "5-7 MIN",
 		"summary": "Cross the stalled transfer line and leave the factory through the breached wall.",
-		"briefing": "TRANSFER LINE 03 OFFLINE\nDuck the jammed line, drop into storage, and cross the rack tops to the breach in the exterior wall.\n\nTwo clearances. Two charged climbs.",
 		"completion": "Exterior wall breached. Unit has left the factory.",
 	},
 	{
@@ -38,7 +37,6 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/levels/level_02_recovery.tscn",
 		"runtime": "7-9 MIN",
 		"summary": "Cross the exterior service district and reach Reserve Depot 03.",
-		"briefing": "CRITICAL REPLACEMENT ASSEMBLY\nRESERVE DEPOT 03\n\nCross the exterior service district and recover the assembly held inside the reserve facility.",
 		"completion": "Replacement ignition module recovered. Target system: Beacon 9.",
 	},
 	{
@@ -47,7 +45,6 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/levels/level_03_beacon.tscn",
 		"runtime": "8-11 MIN",
 		"summary": "Carry the recovered assembly across the city to Beacon 9.",
-		"briefing": "BEACON 9\nIGNITION ASSEMBLY OFFLINE\n\nCarry the replacement across the failing city, climb the beacon, and install it.",
 		"completion": "Beacon 9 ignition restored.",
 	},
 ]
@@ -85,8 +82,10 @@ static func get_runtime(route_index: int) -> String:
 static func get_summary(route_index: int) -> String:
 	return str(get_route(route_index).get("summary", ""))
 
-static func get_briefing(route_index: int) -> String:
-	return str(get_route(route_index).get("briefing", ""))
-
+## Most routes derive their title from code + name. A route can override this
+## with an explicit "title" entry (e.g. the tutorial's "TUTORIAL ROUTE").
 static func get_title(route_index: int) -> String:
+	var route: Dictionary = get_route(route_index)
+	if route.has("title"):
+		return str(route["title"])
 	return "%s  %s" % [get_code(route_index), get_route_name(route_index)]

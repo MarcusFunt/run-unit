@@ -68,12 +68,6 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 34
 text = "RUN//UNIT"
 
-[node name="Subtitle" type="Label" parent="Margin/Layout/Header/TitleBlock"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-theme_override_font_sizes/font_size = 13
-text = "CAMPAIGN ROUTE SELECTOR  //  UNIT-07"
-
 [node name="Status" type="Label" parent="Margin/Layout/Header"]
 layout_mode = 2
 size_flags_horizontal = 8
@@ -102,18 +96,6 @@ theme_override_constants/margin_bottom = 12
 [node name="SectorLayout" type="VBoxContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin"]
 layout_mode = 2
 theme_override_constants/separation = 5
-
-[node name="Heading" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.95, 0.94, 1)
-theme_override_font_sizes/font_size = 17
-text = "ROUTE DEPLOYMENT"
-
-[node name="Caption" type="Label" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.42, 0.63, 0.68, 1)
-text = "Campaign order. Calibration and Factory Escape are playable; later routes are still in development."
-autowrap_mode = 2
 
 [node name="SectorGrid" type="GridContainer" parent="Margin/Layout/Body/SectorPanel/SectorMargin/SectorLayout"]
 unique_name_in_owner = true
@@ -163,28 +145,6 @@ theme_override_colors/font_color = Color(0.69, 0.8, 0.81, 1)
 theme_override_font_sizes/font_size = 14
 text = "CALIBRATION SEQUENCE ACTIVE\nUNIT-07 clears the mobility, hop, spring-load, and clearance checks.\n\nTransfer lift 01 has faulted. Pass beneath the door to leave calibration."
 autowrap_mode = 2
-
-[node name="SeedLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.72, 0.77, 1)
-theme_override_font_sizes/font_size = 13
-text = "AUTHORED ROUTE  //  AVAILABLE"
-
-[node name="DifficultyLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-theme_override_font_sizes/font_size = 13
-text = "EST. RUNTIME  //  1-2 MIN"
-
-[node name="RouteStatus" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(0.4, 0.88, 0.76, 1)
-theme_override_font_sizes/font_size = 13
-text = "ROUTE ONLINE  //  READY TO DEPLOY"
 
 [node name="Footer" type="HBoxContainer" parent="Margin/Layout"]
 layout_mode = 2

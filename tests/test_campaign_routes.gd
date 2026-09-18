@@ -35,7 +35,6 @@ func test_every_route_carries_player_facing_copy() -> void:
 	for index: int in RunUnitCampaign.route_count():
 		assert_false(RunUnitCampaign.get_code(index).is_empty(), "Route %d needs a campaign code" % index)
 		assert_false(RunUnitCampaign.get_summary(index).is_empty(), "Route %d needs a one-line summary" % index)
-		assert_false(RunUnitCampaign.get_briefing(index).is_empty(), "Route %d needs a briefing" % index)
 		assert_false(RunUnitCampaign.get_completion(index).is_empty(), "Route %d needs a completion line for the results menu" % index)
 		assert_true(RunUnitCampaign.get_runtime(index).ends_with("MIN"), "Route %d should carry its target first-play runtime" % index)
 
@@ -49,6 +48,6 @@ func test_route_names_exist_in_the_storyline_sketch() -> void:
 
 func test_route_copy_drops_the_retired_storyline() -> void:
 	for index: int in RunUnitCampaign.route_count():
-		var copy: String = "%s %s %s" % [RunUnitCampaign.get_title(index), RunUnitCampaign.get_summary(index), RunUnitCampaign.get_briefing(index)]
+		var copy: String = "%s %s" % [RunUnitCampaign.get_title(index), RunUnitCampaign.get_summary(index)]
 		for retired: String in RETIRED_COPY:
 			assert_false(copy.to_upper().contains(retired.to_upper()), "Retired copy '%s' must not return to route %d" % [retired, index])
