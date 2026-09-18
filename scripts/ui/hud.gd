@@ -4,7 +4,6 @@ extends CanvasLayer
 @onready var distance_label: Label = %DistanceLabel
 @onready var best_label: Label = %BestLabel
 @onready var score_progress_bar: ProgressBar = %ScoreProgressBar
-@onready var status_label: Label = %StatusLabel
 @onready var _health_cells: Array[CanvasItem] = [
 	$HealthDisplay/HealthCell1,
 	$HealthDisplay/HealthCell2,
@@ -25,9 +24,6 @@ func set_scores(distance: float, best: float) -> void:
 func set_level_length(length: float) -> void:
 	_level_length = maxf(length, 1.0)
 	score_progress_bar.max_value = _level_length
-
-func set_status(text_value: String) -> void:
-	status_label.text = text_value
 
 func set_health(current_health: int, maximum_health: int) -> void:
 	var safe_maximum: int = maxi(maximum_health, 0)

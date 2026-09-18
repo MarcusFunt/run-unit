@@ -31,7 +31,6 @@ var _external_control: bool = false
 var _last_reward_distance: float = 0.0
 var _terminal_penalty_paid: bool = false
 var _trace_sample_countdown: float = 0.0
-var _last_status_text: String = ""
 var _selected_level_index: int = 0
 var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 ## Authored respawn points, in route order, and the next one still ahead.
@@ -94,11 +93,6 @@ func _physics_process(delta: float) -> void:
 		_trace.record_sample(player.global_position, player.velocity, int(current_platform.get("platform_id", -1)))
 	world.set_progress(current_distance)
 	hud.set_scores(current_distance, score_manager.best_distance)
-	var controller_name: String = "BOT" if _bot_enabled else ("AI" if _external_control else "HUMAN")
-	var status_text: String = "%s  //  A/D MOVE  //  SPACE JUMP  //  R RESTART" % controller_name
-	if status_text != _last_status_text:
-		_last_status_text = status_text
-		hud.set_status(status_text)
 	_update_debug(current_distance)
 	if player.global_position.y > world.death_y:
 		_fail_run()
@@ -131,7 +125,6 @@ func reset_run(run_seed: int) -> void:
 	_last_reward_distance = 0.0
 	_terminal_penalty_paid = false
 	_trace_sample_countdown = 0.0
-	_last_status_text = ""
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
 	world.reset(run_seed)

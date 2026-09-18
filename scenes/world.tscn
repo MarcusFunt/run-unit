@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/maintenance_shaft.tmj" id="2_level"]
 [ext_resource type="Script" path="res://scripts/world/tutorial_elevator_exit.gd" id="3_exit"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="4_door_open"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/doorunlocked.png" id="5_door_closed"]
+[ext_resource type="Texture2D" path="res://assets/source/icons/arrow_left.svg" id="6_arrow_left"]
+[ext_resource type="Texture2D" path="res://assets/source/icons/arrow_right.svg" id="7_arrow_right"]
+[ext_resource type="Texture2D" path="res://assets/source/icons/arrow_up.svg" id="8_arrow_up"]
+[ext_resource type="Texture2D" path="res://assets/source/icons/arrow_down.svg" id="9_arrow_down"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_world")
@@ -20,25 +24,6 @@ color = Color(0.04, 0.18, 0.2, 0.16)
 polygon = PackedVector2Array(-256, 350, 2560, 350, 2560, 520, -256, 520)
 
 [node name="ShaftGeometry" parent="." instance=ExtResource("2_level")]
-
-[node name="CalibrationLaneMarkers" type="Node2D" parent="."]
-z_index = 4
-
-[node name="MobilityStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
-color = Color(0.25, 0.9, 0.88, 0.48)
-polygon = PackedVector2Array(208, 440, 432, 440, 432, 448, 208, 448)
-
-[node name="HopTakeoffStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
-color = Color(1, 0.58, 0.2, 0.62)
-polygon = PackedVector2Array(560, 440, 624, 440, 624, 448, 560, 448)
-
-[node name="SpringPadStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
-color = Color(1, 0.58, 0.2, 0.62)
-polygon = PackedVector2Array(1088, 376, 1248, 376, 1248, 384, 1088, 384)
-
-[node name="ExitGuideStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
-color = Color(0.25, 0.9, 0.88, 0.48)
-polygon = PackedVector2Array(1680, 408, 1872, 408, 1872, 416, 1680, 416)
 
 [node name="ElevatorExit" type="Node2D" parent="."]
 position = Vector2(1968, 416)
@@ -101,25 +86,15 @@ theme_override_font_sizes/font_size = 14
 text = "01 // MOBILITY"
 horizontal_alignment = 1
 
-[node name="Keys" type="Label" parent="TutorialSigns/MovementPrompt"]
-offset_left = -128.0
-offset_top = -16.0
-offset_right = 128.0
-offset_bottom = 10.0
-theme_override_colors/font_color = Color(0.80, 0.97, 0.96, 1)
-theme_override_font_sizes/font_size = 15
-text = "[ A ]    [ D ]"
-horizontal_alignment = 1
+[node name="LeftArrowIcon" type="Sprite2D" parent="TutorialSigns/MovementPrompt"]
+position = Vector2(-16, -3)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("6_arrow_left")
 
-[node name="Instruction" type="Label" parent="TutorialSigns/MovementPrompt"]
-offset_left = -128.0
-offset_top = 14.0
-offset_right = 128.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(0.42, 0.68, 0.72, 1)
-theme_override_font_sizes/font_size = 10
-text = "ROLL TO TEST MARKER"
-horizontal_alignment = 1
+[node name="RightArrowIcon" type="Sprite2D" parent="TutorialSigns/MovementPrompt"]
+position = Vector2(16, -3)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_arrow_right")
 
 [node name="JumpPrompt" type="Node2D" parent="TutorialSigns"]
 position = Vector2(705, 258)
@@ -137,22 +112,17 @@ horizontal_alignment = 1
 [node name="Keys" type="Label" parent="TutorialSigns/JumpPrompt"]
 offset_left = -128.0
 offset_top = -16.0
-offset_right = 128.0
+offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.80, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "TAP [ SPACE ]"
-horizontal_alignment = 1
+text = "TAP"
+horizontal_alignment = 2
 
-[node name="Instruction" type="Label" parent="TutorialSigns/JumpPrompt"]
-offset_left = -128.0
-offset_top = 14.0
-offset_right = 128.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(0.42, 0.68, 0.72, 1)
-theme_override_font_sizes/font_size = 10
-text = "CLEAR THE GAP"
-horizontal_alignment = 1
+[node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/JumpPrompt"]
+position = Vector2(14, -3)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_arrow_up")
 
 [node name="ChargePrompt" type="Node2D" parent="TutorialSigns"]
 position = Vector2(1085, 212)
@@ -164,28 +134,23 @@ offset_right = 138.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 14
-text = "03 // SPRING LOAD"
+text = "03 // SPRING JUMP"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/ChargePrompt"]
-offset_left = -138.0
+offset_left = -190.0
 offset_top = -16.0
-offset_right = 138.0
+offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.80, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "HOLD [ SPACE ]"
-horizontal_alignment = 1
+text = "HOLD, THEN RELEASE"
+horizontal_alignment = 2
 
-[node name="Instruction" type="Label" parent="TutorialSigns/ChargePrompt"]
-offset_left = -138.0
-offset_top = 14.0
-offset_right = 138.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(0.42, 0.68, 0.72, 1)
-theme_override_font_sizes/font_size = 10
-text = "RELEASE // REACH UPPER PAD"
-horizontal_alignment = 1
+[node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/ChargePrompt"]
+position = Vector2(14, -3)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_arrow_up")
 
 [node name="CrouchPrompt" type="Node2D" parent="TutorialSigns"]
 position = Vector2(1770, 224)
@@ -197,47 +162,20 @@ offset_right = 132.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(0.35, 0.94, 0.92, 1)
 theme_override_font_sizes/font_size = 14
-text = "04 // EXIT LIFT"
+text = "04 // CROUCH"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/CrouchPrompt"]
 offset_left = -132.0
 offset_top = -16.0
-offset_right = 132.0
+offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.80, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "HOLD [ DOWN ]"
-horizontal_alignment = 1
+text = "HOLD"
+horizontal_alignment = 2
 
-[node name="Instruction" type="Label" parent="TutorialSigns/CrouchPrompt"]
-offset_left = -132.0
-offset_top = 14.0
-offset_right = 132.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(0.42, 0.68, 0.72, 1)
-theme_override_font_sizes/font_size = 10
-text = "DOOR FAULT // PASS BELOW"
-horizontal_alignment = 1
-
-[node name="ShaftTitle" type="Label" parent="."]
-z_index = 5
-offset_left = 120.0
-offset_top = 112.0
-offset_right = 570.0
-offset_bottom = 138.0
-theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.86)
-theme_override_font_sizes/font_size = 12
-text = "CALIBRATION // MOVEMENT TEST"
-horizontal_alignment = 1
-
-[node name="CompletionLabel" type="Label" parent="."]
-z_index = 5
-offset_left = 1835.0
-offset_top = 150.0
-offset_right = 2165.0
-offset_bottom = 176.0
-theme_override_colors/font_color = Color(1, 0.62, 0.22, 1)
-theme_override_font_sizes/font_size = 11
-text = "TRANSFER LIFT 01  //  FAULT"
-horizontal_alignment = 1
+[node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/CrouchPrompt"]
+position = Vector2(14, -3)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("9_arrow_down")

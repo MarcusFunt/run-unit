@@ -96,22 +96,3 @@ custom_minimum_size = Vector2(26, 8)
 color = Color(0.32, 0.88, 0.94, 0.95)
 mouse_filter = 2
 
-[node name="StatusBar" type="PanelContainer" parent="."]
-offset_left = 24.0
-offset_top = 506.0
-offset_right = 936.0
-offset_bottom = 532.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_transparent")
-mouse_filter = 2
-
-[node name="Margin" type="MarginContainer" parent="StatusBar"]
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
-
-[node name="StatusLabel" type="Label" parent="StatusBar/Margin"]
-unique_name_in_owner = true
-theme_override_colors/font_color = Color(0.63, 0.82, 0.84, 0.82)
-theme_override_font_sizes/font_size = 9
-text = "HUMAN  //  A/D MOVE  //  SPACE JUMP  //  R RESTART"

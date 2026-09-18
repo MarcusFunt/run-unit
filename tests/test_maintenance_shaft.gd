@@ -20,11 +20,7 @@ const RETIRED_SIGNAGE: Array[String] = ["FINAL INSPECTION", "MAINTENANCE SHAFT",
 func test_tutorial_signage_uses_the_current_storyline() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
-	var title: Label = world.get_node_or_null("ShaftTitle") as Label
-	assert_not_null(title, "The tutorial keeps a facility title sign")
-	if title == null:
-		return
-	assert_true(title.text.begins_with("CALIBRATION"), "The tutorial is the Calibration route, got '%s'" % title.text)
+	assert_null(world.get_node_or_null("ShaftTitle"), "The 'CALIBRATION // MOVEMENT TEST' facility title sign has been removed")
 	var signage: PackedStringArray = PackedStringArray()
 	for label: Label in _find_labels(world):
 		signage.append(label.text.to_upper())
@@ -222,8 +218,5 @@ func test_charged_jump_reaches_the_charged_jump_pad_height() -> void:
 func test_calibration_route_marks_each_lesson_without_adding_damage() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
-	var markers: Node = world.get_node_or_null("CalibrationLaneMarkers")
-	assert_not_null(markers)
-	if markers != null:
-		assert_eq(markers.get_child_count(), 4, "Movement, hop, spring-load, and exit lessons each get a floor cue")
+	assert_null(world.get_node_or_null("CalibrationLaneMarkers"), "The floor test-marker cues have been removed from calibration")
 	assert_null(world.get_node_or_null("ElectricalFaults"), "Calibration stays a consequence-free teaching space")
