@@ -24,6 +24,14 @@ func test_routes_are_available_exactly_when_they_have_an_authored_world() -> voi
 		assert_eq(RunUnitCampaign.is_available(index), expected_available[index], "%s availability" % route_name)
 		assert_eq(not RunUnitCampaign.get_world_scene(index).is_empty(), expected_available[index], "%s should be playable exactly when it has a world scene" % route_name)
 
+func test_routes_advance_in_campaign_order() -> void:
+	assert_eq(RunUnitCampaign.get_next_route_index(0), 1, "Calibration hands off to Factory Escape")
+	assert_eq(RunUnitCampaign.get_next_route_index(1), 2, "Factory Escape hands off to Recovery")
+	assert_eq(RunUnitCampaign.get_next_route_index(2), 3, "Recovery hands off to Beacon 9")
+	var last_index: int = RunUnitCampaign.route_count() - 1
+	assert_eq(RunUnitCampaign.get_next_route_index(last_index), last_index, "The campaign ends on the last route rather than running off the table")
+
+
 func test_authored_worlds_exist_on_disk() -> void:
 	for index: int in RunUnitCampaign.route_count():
 		var world_scene: String = RunUnitCampaign.get_world_scene(index)

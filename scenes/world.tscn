@@ -28,6 +28,7 @@ polygon = PackedVector2Array(-256, 350, 2560, 350, 2560, 520, -256, 520)
 [node name="ElevatorExit" type="Node2D" parent="."]
 position = Vector2(1968, 416)
 script = ExtResource("3_exit")
+next_scene_path = "res://scenes/game.tscn"
 
 [node name="Interior" type="Polygon2D" parent="ElevatorExit"]
 color = Color(0.008, 0.014, 0.022, 1)

@@ -64,6 +64,12 @@ static func get_route(route_index: int) -> Dictionary:
 static func is_available(route_index: int) -> bool:
 	return not get_world_scene(route_index).is_empty()
 
+## The route that follows this one in campaign order, or this one again when the
+## campaign has nothing playable after it.
+static func get_next_route_index(route_index: int) -> int:
+	var next_index: int = route_index + 1
+	return next_index if is_available(next_index) else route_index
+
 static func get_world_scene(route_index: int) -> String:
 	return str(get_route(route_index).get("world_scene", ""))
 

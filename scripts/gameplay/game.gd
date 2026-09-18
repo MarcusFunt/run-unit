@@ -219,9 +219,15 @@ func _finish_run(result: int) -> void:
 	else:
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
 
+## The exit emits this just before it loads its own next scene. An exit that
+## hands back into this same game scene means "play the next route", so the
+## session has to point at that route before the load happens.
 func _on_route_exit_finished() -> void:
 	if route_exit.next_scene_path.is_empty():
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
+		return
+	if route_exit.next_scene_path == scene_file_path:
+		RunUnitSession.selected_level_index = RunUnitCampaign.get_next_route_index(_selected_level_index)
 
 func _find_route_exit() -> RunUnitRouteExit:
 	for child: Node in world.get_children():

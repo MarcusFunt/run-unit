@@ -118,6 +118,8 @@ func test_game_completion_uses_elevator_blackout_instead_of_results_menu() -> vo
 	if pause_menu_controller != null:
 		pause_menu_controller.free()
 	add_child_autofree(game)
+	# Keep the hand-off inside the game scene; it has its own tests below.
+	game.route_exit.next_scene_path = ""
 	game.world.route_completed.emit()
 
 	assert_true(game.is_terminal())
@@ -141,6 +143,31 @@ func test_game_completion_uses_elevator_blackout_instead_of_results_menu() -> vo
 	assert_gt(blackout.color.a, 0.95, "The elevator slam should end on a full blackout for the Level 1 handoff")
 
 	get_tree().paused = false
+
+
+func test_tutorial_lift_hands_off_to_the_game_scene() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var elevator_exit: RunUnitRouteExit = world.get_node("ElevatorExit") as RunUnitRouteExit
+
+	assert_eq(elevator_exit.next_scene_path, "res://scenes/game.tscn", "The tutorial lift continues into the next campaign route instead of stranding the player on a black screen")
+	assert_true(ResourceLoader.exists(elevator_exit.next_scene_path))
+
+
+func test_finishing_the_tutorial_selects_the_next_campaign_route() -> void:
+	RunUnitSession.selected_level_index = 0
+	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
+	var pause_menu_controller: Node = game.get_node_or_null("PauseMenuController")
+	if pause_menu_controller != null:
+		pause_menu_controller.free()
+	add_child_autofree(game)
+
+	# The exit emits this immediately before loading the game scene again.
+	game._on_route_exit_finished()
+
+	assert_eq(RunUnitSession.selected_level_index, 1, "The reloaded game scene should deploy Factory Escape, not replay the tutorial")
+	assert_false(game.death_menu.visible, "A route with somewhere to go must not fall back to the results menu")
+	RunUnitSession.selected_level_index = 0
 
 
 func test_player_stays_crouched_when_releasing_under_a_low_ceiling() -> void:
