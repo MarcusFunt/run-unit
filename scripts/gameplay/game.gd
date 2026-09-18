@@ -22,6 +22,9 @@ extends Node2D
 ## once per physics frame.
 const TRACE_SAMPLE_INTERVAL: float = 0.1
 
+## How many deaths a demo run absorbs on one route before skipping past it.
+const DEMO_RETRY_LIMIT: int = 3
+
 enum RunState { ACTIVE, FAILED, COMPLETED }
 
 var _run_state: int = RunState.ACTIVE
@@ -31,6 +34,9 @@ var _external_control: bool = false
 var _last_reward_distance: float = 0.0
 var _terminal_penalty_paid: bool = false
 var _trace_sample_countdown: float = 0.0
+## Deaths on the current route during a demo run. Scene-local, so it resets
+## naturally when the demo moves on to the next route.
+var _demo_failures: int = 0
 var _selected_level_index: int = 0
 var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 ## Authored respawn points, in route order, and the next one still ahead.
@@ -113,9 +119,11 @@ func reset_run(run_seed: int) -> void:
 	initial_seed = run_seed
 	_run_state = RunState.ACTIVE
 	_external_control = false
-	_bot_enabled = false
-	human_controller.active = true
-	scripted_controller.active = false
+	# A demo run is driven by the scripted controller from the first frame, and
+	# stays that way across the retries it takes on the way through.
+	_bot_enabled = RunUnitSession.demo_mode
+	human_controller.active = not _bot_enabled
+	scripted_controller.active = _bot_enabled
 	scripted_controller.reset_controller()
 	var spawn_position: Vector2 = world.get_spawn_position()
 	# Distance is always measured from the route's spawn, even when a retry
@@ -210,14 +218,42 @@ func _finish_run(result: int) -> void:
 	_trace.record(outcome, player.global_position, player.velocity)
 	RunUnitSession.set_traversal_trace(_trace.export_data())
 	RunUnitSession.set_run_outcome(outcome)
-	if result == RunState.FAILED:
+	if result == RunState.FAILED and RunUnitSession.demo_mode:
+		_demo_recover_from_failure()
+	elif result == RunState.FAILED:
 		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
 	elif route_exit != null:
 		if not route_exit.transition_finished.is_connected(_on_route_exit_finished):
 			route_exit.transition_finished.connect(_on_route_exit_finished)
 		route_exit.begin_transition()
+	elif RunUnitSession.demo_mode and _has_next_route():
+		# Routes without their own ending normally stop on the results menu,
+		# which would end the recording partway through the campaign.
+		_load_next_route()
 	else:
 		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
+
+## A demo retries from its last checkpoint the way a player would, but it has to
+## give up eventually: without a cap, a corner the bot cannot solve would loop
+## forever and the recording would never reach the end of the campaign.
+func _demo_recover_from_failure() -> void:
+	_demo_failures += 1
+	if _demo_failures <= DEMO_RETRY_LIMIT:
+		reset_run.call_deferred(0)
+		return
+	if _has_next_route():
+		push_warning("Demo: giving up on route %d after %d attempts; skipping ahead." % [_selected_level_index, _demo_failures])
+		_load_next_route()
+		return
+	death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+
+func _has_next_route() -> bool:
+	return RunUnitCampaign.get_next_route_index(_selected_level_index) != _selected_level_index
+
+func _load_next_route() -> void:
+	RunUnitSession.clear_checkpoint()
+	RunUnitSession.selected_level_index = RunUnitCampaign.get_next_route_index(_selected_level_index)
+	SceneLoader.load_scene(scene_file_path)
 
 ## The exit emits this just before it loads its own next scene. An exit that
 ## hands back into this same game scene means "play the next route", so the

@@ -145,6 +145,58 @@ func test_game_completion_uses_elevator_blackout_instead_of_results_menu() -> vo
 	get_tree().paused = false
 
 
+func _demo_game_for(level_index: int) -> RunUnitGame:
+	RunUnitSession.demo_mode = true
+	RunUnitSession.selected_level_index = level_index
+	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
+	var pause_menu_controller: Node = game.get_node_or_null("PauseMenuController")
+	if pause_menu_controller != null:
+		pause_menu_controller.free()
+	add_child_autofree(game)
+	return game
+
+
+func test_demo_mode_hands_the_controls_to_the_bot() -> void:
+	var game: RunUnitGame = _demo_game_for(0)
+
+	assert_true(game.scripted_controller.active, "A demo run is driven by the scripted controller")
+	assert_false(game.human_controller.active, "A demo run ignores player input")
+	assert_true(game.route_exit != null and game._has_next_route(), "The tutorial has somewhere to hand off to")
+
+	RunUnitSession.demo_mode = false
+	RunUnitSession.selected_level_index = 0
+
+
+func test_demo_mode_retries_a_death_instead_of_stopping_on_the_results_menu() -> void:
+	var game: RunUnitGame = _demo_game_for(0)
+
+	game._fail_run()
+
+	assert_eq(RunUnitSession.last_run_outcome, "failed")
+	assert_false(game.death_menu.visible, "A demo retries rather than waiting on input that will never come")
+	assert_eq(game._demo_failures, 1, "The retry is counted so the demo cannot loop forever")
+
+	RunUnitSession.demo_mode = false
+	RunUnitSession.selected_level_index = 0
+
+
+## The last route has nowhere to skip to, so the give-up path has to terminate
+## rather than retry forever. Beacon 9 also keeps this test off the scene-load
+## path, which would otherwise swap the scene out from under the test runner.
+func test_demo_mode_gives_up_after_the_retry_limit() -> void:
+	var game: RunUnitGame = _demo_game_for(3)
+	game._demo_failures = game.DEMO_RETRY_LIMIT
+
+	game._demo_recover_from_failure()
+
+	assert_false(game._has_next_route(), "Beacon 9 ends the campaign")
+	assert_true(game.death_menu.visible, "A demo that runs out of retries on the last route stops instead of looping")
+
+	RunUnitSession.demo_mode = false
+	RunUnitSession.selected_level_index = 0
+	get_tree().paused = false
+
+
 func test_tutorial_lift_hands_off_to_the_game_scene() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)

@@ -1,5 +1,12 @@
 extends Node
 
+## True when the game was launched as a hands-off demo (`--demo`): the scripted
+## controller drives, routes advance into each other without stopping on a
+## results menu, and a death retries instead of waiting for input. Recording a
+## playthrough is the point of it, so it pairs with Godot's movie writer:
+##     godot --path . --write-movie run.avi --fixed-fps 60 -- --demo
+var demo_mode: bool = false
+
 var selected_level_index: int = 0
 var run_seed: int = 0
 var world_version: String = "static"
@@ -26,6 +33,11 @@ var best_distance: float:
 ## mistake. Deploying a route from the selector and finishing it both clear it.
 var checkpoint_level_index: int = -1
 var checkpoint_position: Vector2 = Vector2.ZERO
+
+## Godot only routes arguments after a bare `--` into get_cmdline_user_args(),
+## but passing `--demo` straight through works too, so both are accepted.
+func _ready() -> void:
+	demo_mode = OS.get_cmdline_user_args().has("--demo") or OS.get_cmdline_args().has("--demo")
 
 func begin_run(level_index: int, seed_value: int, mode: String, version: String, config_hash: String) -> void:
 	selected_level_index = level_index

@@ -20,6 +20,11 @@ func _ready() -> void:
 	options_button.text = "SYSTEM SETTINGS"
 	credits_button.text = "CREDITS / INTEL"
 	exit_button.text = "SHUT DOWN"
+	if RunUnitSession.demo_mode:
+		# A demo drives gameplay, not menus, so it deploys the campaign's first
+		# route itself rather than waiting on input that will never come.
+		RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
+		load_game_scene.call_deferred()
 
 func _configure_terminal_button(button: Button) -> void:
 	button.theme = THIN_TERMINAL_THEME
