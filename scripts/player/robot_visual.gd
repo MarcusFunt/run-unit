@@ -34,6 +34,15 @@ extends Node2D
 @export_range(0.0, 4.0, 0.1) var antenna_idle_sway_deg: float = 1.2
 @export_range(0.1, 2.0, 0.05) var antenna_idle_sway_hz: float = 0.55
 @export_range(30.0, 88.0, 1.0) var antenna_contact_max_fold_deg: float = 76.0
+## Crouch tucks the antenna down instead of letting it sway freely, so a
+## low-profile pose doesn't wave a mast around above the gate it just cleared.
+## Bounded by antenna_max_lag_deg: the spring clamps to that limit every
+## step (see _step_antenna_spring), so a target past it is unreachable.
+@export_range(0.0, 14.0, 0.5) var antenna_crouch_fold_deg: float = 12.0
+## Charge gives the antenna a faint held tremor instead of idle sway, so a
+## "loaded" pose visibly differs from a "tucked in" one even before release.
+@export_range(0.0, 8.0, 0.1) var antenna_charge_tremor_deg: float = 3.0
+@export_range(1.0, 20.0, 0.5) var antenna_charge_tremor_hz: float = 9.0
 
 const UPPER_LINK_LENGTH: float = 110.0
 const LOWER_LINK_LENGTH: float = 145.0
@@ -129,12 +138,19 @@ func _build_base_pose() -> Dictionary:
 	if player == null:
 		return pose
 	if player.is_charging():
-		# The motor owns charge state; this rig only visualizes it. As charge
-		# builds, the linkage folds and pulls the wheel closer to the body.
+		# The motor owns charge state; this rig only visualizes it. Charge
+		# should read as *loaded*, not merely short: the linkage coils harder
+		# toward the wheel than a crouch ever does, and a building tremor
+		# sells stored energy about to release rather than a settled pose.
 		var charge: float = player.charge_ratio
-		pose["upper_deg"] = lerpf(25.0, 15.0, charge)
-		pose["knee_deg"] = lerpf(105.0, 140.0, charge)
+		pose["upper_deg"] = lerpf(25.0, 8.0, charge)
+		pose["knee_deg"] = lerpf(105.0, 152.0, charge)
+		pose["knee_deg"] += sin(_visual_time * TAU * antenna_charge_tremor_hz) * 1.6 * charge
 	elif player.is_crouching():
+		# Crouch keeps the linkage geometry that clearance checks (and level
+		# gates) are tuned against -- see test_jammed_elevator_leaf_clears_a_
+		# crouched_robot_but_not_a_standing_one. It reads as "low-profile"
+		# rather than "loaded" via the antenna tuck below, not a deeper fold.
 		var crouch: float = player.crouch_ratio
 		pose["upper_deg"] = lerpf(25.0, 15.0, crouch)
 		pose["knee_deg"] = lerpf(105.0, 140.0, crouch)
@@ -249,7 +265,23 @@ func _update_antenna_motion(delta: float) -> void:
 	var acceleration_x: float = _player_acceleration_x(delta)
 	var local_forward_accel: float = _local_forward_acceleration(acceleration_x)
 	var target: float = _antenna_target(local_forward_accel, _idle_weight())
+	target += _antenna_state_bias()
 	_update_antenna(target, delta)
+
+## Charge and crouch both suppress idle sway (see `_is_idle_eligible`), which
+## would otherwise leave the antenna looking identically inert in either
+## state. Crouch instead tucks it down and out of the way; charge instead
+## gives it a faint held tremor, distinct from the knee tremor's phase so the
+## two don't visually lock together.
+func _antenna_state_bias() -> float:
+	if player == null:
+		return 0.0
+	if player.is_crouching():
+		return deg_to_rad(antenna_crouch_fold_deg) * player.crouch_ratio
+	if player.is_charging():
+		var wobble: float = sin(_visual_time * TAU * antenna_charge_tremor_hz + PI * 0.5)
+		return deg_to_rad(wobble * antenna_charge_tremor_deg * player.charge_ratio)
+	return 0.0
 
 func _antenna_hits_world(angle: float) -> bool:
 	if player == null or not player.is_inside_tree():
