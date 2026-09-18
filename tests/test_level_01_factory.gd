@@ -155,7 +155,8 @@ func test_only_tile_layers_collide_with_the_player() -> void:
 			continue
 		assert_true(node is Area2D, "%s must not be a physics body" % node.get_path())
 		assert_eq((node as CollisionObject2D).collision_layer, 0, "%s must not occupy a collision layer" % node.get_path())
-		story_zone_count += 1
+		if str(node.get_path()).contains("/StoryZones/"):
+			story_zone_count += 1
 	assert_eq(story_zone_count, 5, "All five story zones should import as collision-free areas")
 
 
@@ -232,3 +233,21 @@ func test_completing_level_1_opens_the_results_menu() -> void:
 	assert_true(game.death_menu.visible, "Without a lift exit, completion should show the results menu")
 	assert_true(game.death_menu.description_label.text.contains("01  FACTORY ESCAPE CERTIFIED"), "Results copy should name the campaign route")
 	assert_true(game.death_menu.description_label.text.contains("Exterior wall breached"), "Results copy should come from Level 1, not the tutorial")
+
+
+func test_factory_escape_adds_two_readable_timed_floor_faults() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var faults: Node = world.get_node_or_null("ElectricalFaults")
+	assert_not_null(faults)
+	if faults == null:
+		return
+	assert_eq(faults.get_child_count(), 2, "Factory Escape should introduce the timed hazard language sparingly")
+	var expected: Array[Vector2] = [Vector2(1200, 448), Vector2(4032, 704)]
+	for index: int in range(expected.size()):
+		var hazard: RunUnitTimedHazard = faults.get_child(index) as RunUnitTimedHazard
+		assert_not_null(hazard)
+		if hazard == null:
+			continue
+		assert_eq(hazard.position, expected[index])
+		assert_false(hazard.lethal)
+		assert_not_null(hazard.get_node_or_null("WarningPlate"))

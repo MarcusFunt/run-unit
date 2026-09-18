@@ -21,6 +21,25 @@ polygon = PackedVector2Array(-256, 350, 2560, 350, 2560, 520, -256, 520)
 
 [node name="ShaftGeometry" parent="." instance=ExtResource("2_level")]
 
+[node name="CalibrationLaneMarkers" type="Node2D" parent="."]
+z_index = 4
+
+[node name="MobilityStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
+color = Color(0.25, 0.9, 0.88, 0.48)
+polygon = PackedVector2Array(208, 440, 432, 440, 432, 448, 208, 448)
+
+[node name="HopTakeoffStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
+color = Color(1, 0.58, 0.2, 0.62)
+polygon = PackedVector2Array(560, 440, 624, 440, 624, 448, 560, 448)
+
+[node name="SpringPadStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
+color = Color(1, 0.58, 0.2, 0.62)
+polygon = PackedVector2Array(1088, 376, 1248, 376, 1248, 384, 1088, 384)
+
+[node name="ExitGuideStrip" type="Polygon2D" parent="CalibrationLaneMarkers"]
+color = Color(0.25, 0.9, 0.88, 0.48)
+polygon = PackedVector2Array(1680, 408, 1872, 408, 1872, 416, 1680, 416)
+
 [node name="ElevatorExit" type="Node2D" parent="."]
 position = Vector2(1968, 416)
 script = ExtResource("3_exit")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_03_beacon.tmj" id="2_level"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_4.png" id="8_city4"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_3.png" id="9_city3"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_2.png" id="10_city2"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="11_hazard"]
 
 [node name="Level03Beacon" type="Node2D"]
 script = ExtResource("1_world")
@@ -91,6 +92,26 @@ color = Color(0.022, 0.055, 0.075, 1)
 polygon = PackedVector2Array(14128, 72, 15030, 72, 15030, -900, 16250, -900, 16250, 1100, 14128, 1100)
 
 [node name="BeaconGeometry" parent="." instance=ExtResource("2_level")]
+
+[node name="ElectricalFaults" type="Node2D" parent="."]
+
+[node name="RooftopArc" parent="ElectricalFaults" instance=ExtResource("11_hazard")]
+position = Vector2(1376, 448)
+cycle_seconds = 2.2
+active_seconds = 0.75
+phase_offset_seconds = 0.25
+
+[node name="ViaductArc" parent="ElectricalFaults" instance=ExtResource("11_hazard")]
+position = Vector2(5056, 544)
+cycle_seconds = 2.5
+active_seconds = 0.9
+phase_offset_seconds = 1.15
+
+[node name="CanyonArc" parent="ElectricalFaults" instance=ExtResource("11_hazard")]
+position = Vector2(7744, 672)
+cycle_seconds = 2.0
+active_seconds = 0.7
+phase_offset_seconds = 0.8
 
 [node name="CarriedModule" type="Node2D" parent="."]
 script = ExtResource("3_carried")

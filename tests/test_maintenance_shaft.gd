@@ -217,3 +217,13 @@ func test_charged_jump_reaches_the_charged_jump_pad_height() -> void:
 		minimum_y = minf(minimum_y, player.global_position.y)
 
 	assert_lt(minimum_y, 352.0, "Holding SPACE should provide enough spring height for the upper pad")
+
+
+func test_calibration_route_marks_each_lesson_without_adding_damage() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var markers: Node = world.get_node_or_null("CalibrationLaneMarkers")
+	assert_not_null(markers)
+	if markers != null:
+		assert_eq(markers.get_child_count(), 4, "Movement, hop, spring-load, and exit lessons each get a floor cue")
+	assert_null(world.get_node_or_null("ElectricalFaults"), "Calibration stays a consequence-free teaching space")

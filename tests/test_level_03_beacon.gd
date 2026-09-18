@@ -169,7 +169,8 @@ func test_only_tile_layers_collide_with_the_player() -> void:
 			continue
 		assert_true(node is Area2D, "%s must not be a physics body" % node.get_path())
 		assert_eq((node as CollisionObject2D).collision_layer, 0, "%s must not occupy a collision layer" % node.get_path())
-		story_zone_count += 1
+		if str(node.get_path()).contains("/StoryZones/"):
+			story_zone_count += 1
 	assert_eq(story_zone_count, 8, "All eight story zones should import as collision-free areas")
 
 
@@ -305,3 +306,19 @@ func test_restarting_level_3_puts_the_module_back_on_the_robot() -> void:
 	assert_false(ignition.installed, "A restart puts the ending back before the installation")
 	assert_false(ignition.transition_started)
 	assert_eq(ignition.lit_stages, 0, "The activation stages go dark again")
+
+
+func test_beacon_route_frontloads_three_timed_faults_before_the_quiet_finale() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var faults: Node = world.get_node_or_null("ElectricalFaults")
+	assert_not_null(faults)
+	if faults == null:
+		return
+	assert_eq(faults.get_child_count(), 3)
+	var expected: Array[Vector2] = [Vector2(1376, 448), Vector2(5056, 544), Vector2(7744, 672)]
+	for index: int in range(expected.size()):
+		var hazard: RunUnitTimedHazard = faults.get_child(index) as RunUnitTimedHazard
+		assert_not_null(hazard)
+		if hazard != null:
+			assert_eq(hazard.position, expected[index])
+			assert_lt(hazard.position.x, 9152.0, "Hazards stop before the Beacon scale reveal and quiet interior")

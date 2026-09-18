@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_3.png" id="7_city3"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_2.png" id="8_city2"]
 [ext_resource type="PackedScene" path="res://scenes/props/beacon_9_skyline.tscn" id="9_beacon"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="10_hazard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
 size = Vector2(72, 96)
@@ -95,6 +96,26 @@ polygon = PackedVector2Array(9056, 224, 9312, 224, 9360, 416, 9008, 416)
 vertex_colors = PackedColorArray(0.25, 0.8, 0.85, 0.02, 0.25, 0.8, 0.85, 0.02, 0.25, 0.8, 0.85, 0.18, 0.25, 0.8, 0.85, 0.18)
 
 [node name="RecoveryGeometry" parent="." instance=ExtResource("2_level")]
+
+[node name="ElectricalFaults" type="Node2D" parent="."]
+
+[node name="StreetArc" parent="ElectricalFaults" instance=ExtResource("10_hazard")]
+position = Vector2(1680, 480)
+cycle_seconds = 2.4
+active_seconds = 0.8
+phase_offset_seconds = 0.4
+
+[node name="CoolingArc" parent="ElectricalFaults" instance=ExtResource("10_hazard")]
+position = Vector2(5248, 448)
+cycle_seconds = 2.1
+active_seconds = 0.8
+phase_offset_seconds = 1.0
+
+[node name="CoreArc" parent="ElectricalFaults" instance=ExtResource("10_hazard")]
+position = Vector2(6944, 832)
+cycle_seconds = 2.7
+active_seconds = 1.0
+phase_offset_seconds = 1.8
 
 [node name="AssemblyMonitor" type="Node2D" parent="."]
 position = Vector2(5264, 336)

@@ -63529,6 +63529,16 @@
           "height": 0,
           "rotation": 0,
           "visible": true
+        },
+        {
+          "id": 16,
+          "name": "Checkpoint1",
+          "point": true,
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "x": 4992,
+          "y": 385
         }
       ]
     },
@@ -63798,7 +63808,7 @@
     }
   ],
   "nextlayerid": 9,
-  "nextobjectid": 16,
+  "nextobjectid": 17,
   "orientation": "orthogonal",
   "properties": [
     {
