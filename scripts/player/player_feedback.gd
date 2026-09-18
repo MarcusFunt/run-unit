@@ -48,6 +48,10 @@ func _process(delta: float) -> void:
 	_update_particles(delta)
 	_fill_audio_buffer()
 
+func play_damage_feedback() -> void:
+	_spawn_burst(_emitter_position(Vector2(0.0, -2.0)), 16, Color(1.0, 0.64, 0.24, 1.0), 90.0, 220.0, -80.0)
+	_play_tone(310.0, 150.0, 0.12, 0.16, 0.18)
+
 func play_game_over_feedback() -> void:
 	_spawn_burst(_emitter_position(Vector2(0.0, -4.0)), 28, Color(1.0, 0.52, 0.2, 1.0), 120.0, 280.0, -130.0)
 	_play_tone(240.0, 72.0, 0.42, 0.20, 0.32)

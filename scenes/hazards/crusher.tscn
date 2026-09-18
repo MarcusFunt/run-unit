@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="1_hazard"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crusher"]
+size = Vector2(96, 82)
+
+[node name="Crusher" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_hazard")
+lethal = true
+cycle_seconds = 2.8
+active_seconds = 0.65
+phase_offset_seconds = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_crusher")
+
+[node name="GuideLeft" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-58, -62, -46, -62, -46, 62, -58, 62)
+color = Color(0.15, 0.2, 0.25, 1)
+
+[node name="GuideRight" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(46, -62, 58, -62, 58, 62, 46, 62)
+color = Color(0.15, 0.2, 0.25, 1)
+
+[node name="WarningTop" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-46, -62, 46, -62, 46, -50, -46, -50)
+color = Color(0.95, 0.48, 0.12, 1)
+
+[node name="ActiveVisual" type="Node2D" parent="."]
+
+[node name="Piston" type="Polygon2D" parent="ActiveVisual"]
+polygon = PackedVector2Array(-46, -41, 46, -41, 46, 41, -46, 41)
+color = Color(0.32, 0.39, 0.45, 1)
+
+[node name="ImpactFace" type="Polygon2D" parent="ActiveVisual"]
+polygon = PackedVector2Array(-46, 31, 46, 31, 46, 41, -46, 41)
+color = Color(0.95, 0.48, 0.12, 1)

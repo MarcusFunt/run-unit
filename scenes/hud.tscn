@@ -73,6 +73,29 @@ theme_override_font_sizes/font_size = 10
 horizontal_alignment = 0
 text = "BEST  0000m"
 
+[node name="HealthDisplay" type="HBoxContainer" parent="."]
+offset_left = 844.0
+offset_top = 24.0
+offset_right = 936.0
+offset_bottom = 38.0
+theme_override_constants/separation = 7
+mouse_filter = 2
+
+[node name="HealthCell1" type="ColorRect" parent="HealthDisplay"]
+custom_minimum_size = Vector2(26, 8)
+color = Color(0.32, 0.88, 0.94, 0.95)
+mouse_filter = 2
+
+[node name="HealthCell2" type="ColorRect" parent="HealthDisplay"]
+custom_minimum_size = Vector2(26, 8)
+color = Color(0.32, 0.88, 0.94, 0.95)
+mouse_filter = 2
+
+[node name="HealthCell3" type="ColorRect" parent="HealthDisplay"]
+custom_minimum_size = Vector2(26, 8)
+color = Color(0.32, 0.88, 0.94, 0.95)
+mouse_filter = 2
+
 [node name="StatusBar" type="PanelContainer" parent="."]
 offset_left = 24.0
 offset_top = 506.0

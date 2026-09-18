@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="1_hazard"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arc"]
+size = Vector2(104, 62)
+
+[node name="ElectricalArc" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_hazard")
+damage = 1
+knockback = Vector2(-210, -130)
+hitstun_seconds = 0.16
+cycle_seconds = 2.0
+active_seconds = 0.8
+phase_offset_seconds = 0.25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_arc")
+
+[node name="TerminalLeft" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-62, -18, -46, -18, -46, 18, -62, 18)
+color = Color(0.18, 0.24, 0.3, 1)
+
+[node name="TerminalRight" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(46, -18, 62, -18, 62, 18, 46, 18)
+color = Color(0.18, 0.24, 0.3, 1)
+
+[node name="ActiveVisual" type="Node2D" parent="."]
+
+[node name="ArcGlow" type="Line2D" parent="ActiveVisual"]
+points = PackedVector2Array(-46, 4, -28, -13, -10, 11, 8, -15, 27, 9, 46, -4)
+width = 9.0
+default_color = Color(0.2, 0.85, 1, 0.28)
+
+[node name="ArcCore" type="Line2D" parent="ActiveVisual"]
+points = PackedVector2Array(-46, 4, -28, -13, -10, 11, 8, -15, 27, 9, 46, -4)
+width = 3.0
+default_color = Color(0.75, 0.95, 1, 1)

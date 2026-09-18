@@ -40,6 +40,7 @@ var _is_crouching: bool = false
 var crouch_ratio: float = 0.0
 var _standing_collision_height: float = 0.0
 var _standing_collision_position: Vector2 = Vector2.ZERO
+var _hitstun_remaining: float = 0.0
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
@@ -70,6 +71,7 @@ func reset_motor() -> void:
 	last_landing_speed = 0.0
 	_is_crouching = false
 	crouch_ratio = 0.0
+	_hitstun_remaining = 0.0
 	_update_crouch_collision()
 
 func is_charging() -> bool:
@@ -77,6 +79,18 @@ func is_charging() -> bool:
 
 func is_crouching() -> bool:
 	return _is_crouching
+
+func is_in_hitstun() -> bool:
+	return _hitstun_remaining > 0.0
+
+func apply_knockback(impulse: Vector2, hitstun_seconds: float = 0.15) -> void:
+	velocity = impulse
+	_hitstun_remaining = maxf(hitstun_seconds, 0.0)
+	_is_charging = false
+	charge_ratio = 0.0
+	_release_buffer_remaining = 0.0
+	_jump_press_buffer_remaining = 0.0
+	_released_charge_ratio = 0.0
 
 ## True when a shape sized to the gap between standing and crouched collision
 ## would overlap something `lookahead_distance` ahead of the player at head
@@ -108,46 +122,52 @@ func has_low_clearance_ahead(lookahead_distance: float) -> bool:
 
 func _physics_process(delta: float) -> void:
 	var started_on_floor: bool = is_on_floor()
+	var in_hitstun: bool = _hitstun_remaining > 0.0
 	if started_on_floor:
 		_coyote_remaining = coyote_time
 	else:
 		_coyote_remaining = maxf(_coyote_remaining - delta, 0.0)
 
-	if _action.jump_pressed:
-		_jump_press_buffer_remaining = jump_press_buffer_time
-	else:
-		_jump_press_buffer_remaining = maxf(_jump_press_buffer_remaining - delta, 0.0)
+	if not in_hitstun:
+		if _action.jump_pressed:
+			_jump_press_buffer_remaining = jump_press_buffer_time
+		else:
+			_jump_press_buffer_remaining = maxf(_jump_press_buffer_remaining - delta, 0.0)
 
-	# A held press starts charging the first physics frame that a landing is valid.
-	# A released buffered tap instead becomes an immediate short spring below.
-	if _action.jump_held and _coyote_remaining > 0.0:
-		_is_charging = true
-		charge_ratio = minf(charge_ratio + delta / max_charge_time, 1.0)
-	if _action.jump_released and _is_charging:
-		_release_buffer_remaining = jump_buffer_time
-		_released_charge_ratio = charge_ratio
-		_is_charging = false
-		charge_ratio = 0.0
+		# A held press starts charging the first physics frame that a landing is valid.
+		# A released buffered tap instead becomes an immediate short spring below.
+		if _action.jump_held and _coyote_remaining > 0.0:
+			_is_charging = true
+			charge_ratio = minf(charge_ratio + delta / max_charge_time, 1.0)
+		if _action.jump_released and _is_charging:
+			_release_buffer_remaining = jump_buffer_time
+			_released_charge_ratio = charge_ratio
+			_is_charging = false
+			charge_ratio = 0.0
+		else:
+			_release_buffer_remaining = maxf(_release_buffer_remaining - delta, 0.0)
+		if _jump_press_buffer_remaining > 0.0 and not _action.jump_held and not _is_charging and _coyote_remaining > 0.0:
+			_release_buffer_remaining = jump_buffer_time
+			_released_charge_ratio = 0.0
+			_jump_press_buffer_remaining = 0.0
 	else:
-		_release_buffer_remaining = maxf(_release_buffer_remaining - delta, 0.0)
-	if _jump_press_buffer_remaining > 0.0 and not _action.jump_held and not _is_charging and _coyote_remaining > 0.0:
-		_release_buffer_remaining = jump_buffer_time
-		_released_charge_ratio = 0.0
+		_release_buffer_remaining = 0.0
 		_jump_press_buffer_remaining = 0.0
 
-	var wants_to_crouch: bool = _action.crouch_held and started_on_floor and not _action.jump_held
+	var wants_to_crouch: bool = not in_hitstun and _action.crouch_held and started_on_floor and not _action.jump_held
 	_update_crouch_state(wants_to_crouch, delta)
 
-	var speed_multiplier: float = crouch_speed_multiplier if _is_crouching else 1.0
-	var target_speed: float = _action.movement * max_run_speed * speed_multiplier
-	var acceleration: float = ground_acceleration if started_on_floor else air_acceleration
-	if is_zero_approx(_action.movement):
-		var braking: float = ground_deceleration if started_on_floor else air_acceleration * 0.35
-		velocity.x = move_toward(velocity.x, 0.0, braking * delta)
-	else:
-		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
+	if not in_hitstun:
+		var speed_multiplier: float = crouch_speed_multiplier if _is_crouching else 1.0
+		var target_speed: float = _action.movement * max_run_speed * speed_multiplier
+		var acceleration: float = ground_acceleration if started_on_floor else air_acceleration
+		if is_zero_approx(_action.movement):
+			var braking: float = ground_deceleration if started_on_floor else air_acceleration * 0.35
+			velocity.x = move_toward(velocity.x, 0.0, braking * delta)
+		else:
+			velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
 
-	if _release_buffer_remaining > 0.0 and _coyote_remaining > 0.0:
+	if not in_hitstun and _release_buffer_remaining > 0.0 and _coyote_remaining > 0.0:
 		var launch_ratio: float = pow(_released_charge_ratio, charge_power_curve)
 		velocity.y = lerpf(min_jump_velocity, jump_velocity, launch_ratio)
 		last_launch_velocity = velocity.y
@@ -170,6 +190,7 @@ func _physics_process(delta: float) -> void:
 		last_landing_speed = landing_speed
 		landed.emit()
 	_was_on_floor = is_on_floor()
+	_hitstun_remaining = maxf(_hitstun_remaining - delta, 0.0)
 
 func _update_crouch_collision() -> void:
 	if _collision_shape == null or _standing_collision_height <= 0.0:
