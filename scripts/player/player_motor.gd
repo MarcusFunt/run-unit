@@ -92,6 +92,34 @@ func apply_knockback(impulse: Vector2, hitstun_seconds: float = 0.15) -> void:
 	_jump_press_buffer_remaining = 0.0
 	_released_charge_ratio = 0.0
 
+## True when a shape sized to the gap between standing and crouched collision
+## would overlap something `lookahead_distance` ahead of the player at head
+## height -- i.e. whether the player needs to be crouched to pass through
+## whatever is there. `lookahead_distance` of 0 checks the player's own
+## position, so a caller can tell "still under the gate" apart from
+## "approaching one." Shares its geometry with `_can_expand_to`'s own probe,
+## just aimed forward instead of upward, so a controller can duck a gate
+## before reaching it instead of only reacting after bonking into it.
+func has_low_clearance_ahead(lookahead_distance: float) -> bool:
+	if _collision_shape == null or _standing_collision_height <= crouch_collision_height:
+		return false
+	var rectangle: RectangleShape2D = _collision_shape.shape as RectangleShape2D
+	if rectangle == null:
+		return false
+	var extension_height: float = _standing_collision_height - crouch_collision_height
+	var extension_shape: RectangleShape2D = RectangleShape2D.new()
+	extension_shape.size = Vector2(rectangle.size.x, extension_height)
+	var strip_center_y: float = _standing_collision_position.y + _standing_collision_height * 0.5 - (_standing_collision_height + crouch_collision_height) * 0.5
+	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = extension_shape
+	query.transform = global_transform * Transform2D(0.0, Vector2(lookahead_distance, strip_center_y))
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	query.margin = 0.0
+	return not get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
 func _physics_process(delta: float) -> void:
 	var started_on_floor: bool = is_on_floor()
 	var in_hitstun: bool = _hitstun_remaining > 0.0
