@@ -79,13 +79,13 @@ func _draw_factory() -> void:
 	_draw_fan(Vector2(5350, 360), 70.0, Color(0.055, 0.15, 0.17, 0.42))
 	# Exterior breach: sparse lights and power lines make leaving the factory
 	# feel like a real spatial transition rather than merely a palette change.
-	for x: float in range(6260, 7700, 170):
+	for x: float in range(6260, 8850, 170):
 		var h: float = 120.0 + float(posmod(int(x / 10.0), 5)) * 26.0
 		draw_rect(Rect2(x, 650 - h, 96, h + 530), Color(0.012, 0.045, 0.055, 0.62), true)
 		for yy: float in range(680 - int(h), 690, 36):
 			if posmod(int(x + yy), 3) != 0:
 				draw_rect(Rect2(x + 18, yy, 8, 4), WINDOW, true)
-	_draw_pipe(Vector2(6200, 286), Vector2(7700, 238), 4.0, Color(0.12, 0.34, 0.36, 0.42))
+	_draw_pipe(Vector2(6200, 286), Vector2(8840, 238), 4.0, Color(0.12, 0.34, 0.36, 0.42))
 
 func _draw_recovery() -> void:
 	# Street: broad silhouettes between the tiled route and far parallax stop the
@@ -118,7 +118,7 @@ func _draw_recovery() -> void:
 		draw_line(Vector2(x, 226), Vector2(x - 40, 700), Color(0.20, 0.68, 0.72, 0.16), 4.0)
 	_draw_light(Vector2(9184, 226), Color(0.40, 0.95, 0.94, 0.58), 26.0)
 	# Re-emerge into the city after the depot.
-	for x: float in range(10060, 11200, 420):
+	for x: float in range(10060, 12900, 420):
 		_draw_city_pylon(x, 220, 550)
 func _draw_beacon() -> void:
 	# Exterior city approach: occasional massive infrastructure silhouettes
