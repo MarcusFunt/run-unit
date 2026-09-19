@@ -285,6 +285,29 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	assert_true(game.death_menu.description_label.text.contains("Beacon 9 ignition restored"), "Results copy should come from Level 3")
 
 
+func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
+	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
+	ignition.next_scene_path = ""
+	ignition.install_delay = 0.05
+	ignition.transfer_duration = 0.08
+	ignition.lock_duration = 0.05
+	ignition.stage_interval = 0.05
+	ignition.hold_after_activation = 0.05
+
+	game.world.route_completed.emit()
+	assert_true(ignition.sequence_ui.visible, "The finale should announce that the ignition sequence has begun")
+	assert_true(ignition.activation_label.text.contains("MODULE"), "The first beat must explain what is happening")
+
+	await wait_for_signal(ignition.transition_finished, 5.0)
+
+	assert_true(ignition.installed)
+	assert_eq(ignition.activation_label.text, "BEACON 9 ONLINE  //  GRID SYNCHRONIZED")
+	assert_true(ignition.completion_banner.visible, "The player gets an unmistakable success beat before the ending screen")
+	assert_gt(ignition.socket_burst.amount, 0, "The lock-in moment has a dedicated visual burst")
+	assert_eq(ignition.lit_stages, ignition.stage_paths.size())
+
+
 func test_level_3_hands_off_to_the_ending_screen() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var ignition: RunUnitBeaconIgnition = world.get_node("IgnitionChamber") as RunUnitBeaconIgnition

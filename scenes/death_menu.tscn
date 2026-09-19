@@ -1,22 +1,22 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/run_unit_death_menu.gd" id="1_script"]
 
-[sub_resource type="StyleBoxFlat" id="DeathPanel"]
-bg_color = Color(0.012, 0.045, 0.065, 0.98)
+[sub_resource type="StyleBoxFlat" id="ResultPanel"]
+bg_color = Color(0.055, 0.012, 0.018, 0.985)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.94, 0.45, 0.22, 1)
+border_color = Color(1, 0.28, 0.16, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-content_margin_left = 30.0
-content_margin_top = 26.0
-content_margin_right = 30.0
-content_margin_bottom = 26.0
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
 
 [node name="DeathMenu" type="CanvasLayer"]
 layer = 30
@@ -24,6 +24,7 @@ process_mode = 3
 script = ExtResource("1_script")
 
 [node name="Overlay" type="Control" parent="."]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,12 +33,13 @@ grow_vertical = 2
 mouse_filter = 0
 
 [node name="Dimmer" type="ColorRect" parent="Overlay"]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0.006, 0.012, 0.9)
+color = Color(0.08, 0.005, 0.01, 0.94)
 mouse_filter = 2
 
 [node name="Center" type="CenterContainer" parent="Overlay"]
@@ -47,39 +49,78 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DeathPanel" type="PanelContainer" parent="Overlay/Center"]
-custom_minimum_size = Vector2(430, 300)
-theme_override_styles/panel = SubResource("DeathPanel")
-
-[node name="Content" type="VBoxContainer" parent="Overlay/Center/DeathPanel"]
-theme_override_constants/separation = 14
-
-[node name="TitleLabel" type="Label" parent="Overlay/Center/DeathPanel/Content"]
+[node name="ResultPanel" type="PanelContainer" parent="Overlay/Center"]
 unique_name_in_owner = true
-theme_override_colors/font_color = Color(1, 0.7, 0.35, 1)
-theme_override_colors/font_outline_color = Color(0.08, 0.015, 0.01, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 30
-text = "UNIT OFFLINE"
+custom_minimum_size = Vector2(540, 410)
+pivot_offset = Vector2(270, 205)
+theme_override_styles/panel = SubResource("ResultPanel")
+
+[node name="Content" type="VBoxContainer" parent="Overlay/Center/ResultPanel"]
+theme_override_constants/separation = 13
+
+[node name="AccentBar" type="ColorRect" parent="Overlay/Center/ResultPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 7)
+color = Color(1, 0.28, 0.16, 1)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="Overlay/Center/ResultPanel/Content"]
+theme_override_constants/separation = 18
+
+[node name="OutcomeGlyph" type="Label" parent="Overlay/Center/ResultPanel/Content/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 86)
+theme_override_colors/font_color = Color(1, 0.28, 0.16, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.005, 0.008, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 36
+text = "FAIL"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Rule" type="HSeparator" parent="Overlay/Center/DeathPanel/Content"]
+[node name="HeaderCopy" type="VBoxContainer" parent="Overlay/Center/ResultPanel/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="Overlay/Center/DeathPanel/Content"]
+[node name="OutcomeEyebrow" type="Label" parent="Overlay/Center/ResultPanel/Content/Header/HeaderCopy"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 120)
-theme_override_colors/font_color = Color(0.73, 0.91, 0.9, 1)
+theme_override_colors/font_color = Color(1, 0.28, 0.16, 1)
+theme_override_font_sizes/font_size = 13
+text = "RUN TERMINATED"
+
+[node name="TitleLabel" type="Label" parent="Overlay/Center/ResultPanel/Content/Header/HeaderCopy"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.96, 0.98, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.008, 0.01, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "UNIT OFFLINE"
+
+[node name="Rule" type="HSeparator" parent="Overlay/Center/ResultPanel/Content"]
+
+[node name="DescriptionLabel" type="Label" parent="Overlay/Center/ResultPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 132)
+theme_override_colors/font_color = Color(0.79, 0.91, 0.9, 1)
 theme_override_font_sizes/font_size = 16
 text = "ROUTE TERMINATED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RestartButton" type="Button" parent="Overlay/Center/DeathPanel/Content"]
+[node name="HintLabel" type="Label" parent="Overlay/Center/ResultPanel/Content"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 46)
-text = "RETRY ROUTE"
+theme_override_colors/font_color = Color(0.5, 0.68, 0.68, 1)
+theme_override_font_sizes/font_size = 12
+text = "SYSTEM HALTED  //  R TO RETRY"
+horizontal_alignment = 1
 
-[node name="MainMenuButton" type="Button" parent="Overlay/Center/DeathPanel/Content"]
+[node name="RestartButton" type="Button" parent="Overlay/Center/ResultPanel/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
-text = "SECTOR SELECT"
+text = "RETRY FROM CHECKPOINT"
+
+[node name="MainMenuButton" type="Button" parent="Overlay/Center/ResultPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+text = "ABORT TO SECTOR SELECT"
