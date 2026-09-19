@@ -23,6 +23,13 @@ func reset_level_state() -> void:
 ## Lets the scripted B-roll controller reason about a visible warning cycle
 ## without peeking at physics state. The generous time margins live in the
 ## controller, so this stays a simple deterministic query of the authored cycle.
+func get_cycle_phase_seconds(seconds_from_now: float = 0.0) -> float:
+	var safe_cycle_seconds: float = maxf(cycle_seconds, 0.05)
+	return fposmod(
+		phase_offset_seconds + _cycle_elapsed_seconds + maxf(seconds_from_now, 0.0),
+		safe_cycle_seconds
+	)
+
 func is_active_at_offset(seconds_from_now: float) -> bool:
 	var safe_cycle_seconds: float = maxf(cycle_seconds, 0.05)
 	var safe_active_seconds: float = clampf(active_seconds, 0.0, safe_cycle_seconds)

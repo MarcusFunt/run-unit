@@ -1,40 +1,67 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="1_hazard"]
+[ext_resource type="Script" path="res://scripts/hazards/crusher_hazard.gd" id="1_hazard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_crusher"]
-size = Vector2(96, 82)
+size = Vector2(96, 34)
 
 [node name="Crusher" type="Area2D"]
 collision_layer = 0
 collision_mask = 1
 script = ExtResource("1_hazard")
 lethal = true
-cycle_seconds = 2.8
-active_seconds = 0.65
-phase_offset_seconds = 0.9
+cycle_seconds = 3.0
+active_seconds = 0.62
+phase_offset_seconds = 1.25
+warning_seconds = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_crusher")
 
 [node name="GuideLeft" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-58, -62, -46, -62, -46, 62, -58, 62)
-color = Color(0.15, 0.2, 0.25, 1)
-
+z_index = 3
+polygon = PackedVector2Array(-62, -166, -47, -166, -47, 45, -62, 45)
+color = Color(0.10, 0.18, 0.22, 1)
 [node name="GuideRight" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(46, -62, 58, -62, 58, 62, 46, 62)
-color = Color(0.15, 0.2, 0.25, 1)
+z_index = 3
+polygon = PackedVector2Array(47, -166, 62, -166, 62, 45, 47, 45)
+color = Color(0.10, 0.18, 0.22, 1)
 
-[node name="WarningTop" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-46, -62, 46, -62, 46, -50, -46, -50)
-color = Color(0.95, 0.48, 0.12, 1)
+[node name="TopHousing" type="Polygon2D" parent="."]
+z_index = 3
+polygon = PackedVector2Array(-70, -174, 70, -174, 70, -146, -70, -146)
+color = Color(0.16, 0.27, 0.30, 1)
 
-[node name="ActiveVisual" type="Node2D" parent="."]
+[node name="WarningVisual" type="Node2D" parent="."]
+z_index = 7
 
-[node name="Piston" type="Polygon2D" parent="ActiveVisual"]
+[node name="Lamp" type="Polygon2D" parent="WarningVisual"]
+polygon = PackedVector2Array(-20, -170, 20, -170, 20, -152, -20, -152)
+color = Color(1, 0.45, 0.10, 0.96)
+
+[node name="PistonAssembly" type="Node2D" parent="."]
+z_index = 5
+position = Vector2(0, -118)
+
+[node name="Shaft" type="Polygon2D" parent="PistonAssembly"]
+polygon = PackedVector2Array(-14, -64, 14, -64, 14, -30, -14, -30)
+color = Color(0.30, 0.40, 0.44, 1)
+[node name="Piston" type="Polygon2D" parent="PistonAssembly"]
 polygon = PackedVector2Array(-46, -41, 46, -41, 46, 41, -46, 41)
 color = Color(0.32, 0.39, 0.45, 1)
 
-[node name="ImpactFace" type="Polygon2D" parent="ActiveVisual"]
-polygon = PackedVector2Array(-46, 31, 46, 31, 46, 41, -46, 41)
+[node name="ImpactFace" type="Polygon2D" parent="PistonAssembly"]
+polygon = PackedVector2Array(-48, 28, 48, 28, 48, 41, -48, 41)
 color = Color(0.95, 0.48, 0.12, 1)
+
+[node name="Stripe" type="Polygon2D" parent="PistonAssembly"]
+polygon = PackedVector2Array(-34, 4, 34, 4, 34, 13, -34, 13)
+color = Color(0.07, 0.10, 0.12, 1)
+
+[node name="ActiveVisual" type="Node2D" parent="."]
+z_index = 4
+
+[node name="ImpactGlow" type="Polygon2D" parent="ActiveVisual"]
+polygon = PackedVector2Array(-58, 18, 58, 18, 58, 45, -58, 45)
+color = Color(1, 0.28, 0.06, 0.20)

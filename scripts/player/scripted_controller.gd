@@ -23,6 +23,9 @@ const RELEASE_WINDOW: float = 10.0
 ## forward input while the motor's own acceleration/deceleration smooths it.
 const MIN_APPROACH_INPUT: float = 0.22
 const HAZARD_TIME_MARGIN: float = 0.10
+const TIMED_GATE_HEIGHT: float = 64.0
+const TIMED_GATE_STOP_CLEARANCE: float = 54.0
+const TIMED_GATE_BRAKE_DISTANCE: float = 150.0
 const LANDING_DEPTH_MIN: float = 24.0
 const LANDING_DEPTH_MAX: float = 52.0
 
@@ -114,6 +117,13 @@ func _should_hold_jump() -> bool:
 	return true
 
 func _movement_input_for_plan() -> float:
+	var gate: Dictionary = _world.get_nearest_hazard_ahead(_motor.global_position, HAZARD_LOOKAHEAD_DISTANCE)
+	if _should_wait_for_timed_hazard(gate):
+		var stop_x: float = float(gate.get("start_x", _motor.global_position.x)) - TIMED_GATE_STOP_CLEARANCE
+		var distance_to_stop: float = stop_x - _motor.global_position.x
+		if distance_to_stop <= 3.0:
+			return 0.0
+		return clampf(distance_to_stop / TIMED_GATE_BRAKE_DISTANCE, 0.08, 1.0)
 	if is_nan(_active_takeoff_x) or _active_charge_ratio <= 0.0:
 		return 1.0
 	var remaining_charge: float = maxf(_active_charge_ratio - _motor.charge_ratio, 0.0)
@@ -139,6 +149,8 @@ func _build_jump_plan() -> Dictionary:
 
 	var best: Dictionary = {}
 	var hazard: Dictionary = _world.get_nearest_hazard_ahead(_motor.global_position, HAZARD_LOOKAHEAD_DISTANCE)
+	if _should_wait_for_timed_hazard(hazard):
+		return {}
 	if not hazard.is_empty() and not _can_run_through_hazard(hazard):
 		var preferred_takeoff_x: float = float(hazard.get("start_x", INF)) - HAZARD_BODY_CLEARANCE
 		var platform_id: int = int(platform.get("platform_id", 0))
@@ -148,7 +160,10 @@ func _build_jump_plan() -> Dictionary:
 		var hazard_takeoff_x: float = maxf(preferred_takeoff_x, _motor.global_position.x)
 		best = {
 			"takeoff_x": hazard_takeoff_x,
-			"charge_ratio": _hazard_charge_ratio(float(hazard.get("width", 0.0))),
+			"charge_ratio": _hazard_charge_ratio(
+				float(hazard.get("width", 0.0)),
+				float(hazard.get("height", 0.0))
+			),
 			"reason": "hazard",
 		}
 
@@ -156,6 +171,16 @@ func _build_jump_plan() -> Dictionary:
 	if not edge_plan.is_empty() and (best.is_empty() or float(edge_plan.get("takeoff_x", INF)) < float(best.get("takeoff_x", INF))):
 		best = edge_plan
 	return best
+
+func _should_wait_for_timed_hazard(hazard: Dictionary) -> bool:
+	if hazard.is_empty():
+		return false
+	var node: Node = hazard.get("node") as Node
+	if not node is RunUnitTimedHazard:
+		return false
+	if float(hazard.get("height", 0.0)) < TIMED_GATE_HEIGHT:
+		return false
+	return not _can_run_through_hazard(hazard)
 
 func _can_run_through_hazard(hazard: Dictionary) -> bool:
 	var node: Node = hazard.get("node") as Node
@@ -243,12 +268,15 @@ func _stable_variation(key: int, amplitude: float) -> float:
 	var bucket: int = posmod(key * 37 + 11, 7) - 3
 	return float(bucket) / 3.0 * amplitude
 
-func _hazard_charge_ratio(width: float) -> float:
-	# Hazards keep extra vertical margin so a clean take never brushes an arc.
+func _hazard_charge_ratio(width: float, height: float = 0.0) -> float:
+	# Hazards keep extra vertical margin so a clean take never brushes an arc,
+	# crusher face, or steam column. Width sets travel; height sets apex.
+	var width_ratio: float = 0.82
 	if width <= 48.0:
-		return 0.22
-	if width <= 96.0:
-		return 0.42
-	if width <= 160.0:
-		return 0.62
-	return 0.82
+		width_ratio = 0.22
+	elif width <= 96.0:
+		width_ratio = 0.42
+	elif width <= 160.0:
+		width_ratio = 0.62
+	var height_ratio: float = clampf(0.24 + maxf(height - 28.0, 0.0) / 180.0, 0.24, 0.88)
+	return maxf(width_ratio, height_ratio)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_03_beacon.tmj" id="2_level"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_2.png" id="10_city2"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="11_hazard"]
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="12_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="13_crusher"]
 
 [sub_resource type="Gradient" id="IgnitionSparkGradient"]
 offsets = PackedFloat32Array(0, 1)
@@ -130,6 +131,14 @@ position = Vector2(7744, 672)
 cycle_seconds = 2.0
 active_seconds = 0.7
 phase_offset_seconds = 0.8
+
+[node name="MechanicalHazards" type="Node2D" parent="."]
+
+[node name="ServicePress" parent="MechanicalHazards" instance=ExtResource("13_crusher")]
+position = Vector2(6080, 503)
+cycle_seconds = 2.9
+active_seconds = 0.58
+phase_offset_seconds = 1.3
 
 [node name="CarriedModule" type="Node2D" parent="."]
 script = ExtResource("3_carried")

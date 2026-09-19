@@ -152,6 +152,7 @@ func get_nearest_hazard_ahead(world_position: Vector2, max_distance: float = 240
 			"start_x": front_x,
 			"end_x": back_x,
 			"width": bounds.size.x,
+			"height": bounds.size.y,
 			"active": hazard.active,
 			"lethal": hazard.lethal,
 		}

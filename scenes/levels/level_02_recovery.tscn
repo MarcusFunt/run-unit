@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/beacon_9_skyline.tscn" id="9_beacon"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="10_hazard"]
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="11_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="12_crusher"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
 size = Vector2(72, 96)
@@ -122,6 +123,14 @@ position = Vector2(6944, 832)
 cycle_seconds = 2.7
 active_seconds = 1.0
 phase_offset_seconds = 1.8
+
+[node name="MechanicalHazards" type="Node2D" parent="."]
+
+[node name="DepotPress" parent="MechanicalHazards" instance=ExtResource("12_crusher")]
+position = Vector2(5744, 503)
+cycle_seconds = 3.25
+active_seconds = 0.65
+phase_offset_seconds = 1.65
 
 [node name="AssemblyMonitor" type="Node2D" parent="."]
 position = Vector2(5264, 336)
