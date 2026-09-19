@@ -62,7 +62,13 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	_ensure_input_map()
+	if RunUnitSession.demo_mode and RunUnitSession.demo_completed:
+		print("DEMO_GAME_RESTART_GUARD route=%d" % _selected_level_index)
+		get_tree().quit()
+		return
 	RunUnitSession.selected_level_index = _selected_level_index
+	if RunUnitSession.demo_mode:
+		RunUnitSession.record_demo_route_start(_selected_level_index)
 	world.set_level_profile(_selected_level_index)
 	var world_scene_path: String = RunUnitCampaign.get_world_scene(_selected_level_index)
 	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", world_scene_path.get_file())
@@ -237,6 +243,7 @@ func _finish_run(result: int) -> void:
 ## give up eventually: without a cap, a corner the bot cannot solve would loop
 ## forever and the recording would never reach the end of the campaign.
 func _demo_recover_from_failure() -> void:
+	RunUnitSession.record_demo_failure()
 	_demo_failures += 1
 	if _demo_failures <= DEMO_RETRY_LIMIT:
 		reset_run.call_deferred(0)
@@ -292,6 +299,7 @@ func _on_world_metrics_updated(metrics: Dictionary) -> void:
 	RunUnitSession.set_world_metrics(metrics)
 
 func _on_player_damaged(current_health: int, max_health: int) -> void:
+	RunUnitSession.record_demo_damage()
 	hud.set_health(current_health, max_health)
 	player_feedback.play_damage_feedback()
 

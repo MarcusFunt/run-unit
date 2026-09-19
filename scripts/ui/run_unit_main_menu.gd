@@ -21,6 +21,13 @@ func _ready() -> void:
 	credits_button.text = "CREDITS / INTEL"
 	exit_button.text = "SHUT DOWN"
 	if RunUnitSession.demo_mode:
+		# A completed demo is process-terminal. If anything ever routes back to
+		# the menu after the ending, quit instead of silently starting route 0 a
+		# second time.
+		if not RunUnitSession.should_start_demo():
+			print("DEMO_RESTART_GUARD")
+			get_tree().quit()
+			return
 		# A demo drives gameplay, not menus, so it deploys the campaign's first
 		# route itself rather than waiting on input that will never come. Use a
 		# direct deferred scene change here instead of the threaded menu loader;

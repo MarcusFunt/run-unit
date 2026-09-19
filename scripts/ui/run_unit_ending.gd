@@ -23,6 +23,9 @@ extends Control
 ## Hands-off demo/movie runs linger long enough to show the completed ending,
 ## then exit cleanly so Godot's movie writer can finalize the capture.
 const DEMO_END_HOLD_SECONDS: float = 2.0
+## Tests can disable the process-level quit while still exercising the exact
+## same completion bookkeeping as a real movie/demo run.
+@export var auto_quit_demo: bool = true
 
 @onready var vista: TextureRect = %Vista
 @onready var beacon_halo: Polygon2D = %BeaconHalo
@@ -54,7 +57,9 @@ func _ready() -> void:
 	_start_life()
 	_start_reveal()
 	if RunUnitSession.demo_mode:
-		_quit_demo_after_reveal()
+		RunUnitSession.mark_demo_completed()
+		if auto_quit_demo:
+			_quit_demo_after_reveal()
 
 func _start_push_in() -> void:
 	if _push != null and _push.is_valid():
@@ -109,6 +114,9 @@ func _start_reveal() -> void:
 
 func _quit_demo_after_reveal() -> void:
 	await get_tree().create_timer(buttons_delay + fade_duration + DEMO_END_HOLD_SECONDS).timeout
+	if not RunUnitSession.demo_mode or not RunUnitSession.demo_completed:
+		return
+	print("DEMO_PROCESS_EXIT")
 	get_tree().quit()
 
 func _input(event: InputEvent) -> void:
