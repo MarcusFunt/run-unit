@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_03_beacon.tmj" id="2_level"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="11_hazard"]
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="12_backdrop"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="13_crusher"]
+[ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="14_station"]
 
 [sub_resource type="Gradient" id="IgnitionSparkGradient"]
 offsets = PackedFloat32Array(0, 1)
@@ -44,6 +45,21 @@ vertex_colors = PackedColorArray(0.04, 0.13, 0.19, 1, 0.04, 0.13, 0.19, 1, 0.1, 
 z_index = -19
 script = ExtResource("12_backdrop")
 theme = "beacon"
+
+[node name="DecorativeSetpieces" type="Node2D" parent="."]
+
+[node name="RooftopService" parent="DecorativeSetpieces" instance=ExtResource("14_station")]
+position = Vector2(2020, 398)
+scale = Vector2(0.9, 0.9)
+modulate = Color(0.72, 0.86, 0.88, 0.82)
+
+[node name="ViaductService" parent="DecorativeSetpieces" instance=ExtResource("14_station")]
+position = Vector2(6810, 558)
+scale = Vector2(1.06, 1.06)
+
+[node name="BeaconService" parent="DecorativeSetpieces" instance=ExtResource("14_station")]
+position = Vector2(12030, 558)
+modulate = Color(0.75, 0.92, 0.92, 0.9)
 
 [node name="BeaconParallax" type="Parallax2D" parent="."]
 z_index = -28

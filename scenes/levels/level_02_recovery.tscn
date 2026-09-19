@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="10_hazard"]
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="11_backdrop"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="12_crusher"]
+[ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="13_station"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
 size = Vector2(72, 96)
@@ -34,6 +35,21 @@ vertex_colors = PackedColorArray(0.05, 0.16, 0.22, 1, 0.05, 0.16, 0.22, 1, 0.1, 
 z_index = -19
 script = ExtResource("11_backdrop")
 theme = "recovery"
+
+[node name="DecorativeSetpieces" type="Node2D" parent="."]
+
+[node name="DepotServiceA" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(3500, 622)
+scale = Vector2(1.08, 1.08)
+
+[node name="DepotServiceB" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(8380, 398)
+modulate = Color(0.72, 0.92, 0.9, 0.88)
+
+[node name="ExitService" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(10120, 558)
+scale = Vector2(0.88, 0.88)
+modulate = Color(0.65, 0.78, 0.8, 0.75)
 
 [node name="BeaconParallax" type="Parallax2D" parent="."]
 z_index = -28
