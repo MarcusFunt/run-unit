@@ -5,6 +5,7 @@ extends GutTest
 ## permanently at the first crouch gate on every authored route.
 
 const LEVEL_SCENE: PackedScene = preload("res://scenes/levels/level_01_factory.tscn")
+const TUTORIAL_LEVEL_SCENE: PackedScene = preload("res://scenes/world.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 
 const TRANSFER_GATE_LEFT_X: float = 992.0     # jammed conveyor, tiles 31-33 over the row-14 deck
@@ -48,3 +49,70 @@ func test_bot_is_crouching_while_under_the_gate() -> void:
 			was_crouching_under_the_gate = was_crouching_under_the_gate or player.is_crouching()
 
 	assert_true(was_crouching_under_the_gate, "The bot should be crouched at some point while inside the gate's span")
+
+
+func test_world_exposes_an_inactive_floor_arc_to_the_bot() -> void:
+	var world: RunUnitStaticWorld = LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var arc: RunUnitHazardArea = world.get_node("ElectricalFaults/TransferArc") as RunUnitHazardArea
+	arc.set_active(false)
+	await get_tree().physics_frame
+	var hazard: Dictionary = world.get_nearest_hazard_ahead(Vector2(1100.0, TRANSFER_DECK_Y - 32.0), 240.0)
+	assert_false(hazard.is_empty(), "The warning plate must remain visible to the bot while a timed arc is electrically off")
+	assert_eq(hazard.get("node"), arc, "The controller should be planning around the TransferArc")
+
+
+func test_bot_jumps_the_factory_floor_arc_instead_of_tanking_the_hit() -> void:
+	var world: RunUnitStaticWorld = LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = Vector2(900.0, TRANSFER_DECK_Y - 32.0)
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+	controller.active = true
+	var health: RunUnitPlayerHealth = player.get_node("Health") as RunUnitPlayerHealth
+	var jumped: Array[bool] = [false]
+	player.jumped.connect(func() -> void: jumped[0] = true)
+
+	for frame: int in range(200):
+		await get_tree().physics_frame
+		if player.global_position.x > 1280.0:
+			break
+
+	assert_true(jumped[0], "The bot should deliberately jump the floor arc")
+	assert_gt(player.global_position.x, 1240.0, "The bot should clear the hazard and keep moving")
+	assert_eq(health.current_health, health.max_health, "Hazard avoidance should prevent the floor arc from damaging the bot")
+
+
+func test_bot_releases_edge_jump_close_to_the_physical_ledge() -> void:
+	var world: RunUnitStaticWorld = TUTORIAL_LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = world.get_spawn_position()
+	var platform: Dictionary = world.get_platform_below_position(player.global_position)
+	assert_false(platform.is_empty(), "Tutorial spawn should resolve to its authored platform")
+	var physical_edge_x: float = world.to_global(Vector2(float(int(platform.get("end_x", 0)) + 1) * world.tile_size, 0.0)).x
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+	controller.active = true
+	var launch_x: Array[float] = [NAN]
+	player.jumped.connect(func() -> void:
+		if is_nan(launch_x[0]):
+			launch_x[0] = player.global_position.x
+	)
+
+	for frame: int in range(240):
+		await get_tree().physics_frame
+		if not is_nan(launch_x[0]):
+			break
+
+	assert_false(is_nan(launch_x[0]), "The bot should jump the tutorial's first gap")
+	var distance_before_edge: float = physical_edge_x - launch_x[0]
+	assert_lt(distance_before_edge, 45.0, "Takeoff should happen near the ledge, not roughly 60 px early")
+	assert_gt(distance_before_edge, 20.0, "Takeoff should still leave the robot body safely on the platform")
