@@ -20,6 +20,10 @@ extends Control
 ## Seconds for one full dim-to-bright-to-dim of the ignition column.
 @export_range(0.5, 8.0, 0.1) var pulse_period: float = 2.6
 
+## Hands-off demo/movie runs linger long enough to show the completed ending,
+## then exit cleanly so Godot's movie writer can finalize the capture.
+const DEMO_END_HOLD_SECONDS: float = 2.0
+
 @onready var vista: TextureRect = %Vista
 @onready var beacon_halo: Polygon2D = %BeaconHalo
 @onready var beacon_column: Polygon2D = %BeaconColumn
@@ -49,6 +53,8 @@ func _ready() -> void:
 	_start_push_in()
 	_start_life()
 	_start_reveal()
+	if RunUnitSession.demo_mode:
+		_quit_demo_after_reveal()
 
 func _start_push_in() -> void:
 	if _push != null and _push.is_valid():
@@ -100,6 +106,10 @@ func _start_reveal() -> void:
 	_reveal.tween_interval(maxf(buttons_delay - thanks_delay - fade_duration, 0.0))
 	_reveal.tween_property(buttons, "modulate:a", 1.0, fade_duration)
 	_reveal.tween_callback(sector_button.grab_focus)
+
+func _quit_demo_after_reveal() -> void:
+	await get_tree().create_timer(buttons_delay + fade_duration + DEMO_END_HOLD_SECONDS).timeout
+	get_tree().quit()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

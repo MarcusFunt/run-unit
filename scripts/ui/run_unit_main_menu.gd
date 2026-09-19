@@ -22,9 +22,12 @@ func _ready() -> void:
 	exit_button.text = "SHUT DOWN"
 	if RunUnitSession.demo_mode:
 		# A demo drives gameplay, not menus, so it deploys the campaign's first
-		# route itself rather than waiting on input that will never come.
+		# route itself rather than waiting on input that will never come. Use a
+		# direct deferred scene change here instead of the threaded menu loader;
+		# movie-writing starts before the menu is ready and can otherwise race the
+		# first game's resource load.
 		RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
-		load_game_scene.call_deferred()
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/game.tscn")
 
 func _configure_terminal_button(button: Button) -> void:
 	button.theme = THIN_TERMINAL_THEME

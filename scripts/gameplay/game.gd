@@ -253,7 +253,11 @@ func _has_next_route() -> bool:
 func _load_next_route() -> void:
 	RunUnitSession.clear_checkpoint()
 	RunUnitSession.selected_level_index = RunUnitCampaign.get_next_route_index(_selected_level_index)
-	SceneLoader.load_scene(scene_file_path)
+	# Route completion is emitted from an Area2D physics callback. Replacing the
+	# scene immediately from that callback removes CollisionObject2D nodes while
+	# the physics server is still iterating them, which can strand demo runs on
+	# the old route. Defer the hand-off to the next idle turn instead.
+	SceneLoader.call_deferred("load_scene", scene_file_path)
 
 ## The exit emits this just before it loads its own next scene. An exit that
 ## hands back into this same game scene means "play the next route", so the
