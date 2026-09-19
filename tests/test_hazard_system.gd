@@ -85,6 +85,12 @@ func test_lethal_damage_depletes_immediately_and_reset_restores_full_health() ->
 
 func test_knockback_survives_held_input_and_gravity_keeps_running() -> void:
 	var player: RunUnitPlayerMotor = _instantiate_player()
+	# A node added this frame does not run _physics_process until the next step.
+	# Without settling first, the frame awaited after the hit is one the motor
+	# sits out, so velocity still reads back exactly as apply_knockback left it
+	# and every assertion below passes without simulating anything.
+	for frame: int in range(2):
+		await get_tree().physics_frame
 	var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
 	action.movement = 1.0
 	player.set_action(action)
