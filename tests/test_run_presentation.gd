@@ -44,6 +44,29 @@ func test_results_menu_leaves_a_pause_it_did_not_take() -> void:
 	get_tree().paused = false
 
 
+func test_failure_and_completion_results_have_distinct_visual_language() -> void:
+	var menu: RunUnitDeathMenu = DEATH_MENU_SCENE.instantiate() as RunUnitDeathMenu
+	add_child_autofree(menu)
+
+	menu.open_with_scores(12.0, 20.0)
+	var failure_glyph: String = menu.outcome_glyph.text
+	var failure_eyebrow: String = menu.outcome_eyebrow.text
+	var failure_accent: Color = menu.accent_bar.color
+	var failure_dimmer: Color = menu.dimmer.color
+	menu.close()
+
+	menu.open_completed_with_scores(20.0, 20.0)
+	assert_ne(menu.outcome_glyph.text, failure_glyph, "Success must never reuse the death symbol")
+	assert_ne(menu.outcome_eyebrow.text, failure_eyebrow, "Success and death need different status language")
+	assert_ne(menu.accent_bar.color, failure_accent, "Success and death need different accent colours")
+	assert_ne(menu.dimmer.color, failure_dimmer, "The full-screen treatment must read differently before the player reads a word")
+	assert_eq(menu.outcome_glyph.text, "CLEAR")
+	assert_eq(menu.outcome_eyebrow.text, "MISSION SUCCESS")
+	assert_eq(menu.title_label.text, "ROUTE COMPLETE")
+
+	menu.close()
+
+
 func test_sparks_are_emitted_into_the_world_not_carried_by_the_robot() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
