@@ -175,10 +175,15 @@ func _hazard_bounds(hazard: RunUnitHazardArea) -> Rect2:
 	# warning plate is still an authored obstacle. Keep its geometry visible to
 	# the bot so it never commits to walking across a floor arc that can switch
 	# on before UNIT-07 has cleared it.
+	var half: Vector2 = Vector2.ZERO
 	var rectangle: RectangleShape2D = collision.shape as RectangleShape2D
-	if rectangle == null:
-		return Rect2()
-	var half: Vector2 = rectangle.size * 0.5
+	if rectangle != null:
+		half = rectangle.size * 0.5
+	else:
+		var circle: CircleShape2D = collision.shape as CircleShape2D
+		if circle == null:
+			return Rect2()
+		half = Vector2(circle.radius, circle.radius)
 	var corners: Array[Vector2] = [
 		collision.to_global(Vector2(-half.x, -half.y)),
 		collision.to_global(Vector2(half.x, -half.y)),

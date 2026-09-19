@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="11_backdrop"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="12_crusher"]
 [ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="13_station"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="14_saw"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/laser_gate.tscn" id="15_laser"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
 size = Vector2(72, 96)
@@ -147,6 +149,19 @@ position = Vector2(5744, 503)
 cycle_seconds = 3.25
 active_seconds = 0.65
 phase_offset_seconds = 1.65
+
+[node name="RotaryHazards" type="Node2D" parent="."]
+
+[node name="DepotSaw" parent="RotaryHazards" instance=ExtResource("14_saw")]
+position = Vector2(3760, 609)
+
+[node name="TimingHazards" type="Node2D" parent="."]
+
+[node name="VaultLaser" parent="TimingHazards" instance=ExtResource("15_laser")]
+position = Vector2(8640, 334)
+cycle_seconds = 2.8
+active_seconds = 0.95
+phase_offset_seconds = 1.15
 
 [node name="AssemblyMonitor" type="Node2D" parent="."]
 position = Vector2(5264, 336)

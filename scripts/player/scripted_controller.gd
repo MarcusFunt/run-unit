@@ -26,6 +26,7 @@ const HAZARD_TIME_MARGIN: float = 0.10
 const TIMED_GATE_HEIGHT: float = 64.0
 const TIMED_GATE_STOP_CLEARANCE: float = 54.0
 const TIMED_GATE_BRAKE_DISTANCE: float = 150.0
+const TIMED_GATE_COMMIT_DISTANCE: float = 92.0
 const LANDING_DEPTH_MIN: float = 24.0
 const LANDING_DEPTH_MAX: float = 52.0
 
@@ -36,6 +37,8 @@ var _jump_held_last_frame: bool = false
 var _active_takeoff_x: float = NAN
 var _active_charge_ratio: float = 0.0
 var _active_plan_reason: String = ""
+var _timed_gate_commit_until_x: float = NAN
+var _timed_gate_node_id: int = 0
 
 func _ready() -> void:
 	_motor = get_node(player_path) as RunUnitPlayerMotor
@@ -46,14 +49,16 @@ func reset_controller() -> void:
 	_active_takeoff_x = NAN
 	_active_charge_ratio = 0.0
 	_active_plan_reason = ""
+	_timed_gate_commit_until_x = NAN
+	_timed_gate_node_id = 0
 
 func _physics_process(_delta: float) -> void:
 	if not active or _motor == null or _world == null:
 		return
-	var wants_to_crouch: bool = _should_crouch()
-	var should_hold_jump: bool = not wants_to_crouch and _should_hold_jump()
 	var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
 	action.movement = _movement_input_for_plan()
+	var wants_to_crouch: bool = _should_crouch()
+	var should_hold_jump: bool = not wants_to_crouch and _should_hold_jump()
 	action.crouch_held = wants_to_crouch
 	action.jump_held = should_hold_jump
 	action.jump_pressed = should_hold_jump and not _jump_held_last_frame
@@ -117,13 +122,28 @@ func _should_hold_jump() -> bool:
 	return true
 
 func _movement_input_for_plan() -> float:
+	if not is_nan(_timed_gate_commit_until_x):
+		if _motor.global_position.x < _timed_gate_commit_until_x:
+			return 1.0
+		_timed_gate_commit_until_x = NAN
+		_timed_gate_node_id = 0
+
 	var gate: Dictionary = _world.get_nearest_hazard_ahead(_motor.global_position, HAZARD_LOOKAHEAD_DISTANCE)
-	if _should_wait_for_timed_hazard(gate):
-		var stop_x: float = float(gate.get("start_x", _motor.global_position.x)) - TIMED_GATE_STOP_CLEARANCE
-		var distance_to_stop: float = stop_x - _motor.global_position.x
-		if distance_to_stop <= 3.0:
-			return 0.0
-		return clampf(distance_to_stop / TIMED_GATE_BRAKE_DISTANCE, 0.08, 1.0)
+	if _is_tall_timed_hazard(gate):
+		if _can_run_through_hazard(gate):
+			var start_x: float = float(gate.get("start_x", _motor.global_position.x))
+			if start_x - _motor.global_position.x <= TIMED_GATE_COMMIT_DISTANCE:
+				_timed_gate_commit_until_x = float(gate.get("end_x", start_x)) + HAZARD_BODY_CLEARANCE
+				var gate_node: Node = gate.get("node") as Node
+				_timed_gate_node_id = gate_node.get_instance_id() if gate_node != null else 0
+				return 1.0
+		else:
+			var stop_x: float = float(gate.get("start_x", _motor.global_position.x)) - TIMED_GATE_STOP_CLEARANCE
+			var distance_to_stop: float = stop_x - _motor.global_position.x
+			if distance_to_stop <= 3.0:
+				return 0.0
+			return clampf(distance_to_stop / TIMED_GATE_BRAKE_DISTANCE, 0.08, 1.0)
+
 	if is_nan(_active_takeoff_x) or _active_charge_ratio <= 0.0:
 		return 1.0
 	var remaining_charge: float = maxf(_active_charge_ratio - _motor.charge_ratio, 0.0)
@@ -149,7 +169,9 @@ func _build_jump_plan() -> Dictionary:
 
 	var best: Dictionary = {}
 	var hazard: Dictionary = _world.get_nearest_hazard_ahead(_motor.global_position, HAZARD_LOOKAHEAD_DISTANCE)
-	if _should_wait_for_timed_hazard(hazard):
+	if _is_committed_to_timed_hazard(hazard):
+		hazard = {}
+	elif _should_wait_for_timed_hazard(hazard):
 		return {}
 	if not hazard.is_empty() and not _can_run_through_hazard(hazard):
 		var preferred_takeoff_x: float = float(hazard.get("start_x", INF)) - HAZARD_BODY_CLEARANCE
@@ -172,13 +194,24 @@ func _build_jump_plan() -> Dictionary:
 		best = edge_plan
 	return best
 
-func _should_wait_for_timed_hazard(hazard: Dictionary) -> bool:
+func _is_tall_timed_hazard(hazard: Dictionary) -> bool:
 	if hazard.is_empty():
 		return false
 	var node: Node = hazard.get("node") as Node
-	if not node is RunUnitTimedHazard:
+	return node is RunUnitTimedHazard and float(hazard.get("height", 0.0)) >= TIMED_GATE_HEIGHT
+
+func _is_committed_to_timed_hazard(hazard: Dictionary) -> bool:
+	if hazard.is_empty() or is_nan(_timed_gate_commit_until_x):
 		return false
-	if float(hazard.get("height", 0.0)) < TIMED_GATE_HEIGHT:
+	if _motor.global_position.x >= _timed_gate_commit_until_x:
+		return false
+	var node: Node = hazard.get("node") as Node
+	return node != null and node.get_instance_id() == _timed_gate_node_id
+
+func _should_wait_for_timed_hazard(hazard: Dictionary) -> bool:
+	if not _is_tall_timed_hazard(hazard):
+		return false
+	if _is_committed_to_timed_hazard(hazard):
 		return false
 	return not _can_run_through_hazard(hazard)
 
@@ -187,11 +220,17 @@ func _can_run_through_hazard(hazard: Dictionary) -> bool:
 	if not node is RunUnitTimedHazard:
 		return false
 	var timed: RunUnitTimedHazard = node as RunUnitTimedHazard
-	var speed: float = maxf(absf(_motor.velocity.x), _motor.max_run_speed * 0.72)
+	var current_speed: float = absf(_motor.velocity.x)
+	var prediction_speed: float = maxf(current_speed, _motor.max_run_speed * 0.52)
 	var start_x: float = float(hazard.get("start_x", _motor.global_position.x))
 	var width: float = float(hazard.get("width", 0.0))
-	var arrival_seconds: float = maxf(start_x - _motor.global_position.x - 18.0, 0.0) / speed
-	var crossing_seconds: float = (width + HAZARD_BODY_CLEARANCE) / speed
+	var arrival_seconds: float = maxf(start_x - _motor.global_position.x - 18.0, 0.0) / prediction_speed
+	var crossing_seconds: float = (width + HAZARD_BODY_CLEARANCE) / prediction_speed
+	if current_speed < _motor.max_run_speed * 0.55:
+		# Starting from a deliberate wait costs roughly a quarter second before
+		# UNIT-07 is back near cruising speed. Build that into the safe window.
+		arrival_seconds += 0.10
+		crossing_seconds += 0.24
 	var window_start: float = maxf(arrival_seconds - HAZARD_TIME_MARGIN, 0.0)
 	var window_end: float = arrival_seconds + crossing_seconds + HAZARD_TIME_MARGIN
 	return not timed.is_active_during_window(window_start, window_end)

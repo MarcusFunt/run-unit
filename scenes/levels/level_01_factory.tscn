@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_01_factory.tmj" id="2_level"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="7_backdrop"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="8_crusher"]
 [ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="9_station"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="10_saw"]
 
 [node name="Level01Factory" type="Node2D"]
 script = ExtResource("1_world")
@@ -367,6 +368,11 @@ position = Vector2(2752, 375)
 cycle_seconds = 3.1
 active_seconds = 0.62
 phase_offset_seconds = 1.55
+
+[node name="RotaryHazards" type="Node2D" parent="."]
+
+[node name="AssemblySaw" parent="RotaryHazards" instance=ExtResource("10_saw")]
+position = Vector2(1760, 353)
 
 [node name="EntryLift" type="Node2D" parent="."]
 position = Vector2(64, 448)
