@@ -116,3 +116,48 @@ func test_bot_releases_edge_jump_close_to_the_physical_ledge() -> void:
 	var distance_before_edge: float = physical_edge_x - launch_x[0]
 	assert_lt(distance_before_edge, 45.0, "Takeoff should happen near the ledge, not roughly 60 px early")
 	assert_gt(distance_before_edge, 20.0, "Takeoff should still leave the robot body safely on the platform")
+
+
+func test_jump_charge_scales_with_landing_distance() -> void:
+	var world: RunUnitStaticWorld = TUTORIAL_LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+
+	var short_jump: float = controller._required_charge_ratio(105.0, 0.0)
+	var long_jump: float = controller._required_charge_ratio(190.0, 0.0)
+	assert_lt(short_jump, long_jump, "A short landing should use visibly less spring charge than a long landing")
+	assert_lt(short_jump, 0.70, "Easy geometry should not get the old universal 70% jump")
+	assert_gt(long_jump, 0.10, "A long landing should still demand meaningful charge")
+
+
+func test_approach_speed_feathers_instead_of_stopping_dead() -> void:
+	var world: RunUnitStaticWorld = TUTORIAL_LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = world.get_spawn_position()
+	player.velocity.x = player.max_run_speed
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+
+	controller._active_takeoff_x = player.global_position.x + 4.0
+	controller._active_charge_ratio = 0.80
+	player.charge_ratio = 0.0
+	var movement: float = controller._movement_input_for_plan()
+	assert_gt(movement, 0.0, "Finishing a charge must never command a full stop")
+	assert_lt(movement, 1.0, "An undercharged late approach should visibly feather forward speed")
+
+
+func test_timed_hazard_reports_active_windows_for_safe_crossing_plans() -> void:
+	var world: RunUnitStaticWorld = LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var arc: RunUnitTimedHazard = world.get_node("ElectricalFaults/TransferArc") as RunUnitTimedHazard
+	assert_not_null(arc)
+	assert_true(arc.is_active_during_window(0.0, arc.cycle_seconds), "A full authored cycle must include the active phase")
