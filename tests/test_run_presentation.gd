@@ -67,26 +67,31 @@ func test_failure_and_completion_results_have_distinct_visual_language() -> void
 	menu.close()
 
 
-func test_sparks_are_emitted_into_the_world_not_carried_by_the_robot() -> void:
+func test_feedback_effects_stay_in_world_space() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
 	player.global_position = Vector2(1000.0, 200.0)
 	var feedback: RunUnitPlayerFeedback = player.get_node("Feedback") as RunUnitPlayerFeedback
 
-	assert_true(feedback.top_level, "The spark layer must not inherit the player's transform")
+	assert_true(feedback.top_level, "The feedback layer must not inherit the player's transform")
 
 	feedback.play_game_over_feedback()
-	var spawned: Array = feedback.get("_particles")
-	assert_gt(spawned.size(), 0, "The game-over burst should have spawned sparks")
-	var first_position: Vector2 = (spawned[0] as Dictionary)["position"] as Vector2
-	assert_almost_eq(first_position.x, 1000.0, 20.0, "Sparks spawn at the robot's world position")
+	var effect: AnimatedSprite2D = null
+	for child: Node in feedback.get_children():
+		if child is AnimatedSprite2D:
+			effect = child as AnimatedSprite2D
+			break
+	assert_not_null(effect, "The game-over feedback should spawn an FX animation")
+	if effect == null:
+		return
+
+	var first_position: Vector2 = effect.global_position
+	assert_almost_eq(first_position.x, 1000.0, 20.0, "The effect starts at the robot's world position")
 
 	player.global_position = Vector2(2000.0, 200.0)
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	var moved: Array = feedback.get("_particles")
-	if moved.is_empty():
+	if not is_instance_valid(effect):
 		return
-	var later_position: Vector2 = (moved[0] as Dictionary)["position"] as Vector2
-	assert_lt(absf(later_position.x - first_position.x), 100.0, "Sparks must stay where they were emitted instead of travelling with the robot")
+	assert_lt(absf(effect.global_position.x - first_position.x), 1.0, "The effect stays where it was emitted instead of travelling with the robot")

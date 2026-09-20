@@ -1,0 +1,9 @@
+﻿Source pack: 750 Effect and FX Pixel All (free pack)
+Creator: BDragon1727
+Source: https://bdragon1727.itch.io/750-effect-and-fx-pixel-all
+
+RUN//UNIT uses the existing imported SpriteFrames from this pack for jump,
+landing, damage and game-over feedback.
+
+The source page states that no generative AI was used for the asset.
+The free license permits non-commercial use and modification.

@@ -1,0 +1,14 @@
+﻿RUN//UNIT uses four sound effects from Kenney's Sci-Fi Sounds and Impact Sounds packs.
+
+Source packs:
+https://kenney.nl/assets/sci-fi-sounds
+https://kenney.nl/assets/impact-sounds
+
+Files used:
+laserRetro_001.ogg -> jump_zap.ogg
+impactMetal_light_002.ogg -> land_metal.ogg
+impactMetal_heavy_001.ogg -> damage_metal.ogg
+explosionCrunch_004.ogg -> game_over_crunch.ogg
+
+License: Creative Commons CC0 1.0 Universal (public domain dedication).
+Attribution is not required by the license. Credit: Kenney.
