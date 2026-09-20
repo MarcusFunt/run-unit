@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/hazards/hazard_area.gd" id="1_hazard"]
+[ext_resource type="Script" path="res://scripts/hazards/saw_hazard.gd" id="1_hazard"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_saw"]
 radius = 31.0
@@ -13,6 +13,16 @@ lethal = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_saw")
+
+[node name="FloorMount" type="Polygon2D" parent="."]
+z_index = 2
+polygon = PackedVector2Array(-42, 22, 42, 22, 34, 36, -34, 36)
+color = Color(0.11, 0.18, 0.21, 1)
+
+[node name="WarningStripe" type="Polygon2D" parent="."]
+z_index = 3
+polygon = PackedVector2Array(-35, 26, 35, 26, 35, 31, -35, 31)
+color = Color(0.95, 0.48, 0.12, 0.9)
 
 [node name="ActiveVisual" type="Node2D" parent="."]
 

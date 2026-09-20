@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_01_factory.tmj" id="2_level"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/box.png" id="4_box"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="5_door"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="6_hazard"]
+[ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="7_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="8_crusher"]
+[ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="9_station"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="10_saw"]
 
 [node name="Level01Factory" type="Node2D"]
 script = ExtResource("1_world")
@@ -14,7 +18,27 @@ death_y = 1180.0
 [node name="Backdrop" type="Polygon2D" parent="."]
 z_index = -20
 color = Color(0.012, 0.028, 0.043, 1)
-polygon = PackedVector2Array(-256, -1024, 7680, -1024, 7680, 1280, -256, 1280)
+polygon = PackedVector2Array(-256, -1024, 8960, -1024, 8960, 1280, -256, 1280)
+
+[node name="EnvironmentDepth" type="Node2D" parent="."]
+z_index = -7
+script = ExtResource("7_backdrop")
+theme = "factory"
+
+[node name="DecorativeSetpieces" type="Node2D" parent="."]
+
+[node name="TransferMaintenance" parent="DecorativeSetpieces" instance=ExtResource("9_station")]
+position = Vector2(920, 430)
+
+[node name="WarehouseMaintenance" parent="DecorativeSetpieces" instance=ExtResource("9_station")]
+position = Vector2(5200, 622)
+scale = Vector2(1.08, 1.08)
+modulate = Color(0.78, 0.88, 0.9, 0.9)
+
+[node name="ExteriorMaintenance" parent="DecorativeSetpieces" instance=ExtResource("9_station")]
+position = Vector2(7830, 622)
+scale = Vector2(0.94, 0.94)
+modulate = Color(0.68, 0.86, 0.9, 0.82)
 
 [node name="WarehouseHaze" type="Polygon2D" parent="."]
 z_index = -18
@@ -28,7 +52,7 @@ vertex_colors = PackedColorArray(0.03, 0.1, 0.12, 0, 0.03, 0.1, 0.12, 0.6, 0.03,
 
 [node name="ExteriorSky" type="Polygon2D" parent="."]
 z_index = -17
-polygon = PackedVector2Array(6240, 64, 7680, 64, 7680, 1180, 6240, 1180)
+polygon = PackedVector2Array(6240, 64, 8960, 64, 8960, 1180, 6240, 1180)
 vertex_colors = PackedColorArray(0.1, 0.3, 0.38, 1, 0.14, 0.42, 0.5, 1, 0.03, 0.09, 0.12, 1, 0.02, 0.06, 0.08, 1)
 
 [node name="ExteriorSkyline" type="Polygon2D" parent="."]
@@ -341,6 +365,19 @@ position = Vector2(4032, 704)
 cycle_seconds = 2.6
 active_seconds = 0.9
 phase_offset_seconds = 1.2
+
+[node name="MechanicalHazards" type="Node2D" parent="."]
+
+[node name="TransferPress" parent="MechanicalHazards" instance=ExtResource("8_crusher")]
+position = Vector2(2752, 375)
+cycle_seconds = 3.1
+active_seconds = 0.62
+phase_offset_seconds = 1.55
+
+[node name="RotaryHazards" type="Node2D" parent="."]
+
+[node name="AssemblySaw" parent="RotaryHazards" instance=ExtResource("10_saw")]
+position = Vector2(1760, 353)
 
 [node name="EntryLift" type="Node2D" parent="."]
 position = Vector2(64, 448)

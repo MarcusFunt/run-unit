@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -10,6 +10,11 @@
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_2.png" id="8_city2"]
 [ext_resource type="PackedScene" path="res://scenes/props/beacon_9_skyline.tscn" id="9_beacon"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="10_hazard"]
+[ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="11_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="12_crusher"]
+[ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="13_station"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="14_saw"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/laser_gate.tscn" id="15_laser"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
 size = Vector2(72, 96)
@@ -21,12 +26,37 @@ death_y = 1000.0
 [node name="Backdrop" type="Polygon2D" parent="."]
 z_index = -30
 color = Color(0.012, 0.028, 0.043, 1)
-polygon = PackedVector2Array(-512, -1024, 11200, -1024, 11200, 1536, -512, 1536)
+polygon = PackedVector2Array(-512, -1024, 13200, -1024, 13200, 1536, -512, 1536)
 
 [node name="Sky" type="Polygon2D" parent="."]
 z_index = -29
-polygon = PackedVector2Array(-512, -1024, 11200, -1024, 11200, 1100, -512, 1100)
+polygon = PackedVector2Array(-512, -1024, 13200, -1024, 13200, 1100, -512, 1100)
 vertex_colors = PackedColorArray(0.05, 0.16, 0.22, 1, 0.05, 0.16, 0.22, 1, 0.1, 0.28, 0.34, 1, 0.1, 0.28, 0.34, 1)
+
+[node name="EnvironmentDepth" type="Node2D" parent="."]
+z_index = -19
+script = ExtResource("11_backdrop")
+theme = "recovery"
+
+[node name="DecorativeSetpieces" type="Node2D" parent="."]
+
+[node name="DepotServiceA" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(3500, 622)
+scale = Vector2(1.08, 1.08)
+
+[node name="DepotServiceB" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(8380, 398)
+modulate = Color(0.72, 0.92, 0.9, 0.88)
+
+[node name="ExitService" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(10120, 558)
+scale = Vector2(0.88, 0.88)
+modulate = Color(0.65, 0.78, 0.8, 0.75)
+
+[node name="OutboundService" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
+position = Vector2(11720, 558)
+scale = Vector2(0.96, 0.96)
+modulate = Color(0.7, 0.88, 0.9, 0.82)
 
 [node name="BeaconParallax" type="Parallax2D" parent="."]
 z_index = -28
@@ -87,7 +117,7 @@ polygon = PackedVector2Array(4816, 96, 10032, 96, 10032, 1100, 4816, 1100)
 
 [node name="ExitHaze" type="Polygon2D" parent="."]
 z_index = -22
-polygon = PackedVector2Array(10048, 560, 11200, 560, 11200, 1100, 10048, 1100)
+polygon = PackedVector2Array(10048, 560, 13200, 560, 13200, 1100, 10048, 1100)
 vertex_colors = PackedColorArray(0.02, 0.07, 0.09, 0, 0.02, 0.07, 0.09, 0, 0.02, 0.06, 0.08, 0.95, 0.02, 0.06, 0.08, 0.95)
 
 [node name="VaultLight" type="Polygon2D" parent="."]
@@ -116,6 +146,27 @@ position = Vector2(6944, 832)
 cycle_seconds = 2.7
 active_seconds = 1.0
 phase_offset_seconds = 1.8
+
+[node name="MechanicalHazards" type="Node2D" parent="."]
+
+[node name="DepotPress" parent="MechanicalHazards" instance=ExtResource("12_crusher")]
+position = Vector2(5744, 503)
+cycle_seconds = 3.25
+active_seconds = 0.65
+phase_offset_seconds = 1.65
+
+[node name="RotaryHazards" type="Node2D" parent="."]
+
+[node name="DepotSaw" parent="RotaryHazards" instance=ExtResource("14_saw")]
+position = Vector2(3760, 609)
+
+[node name="TimingHazards" type="Node2D" parent="."]
+
+[node name="VaultLaser" parent="TimingHazards" instance=ExtResource("15_laser")]
+position = Vector2(8640, 334)
+cycle_seconds = 2.8
+active_seconds = 0.95
+phase_offset_seconds = 1.15
 
 [node name="AssemblyMonitor" type="Node2D" parent="."]
 position = Vector2(5264, 336)

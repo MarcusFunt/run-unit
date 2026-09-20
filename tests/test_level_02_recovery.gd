@@ -115,9 +115,12 @@ func test_level_02_has_the_expected_route() -> void:
 		[256, 272, 13],  # vault perimeter
 		[276, 290, 13],  # storage cradle
 		[294, 302, 16],  # maintenance return
-		[306, 329, 18],  # emergency shutter (crouch gate) + exterior exit
+		[306, 341, 18],  # emergency shutter opens into the longer outbound deck
+		[345, 358, 17],  # upper conduit span
+		[362, 372, 19],  # lower city crossing
+		[376, 393, 16],  # final return to the skyline
 	]
-	assert_eq(plan.size(), expected.size(), "Level 2 should keep its twenty-three authored platform beats")
+	assert_eq(plan.size(), expected.size(), "Level 2 should keep its twenty-six authored platform beats")
 	for index: int in range(mini(plan.size(), expected.size())):
 		var platform: Dictionary = plan[index]
 		assert_eq(int(platform.get("start_x", -1)), int(expected[index][0]), "platform %d start" % (index + 1))
@@ -130,7 +133,7 @@ func test_level_02_publishes_spawn_and_goal_markers() -> void:
 
 	assert_eq(world.get_spawn_position(), Vector2(160.0, 321.0), "Spawn sits just above the factory breach ledge")
 	assert_true(world.has_goal(), "Level 2 declares a Goal marker")
-	assert_eq(world.get_goal_position(), Vector2(10448.0, 512.0), "Goal sits outside the reserve depot")
+	assert_eq(world.get_goal_position(), Vector2(12512.0, 448.0), "Goal sits beyond the extended outbound service route")
 
 	var trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
 	assert_not_null(trigger, "A completion trigger should be built from the Goal marker")

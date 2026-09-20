@@ -43,6 +43,7 @@ var _spawn_marker: Marker2D = null
 var _goal_marker: Marker2D = null
 var _completion_trigger: Area2D = null
 var _checkpoints: Array[Vector2] = []
+var _hazards: Array[RunUnitHazardArea] = []
 
 func _ready() -> void:
 	_semantic_layer = _find_layer(&"Semantic")
@@ -55,6 +56,7 @@ func _ready() -> void:
 	_collect_checkpoints()
 	_load_platforms_from_tilemap()
 	_load_semantic_hazards_from_tilemap()
+	_collect_hazards()
 	_update_metrics()
 	_ensure_completion_trigger()
 
@@ -118,6 +120,84 @@ func get_upcoming_platforms(world_x: float, count: int = 3) -> Array[Dictionary]
 			if result.size() >= count:
 				break
 	return result
+
+## Returns the closest hazard on the same walkable surface in front of a world
+## position. This includes both hand-authored hazards (electric arcs, saws,
+## crushers) and semantic hazard tiles materialized at runtime.
+func get_nearest_hazard_ahead(world_position: Vector2, max_distance: float = 240.0) -> Dictionary:
+	var current_platform: Dictionary = get_platform_below_position(world_position)
+	var surface_y: float = INF
+	if not current_platform.is_empty():
+		surface_y = to_global(Vector2(0.0, float(current_platform.get("height", 0)) * tile_size)).y
+	var best: Dictionary = {}
+	var best_distance: float = INF
+	for hazard: RunUnitHazardArea in _hazards:
+		if not is_instance_valid(hazard):
+			continue
+		var bounds: Rect2 = _hazard_bounds(hazard)
+		if bounds.size == Vector2.ZERO:
+			continue
+		var front_x: float = bounds.position.x
+		var back_x: float = bounds.end.x
+		if back_x < world_position.x:
+			continue
+		if surface_y < INF and absf(bounds.end.y - surface_y) > tile_size * 1.25:
+			continue
+		var distance: float = maxf(front_x - world_position.x, 0.0)
+		if distance > max_distance or distance >= best_distance:
+			continue
+		best_distance = distance
+		best = {
+			"node": hazard,
+			"start_x": front_x,
+			"end_x": back_x,
+			"width": bounds.size.x,
+			"height": bounds.size.y,
+			"active": hazard.active,
+			"lethal": hazard.lethal,
+		}
+	return best
+
+func _collect_hazards() -> void:
+	_hazards.clear()
+	var pending: Array[Node] = [self]
+	while not pending.is_empty():
+		var node: Node = pending.pop_back()
+		pending.append_array(node.get_children())
+		if node is RunUnitHazardArea:
+			_hazards.append(node as RunUnitHazardArea)
+
+func _hazard_bounds(hazard: RunUnitHazardArea) -> Rect2:
+	var collision: CollisionShape2D = hazard.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if collision == null:
+		return Rect2()
+	# Timed hazards disable their detector during the safe phase, but their
+	# warning plate is still an authored obstacle. Keep its geometry visible to
+	# the bot so it never commits to walking across a floor arc that can switch
+	# on before UNIT-07 has cleared it.
+	var half: Vector2 = Vector2.ZERO
+	var rectangle: RectangleShape2D = collision.shape as RectangleShape2D
+	if rectangle != null:
+		half = rectangle.size * 0.5
+	else:
+		var circle: CircleShape2D = collision.shape as CircleShape2D
+		if circle == null:
+			return Rect2()
+		half = Vector2(circle.radius, circle.radius)
+	var corners: Array[Vector2] = [
+		collision.to_global(Vector2(-half.x, -half.y)),
+		collision.to_global(Vector2(half.x, -half.y)),
+		collision.to_global(Vector2(-half.x, half.y)),
+		collision.to_global(Vector2(half.x, half.y)),
+	]
+	var min_point: Vector2 = corners[0]
+	var max_point: Vector2 = corners[0]
+	for corner: Vector2 in corners:
+		min_point.x = minf(min_point.x, corner.x)
+		min_point.y = minf(min_point.y, corner.y)
+		max_point.x = maxf(max_point.x, corner.x)
+		max_point.y = maxf(max_point.y, corner.y)
+	return Rect2(min_point, max_point - min_point)
 
 ## World-space centre of a platform's walkable surface, for callers that have
 ## to compare platform geometry against a player's global position.

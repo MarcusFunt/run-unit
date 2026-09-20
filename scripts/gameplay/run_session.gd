@@ -6,6 +6,13 @@ extends Node
 ## playthrough is the point of it, so it pairs with Godot's movie writer:
 ##     godot --path . --write-movie run.avi --fixed-fps 60 -- --demo
 var demo_mode: bool = false
+## A completed hands-off run is terminal for the lifetime of the process. This
+## prevents any fallback to the main menu from auto-starting route 0 again.
+var demo_completed: bool = false
+var demo_completion_count: int = 0
+var demo_route_starts: Array[int] = []
+var demo_damage_events: int = 0
+var demo_failure_events: int = 0
 
 var selected_level_index: int = 0
 var run_seed: int = 0
@@ -38,6 +45,41 @@ var checkpoint_position: Vector2 = Vector2.ZERO
 ## but passing `--demo` straight through works too, so both are accepted.
 func _ready() -> void:
 	demo_mode = OS.get_cmdline_user_args().has("--demo") or OS.get_cmdline_args().has("--demo")
+	reset_demo_lifecycle()
+
+func reset_demo_lifecycle() -> void:
+	demo_completed = false
+	demo_completion_count = 0
+	demo_route_starts.clear()
+	demo_damage_events = 0
+	demo_failure_events = 0
+
+func should_start_demo() -> bool:
+	return demo_mode and not demo_completed
+
+func record_demo_route_start(level_index: int) -> void:
+	if not demo_mode or demo_completed:
+		return
+	demo_route_starts.append(level_index)
+	print("DEMO_ROUTE_START index=%d ordinal=%d" % [level_index, demo_route_starts.size()])
+
+func record_demo_damage() -> void:
+	if demo_mode and not demo_completed:
+		demo_damage_events += 1
+
+func record_demo_failure() -> void:
+	if demo_mode and not demo_completed:
+		demo_failure_events += 1
+
+## Marks the campaign terminal exactly once. Returning false means some later
+## scene tried to finish an already-finished demo and must not restart it.
+func mark_demo_completed() -> bool:
+	if not demo_mode or demo_completed:
+		return false
+	demo_completed = true
+	demo_completion_count += 1
+	print("DEMO_CAMPAIGN_COMPLETE completions=%d routes=%s damage=%d failures=%d" % [demo_completion_count, str(demo_route_starts), demo_damage_events, demo_failure_events])
+	return true
 
 func begin_run(level_index: int, seed_value: int, mode: String, version: String, config_hash: String) -> void:
 	selected_level_index = level_index

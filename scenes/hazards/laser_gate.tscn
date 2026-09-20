@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="1_hazard"]
+[ext_resource type="Script" path="res://scripts/hazards/laser_gate_hazard.gd" id="1_hazard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_beam"]
 size = Vector2(22, 144)
@@ -13,7 +13,8 @@ damage = 1
 knockback = Vector2(-180, -40)
 hitstun_seconds = 0.12
 cycle_seconds = 2.4
-active_seconds = 1.4
+active_seconds = 1.0
+warning_seconds = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_beam")
@@ -25,6 +26,17 @@ color = Color(0.17, 0.22, 0.28, 1)
 [node name="EmitterBottom" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-20, 64, 20, 64, 20, 82, -20, 82)
 color = Color(0.17, 0.22, 0.28, 1)
+
+[node name="WarningVisual" type="Node2D" parent="."]
+z_index = 7
+
+[node name="TopLamp" type="Polygon2D" parent="WarningVisual"]
+polygon = PackedVector2Array(-9, -79, 9, -79, 9, -69, -9, -69)
+color = Color(1, 0.48, 0.12, 0.95)
+
+[node name="BottomLamp" type="Polygon2D" parent="WarningVisual"]
+polygon = PackedVector2Array(-9, 69, 9, 69, 9, 79, -9, 79)
+color = Color(1, 0.48, 0.12, 0.95)
 
 [node name="ActiveVisual" type="Node2D" parent="."]
 

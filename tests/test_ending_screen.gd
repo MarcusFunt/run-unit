@@ -14,6 +14,8 @@ func _instantiate_ending() -> RunUnitEnding:
 
 func after_each() -> void:
 	RunUnitSession.clear_checkpoint()
+	RunUnitSession.demo_mode = false
+	RunUnitSession.reset_demo_lifecycle()
 
 
 func test_the_ending_thanks_the_player() -> void:
@@ -86,6 +88,25 @@ func test_reaching_the_ending_clears_any_route_checkpoint() -> void:
 	_instantiate_ending()
 
 	assert_false(RunUnitSession.has_checkpoint(3), "Finishing the campaign should not leave a route mid-run")
+
+
+func test_demo_ending_marks_the_campaign_terminal_exactly_once() -> void:
+	RunUnitSession.demo_mode = true
+	RunUnitSession.reset_demo_lifecycle()
+	RunUnitSession.record_demo_route_start(0)
+	RunUnitSession.record_demo_route_start(1)
+	RunUnitSession.record_demo_route_start(2)
+	RunUnitSession.record_demo_route_start(3)
+	var ending: RunUnitEnding = ENDING_SCENE.instantiate() as RunUnitEnding
+	ending.auto_quit_demo = false
+	add_child_autofree(ending)
+
+	assert_true(RunUnitSession.demo_completed, "Reaching the ending makes a hands-off run process-terminal")
+	assert_eq(RunUnitSession.demo_completion_count, 1, "The campaign should be completed exactly once")
+	assert_false(RunUnitSession.should_start_demo(), "A completed demo must never auto-start route 0 again")
+	assert_false(RunUnitSession.mark_demo_completed(), "A duplicate ending cannot count as another completion")
+	assert_eq(RunUnitSession.demo_completion_count, 1, "Duplicate completion requests stay idempotent")
+	assert_eq(RunUnitSession.demo_route_starts, [0, 1, 2, 3], "One complete demo contains exactly the four campaign routes")
 
 
 func test_the_vista_pushes_in_slowly() -> void:
