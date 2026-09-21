@@ -19,7 +19,7 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 RunUnitSession="*res://scripts/gameplay/run_session.gd"
 SceneLoader="*res://addons/maaacks_menus_template/base/nodes/autoloads/scene_loader/scene_loader.tscn"
 ProjectMusicController="*res://addons/maaacks_menus_template/base/nodes/autoloads/music_controller/project_music_controller.tscn"
-ProjectUISoundController="*res://addons/maaacks_menus_template/base/nodes/autoloads/ui_sound_controller/project_ui_sound_controller.tscn"
+ProjectUISoundController="*res://scenes/audio/project_ui_sound_controller.tscn"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]

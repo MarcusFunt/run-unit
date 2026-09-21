@@ -3,6 +3,10 @@ extends RunUnitRouteExit
 
 signal module_installed
 
+const BEACON_LOCK_SOUND: AudioStream = preload("res://assets/audio/run_unit/beacon_lock.ogg")
+const BEACON_STAGE_SOUND: AudioStream = preload("res://assets/audio/run_unit/beacon_stage.ogg")
+const BEACON_ONLINE_SOUND: AudioStream = preload("res://assets/audio/run_unit/beacon_online.ogg")
+
 @export var carried_module_path: NodePath
 @export var stage_paths: Array[NodePath] = []
 @export_range(0.0, 3.0, 0.05) var install_delay: float = 0.45
@@ -115,6 +119,7 @@ func _lock_module() -> void:
 	seated_module.visible = true
 	installed = true
 	module_installed.emit()
+	_play_sound(BEACON_LOCK_SOUND, -4.5, 0.98)
 	activation_label.text = "MODULE LOCKED  //  AUTHENTICATING"
 	activation_progress.value = 22.0
 
@@ -146,9 +151,11 @@ func _light_stage(index: int) -> void:
 	reveal.parallel().tween_property(stage, "scale", Vector2.ONE * 1.015, stage_interval * 0.4)
 	reveal.tween_property(stage, "scale", Vector2.ONE, stage_interval * 0.35)
 	lit_stages += 1
+	_play_sound(BEACON_STAGE_SOUND, -8.0, 0.90 + 0.045 * float(index))
 	activation_label.text = STAGE_COPY[index] if index < STAGE_COPY.size() else "SYSTEM STAGE %02d ONLINE" % (index + 1)
 	activation_progress.value = lerpf(24.0, 92.0, float(lit_stages) / maxf(float(stage_paths.size()), 1.0))
 func _declare_success() -> void:
+	_play_sound(BEACON_ONLINE_SOUND, -3.5, 1.0)
 	activation_label.text = "BEACON 9 ONLINE  //  GRID SYNCHRONIZED"
 	activation_progress.value = 100.0
 	completion_banner.visible = true
@@ -159,6 +166,19 @@ func _declare_success() -> void:
 	reveal.parallel().tween_property(completion_banner, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	reveal.tween_property(completion_banner, "modulate:a", 0.82, 0.22)
 	reveal.tween_property(completion_banner, "modulate:a", 1.0, 0.28)
+
+func _play_sound(stream: AudioStream, volume_db: float, pitch_scale: float) -> void:
+	if stream == null or DisplayServer.get_name() == "headless":
+		return
+	var voice := AudioStreamPlayer.new()
+	voice.stream = stream
+	voice.volume_db = volume_db
+	voice.pitch_scale = pitch_scale
+	voice.bus = &"SFX"
+	add_child(voice)
+	voice.finished.connect(voice.queue_free, CONNECT_ONE_SHOT)
+	voice.play()
+
 
 func _focus_camera() -> void:
 	_camera = get_viewport().get_camera_2d()

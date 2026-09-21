@@ -1,10 +1,10 @@
 class_name RunUnitPlayerFeedback
 extends Node2D
 
-const JUMP_SOUND: AudioStream = preload("res://assets/audio/kenney/jump_zap.ogg")
-const LAND_SOUND: AudioStream = preload("res://assets/audio/kenney/land_metal.ogg")
-const DAMAGE_SOUND: AudioStream = preload("res://assets/audio/kenney/damage_metal.ogg")
-const GAME_OVER_SOUND: AudioStream = preload("res://assets/audio/kenney/game_over_crunch.ogg")
+const JUMP_SOUND: AudioStream = preload("res://assets/audio/run_unit/jump_servo.ogg")
+const LAND_SOUND: AudioStream = preload("res://assets/audio/run_unit/land_weighted.ogg")
+const DAMAGE_SOUND: AudioStream = preload("res://assets/audio/run_unit/damage_electric.ogg")
+const GAME_OVER_SOUND: AudioStream = preload("res://assets/audio/run_unit/shutdown.ogg")
 
 const JUMP_FX: SpriteFrames = preload("res://assets/generated/godot/spriteframes/fx/part_2/fx_77.tres")
 const LAND_FX: SpriteFrames = preload("res://assets/generated/godot/spriteframes/fx/part_2/fx_78.tres")
@@ -27,17 +27,17 @@ func _ready() -> void:
 
 func play_damage_feedback() -> void:
 	_spawn_effect(_emitter_position(Vector2(0.0, -2.0)), DAMAGE_FX, AMBER_FX, 0.78)
-	_play_sound(DAMAGE_SOUND, -2.0, 0.96)
+	_play_sound(DAMAGE_SOUND, -4.0, 1.0)
 
 
 func play_game_over_feedback() -> void:
 	_spawn_effect(_emitter_position(Vector2(0.0, -4.0)), GAME_OVER_FX, AMBER_FX, 1.05)
-	_play_sound(GAME_OVER_SOUND, -1.0, 0.92)
+	_play_sound(GAME_OVER_SOUND, -3.0, 0.96)
 
 
 func _on_player_jumped() -> void:
 	_spawn_effect(_emitter_position(Vector2(0.0, 14.0)), JUMP_FX, CYAN_FX, 0.48)
-	_play_sound(JUMP_SOUND, -8.0, 1.16)
+	_play_sound(JUMP_SOUND, -9.0, 1.02)
 
 
 func _on_player_landed() -> void:
@@ -47,7 +47,7 @@ func _on_player_landed() -> void:
 
 	var effect_scale: float = lerpf(0.45, 0.72, impact_ratio)
 	_spawn_effect(_emitter_position(Vector2(0.0, 15.0)), LAND_FX, AMBER_FX, effect_scale)
-	_play_sound(LAND_SOUND, lerpf(-10.0, -4.0, impact_ratio), lerpf(1.08, 0.92, impact_ratio))
+	_play_sound(LAND_SOUND, lerpf(-12.0, -5.5, impact_ratio), lerpf(1.0, 0.92, impact_ratio))
 
 
 func _emitter_position(body_offset: Vector2) -> Vector2:

@@ -21,6 +21,11 @@ extends Node2D
 ## frame by frame, so it is sampled on a fixed wall-clock cadence instead of
 ## once per physics frame.
 const TRACE_SAMPLE_INTERVAL: float = 0.1
+const AMBIENCE_BY_LEVEL: Array[AudioStream] = [
+	preload("res://assets/audio/run_unit/amb_factory.ogg"),
+	preload("res://assets/audio/run_unit/amb_recovery.ogg"),
+	preload("res://assets/audio/run_unit/amb_beacon.ogg"),
+]
 
 ## How many deaths a demo run absorbs on one route before skipping past it.
 const DEMO_RETRY_LIMIT: int = 3
@@ -42,6 +47,7 @@ var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 ## Authored respawn points, in route order, and the next one still ahead.
 var _checkpoints: Array[Vector2] = []
 var _next_checkpoint: int = 0
+var _ambience_player: AudioStreamPlayer = null
 
 ## Swaps in the selected route's world before any child is ready, so the
 ## controllers' world_path and this node's @onready references all resolve to
@@ -70,6 +76,7 @@ func _ready() -> void:
 	if RunUnitSession.demo_mode:
 		RunUnitSession.record_demo_route_start(_selected_level_index)
 	world.set_level_profile(_selected_level_index)
+	_start_ambience()
 	var world_scene_path: String = RunUnitCampaign.get_world_scene(_selected_level_index)
 	RunUnitSession.begin_run(_selected_level_index, 0, "authored", "static", world_scene_path.get_file())
 	if not world.obstacle_triggered.is_connected(_on_obstacle_triggered):
@@ -84,6 +91,24 @@ func _ready() -> void:
 	_checkpoints = world.get_checkpoint_positions()
 	reset_run(0)
 	_run_started = true
+
+func _start_ambience() -> void:
+	if DisplayServer.get_name() == "headless" or AMBIENCE_BY_LEVEL.is_empty():
+		return
+	if _ambience_player == null:
+		_ambience_player = AudioStreamPlayer.new()
+		_ambience_player.name = "Ambience"
+		_ambience_player.bus = &"SFX"
+		_ambience_player.volume_db = -23.0
+		add_child(_ambience_player)
+	var index: int = clampi(_selected_level_index, 0, AMBIENCE_BY_LEVEL.size() - 1)
+	var selected: AudioStream = AMBIENCE_BY_LEVEL[index]
+	if selected is AudioStreamOggVorbis:
+		selected = selected.duplicate()
+		(selected as AudioStreamOggVorbis).loop = true
+	_ambience_player.stream = selected
+	_ambience_player.play()
+
 
 func _physics_process(delta: float) -> void:
 	if not _run_started:
