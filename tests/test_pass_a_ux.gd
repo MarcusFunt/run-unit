@@ -56,42 +56,59 @@ func test_health_cells_keep_their_outline_when_depleted() -> void:
 	assert_lt(last.color.get_luminance(), lit.get_luminance())
 	assert_gt(hud.get_node("HealthFrame").size.x, 80.0)
 
-func test_camera_holds_steady_on_ascent_and_previews_the_drop() -> void:
+func test_camera_stays_put_on_a_jump_and_tracks_a_drop_without_rebound() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
 	var camera: RunUnitFollowCamera = player.get_node("Camera2D") as RunUnitFollowCamera
 	assert_not_null(camera)
 	if camera == null:
 		return
-	var resting: Vector2 = camera.position
-	assert_almost_eq(resting.y, -72.0, 0.01, "Resting view leaves more space below the player")
+	var starting_player: Vector2 = player.global_position
+	var starting_view: Vector2 = camera.global_position
 	player.velocity = Vector2(285, -650)
+	for height: int in [32, 64, 96, 128]:
+		player.global_position.y = starting_player.y - height
+		camera.update_lookahead(0.016)
+	assert_almost_eq(camera.global_position.y, starting_view.y, 1.0, "An ordinary jump leaves the world frame still")
+	for height: int in range(-128, 225, 16):
+		player.global_position.y = starting_player.y + height
+		player.velocity.y = clampf((height + 128) * 4.0, 0.0, 800.0)
+		camera.update_lookahead(0.016)
+	assert_gt(camera.global_position.y, starting_view.y + 55.0, "The view follows a sustained drop")
+	var landing_view_y: float = camera.global_position.y
+	player.velocity = Vector2.ZERO
 	for frame: int in range(120):
 		camera.update_lookahead(0.016)
-	assert_almost_eq(camera.position.y, resting.y, 0.1, "Rising should not pull the view upward")
-	assert_lt(absf(camera.position.x - resting.x), 30.0, "Running changes the horizontal frame only slightly")
-	player.velocity.y = 800
-	camera.update_lookahead(0.016)
-	assert_gt(camera.position.y, resting.y, "Falling shows terrain below")
-	assert_lt(camera.position.y - resting.y, 10.0, "The first falling frame should ease in")
-	for frame: int in range(120):
+	assert_almost_eq(camera.global_position.y, landing_view_y, 1.0, "Landing does not pull the scenery back up")
+	for wobble: int in [2, -2, 1, -1, 0]:
+		player.global_position.y = starting_player.y + 224 + wobble
 		camera.update_lookahead(0.016)
-	assert_gt(camera.position.y - resting.y, 75.0, "A sustained drop reveals the landing area")
-	assert_lt(camera.position.y - resting.y, 95.0, "The fall preview remains bounded")
-	var forward_x: float = camera.position.x
+	assert_almost_eq(camera.global_position.y, landing_view_y, 1.0, "Small grounded motion stays inside the dead zone")
+	player.global_position = Vector2(5000, 500)
+	camera.call("snap_to_player")
+	assert_almost_eq(camera.global_position.y, player.global_position.y - 72.0, 1.0, "A retry starts with its own frame")
+	assert_almost_eq(camera.global_position.x, player.global_position.x + 309.0, 1.0)
+
+func test_camera_ignores_small_direction_changes_then_follows_travel() -> void:
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	var camera: RunUnitFollowCamera = player.get_node("Camera2D") as RunUnitFollowCamera
+	var starting_x: float = camera.global_position.x
+	for nudge: int in [5, -5, 6, -6, 0]:
+		player.global_position.x = nudge
+		player.velocity.x = 285 if nudge > 0 else -285
+		camera.update_lookahead(0.016)
+	assert_almost_eq(camera.global_position.x, starting_x, 1.0, "Changing direction in place does not pan the view")
+	for frame: int in range(60):
+		player.global_position.x += 5.0
+		player.velocity.x = 285
+		camera.update_lookahead(0.016)
+	assert_gt(camera.global_position.x, starting_x + 100.0, "Sustained travel still moves the camera")
+	var before_turn: float = camera.global_position.x
+	player.global_position.x -= 5.0
 	player.velocity.x = -285
 	camera.update_lookahead(0.016)
-	assert_lt(absf(camera.position.x - forward_x), 10.0, "Reversing does not snap the frame")
-	for frame: int in range(120):
-		camera.update_lookahead(0.016)
-	assert_lt(camera.position.x, resting.x, "Reversing still gives a little leftward preview")
-	assert_lt(absf(camera.position.x - resting.x), 30.0, "Leftward movement cannot swing the view across the screen")
-	player.velocity = Vector2.ZERO
-	camera.update_lookahead(0.016)
-	assert_gt(camera.position.y, resting.y + 10.0, "Landing eases the view back")
-	for frame: int in range(120):
-		camera.update_lookahead(0.016)
-	assert_almost_eq(camera.position.y, resting.y, 0.1, "The resting frame returns after landing")
+	assert_lt(absf(camera.global_position.x - before_turn), 10.0, "Reversing cannot jerk the frame")
 
 func test_charge_has_low_medium_and_locked_full_visual_states() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
