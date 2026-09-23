@@ -149,6 +149,7 @@ func reset_run(run_seed: int) -> void:
 		if RunUnitSession.has_checkpoint(_selected_level_index) and station.checkpoint_position.x <= resume_position.x:
 			station.restore_active()
 	player.reset_motor()
+	(player.get_node("Camera2D") as RunUnitFollowCamera).snap_to_player()
 	player_health.reset_health()
 	player.set_physics_process(true)
 	death_menu.close()
