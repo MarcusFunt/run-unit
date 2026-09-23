@@ -18,6 +18,13 @@ signal module_acquired
 var acquired: bool = false
 var _mounted_module: Node2D = null
 
+func _process(delta: float) -> void:
+	if acquired:
+		return
+	var halo: Polygon2D = get_node_or_null("ObjectiveHalo") as Polygon2D
+	if halo != null:
+		halo.modulate.a = 0.84 + 0.16 * sin(Time.get_ticks_msec() * 0.001 * 2.0)
+
 func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 1
@@ -31,6 +38,8 @@ func reset_level_state() -> void:
 	RunUnitModuleMount.clear(_mounted_module)
 	_mounted_module = null
 	cradle_module.visible = true
+	get_node("ObjectiveHalo").visible = true
+	get_node("ModuleName").visible = true
 	acquisition_readout.visible = false
 	_set_shutdown(false)
 
@@ -42,6 +51,8 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 		return
 	acquired = true
 	cradle_module.visible = false
+	get_node("ObjectiveHalo").visible = false
+	get_node("ModuleName").visible = false
 	_mounted_module = RunUnitModuleMount.mount(player, cradle_module)
 	acquisition_readout.visible = true
 	_set_shutdown(true)

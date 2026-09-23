@@ -55,10 +55,29 @@ func _ready() -> void:
 	_goal_marker = _find_marker(&"Goal")
 	_collect_checkpoints()
 	_load_platforms_from_tilemap()
+	_create_walkable_edges()
+	_create_checkpoint_stations()
 	_load_semantic_hazards_from_tilemap()
 	_collect_hazards()
 	_update_metrics()
 	_ensure_completion_trigger()
+
+func _create_walkable_edges() -> void:
+	var edges := RunUnitWalkableEdges.new()
+	edges.name = "WalkableEdges"
+	add_child(edges)
+	edges.set_segments(_platforms, tile_size)
+
+func _create_checkpoint_stations() -> void:
+	var stations := Node2D.new()
+	stations.name = "CheckpointStations"
+	add_child(stations)
+	for index: int in range(_checkpoints.size()):
+		var station := RunUnitCheckpointStation.new()
+		station.name = "Station%d" % (index + 1)
+		station.checkpoint_position = _checkpoints[index]
+		station.position = stations.to_local(_checkpoints[index])
+		stations.add_child(station)
 
 func set_level_profile(_level_index: int) -> void:
 	pass

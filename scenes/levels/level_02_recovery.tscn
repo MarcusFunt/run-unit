@@ -40,23 +40,11 @@ theme = "recovery"
 
 [node name="DecorativeSetpieces" type="Node2D" parent="."]
 
-[node name="DepotServiceA" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
-position = Vector2(3500, 622)
-scale = Vector2(1.08, 1.08)
+[node name="CheckpointDepot" type="Marker2D" parent="."]
+position = Vector2(8380, 385)
 
-[node name="DepotServiceB" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
-position = Vector2(8380, 398)
-modulate = Color(0.72, 0.92, 0.9, 0.88)
-
-[node name="ExitService" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
-position = Vector2(10120, 558)
-scale = Vector2(0.88, 0.88)
-modulate = Color(0.65, 0.78, 0.8, 0.75)
-
-[node name="OutboundService" parent="DecorativeSetpieces" instance=ExtResource("13_station")]
-position = Vector2(11720, 558)
-scale = Vector2(0.96, 0.96)
-modulate = Color(0.7, 0.88, 0.9, 0.82)
+[node name="CheckpointOutbound" type="Marker2D" parent="."]
+position = Vector2(11720, 576)
 
 [node name="BeaconParallax" type="Parallax2D" parent="."]
 z_index = -28
@@ -182,6 +170,7 @@ polygon = PackedVector2Array(-64, -48, 64, -48, 64, 36, -64, 36)
 [node name="ModulePreview" type="Sprite2D" parent="AssemblyMonitor"]
 position = Vector2(-30, -6)
 scale = Vector2(2, 2)
+modulate = Color(1, 0.72, 0.35, 1)
 texture = ExtResource("4_module")
 hframes = 10
 vframes = 6
@@ -211,9 +200,24 @@ z_index = -1
 color = Color(0.13, 0.32, 0.36, 1)
 polygon = PackedVector2Array(-22, -30, -16, -30, -16, 30, -22, 30, -22, -30, 22, -30, 22, 30, 16, 30, 16, -30)
 
+[node name="ObjectiveHalo" type="Polygon2D" parent="ModuleCradle"]
+z_index = -1
+color = Color(1, 0.58, 0.17, 0.19)
+polygon = PackedVector2Array(0, -58, 52, 8, 0, 70, -52, 8)
+
+[node name="ModuleName" type="Label" parent="ModuleCradle"]
+offset_left = -150.0
+offset_top = -112.0
+offset_right = 220.0
+offset_bottom = -82.0
+theme_override_colors/font_color = Color(1, 0.78, 0.46, 1)
+theme_override_font_sizes/font_size = 14
+text = "IGNITION ASSEMBLY DETECTED"
+
 [node name="CradleModule" type="Sprite2D" parent="ModuleCradle"]
 position = Vector2(0, 8)
 scale = Vector2(1.6, 1.6)
+modulate = Color(1, 0.72, 0.35, 1)
 texture = ExtResource("4_module")
 hframes = 10
 vframes = 6
@@ -228,8 +232,8 @@ offset_right = 440.0
 offset_bottom = -136.0
 theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.95)
 theme_override_font_sizes/font_size = 14
-text = "REPLACEMENT IGNITION MODULE ACQUIRED
-TARGET SYSTEM: BEACON 9"
+text = "IGNITION ASSEMBLY SECURED
+TARGET: BEACON 9"
 
 [node name="ShutdownLighting" type="Polygon2D" parent="."]
 visible = false

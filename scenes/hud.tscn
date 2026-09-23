@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
 
@@ -17,6 +17,18 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_transparent"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_frame"]
+bg_color = Color(0.018, 0.057, 0.071, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.27, 0.67, 0.69, 0.95)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -73,11 +85,28 @@ theme_override_font_sizes/font_size = 10
 horizontal_alignment = 0
 text = "BEST  0000m"
 
+[node name="HealthFrame" type="Panel" parent="."]
+offset_left = 808.0
+offset_top = 14.0
+offset_right = 948.0
+offset_bottom = 66.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_health_frame")
+mouse_filter = 2
+
+[node name="HealthTitle" type="Label" parent="HealthFrame"]
+offset_left = 12.0
+offset_top = 4.0
+offset_right = 120.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.86, 0.98, 0.97, 1)
+theme_override_font_sizes/font_size = 11
+text = "INTEGRITY"
+
 [node name="HealthDisplay" type="HBoxContainer" parent="."]
 offset_left = 844.0
-offset_top = 24.0
+offset_top = 42.0
 offset_right = 936.0
-offset_bottom = 38.0
+offset_bottom = 56.0
 theme_override_constants/separation = 7
 mouse_filter = 2
 

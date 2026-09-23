@@ -27,11 +27,6 @@ theme = "tutorial"
 
 [node name="DecorativeSetpieces" type="Node2D" parent="."]
 
-[node name="CalibrationServiceBay" parent="DecorativeSetpieces" instance=ExtResource("11_station")]
-position = Vector2(1510, 430)
-scale = Vector2(0.92, 0.92)
-modulate = Color(0.72, 0.9, 0.92, 0.78)
-
 [node name="FloorGlow" type="Polygon2D" parent="."]
 z_index = -9
 color = Color(0.04, 0.18, 0.2, 0.16)

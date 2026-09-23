@@ -27,19 +27,6 @@ theme = "factory"
 
 [node name="DecorativeSetpieces" type="Node2D" parent="."]
 
-[node name="TransferMaintenance" parent="DecorativeSetpieces" instance=ExtResource("9_station")]
-position = Vector2(920, 430)
-
-[node name="WarehouseMaintenance" parent="DecorativeSetpieces" instance=ExtResource("9_station")]
-position = Vector2(5200, 622)
-scale = Vector2(1.08, 1.08)
-modulate = Color(0.78, 0.88, 0.9, 0.9)
-
-[node name="ExteriorMaintenance" parent="DecorativeSetpieces" instance=ExtResource("9_station")]
-position = Vector2(7830, 622)
-scale = Vector2(0.94, 0.94)
-modulate = Color(0.68, 0.86, 0.9, 0.82)
-
 [node name="WarehouseHaze" type="Polygon2D" parent="."]
 z_index = -18
 color = Color(0.03, 0.1, 0.12, 0.6)
@@ -349,6 +336,9 @@ texture = ExtResource("4_box")
 position = Vector2(5568, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
+
+[node name="CheckpointFactory" type="Marker2D" parent="."]
+position = Vector2(5200, 608)
 
 [node name="FactoryGeometry" parent="." instance=ExtResource("2_level")]
 

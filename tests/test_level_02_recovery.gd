@@ -294,8 +294,8 @@ func test_completing_level_2_opens_the_results_menu() -> void:
 func test_recovery_adds_checkpoint_after_the_first_indoor_gate() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var checkpoints: Array[Vector2] = world.get_checkpoint_positions()
-	assert_eq(checkpoints.size(), 1, "The long Recovery route should not replay its whole first half after one mistake")
-	if checkpoints.size() == 1:
+	assert_eq(checkpoints.size(), 3, "Recovery should have nodes after the hatch, before the module, and on the return")
+	if checkpoints.size() == 3:
 		assert_eq(checkpoints[0], Vector2(4992, 385), "Checkpoint sits just beyond the jammed maintenance hatch")
 
 
