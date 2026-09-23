@@ -8,9 +8,13 @@ const OPTIONS_SCENE: PackedScene = preload("res://menus/scenes/menus/options_men
 ## The selector opens on RunUnitSession.selected_level_index, so each test
 ## starts from the tutorial unless it says otherwise.
 func before_each() -> void:
+	RunUnitSession.save_path = "user://gut_selector_campaign.cfg"
+	RunUnitSession.reset_campaign()
 	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
 
 func after_each() -> void:
+	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
+	RunUnitSession.load_campaign()
 	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
 
 func test_main_menu_has_drifting_city_parallax_background() -> void:
@@ -78,11 +82,11 @@ func test_level_selector_lists_the_storyline_campaign_routes() -> void:
 	for index: int in sector_buttons.size():
 		assert_true(sector_buttons[index].text.contains(expected_names[index]), "Route %d should be %s in campaign order" % [index, expected_names[index]])
 	assert_false(sector_buttons[0].disabled, "Calibration is authored and playable")
-	for index: int in sector_buttons.size():
-		assert_false(sector_buttons[index].disabled, "%s is authored and playable" % expected_names[index])
-		assert_false(sector_buttons[index].text.contains("LOCKED"), "Every campaign route ships an authored world now")
+	for index: int in range(1, sector_buttons.size()):
+		assert_false(sector_buttons[index].disabled, "Locked routes stay inspectable")
+		assert_true(sector_buttons[index].text.contains("LOCKED"), "A fresh campaign locks later routes")
 	var hint: Label = selector.get_node_or_null("Margin/Layout/Footer/Hint") as Label
-	assert_eq(hint.text, "ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
+	assert_eq(hint.text, "CLICK / ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK")
 
 func test_level_selector_hides_the_stale_dev_status_chrome() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
@@ -106,6 +110,7 @@ func test_level_selector_briefs_factory_escape() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	add_child_autofree(selector)
 
+	RunUnitSession.record_route_completion(0, 42.0)
 	selector._on_sector_focused(1)
 
 	assert_eq(RunUnitSession.selected_level_index, 1, "Focusing Factory Escape should select it for deployment")
@@ -113,9 +118,12 @@ func test_level_selector_briefs_factory_escape() -> void:
 	assert_true(selector.description.text.contains("breach"), "Factory Escape's briefing should describe Level 1")
 
 	selector._on_sector_focused(3)
-	assert_eq(RunUnitSession.selected_level_index, 3, "Focusing Beacon 9 should select it for deployment")
+	assert_true(selector.selected_sector.text.contains("BEACON 9"), "Locked Beacon remains inspectable")
+	assert_true(selector.deploy_button.disabled, "Beacon cannot deploy before Recovery and the module")
+	assert_eq(RunUnitSession.selected_level_index, 1, "Locked route focus must not arm a deployment")
 
 func test_level_selector_reopens_on_the_last_selected_route() -> void:
+	RunUnitSession.record_route_completion(0, 42.0)
 	RunUnitSession.selected_level_index = 1
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	add_child_autofree(selector)
@@ -125,10 +133,40 @@ func test_level_selector_previews_a_route_without_arming_it() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
 	add_child_autofree(selector)
 	selector._on_sector_hovered(3)
-	assert_true(selector.selected_sector.text.contains("BEACON 9"), "Hovering a route should preview it")
+	assert_true(selector.selected_sector.text.contains("TUTORIAL ROUTE"), "Hovering alone should not change selection")
 	selector._on_sector_unhovered()
-	assert_true(selector.selected_sector.text.contains("TUTORIAL ROUTE"), "Leaving a hovered route should restore the selected briefing")
+	assert_true(selector.selected_sector.text.contains("TUTORIAL ROUTE"), "Leaving a route keeps the selected briefing")
 	assert_eq(RunUnitSession.selected_level_index, RunUnitCampaign.PLAYABLE_INDEX, "Hovering must not arm a route for deployment")
+
+func test_clicking_available_route_selects_without_clearing_the_checkpoint() -> void:
+	RunUnitSession.record_route_completion(0, 42.0)
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	RunUnitSession.record_checkpoint(0, Vector2(512.0, 360.0))
+	selector._on_sector_pressed(1)
+	assert_eq(RunUnitSession.selected_level_index, 1)
+	assert_true(selector.selected_sector.text.contains("FACTORY ESCAPE"))
+	assert_true(selector.deploy_button.disabled == false)
+	assert_true(RunUnitSession.has_checkpoint(0), "Click only selects; deployment clears the checkpoint")
+
+func test_clicking_locked_route_selects_its_briefing_without_deploying() -> void:
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	selector._on_sector_pressed(3)
+	assert_true(selector.selected_sector.text.contains("BEACON 9"))
+	assert_true(selector.description.text.contains("Recovery"), "Briefing explains the missing prerequisite")
+	assert_true(selector.deploy_button.disabled)
+	assert_eq(RunUnitSession.selected_level_index, 0)
+
+func test_completed_route_is_labeled_and_remains_selectable() -> void:
+	RunUnitSession.record_route_completion(0, 42.0)
+	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector
+	add_child_autofree(selector)
+	var route_button: Button = selector.sector_grid.get_child(0) as Button
+	assert_true(route_button.text.contains("COMPLETE"))
+	assert_false(selector.deploy_button.disabled)
+	selector._on_sector_focused(1)
+	assert_false(selector.deploy_button.disabled)
 
 func test_project_theme_focus_label_differs_from_hover_label() -> void:
 	var selector: RunUnitLevelSelector = LEVEL_SELECTOR_SCENE.instantiate() as RunUnitLevelSelector

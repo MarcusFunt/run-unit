@@ -201,7 +201,14 @@ func _instantiate_game_for(level_index: int) -> RunUnitGame:
 	return game
 
 
+func before_each() -> void:
+	RunUnitSession.save_path = "user://gut_test_level_01_factory.cfg"
+	RunUnitSession.reset_campaign()
+	RunUnitSession.record_route_completion(0, 60.0)
+
 func after_each() -> void:
+	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
+	RunUnitSession.load_campaign()
 	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
 	get_tree().paused = false
 

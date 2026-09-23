@@ -34,6 +34,8 @@ var _external_control: bool = false
 var _last_reward_distance: float = 0.0
 var _terminal_penalty_paid: bool = false
 var _trace_sample_countdown: float = 0.0
+var _run_elapsed_seconds: float = 0.0
+var _full_route_attempt: bool = true
 ## Deaths on the current route during a demo run. Scene-local, so it resets
 ## naturally when the demo moves on to the next route.
 var _demo_failures: int = 0
@@ -44,7 +46,7 @@ var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
 ## controllers' world_path and this node's @onready references all resolve to
 ## the level that is actually being played.
 func _enter_tree() -> void:
-	_selected_level_index = RunUnitSession.selected_level_index if RunUnitCampaign.is_available(RunUnitSession.selected_level_index) else 0
+	_selected_level_index = RunUnitSession.selected_level_index if RunUnitSession.is_route_unlocked(RunUnitSession.selected_level_index) else RunUnitCampaign.PLAYABLE_INDEX
 	var world_scene_path: String = RunUnitCampaign.get_world_scene(_selected_level_index)
 	var current_world: Node = get_node_or_null("World")
 	if current_world == null or current_world.scene_file_path == world_scene_path:
@@ -73,6 +75,9 @@ func _ready() -> void:
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
 	if not world.route_completed.is_connected(_on_route_completed):
 		world.route_completed.connect(_on_route_completed)
+	var module_cradle: RunUnitModuleCradle = world.get_node_or_null("ModuleCradle") as RunUnitModuleCradle
+	if module_cradle != null and not module_cradle.module_acquired.is_connected(_on_module_acquired):
+		module_cradle.module_acquired.connect(_on_module_acquired)
 	if not player_health.damaged.is_connected(_on_player_damaged):
 		player_health.damaged.connect(_on_player_damaged)
 	if not player_health.depleted.is_connected(_on_player_depleted):
@@ -94,6 +99,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("restart"):
 		reset_run(0)
 		return
+	_run_elapsed_seconds += delta
 	var current_distance: float = score_manager.record_position(player.global_position.x)
 	RunUnitSession.record_best_distance(score_manager.best_distance)
 	_trace_sample_countdown -= delta
@@ -133,10 +139,12 @@ func reset_run(run_seed: int) -> void:
 	# Distance is always measured from the route's spawn, even when a retry
 	# resumes at a checkpoint, so progress reads the same either way.
 	var resume_position: Vector2 = RunUnitSession.get_resume_position(_selected_level_index, spawn_position)
+	_full_route_attempt = not RunUnitSession.has_checkpoint(_selected_level_index)
 	score_manager.reset(spawn_position.x, RunUnitSession.best_distance)
 	_last_reward_distance = 0.0
 	_terminal_penalty_paid = false
 	_trace_sample_countdown = 0.0
+	_run_elapsed_seconds = 0.0
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
 	world.reset(run_seed)
@@ -217,9 +225,13 @@ func _finish_run(result: int) -> void:
 	RunUnitSession.record_best_distance(score_manager.best_distance)
 	hud.set_scores(current_distance, score_manager.best_distance)
 	var outcome: String = "failed" if result == RunState.FAILED else "completed"
+	var campaign_completion_recorded: bool = true
 	if result == RunState.COMPLETED:
 		# The route is done; a redeploy starts it from the beginning again.
 		RunUnitSession.clear_checkpoint()
+		campaign_completion_recorded = RunUnitSession.record_route_completion(_selected_level_index, _run_elapsed_seconds if _full_route_attempt else 0.0)
+		if _selected_level_index == 2 and not campaign_completion_recorded and not RunUnitSession.demo_mode and not RunUnitSession.debug_unlock_routes:
+			outcome = "incomplete"
 	if result == RunState.FAILED:
 		player_feedback.play_game_over_feedback()
 	_trace.record(outcome, player.global_position, player.velocity)
@@ -229,6 +241,8 @@ func _finish_run(result: int) -> void:
 		_demo_recover_from_failure()
 	elif result == RunState.FAILED:
 		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+	elif outcome == "incomplete":
+		death_menu.open_missing_module()
 	elif route_exit != null:
 		if not route_exit.transition_finished.is_connected(_on_route_exit_finished):
 			route_exit.transition_finished.connect(_on_route_exit_finished)
@@ -320,6 +334,9 @@ func _on_checkpoint_activated(position: Vector2) -> void:
 func _on_route_completed() -> void:
 	_complete_run()
 
+func _on_module_acquired() -> void:
+	RunUnitSession.record_module_acquired()
+
 func _ensure_input_map() -> void:
 	_add_key_action("move_left", KEY_A)
 	_add_key_action("move_left", KEY_LEFT)
@@ -333,6 +350,10 @@ func _ensure_input_map() -> void:
 func _add_key_action(action_name: StringName, keycode: Key) -> void:
 	if not InputMap.has_action(action_name):
 		InputMap.add_action(action_name)
+	# The options menu loads saved bindings at startup. Do not restore a
+	# removed default key when a player has already remapped this action.
+	if not InputMap.action_get_events(action_name).is_empty():
+		return
 	var input_event: InputEventKey = InputEventKey.new()
 	input_event.keycode = keycode
 	if not InputMap.action_has_event(action_name, input_event):

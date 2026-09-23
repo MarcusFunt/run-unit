@@ -53,6 +53,15 @@ func open_completed_with_scores(distance: float, best: float) -> void:
 	hint_label.text = "OBJECTIVE VERIFIED  //  ROUTE CERTIFIED"
 	_open(true)
 
+func open_missing_module() -> void:
+	_apply_failure_presentation()
+	title_label.text = "OBJECTIVE INCOMPLETE"
+	description_label.text = "RECOVERY  //  IGNITION MODULE MISSING\n\nReturn to Reserve Depot 03 and collect the replacement module. Beacon 9 remains locked."
+	restart_button.text = "REDEPLOY RECOVERY"
+	main_menu_button.text = "RETURN TO SECTOR SELECT"
+	hint_label.text = "MODULE REQUIRED  //  R TO RETRY"
+	_open(false)
+
 func _apply_failure_presentation() -> void:
 	outcome_glyph.text = "FAIL"
 	outcome_glyph.add_theme_color_override("font_color", FAILURE_ACCENT)

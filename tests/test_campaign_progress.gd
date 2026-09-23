@@ -1,5 +1,6 @@
 extends GutTest
 
+const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
 const SAVE_PATH: String = "user://gut_campaign_progress.cfg"
 
 func before_each() -> void:
@@ -9,6 +10,7 @@ func before_each() -> void:
 
 func after_each() -> void:
 	RunUnitSession.demo_mode = false
+	RunUnitSession.debug_unlock_routes = false
 	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
 	RunUnitSession.load_campaign()
 	RunUnitSession.selected_level_index = 0
@@ -76,3 +78,26 @@ func test_demo_bypass_does_not_write_campaign_progress() -> void:
 	RunUnitSession.demo_mode = false
 	assert_false(RunUnitSession.is_route_unlocked(3))
 	assert_false(RunUnitSession.beacon_complete)
+
+func test_direct_game_scene_cannot_enter_locked_beacon() -> void:
+	RunUnitSession.selected_level_index = 3
+	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
+	var pause_menu_controller: Node = game.get_node_or_null("PauseMenuController")
+	if pause_menu_controller != null:
+		pause_menu_controller.free()
+	add_child_autofree(game)
+	assert_eq(game.world.scene_file_path, "res://scenes/world.tscn")
+	assert_eq(RunUnitSession.selected_level_index, 0)
+
+func test_settings_bootstrap_is_registered() -> void:
+	assert_eq(ProjectSettings.get_setting("autoload/PlayerSettings"), "*res://addons/maaacks_menus_template/base/nodes/config/start_up/start_up.tscn")
+
+func test_debug_unlock_is_ephemeral() -> void:
+	RunUnitSession.debug_unlock_routes = true
+	assert_true(RunUnitSession.is_route_unlocked(3))
+	RunUnitSession.record_module_acquired()
+	assert_false(RunUnitSession.record_route_completion(3, 25.0))
+	RunUnitSession.debug_unlock_routes = false
+	RunUnitSession.load_campaign()
+	assert_false(RunUnitSession.ignition_module_acquired)
+	assert_false(RunUnitSession.is_route_unlocked(3))

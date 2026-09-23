@@ -13,13 +13,14 @@ extends RefCounted
 
 const PLAYABLE_INDEX: int = 0
 
+## Qualitative lengths until first-time player measurements in issue #65 exist.
 const ROUTES: Array[Dictionary] = [
 	{
 		"code": "TUT",
 		"name": "CALIBRATION",
 		"title": "TUTORIAL ROUTE",
 		"world_scene": "res://scenes/world.tscn",
-		"runtime": "1-2 MIN",
+		"runtime": "SHORT",
 		"summary": "Clear the factory movement checks and leave the calibration tunnel.",
 		"completion": "Calibration checks complete.",
 	},
@@ -27,7 +28,7 @@ const ROUTES: Array[Dictionary] = [
 		"code": "01",
 		"name": "FACTORY ESCAPE",
 		"world_scene": "res://scenes/levels/level_01_factory.tscn",
-		"runtime": "5-7 MIN",
+		"runtime": "MEDIUM",
 		"summary": "Cross the stalled transfer line and leave the factory through the breached wall.",
 		"completion": "Exterior wall breached. Unit has left the factory.",
 	},
@@ -35,7 +36,7 @@ const ROUTES: Array[Dictionary] = [
 		"code": "02",
 		"name": "RECOVERY",
 		"world_scene": "res://scenes/levels/level_02_recovery.tscn",
-		"runtime": "7-9 MIN",
+		"runtime": "MEDIUM",
 		"summary": "Cross the exterior service district and reach Reserve Depot 03.",
 		"completion": "Replacement ignition module recovered. Target system: Beacon 9.",
 	},
@@ -43,7 +44,7 @@ const ROUTES: Array[Dictionary] = [
 		"code": "03",
 		"name": "BEACON 9",
 		"world_scene": "res://scenes/levels/level_03_beacon.tscn",
-		"runtime": "8-11 MIN",
+		"runtime": "MEDIUM",
 		"summary": "Carry the recovered assembly across the city to Beacon 9.",
 		"completion": "Beacon 9 ignition restored.",
 	},
