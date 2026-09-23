@@ -58,15 +58,15 @@ func test_movement_and_jump_can_be_held_by_two_fingers() -> void:
 	jump_touch.index = 1
 	jump_touch.position = jump.global_position + Vector2.ONE * (44.0 * jump.scale.x)
 	jump_touch.pressed = true
-	Input.parse_input_event(left_touch)
-	Input.parse_input_event(jump_touch)
+	get_viewport().push_input(left_touch, true)
+	get_viewport().push_input(jump_touch, true)
 	await get_tree().physics_frame
 	assert_true(Input.is_action_pressed(&"move_left"))
 	assert_true(Input.is_action_pressed(&"jump"))
 	left_touch.pressed = false
 	jump_touch.pressed = false
-	Input.parse_input_event(left_touch)
-	Input.parse_input_event(jump_touch)
+	get_viewport().push_input(left_touch, true)
+	get_viewport().push_input(jump_touch, true)
 	await get_tree().physics_frame
 	assert_false(Input.is_action_pressed(&"move_left"))
 	assert_false(Input.is_action_pressed(&"jump"))
