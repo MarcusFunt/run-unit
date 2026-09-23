@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" path="res://scenes/player_robot_visual.tscn" id="2_robot"]
 [ext_resource type="Script" path="res://scripts/player/player_feedback.gd" id="3_feedback"]
 [ext_resource type="Script" path="res://scripts/player/player_health.gd" id="4_health"]
+[ext_resource type="Script" path="res://scripts/player/follow_camera.gd" id="5_camera"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(50, 64)
@@ -27,3 +28,4 @@ shape = SubResource("RectangleShape2D_body")
 position = Vector2(309, -132)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+script = ExtResource("5_camera")

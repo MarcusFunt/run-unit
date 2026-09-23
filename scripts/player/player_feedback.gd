@@ -25,6 +25,15 @@ func _ready() -> void:
 		player.landed.connect(_on_player_landed)
 
 
+func play_charge_stage(stage: int) -> void:
+	_play_sound(JUMP_SOUND, -18.0 if stage == 1 else -15.0, 0.70 if stage == 1 else 0.98)
+
+
+func play_charge_ready() -> void:
+	_spawn_effect(_emitter_position(Vector2(0.0, -20.0)), JUMP_FX, CYAN_FX, 0.34)
+	_play_sound(LAND_SOUND, -13.0, 1.55)
+
+
 func play_damage_feedback() -> void:
 	_spawn_effect(_emitter_position(Vector2(0.0, -2.0)), DAMAGE_FX, AMBER_FX, 0.78)
 	_play_sound(DAMAGE_SOUND, -2.0, 0.96)

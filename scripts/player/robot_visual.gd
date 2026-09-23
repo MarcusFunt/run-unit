@@ -62,6 +62,9 @@ const ANTENNA_FOLD_ANGLE_TOLERANCE: float = 0.035 # ~2 degrees
 @onready var knee_pivot: Node2D = $UpperLinkPivot/KneePivot
 @onready var wheel_pivot: Node2D = $UpperLinkPivot/KneePivot/WheelPivot
 @onready var eye: Sprite2D = $BodyPivot/Eye
+@onready var charge_core: Polygon2D = $BodyPivot/ChargeCore
+@onready var charge_lock: Polygon2D = $BodyPivot/ChargeLock
+var _charge_stage: int = 0
 @onready var antenna_pivot: Node2D = $BodyPivot/AntennaPivot
 @onready var player: RunUnitPlayerMotor = get_parent() as RunUnitPlayerMotor
 
@@ -108,6 +111,7 @@ func _process(delta: float) -> void:
 
 	_update_antenna_motion(delta)
 	_update_eye()
+	_update_charge_visuals()
 
 	_apply_pose(pose["upper_deg"], pose["knee_deg"], pose["body_lean"], _wheel_spin)
 	_apply_antenna_overhead_contact()
@@ -339,6 +343,32 @@ func _update_eye() -> void:
 	if player != null and player.is_charging():
 		charge_boost = player.charge_ratio * 0.15
 	eye.modulate = Color(1.0, 1.0, 1.0, clampf(pulse + charge_boost, 0.0, 1.0))
+
+func get_charge_stage() -> int:
+	if player == null or not player.is_charging():
+		return 0
+	if player.charge_ratio >= 0.98:
+		return 3
+	if player.charge_ratio >= 0.38:
+		return 2
+	return 1
+
+func _update_charge_visuals() -> void:
+	var stage: int = get_charge_stage()
+	charge_core.visible = stage > 0
+	charge_lock.visible = stage == 3
+	if stage > 0:
+		var glow: float = [0.0, 0.35, 0.75, 1.0][stage]
+		charge_core.color = Color(0.35, 0.95, 0.96, glow)
+		charge_core.scale = Vector2.ONE * (0.8 + 0.2 * glow)
+	if stage > 0 and stage != _charge_stage:
+		var feedback: RunUnitPlayerFeedback = player.get_node_or_null("Feedback") as RunUnitPlayerFeedback
+		if feedback != null:
+			if stage == 3:
+				feedback.play_charge_ready()
+			else:
+				feedback.play_charge_stage(stage)
+	_charge_stage = stage
 
 func _apply_pose(upper_degrees: float, knee_degrees: float, body_lean: float, wheel_spin: float) -> void:
 	var lower_world_degrees: float = upper_degrees + knee_degrees

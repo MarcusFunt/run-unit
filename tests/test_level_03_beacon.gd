@@ -233,7 +233,9 @@ func test_passing_a_checkpoint_moves_where_a_retry_resumes() -> void:
 	var spawn: Vector2 = game.world.get_spawn_position()
 	assert_false(RunUnitSession.has_checkpoint(LEVEL_3_INDEX), "A fresh deployment starts at the route's spawn")
 
-	game.player.global_position = checkpoints[1] + Vector2(64.0, 0.0)
+	game.player.global_position = checkpoints[1]
+	var station: RunUnitCheckpointStation = game.world.get_node("CheckpointStations/Station2") as RunUnitCheckpointStation
+	station.activate_for(game.player)
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 

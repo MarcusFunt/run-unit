@@ -146,7 +146,8 @@ func test_hud_exposes_three_compact_health_cells() -> void:
 	hud.call("set_health", 2, 3)
 	assert_true((cells[0] as CanvasItem).visible)
 	assert_true((cells[1] as CanvasItem).visible)
-	assert_false((cells[2] as CanvasItem).visible, "The depleted health cell should visibly turn off")
+	assert_true((cells[2] as CanvasItem).visible, "The empty socket remains visible")
+	assert_lt((cells[2] as ColorRect).color.get_luminance(), (cells[1] as ColorRect).color.get_luminance())
 
 func test_active_hazard_hits_once_for_one_continuous_exposure() -> void:
 	var hazard: Area2D = _instantiate_hazard()

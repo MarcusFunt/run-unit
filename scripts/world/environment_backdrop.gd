@@ -10,7 +10,7 @@ const INK := Color(0.008, 0.025, 0.036, 0.92)
 const PANEL := Color(0.025, 0.075, 0.09, 0.78)
 const STEEL := Color(0.075, 0.18, 0.20, 0.72)
 const CYAN := Color(0.28, 0.82, 0.84, 0.42)
-const CYAN_DIM := Color(0.14, 0.45, 0.50, 0.30)
+const CYAN_DIM := Color(0.12, 0.26, 0.29, 0.22)
 const AMBER := Color(1.0, 0.48, 0.15, 0.46)
 const WINDOW := Color(0.18, 0.52, 0.58, 0.30)
 
@@ -117,11 +117,11 @@ func _draw_recovery() -> void:
 	_draw_fan(Vector2(6420, 430), 112.0, Color(0.055, 0.16, 0.18, 0.54))
 	_draw_tank(Rect2(7540, 300, 230, 430))
 	_draw_pipe(Vector2(7655, 300), Vector2(7655, 174), 9.0, STEEL)
-	# The module vault gets a clear cyan focal corridor before the pickup.
-	draw_rect(Rect2(8710, 190, 760, 540), Color(0.03, 0.12, 0.14, 0.35), true)
+	# The recovered assembly uses steady amber, distinct from cyan walkable edges.
+	draw_rect(Rect2(8710, 190, 760, 540), Color(0.12, 0.072, 0.025, 0.27), true)
 	for x: float in range(8780, 9450, 112):
-		draw_line(Vector2(x, 226), Vector2(x - 40, 700), Color(0.20, 0.68, 0.72, 0.16), 4.0)
-	_draw_light(Vector2(9184, 226), Color(0.40, 0.95, 0.94, 0.58), 26.0)
+		draw_line(Vector2(x, 226), Vector2(x - 40, 700), Color(0.64, 0.36, 0.12, 0.12), 4.0)
+	_draw_light(Vector2(9184, 226), Color(1.0, 0.67, 0.29, 0.52), 26.0)
 	# Re-emerge into the city after the depot.
 	for x: float in range(10060, 12900, 420):
 		_draw_city_pylon(x, 220, 550)

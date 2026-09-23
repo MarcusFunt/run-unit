@@ -39,9 +39,6 @@ var _trace_sample_countdown: float = 0.0
 var _demo_failures: int = 0
 var _selected_level_index: int = 0
 var _trace: RunUnitTraversalTrace = RunUnitTraversalTrace.new()
-## Authored respawn points, in route order, and the next one still ahead.
-var _checkpoints: Array[Vector2] = []
-var _next_checkpoint: int = 0
 
 ## Swaps in the selected route's world before any child is ready, so the
 ## controllers' world_path and this node's @onready references all resolve to
@@ -81,7 +78,9 @@ func _ready() -> void:
 	if not player_health.depleted.is_connected(_on_player_depleted):
 		player_health.depleted.connect(_on_player_depleted)
 	hud.set_level_length(world.get_traversal_length())
-	_checkpoints = world.get_checkpoint_positions()
+	for node: Node in world.get_node("CheckpointStations").get_children():
+		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
+		station.activated.connect(_on_checkpoint_activated)
 	reset_run(0)
 	_run_started = true
 
@@ -97,7 +96,6 @@ func _physics_process(delta: float) -> void:
 		return
 	var current_distance: float = score_manager.record_position(player.global_position.x)
 	RunUnitSession.record_best_distance(score_manager.best_distance)
-	_record_passed_checkpoints()
 	_trace_sample_countdown -= delta
 	if _trace_sample_countdown <= 0.0:
 		_trace_sample_countdown = TRACE_SAMPLE_INTERVAL
@@ -146,8 +144,10 @@ func reset_run(run_seed: int) -> void:
 	RunUnitSession.set_run_outcome("active")
 	_trace.begin(run_seed)
 	player.global_position = resume_position
-	_next_checkpoint = 0
-	_record_passed_checkpoints()
+	for node: Node in world.get_node("CheckpointStations").get_children():
+		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
+		if RunUnitSession.has_checkpoint(_selected_level_index) and station.checkpoint_position.x <= resume_position.x:
+			station.restore_active()
 	player.reset_motor()
 	player_health.reset_health()
 	player.set_physics_process(true)
@@ -312,12 +312,9 @@ func _on_obstacle_triggered(obstacle_type: String, platform_id: int) -> void:
 	_trace.record("obstacle:%s" % obstacle_type, player.global_position, player.velocity, platform_id)
 	_fail_run()
 
-## Remembers every checkpoint the player has already driven past, so a retry
-## resumes from the furthest one instead of replaying the whole route.
-func _record_passed_checkpoints() -> void:
-	while _next_checkpoint < _checkpoints.size() and player.global_position.x >= _checkpoints[_next_checkpoint].x:
-		RunUnitSession.record_checkpoint(_selected_level_index, _checkpoints[_next_checkpoint])
-		_next_checkpoint += 1
+## A checkpoint only registers when the player actually touches its node.
+func _on_checkpoint_activated(position: Vector2) -> void:
+	RunUnitSession.record_checkpoint(_selected_level_index, position)
 
 func _on_route_completed() -> void:
 	_complete_run()
