@@ -252,7 +252,15 @@ func _instantiate_game_for(level_index: int) -> RunUnitGame:
 	return game
 
 
+func before_each() -> void:
+	RunUnitSession.save_path = "user://gut_test_level_02_recovery.cfg"
+	RunUnitSession.reset_campaign()
+	RunUnitSession.record_route_completion(0, 60.0)
+	RunUnitSession.record_route_completion(1, 60.0)
+
 func after_each() -> void:
+	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
+	RunUnitSession.load_campaign()
 	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
 	get_tree().paused = false
 
@@ -281,6 +289,7 @@ func test_restarting_a_recovery_run_resets_the_cradle() -> void:
 
 func test_completing_level_2_opens_the_results_menu() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
+	(game.world.get_node("ModuleCradle") as RunUnitModuleCradle).acquire_for(game.player)
 
 	game.world.route_completed.emit()
 
@@ -290,6 +299,26 @@ func test_completing_level_2_opens_the_results_menu() -> void:
 	assert_true(game.death_menu.description_label.text.contains("02  RECOVERY"), "Results copy should name the campaign route")
 	assert_true(game.death_menu.description_label.text.contains("Beacon 9"), "Results copy should come from Level 2")
 
+
+func test_recovery_exit_without_module_does_not_certify_objective() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
+	game.world.route_completed.emit()
+	assert_eq(RunUnitSession.last_run_outcome, "incomplete")
+	assert_false(RunUnitSession.recovery_complete)
+	assert_false(RunUnitSession.is_route_unlocked(3))
+	assert_true(game.death_menu.description_label.text.contains("MODULE MISSING"))
+
+func test_module_pickup_persists_and_completion_unlocks_beacon() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
+	var cradle: RunUnitModuleCradle = game.world.get_node("ModuleCradle") as RunUnitModuleCradle
+	cradle.acquire_for(game.player)
+	assert_true(RunUnitSession.ignition_module_acquired)
+	RunUnitSession.load_campaign()
+	assert_true(RunUnitSession.ignition_module_acquired, "The module survives closing the game")
+	assert_false(RunUnitSession.is_route_unlocked(3), "Recovery still needs a completed run")
+	game.world.route_completed.emit()
+	assert_true(RunUnitSession.recovery_complete)
+	assert_true(RunUnitSession.is_route_unlocked(3))
 
 func test_recovery_adds_checkpoint_after_the_first_indoor_gate() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()

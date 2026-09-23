@@ -44,7 +44,7 @@ func test_every_route_carries_player_facing_copy() -> void:
 		assert_false(RunUnitCampaign.get_code(index).is_empty(), "Route %d needs a campaign code" % index)
 		assert_false(RunUnitCampaign.get_summary(index).is_empty(), "Route %d needs a one-line summary" % index)
 		assert_false(RunUnitCampaign.get_completion(index).is_empty(), "Route %d needs a completion line for the results menu" % index)
-		assert_true(RunUnitCampaign.get_runtime(index).ends_with("MIN"), "Route %d should carry its target first-play runtime" % index)
+		assert_true(RunUnitCampaign.get_runtime(index) in ["SHORT", "MEDIUM"], "Route %d should use a qualitative length until playtest measurements exist" % index)
 
 func test_route_names_exist_in_the_storyline_sketch() -> void:
 	var storyline: String = _read_storyline()

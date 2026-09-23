@@ -16,7 +16,7 @@ func _ready() -> void:
 		button_box.add_theme_constant_override("separation", 10)
 		button_box.anchor_left = TERMINAL_BUTTON_ANCHOR_X
 		button_box.anchor_right = TERMINAL_BUTTON_ANCHOR_X
-	new_game_button.text = "START NEW RUN"
+	new_game_button.text = "SELECT ROUTE"
 	options_button.text = "SYSTEM SETTINGS"
 	credits_button.text = "CREDITS / INTEL"
 	exit_button.text = "SHUT DOWN"

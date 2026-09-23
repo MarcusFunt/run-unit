@@ -201,10 +201,18 @@ func _instantiate_game_for(level_index: int) -> RunUnitGame:
 
 
 func before_each() -> void:
+	RunUnitSession.save_path = "user://gut_test_level_03_beacon.cfg"
+	RunUnitSession.reset_campaign()
+	RunUnitSession.record_route_completion(0, 60.0)
+	RunUnitSession.record_route_completion(1, 60.0)
+	RunUnitSession.record_module_acquired()
+	RunUnitSession.record_route_completion(2, 60.0)
 	RunUnitSession.clear_checkpoint()
 
 
 func after_each() -> void:
+	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
+	RunUnitSession.load_campaign()
 	RunUnitSession.selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
 	RunUnitSession.clear_checkpoint()
 	get_tree().paused = false
@@ -257,6 +265,15 @@ func test_completing_the_route_clears_the_checkpoint() -> void:
 
 	assert_false(RunUnitSession.has_checkpoint(LEVEL_3_INDEX), "Finishing a route means the next deployment starts over")
 
+
+func test_checkpoint_resume_cannot_set_a_full_route_best_time() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
+	game.route_exit.next_scene_path = ""
+	RunUnitSession.record_checkpoint(LEVEL_3_INDEX, game.world.get_checkpoint_positions()[0])
+	game.reset_run(0)
+	game._run_elapsed_seconds = 12.0
+	game.world.route_completed.emit()
+	assert_eq(RunUnitSession.get_best_time(LEVEL_3_INDEX), 0.0)
 
 func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)

@@ -6,6 +6,17 @@ const SCORE_MANAGER_SCRIPT: GDScript = preload("res://scripts/gameplay/score_man
 const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
 
 
+func before_each() -> void:
+	RunUnitSession.save_path = "user://gut_run_progression.cfg"
+	RunUnitSession.reset_campaign()
+
+func after_each() -> void:
+	RunUnitSession.demo_mode = false
+	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
+	RunUnitSession.load_campaign()
+	RunUnitSession.selected_level_index = 0
+	get_tree().paused = false
+
 func test_distance_is_measured_in_metres_from_the_start_pad() -> void:
 	var score_manager: RunUnitScoreManager = autofree(SCORE_MANAGER_SCRIPT.new()) as RunUnitScoreManager
 	score_manager.call("reset", 128.0, 18.0)
@@ -255,3 +266,19 @@ func _create_static_body(body_position: Vector2, body_size: Vector2) -> StaticBo
 	collision_shape.shape = rectangle
 	body.add_child(collision_shape)
 	return body
+
+func test_game_setup_keeps_the_players_remapped_keys() -> void:
+	var original_events: Array[InputEvent] = InputMap.action_get_events(&"move_left")
+	InputMap.action_erase_events(&"move_left")
+	var remapped: InputEventKey = InputEventKey.new()
+	remapped.keycode = KEY_J
+	InputMap.action_add_event(&"move_left", remapped)
+	var game: RunUnitGame = GAME_SCENE.instantiate() as RunUnitGame
+	game._ensure_input_map()
+	var current_events: Array[InputEvent] = InputMap.action_get_events(&"move_left")
+	assert_eq(current_events.size(), 1, "Game setup should not add old defaults after remapping")
+	assert_true(InputMap.action_has_event(&"move_left", remapped))
+	InputMap.action_erase_events(&"move_left")
+	for event: InputEvent in original_events:
+		InputMap.action_add_event(&"move_left", event)
+	game.free()

@@ -14,6 +14,18 @@ var demo_route_starts: Array[int] = []
 var demo_damage_events: int = 0
 var demo_failure_events: int = 0
 
+## Campaign progress is intentionally a single, inspectable save. The menu
+## template stores audio/video settings and remaps separately in player_config.cfg.
+var save_path: String = "user://run_unit_campaign.cfg"
+var debug_unlock_routes: bool = false
+var calibration_complete: bool = false
+var factory_complete: bool = false
+var recovery_complete: bool = false
+var ignition_module_acquired: bool = false
+var beacon_complete: bool = false
+var highest_unlocked_route: int = 0
+var _best_times_by_level: Dictionary = {}
+
 var selected_level_index: int = 0
 var run_seed: int = 0
 var world_version: String = "static"
@@ -45,7 +57,146 @@ var checkpoint_position: Vector2 = Vector2.ZERO
 ## but passing `--demo` straight through works too, so both are accepted.
 func _ready() -> void:
 	demo_mode = OS.get_cmdline_user_args().has("--demo") or OS.get_cmdline_args().has("--demo")
+	debug_unlock_routes = OS.is_debug_build() and (OS.get_cmdline_user_args().has("--unlock-routes") or OS.get_cmdline_args().has("--unlock-routes"))
+	load_campaign()
 	reset_demo_lifecycle()
+
+## Invalid fields cannot create progress. The derived unlock index wins over a
+## stale or edited index in the save, so Beacon always needs the full chain.
+func load_campaign() -> void:
+	_clear_campaign_state()
+	selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
+	var save: ConfigFile = ConfigFile.new()
+	if save.load(save_path) != OK:
+		return
+	var version_value: Variant = save.get_value("campaign", "version", 0)
+	if not (version_value is int):
+		return
+	if int(version_value) != 1:
+		return
+	calibration_complete = _saved_flag(save, "calibration_complete")
+	factory_complete = calibration_complete and _saved_flag(save, "factory_complete")
+	ignition_module_acquired = factory_complete and _saved_flag(save, "ignition_module_acquired")
+	recovery_complete = factory_complete and ignition_module_acquired and _saved_flag(save, "recovery_complete")
+	beacon_complete = recovery_complete and _saved_flag(save, "beacon_complete")
+	_recompute_unlocked_route()
+	for route_index: int in RunUnitCampaign.route_count():
+		var time_value: Variant = save.get_value("best_times", "route_%d" % route_index, 0.0)
+		if (time_value is float or time_value is int) and float(time_value) > 0.0 and not is_nan(float(time_value)) and not is_inf(float(time_value)):
+			_best_times_by_level[route_index] = float(time_value)
+	selected_level_index = highest_unlocked_route
+
+func _saved_flag(save: ConfigFile, key: String) -> bool:
+	var value: Variant = save.get_value("campaign", key, false)
+	return value is bool and value
+
+func reset_campaign() -> void:
+	_clear_campaign_state()
+	selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
+	clear_checkpoint()
+	_save_campaign()
+
+func _clear_campaign_state() -> void:
+	calibration_complete = false
+	factory_complete = false
+	recovery_complete = false
+	ignition_module_acquired = false
+	beacon_complete = false
+	highest_unlocked_route = 0
+	_best_times_by_level.clear()
+
+func _recompute_unlocked_route() -> void:
+	if recovery_complete and ignition_module_acquired:
+		highest_unlocked_route = 3
+	elif factory_complete:
+		highest_unlocked_route = 2
+	elif calibration_complete:
+		highest_unlocked_route = 1
+	else:
+		highest_unlocked_route = 0
+
+func _save_campaign() -> void:
+	var save: ConfigFile = ConfigFile.new()
+	save.set_value("campaign", "version", 1)
+	save.set_value("campaign", "calibration_complete", calibration_complete)
+	save.set_value("campaign", "factory_complete", factory_complete)
+	save.set_value("campaign", "recovery_complete", recovery_complete)
+	save.set_value("campaign", "ignition_module_acquired", ignition_module_acquired)
+	save.set_value("campaign", "beacon_complete", beacon_complete)
+	save.set_value("campaign", "highest_unlocked_route", highest_unlocked_route)
+	for route_index: int in _best_times_by_level:
+		save.set_value("best_times", "route_%d" % route_index, _best_times_by_level[route_index])
+	var error: Error = save.save(save_path)
+	if error != OK:
+		push_warning("Campaign save failed: %s" % error_string(error))
+
+func is_route_unlocked(route_index: int) -> bool:
+	if not RunUnitCampaign.is_available(route_index):
+		return false
+	if demo_mode or debug_unlock_routes:
+		return true
+	return route_index <= highest_unlocked_route and (route_index != 3 or (recovery_complete and ignition_module_acquired))
+
+func get_route_lock_reason(route_index: int) -> String:
+	if not RunUnitCampaign.is_available(route_index):
+		return "Route unavailable in this build."
+	if is_route_unlocked(route_index):
+		return ""
+	match route_index:
+		1:
+			return "Complete Calibration to unlock Factory Escape."
+		2:
+			return "Complete Factory Escape to unlock Recovery."
+		3:
+			return "Complete Recovery and recover the ignition module to unlock Beacon 9."
+	return "Complete the preceding route to unlock this route."
+
+func get_best_time(route_index: int) -> float:
+	return float(_best_times_by_level.get(route_index, 0.0))
+
+func is_route_completed(route_index: int) -> bool:
+	match route_index:
+		0:
+			return calibration_complete
+		1:
+			return factory_complete
+		2:
+			return recovery_complete
+		3:
+			return beacon_complete
+	return false
+
+func record_module_acquired() -> void:
+	if demo_mode or debug_unlock_routes or ignition_module_acquired:
+		return
+	ignition_module_acquired = true
+	_save_campaign()
+
+## Called only after an actual route finish. Demo/debug routes do not bypass
+## campaign prerequisites when recording permanent progress.
+func record_route_completion(route_index: int, elapsed_seconds: float) -> bool:
+	if demo_mode or debug_unlock_routes or not is_route_unlocked(route_index):
+		return false
+	match route_index:
+		0:
+			calibration_complete = true
+		1:
+			factory_complete = calibration_complete
+		2:
+			if not ignition_module_acquired:
+				return false
+			recovery_complete = factory_complete
+		3:
+			beacon_complete = recovery_complete and ignition_module_acquired
+		_:
+			return false
+	_recompute_unlocked_route()
+	if elapsed_seconds > 0.0 and not is_nan(elapsed_seconds) and not is_inf(elapsed_seconds):
+		var previous: float = get_best_time(route_index)
+		if previous == 0.0 or elapsed_seconds < previous:
+			_best_times_by_level[route_index] = elapsed_seconds
+	_save_campaign()
+	return true
 
 func reset_demo_lifecycle() -> void:
 	demo_completed = false
