@@ -57,9 +57,10 @@ func test_progress_and_best_times_survive_reload() -> void:
 	assert_almost_eq(RunUnitSession.get_best_time(1), 120.0, 0.01)
 
 func test_corrupt_and_inconsistent_save_cannot_unlock_beacon() -> void:
-	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	file.store_string("[this is not a valid config file")
-	file.close()
+	var invalid: ConfigFile = ConfigFile.new()
+	invalid.set_value("campaign", "version", "unknown")
+	invalid.set_value("campaign", "calibration_complete", true)
+	invalid.save(SAVE_PATH)
 	RunUnitSession.load_campaign()
 	assert_eq(RunUnitSession.highest_unlocked_route, 0)
 	var forged: ConfigFile = ConfigFile.new()
