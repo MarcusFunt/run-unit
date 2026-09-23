@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/gameplay/game.gd" id="1_game"]
 [ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://addons/maaacks_menus_template/base/nodes/utilities/pause_menu_controller.gd" id="11_pause"]
 [ext_resource type="PackedScene" path="res://menus/scenes/windows/pause_menu.tscn" id="12_pause_menu"]
 [ext_resource type="PackedScene" path="res://scenes/death_menu.tscn" id="13_death_menu"]
+[ext_resource type="PackedScene" path="res://scenes/mobile_controls.tscn" id="14_mobile"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
@@ -60,6 +61,8 @@ script = ExtResource("7_environment")
 game_path = NodePath("..")
 
 [node name="HUD" parent="." instance=ExtResource("8_hud")]
+
+[node name="MobileControls" parent="." instance=ExtResource("14_mobile")]
 
 [node name="DebugOverlay" parent="." instance=ExtResource("9_debug")]
 

@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/mobile_controls.gd" id="1_controls"]
+[ext_resource type="Texture2D" path="res://scenes/ui/touch_button.svg" id="2_idle"]
+[ext_resource type="Texture2D" path="res://scenes/ui/touch_button_pressed.svg" id="3_pressed"]
+
+[node name="MobileControls" type="CanvasLayer"]
+layer = 8
+process_mode = 3
+script = ExtResource("1_controls")
+
+[node name="Area" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Left" type="TouchScreenButton" parent="Area"]
+texture_normal = ExtResource("2_idle")
+texture_pressed = ExtResource("3_pressed")
+action = "move_left"
+visibility_mode = 1
+
+[node name="Label" type="Label" parent="Area/Left"]
+offset_right = 88.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.86, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "<"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right" type="TouchScreenButton" parent="Area"]
+texture_normal = ExtResource("2_idle")
+texture_pressed = ExtResource("3_pressed")
+action = "move_right"
+visibility_mode = 1
+
+[node name="Label" type="Label" parent="Area/Right"]
+offset_right = 88.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.86, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Crouch" type="TouchScreenButton" parent="Area"]
+texture_normal = ExtResource("2_idle")
+texture_pressed = ExtResource("3_pressed")
+action = "crouch"
+visibility_mode = 1
+
+[node name="Label" type="Label" parent="Area/Crouch"]
+offset_right = 88.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.86, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "DUCK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Jump" type="TouchScreenButton" parent="Area"]
+texture_normal = ExtResource("2_idle")
+texture_pressed = ExtResource("3_pressed")
+modulate = Color(1, 0.81, 0.48, 1)
+action = "jump"
+visibility_mode = 1
+
+[node name="Label" type="Label" parent="Area/Jump"]
+offset_right = 88.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "JUMP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pause" type="TouchScreenButton" parent="Area"]
+texture_normal = ExtResource("2_idle")
+texture_pressed = ExtResource("3_pressed")
+visibility_mode = 1
+
+[node name="Label" type="Label" parent="Area/Pause"]
+offset_right = 88.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.86, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "II"
+horizontal_alignment = 1
+vertical_alignment = 1
