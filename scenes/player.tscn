@@ -10,6 +10,7 @@
 size = Vector2(50, 64)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 3
 script = ExtResource("1_motor")
 
 [node name="RobotVisual" parent="." instance=ExtResource("2_robot")]

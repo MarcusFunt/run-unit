@@ -35,6 +35,7 @@ func test_platforms_are_derived_from_the_semantic_tilemap_layer() -> void:
 	assert_eq(int(one_way.get("end_x", -1)), 15)
 	assert_eq(int(one_way.get("height", -1)), 5)
 	assert_eq(str(one_way.get("surface_type", "")), "one_way")
+	assert_true(player.get_collision_mask_value(2), "Player should initially collide with the separate one-way physics layer")
 
 	var platform_c: Dictionary = world.get_platform_below(19 * TILE)
 	assert_eq(int(platform_c.get("start_x", -1)), 17)

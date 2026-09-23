@@ -12,6 +12,10 @@
   "tilewidth": 32,
   "type": "tileset",
   "version": "1.10",
+  "properties": [
+    { "name": "collision_layer", "type": "string", "value": "1" },
+    { "name": "collision_layer_1", "type": "string", "value": "2" }
+  ],
   "tiles": [
     {
       "id": 0,
@@ -73,7 +77,7 @@
             "rotation": 0,
             "visible": true,
             "properties": [
-              { "name": "physics_layer", "type": "int", "value": 0 },
+              { "name": "physics_layer", "type": "int", "value": 1 },
               { "name": "one_way", "type": "bool", "value": true }
             ]
           }
