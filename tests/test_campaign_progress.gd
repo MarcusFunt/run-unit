@@ -1,0 +1,78 @@
+extends GutTest
+
+const SAVE_PATH: String = "user://gut_campaign_progress.cfg"
+
+func before_each() -> void:
+	RunUnitSession.save_path = SAVE_PATH
+	RunUnitSession.reset_campaign()
+	RunUnitSession.demo_mode = false
+
+func after_each() -> void:
+	RunUnitSession.demo_mode = false
+	RunUnitSession.save_path = "user://run_unit_campaign.cfg"
+	RunUnitSession.load_campaign()
+	RunUnitSession.selected_level_index = 0
+	RunUnitSession.clear_checkpoint()
+
+func test_fresh_save_only_unlocks_calibration() -> void:
+	assert_true(RunUnitSession.is_route_unlocked(0))
+	for route_index: int in range(1, 4):
+		assert_false(RunUnitSession.is_route_unlocked(route_index))
+	assert_eq(RunUnitSession.highest_unlocked_route, 0)
+
+func test_route_completion_unlocks_next_and_preserves_replays() -> void:
+	assert_false(RunUnitSession.record_route_completion(1, 37.0))
+	assert_true(RunUnitSession.record_route_completion(0, 41.0))
+	assert_true(RunUnitSession.is_route_unlocked(1))
+	assert_true(RunUnitSession.record_route_completion(1, 150.0))
+	assert_true(RunUnitSession.is_route_unlocked(2))
+	assert_true(RunUnitSession.record_route_completion(0, 38.0))
+	assert_true(RunUnitSession.is_route_unlocked(2))
+	assert_almost_eq(RunUnitSession.get_best_time(0), 38.0, 0.01)
+
+func test_recovery_needs_its_module_before_beacon_unlocks() -> void:
+	RunUnitSession.record_route_completion(0, 42.0)
+	RunUnitSession.record_route_completion(1, 145.0)
+	assert_false(RunUnitSession.record_route_completion(2, 160.0))
+	assert_false(RunUnitSession.is_route_unlocked(3))
+	RunUnitSession.record_module_acquired()
+	assert_true(RunUnitSession.record_route_completion(2, 162.0))
+	assert_true(RunUnitSession.is_route_unlocked(3))
+	assert_true(RunUnitSession.record_route_completion(3, 180.0))
+	assert_true(RunUnitSession.beacon_complete)
+
+func test_progress_and_best_times_survive_reload() -> void:
+	RunUnitSession.record_route_completion(0, 50.0)
+	RunUnitSession.record_route_completion(1, 120.0)
+	RunUnitSession.record_module_acquired()
+	RunUnitSession.record_route_completion(2, 200.0)
+	RunUnitSession.load_campaign()
+	assert_true(RunUnitSession.calibration_complete)
+	assert_true(RunUnitSession.factory_complete)
+	assert_true(RunUnitSession.recovery_complete)
+	assert_true(RunUnitSession.ignition_module_acquired)
+	assert_eq(RunUnitSession.highest_unlocked_route, 3)
+	assert_almost_eq(RunUnitSession.get_best_time(1), 120.0, 0.01)
+
+func test_corrupt_and_inconsistent_save_cannot_unlock_beacon() -> void:
+	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	file.store_string("[this is not a valid config file")
+	file.close()
+	RunUnitSession.load_campaign()
+	assert_eq(RunUnitSession.highest_unlocked_route, 0)
+	var forged: ConfigFile = ConfigFile.new()
+	forged.set_value("campaign", "version", 1)
+	forged.set_value("campaign", "highest_unlocked_route", 3)
+	forged.set_value("campaign", "beacon_complete", true)
+	forged.save(SAVE_PATH)
+	RunUnitSession.load_campaign()
+	assert_false(RunUnitSession.is_route_unlocked(3))
+	assert_false(RunUnitSession.beacon_complete)
+
+func test_demo_bypass_does_not_write_campaign_progress() -> void:
+	RunUnitSession.demo_mode = true
+	assert_true(RunUnitSession.is_route_unlocked(3))
+	assert_false(RunUnitSession.record_route_completion(3, 50.0))
+	RunUnitSession.demo_mode = false
+	assert_false(RunUnitSession.is_route_unlocked(3))
+	assert_false(RunUnitSession.beacon_complete)
