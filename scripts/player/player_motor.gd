@@ -1,6 +1,9 @@
 class_name RunUnitPlayerMotor
 extends CharacterBody2D
 
+## Collision mask bit for one-way platforms; kept separate so held jumps can pass through them only.
+const ONE_WAY_COLLISION_LAYER: int = 2
+
 signal landed
 signal jumped
 
@@ -28,6 +31,7 @@ signal jumped
 
 var _action: RunUnitPlayerAction = RunUnitPlayerAction.new()
 var _coyote_remaining: float = 0.0
+var _jump_origin_floor_y: float = INF
 var _release_buffer_remaining: float = 0.0
 var _jump_press_buffer_remaining: float = 0.0
 var _released_charge_ratio: float = 0.0
@@ -64,6 +68,8 @@ func reset_motor() -> void:
 	_release_buffer_remaining = 0.0
 	_jump_press_buffer_remaining = 0.0
 	_released_charge_ratio = 0.0
+	_jump_origin_floor_y = INF
+	set_collision_mask_value(ONE_WAY_COLLISION_LAYER, true)
 	_was_on_floor = false
 	_is_charging = false
 	charge_ratio = 0.0
@@ -169,6 +175,7 @@ func _physics_process(delta: float) -> void:
 
 	if not in_hitstun and _release_buffer_remaining > 0.0 and _coyote_remaining > 0.0:
 		var launch_ratio: float = pow(_released_charge_ratio, charge_power_curve)
+		_jump_origin_floor_y = _collision_bottom_y()
 		velocity.y = lerpf(min_jump_velocity, jump_velocity, launch_ratio)
 		last_launch_velocity = velocity.y
 		_release_buffer_remaining = 0.0
@@ -184,10 +191,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = minf(velocity.y, 40.0)
 
+	_update_one_way_drop_through(delta)
 	var landing_speed: float = maxf(velocity.y, 0.0)
 	move_and_slide()
 	if is_on_floor() and not _was_on_floor:
 		last_landing_speed = landing_speed
+		_jump_origin_floor_y = INF
+		set_collision_mask_value(ONE_WAY_COLLISION_LAYER, true)
 		landed.emit()
 	_was_on_floor = is_on_floor()
 	_hitstun_remaining = maxf(_hitstun_remaining - delta, 0.0)
@@ -238,3 +248,18 @@ func _can_expand_to(target_crouch_ratio: float) -> bool:
 	query.margin = 0.0
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 	return space_state.intersect_shape(query, 1).is_empty()
+
+func _update_one_way_drop_through(delta: float) -> void:
+	var should_drop_through: bool = false
+	if _action.jump_held and _jump_origin_floor_y < INF and velocity.y > 0.0:
+		var next_collision_bottom_y: float = _collision_bottom_y() + velocity.y * delta
+		should_drop_through = next_collision_bottom_y >= _jump_origin_floor_y
+	set_collision_mask_value(ONE_WAY_COLLISION_LAYER, not should_drop_through)
+
+func _collision_bottom_y() -> float:
+	if _collision_shape == null:
+		return global_position.y
+	var rectangle: RectangleShape2D = _collision_shape.shape as RectangleShape2D
+	if rectangle == null:
+		return global_position.y
+	return _collision_shape.global_position.y + rectangle.size.y * 0.5

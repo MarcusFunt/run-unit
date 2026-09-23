@@ -101,24 +101,28 @@ func test_player_lands_on_a_solid_platform_derived_from_tiles() -> void:
 	assert_almost_eq(player.global_position.y, surface_y - 32.0, 6.0, "Player should settle on top of the tile surface")
 
 
-func test_player_falls_through_a_decorative_only_tile_with_no_semantic_collision() -> void:
+func test_gap_is_open_and_approximately_the_width_of_the_player() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
 
-	# x=22..23,y=6 only has an Art-layer tile (no Semantic cell underneath) --
-	# it must look identical to Platform C but never stop the player. Centered
-	# in the middle of the two-tile decorative strip (x=704..768) so the wider
-	# player body clears the real collision edges on both sides.
-	var decorative_surface_y: float = 6 * TILE
-	player.global_position = Vector2(23 * TILE, decorative_surface_y - 60.0)
+	var art_layer: TileMapLayer = world.find_child("Art", true, false) as TileMapLayer
+	assert_not_null(art_layer, "The fixture should keep its decorative layer")
+	assert_eq(art_layer.get_cell_source_id(Vector2i(22, 6)), -1, "The unsupported art tile should be removed")
+	assert_eq(art_layer.get_cell_source_id(Vector2i(23, 6)), -1, "The unsupported art tile should be removed")
 
+	var player_shape: RectangleShape2D = player.get_node("CollisionShape2D").shape as RectangleShape2D
+	var gap_width: float = (24.0 - 22.0) * TILE
+	assert_almost_eq(gap_width, player_shape.size.x, TILE * 0.5, "The open gap should be about one robot wide")
+
+	var gap_surface_y: float = 6 * TILE
+	player.global_position = Vector2(23 * TILE, gap_surface_y - 60.0)
 	for frame: int in range(60):
 		await get_tree().physics_frame
 
-	assert_false(player.is_on_floor(), "Decorative-only art tiles must never create collision")
-	assert_true(player.global_position.y > decorative_surface_y + 50.0, "The player should have fallen straight through")
+	assert_false(player.is_on_floor(), "The open gap must not stop the player")
+	assert_true(player.global_position.y > gap_surface_y + 50.0, "The player should fall through the open gap")
 
 
 func test_one_way_platform_can_be_entered_from_below() -> void:
@@ -126,6 +130,7 @@ func test_one_way_platform_can_be_entered_from_below() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
+	assert_true(player.get_collision_mask_value(2), "Player should initially collide with the separate one-way physics layer")
 
 	var one_way_surface_y: float = 5 * TILE
 	player.global_position = Vector2(14 * TILE + 16, one_way_surface_y + 40.0)
@@ -135,3 +140,34 @@ func test_one_way_platform_can_be_entered_from_below() -> void:
 		await get_tree().physics_frame
 
 	assert_true(player.global_position.y < one_way_surface_y, "Rising from below, the player should pass through the one-way tile instead of being blocked by it")
+
+
+func test_holding_jump_drops_through_same_height_one_way_platform() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+
+	var surface_y: float = 5 * TILE
+	player.global_position = Vector2(14 * TILE + 16, surface_y - 32.0)
+	for frame: int in range(3):
+		await get_tree().physics_frame
+	assert_true(player.is_on_floor(), "The player should start on the one-way platform")
+
+	var held_jump: RunUnitPlayerAction = RunUnitPlayerAction.new()
+	held_jump.jump_held = true
+	player.set_action(held_jump)
+	for frame: int in range(30):
+		await get_tree().physics_frame
+
+	var release_jump: RunUnitPlayerAction = RunUnitPlayerAction.new()
+	release_jump.jump_released = true
+	player.set_action(release_jump)
+	await get_tree().physics_frame
+
+	player.set_action(held_jump)
+	for frame: int in range(100):
+		await get_tree().physics_frame
+
+	assert_true(player.global_position.y > surface_y + 50.0, "Holding jump on descent should let the player pass through the takeoff platform")
+	assert_false(player.is_on_floor(), "The player should not land on the one-way platform they jumped from")
