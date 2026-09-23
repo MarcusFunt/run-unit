@@ -67,7 +67,12 @@ func load_campaign() -> void:
 	_clear_campaign_state()
 	selected_level_index = RunUnitCampaign.PLAYABLE_INDEX
 	var save: ConfigFile = ConfigFile.new()
-	if save.load(save_path) != OK or save.get_value("campaign", "version", 0) != 1:
+	if save.load(save_path) != OK:
+		return
+	var version_value: Variant = save.get_value("campaign", "version", 0)
+	if not (version_value is int):
+		return
+	if int(version_value) != 1:
 		return
 	calibration_complete = _saved_flag(save, "calibration_complete")
 	factory_complete = calibration_complete and _saved_flag(save, "factory_complete")
