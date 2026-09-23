@@ -25,7 +25,7 @@ script = ExtResource("4_health")
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(309, -132)
+position = Vector2(309, -72)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = ExtResource("5_camera")
