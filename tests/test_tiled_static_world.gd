@@ -35,7 +35,6 @@ func test_platforms_are_derived_from_the_semantic_tilemap_layer() -> void:
 	assert_eq(int(one_way.get("end_x", -1)), 15)
 	assert_eq(int(one_way.get("height", -1)), 5)
 	assert_eq(str(one_way.get("surface_type", "")), "one_way")
-	assert_true(player.get_collision_mask_value(2), "Player should initially collide with the separate one-way physics layer")
 
 	var platform_c: Dictionary = world.get_platform_below(19 * TILE)
 	assert_eq(int(platform_c.get("start_x", -1)), 17)
@@ -125,11 +124,13 @@ func test_gap_is_open_and_approximately_the_width_of_the_player() -> void:
 	assert_false(player.is_on_floor(), "The open gap must not stop the player")
 	assert_true(player.global_position.y > gap_surface_y + 50.0, "The player should fall through the open gap")
 
+
 func test_one_way_platform_can_be_entered_from_below() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
+	assert_true(player.get_collision_mask_value(2), "Player should initially collide with the separate one-way physics layer")
 
 	var one_way_surface_y: float = 5 * TILE
 	player.global_position = Vector2(14 * TILE + 16, one_way_surface_y + 40.0)
