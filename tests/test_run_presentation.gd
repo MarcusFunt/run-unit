@@ -76,12 +76,12 @@ func test_feedback_effects_stay_in_world_space() -> void:
 	assert_true(feedback.top_level, "The feedback layer must not inherit the player's transform")
 
 	feedback.play_game_over_feedback()
-	var effect: AnimatedSprite2D = null
+	var effect: CPUParticles2D = null
 	for child: Node in feedback.get_children():
-		if child is AnimatedSprite2D:
-			effect = child as AnimatedSprite2D
+		if child is CPUParticles2D:
+			effect = child as CPUParticles2D
 			break
-	assert_not_null(effect, "The game-over feedback should spawn an FX animation")
+	assert_not_null(effect, "The game-over feedback should spawn a world-space particle effect")
 	if effect == null:
 		return
 
