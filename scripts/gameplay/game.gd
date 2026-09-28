@@ -13,7 +13,7 @@ extends Node2D
 @onready var hud: RunUnitHud = $HUD
 @onready var debug_overlay: RunUnitDebugOverlay = $DebugOverlay
 @onready var death_menu: RunUnitDeathMenu = $DeathMenu
-## A level may own its ending (the tutorial's lift, Beacon 9's ignition
+## A level may own its ending (the inter-level portals, Beacon 9's ignition
 ## chamber). Routes without one finish on the results menu.
 @onready var route_exit: RunUnitRouteExit = _find_route_exit()
 

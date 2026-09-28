@@ -219,7 +219,9 @@ func test_deploying_factory_escape_plays_level_1() -> void:
 	assert_eq(game.world.scene_file_path, "res://scenes/levels/level_01_factory.tscn", "Factory Escape should load the Level 1 world")
 	assert_eq(game.get_children().filter(func(child: Node) -> bool: return child is RunUnitStaticWorld).size(), 1, "Only the selected world should be in the game")
 	assert_eq(game.world.get_parent(), game)
-	assert_null(game.route_exit, "Level 1 has no ending of its own")
+	assert_not_null(game.route_exit, "Level 1 should end at the dimensional portal")
+	assert_true(game.route_exit is RunUnitDimensionalPortalExit)
+	assert_eq(game.route_exit.next_scene_path, "res://scenes/game.tscn")
 	assert_eq(game.player.global_position, Vector2(160.0, 385.0), "The run should start at Level 1's Spawn marker")
 	assert_eq(RunUnitSession.selected_level_index, LEVEL_1_INDEX, "The session should remember the deployed route for retries")
 	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()
@@ -230,19 +232,22 @@ func test_deploying_calibration_still_plays_the_tutorial() -> void:
 	var game: RunUnitGame = _instantiate_game_for(0)
 
 	assert_eq(game.world.scene_file_path, "res://scenes/world.tscn")
-	assert_not_null(game.route_exit, "The tutorial keeps its lift exit")
+	assert_not_null(game.route_exit, "The tutorial should hand off through the dimensional portal")
+	assert_true(game.route_exit is RunUnitDimensionalPortalExit)
 
 
-func test_completing_level_1_opens_the_results_menu() -> void:
+func test_completing_level_1_starts_the_portal_handoff() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_1_INDEX)
 
 	game.world.route_completed.emit()
 
 	assert_true(game.is_terminal())
 	assert_eq(RunUnitSession.last_run_outcome, "completed")
-	assert_true(game.death_menu.visible, "Without a lift exit, completion should show the results menu")
-	assert_true(game.death_menu.description_label.text.contains("01  FACTORY ESCAPE CERTIFIED"), "Results copy should name the campaign route")
-	assert_true(game.death_menu.description_label.text.contains("Exterior wall breached"), "Results copy should come from Level 1, not the tutorial")
+	assert_false(game.death_menu.visible, "Portal completion should stay in-world instead of opening the results menu")
+	assert_not_null(game.route_exit)
+	if game.route_exit != null:
+		assert_true(game.route_exit.transition_started, "Completing Factory Escape should activate the portal")
+		assert_eq(game.route_exit.next_scene_path, "res://scenes/game.tscn")
 
 
 func test_factory_escape_adds_two_readable_timed_floor_faults() -> void:

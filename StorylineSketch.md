@@ -31,9 +31,9 @@ UNIT-07 activates in a calibration/testing tunnel. Factory systems guide the rob
 
 The environment should make each action feel like part of an industrial test rather than a floating tutorial challenge. The calibration area is enclosed, mechanical, and controlled, although signs of failure are already present.
 
-The final crouch lesson is a malfunctioning transfer/elevator door that is stuck partially closed. UNIT-07 crouches beneath it; the antenna physically folds against the low overhead clearance. Once UNIT-07 passes through, the door slams shut and the screen goes dark.
+The final crouch lesson is a malfunctioning transfer/elevator door that is stuck partially closed. UNIT-07 crouches beneath it; the antenna physically folds against the low overhead clearance. Beyond the damaged door, an unstable dimensional portal has formed in the transfer bay. UNIT-07 enters it and is pulled out of the calibration area.
 
-That blackout is the transition into Level 1.
+The portal transport is the transition into Level 1.
 
 ### What the player should understand
 
@@ -52,9 +52,9 @@ Level 1 turns the tutorial controls into real traversal and gives the first majo
 
 Target first-play time: roughly **5–7 minutes**.
 
-### 1. Elevator arrival / intact transfer line
+### 1. Portal arrival / intact transfer line
 
-The elevator opens into the production-transfer system. This should feel like the next place UNIT-07 would normally have gone after calibration.
+The portal drops UNIT-07 into the production-transfer system. This should still feel like the next place the unit would normally have reached after calibration, except the failed facility is now routing it through an impossible shortcut.
 
 The first section is comparatively intact. Stationary conveyor/transfer machinery forms long, readable platforms with easy gaps. The player uses the tutorial mechanics without further control prompts.
 
