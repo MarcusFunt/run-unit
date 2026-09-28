@@ -269,7 +269,9 @@ func test_deploying_recovery_plays_level_2() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
 
 	assert_eq(game.world.scene_file_path, "res://scenes/levels/level_02_recovery.tscn", "Recovery should load the Level 2 world")
-	assert_null(game.route_exit, "Level 2 has no ending of its own")
+	assert_not_null(game.route_exit, "Level 2 should end at the dimensional portal")
+	assert_true(game.route_exit is RunUnitDimensionalPortalExit)
+	assert_eq(game.route_exit.next_scene_path, "res://scenes/game.tscn")
 	assert_eq(game.player.global_position, Vector2(160.0, 321.0), "The run should start at Level 2's Spawn marker")
 	assert_eq(RunUnitSession.selected_level_index, LEVEL_2_INDEX, "The session should remember the deployed route for retries")
 	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()
@@ -287,7 +289,7 @@ func test_restarting_a_recovery_run_resets_the_cradle() -> void:
 	assert_null(cradle.get_mounted_module())
 
 
-func test_completing_level_2_opens_the_results_menu() -> void:
+func test_completing_level_2_starts_the_portal_handoff() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
 	(game.world.get_node("ModuleCradle") as RunUnitModuleCradle).acquire_for(game.player)
 
@@ -295,9 +297,11 @@ func test_completing_level_2_opens_the_results_menu() -> void:
 
 	assert_true(game.is_terminal())
 	assert_eq(RunUnitSession.last_run_outcome, "completed")
-	assert_true(game.death_menu.visible, "Without a lift exit, completion should show the results menu")
-	assert_true(game.death_menu.description_label.text.contains("02  RECOVERY"), "Results copy should name the campaign route")
-	assert_true(game.death_menu.description_label.text.contains("Beacon 9"), "Results copy should come from Level 2")
+	assert_false(game.death_menu.visible, "Portal completion should stay in-world instead of opening the results menu")
+	assert_not_null(game.route_exit)
+	if game.route_exit != null:
+		assert_true(game.route_exit.transition_started, "Completing Recovery should activate the portal")
+		assert_eq(game.route_exit.next_scene_path, "res://scenes/game.tscn")
 
 
 func test_recovery_exit_without_module_does_not_certify_objective() -> void:
