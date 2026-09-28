@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="13_station"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="14_saw"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/laser_gate.tscn" id="15_laser"]
+[ext_resource type="PackedScene" path="res://scenes/props/dimensional_portal_exit.tscn" id="16_portal"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
 size = Vector2(72, 96)
@@ -268,3 +269,7 @@ text = "CRITICAL REPLACEMENT ASSEMBLY
 RESERVE DEPOT 03"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DimensionalPortalExit" parent="." instance=ExtResource("16_portal")]
+position = Vector2(12512, 448)
+next_scene_path = "res://scenes/game.tscn"

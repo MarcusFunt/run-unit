@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/maintenance_shaft.tmj" id="2_level"]
-[ext_resource type="Script" path="res://scripts/world/tutorial_elevator_exit.gd" id="3_exit"]
+[ext_resource type="PackedScene" path="res://scenes/props/dimensional_portal_exit.tscn" id="3_portal"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="4_door_open"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/doorunlocked.png" id="5_door_closed"]
 [ext_resource type="Texture2D" path="res://assets/source/icons/arrow_left.svg" id="6_arrow_left"]
@@ -36,8 +36,6 @@ polygon = PackedVector2Array(-256, 350, 2560, 350, 2560, 520, -256, 520)
 
 [node name="ElevatorExit" type="Node2D" parent="."]
 position = Vector2(1968, 416)
-script = ExtResource("3_exit")
-next_scene_path = "res://scenes/game.tscn"
 
 [node name="Interior" type="Polygon2D" parent="ElevatorExit"]
 color = Color(0.008, 0.014, 0.022, 1)
@@ -68,17 +66,9 @@ texture = ExtResource("5_door_closed")
 position = Vector2(0, -104.4)
 scale = Vector2(0.45, 0.45)
 
-[node name="BlackoutLayer" type="CanvasLayer" parent="ElevatorExit"]
-layer = 100
-
-[node name="Blackout" type="ColorRect" parent="ElevatorExit/BlackoutLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0)
+[node name="DimensionalPortalExit" parent="." instance=ExtResource("3_portal")]
+position = Vector2(2032, 352)
+next_scene_path = "res://scenes/game.tscn"
 
 [node name="TutorialSigns" type="Node2D" parent="."]
 z_index = 5
