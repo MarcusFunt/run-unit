@@ -23,6 +23,17 @@ func _instantiate_level() -> RunUnitStaticWorld:
 	return world
 
 
+func _assert_clearance_treatment(world: RunUnitStaticWorld, gate_name: String, expected_position: Vector2) -> void:
+	var gate: Node2D = world.get_node_or_null("ClearanceTreatments/" + gate_name) as Node2D
+	assert_not_null(gate, "%s treatment must be present" % gate_name)
+	if gate == null:
+		return
+	assert_eq(gate.global_position, expected_position, "%s treatment aligns to its authored gate" % gate_name)
+	assert_false(gate is CollisionObject2D, "%s treatment must stay decorative" % gate_name)
+	var bounds: Rect2 = gate.call("get_visual_bounds")
+	assert_eq(bounds.size, Vector2(96.0, 32.0), "%s treatment keeps the authored gate span" % gate_name)
+
+
 func _drive_through_gate(gate_left_x: float, deck_y: float, crouch: bool) -> float:
 	_instantiate_level()
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
@@ -82,6 +93,11 @@ func _jump_to_next_platform(from_index: int, charge_frames: int) -> bool:
 	player.free()
 	world.free()
 	return landed
+
+
+func test_crouch_gate_visual_treatments_are_aligned_and_non_colliding() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	_assert_clearance_treatment(world, "BeaconCanyonGate", Vector2(8240.0, 736.0))
 
 
 func test_level_03_has_the_expected_route() -> void:
