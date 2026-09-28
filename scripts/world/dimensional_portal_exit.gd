@@ -46,10 +46,7 @@ func begin_transition() -> void:
 	_transition_tween.tween_property(portal, "scale", Vector2.ONE * 2.7, surge_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_transition_tween.parallel().tween_property(halo, "scale", Vector2.ONE * 3.35, surge_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_transition_tween.parallel().tween_property(halo, "modulate:a", 0.5, surge_duration)
-	if not next_scene_path.is_empty():
-		_transition_tween.tween_property(blackout, "color:a", 1.0, fade_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-		_transition_tween.parallel().tween_property(portal, "modulate:a", 0.0, fade_duration)
-		_transition_tween.parallel().tween_property(halo, "modulate:a", 0.0, fade_duration)
-	else:
-		_transition_tween.tween_interval(fade_duration)
+	_transition_tween.tween_property(blackout, "color:a", 1.0, fade_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_transition_tween.parallel().tween_property(portal, "modulate:a", 0.0, fade_duration)
+	_transition_tween.parallel().tween_property(halo, "modulate:a", 0.0, fade_duration)
 	_transition_tween.tween_callback(finish_transition)
