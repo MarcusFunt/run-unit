@@ -4,8 +4,8 @@ extends Node2D
 ## A level-owned ending.
 ##
 ## When a run completes, RunUnitGame hands control to the route's exit instead
-## of opening the results menu: the tutorial closes its transfer door, Beacon 9
-## installs the module and lights up. The exit reports back through
+## of opening the results menu: inter-level portals transport UNIT-07 onward,
+## while Beacon 9 installs the module and lights up. The exit reports back through
 ## `transition_finished`, then loads `next_scene_path`; an exit that leaves that
 ## path empty falls back to the results menu, so a level can own its ending
 ## without owning what comes after it.

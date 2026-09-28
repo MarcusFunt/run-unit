@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/dimensional_portal_exit.gd" id="1_portal"]
+[ext_resource type="Texture2D" path="res://assets/images/dimensional_portal.png" id="2_texture"]
+
+[node name="DimensionalPortalExit" type="Node2D"]
+z_index = 18
+script = ExtResource("1_portal")
+
+[node name="Halo" type="Sprite2D" parent="."]
+z_index = -1
+modulate = Color(0.58, 1, 0.7, 0.18)
+texture = ExtResource("2_texture")
+hframes = 3
+vframes = 2
+scale = Vector2(2.55, 2.55)
+
+[node name="Portal" type="Sprite2D" parent="."]
+texture = ExtResource("2_texture")
+hframes = 3
+vframes = 2
+scale = Vector2(2, 2)
+
+[node name="BlackoutLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Blackout" type="ColorRect" parent="BlackoutLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
