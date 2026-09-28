@@ -115,9 +115,26 @@ func test_player_lands_on_the_shipping_starting_deck() -> void:
 	assert_almost_eq(player.global_position.y, 448.0 - 32.0, 6.0, "The player settles on the tiled deck surface")
 
 
+func test_calibration_crouch_prompt_precedes_the_safe_required_gate() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+
+	var prompt: Node2D = world.get_node_or_null("TutorialSigns/CrouchPrompt") as Node2D
+	assert_not_null(prompt, "Calibration labels the required crouch gate")
+	if prompt == null:
+		return
+	assert_eq(prompt.global_position.x, 1770.0)
+	assert_lt(prompt.global_position.x, GATE_LEFT_X, "The instruction appears before the real gate")
+
+	var heading: Label = prompt.get_node_or_null("Heading") as Label
+	assert_not_null(heading)
+	if heading != null:
+		assert_eq(heading.text, "04 // CROUCH")
+	assert_null(world.get_node_or_null("ElectricalFaults"), "Calibration remains a safe teaching route")
+
+
 ## The gate tile's collider is shorter than its 32px cell, leaving just enough
-## clearance to force a crouch, which is the whole reason the crouch lesson
-## survives being put on a 32px grid. These two tests pin that behaviour to
+## clearance to force a crouch. These passability tests pin that behaviour to
 ## the real tile rather than a synthetic ceiling.
 func test_shipping_crouch_gate_blocks_a_standing_player() -> void:
 	var reached_x: float = await _drive_through_gate(false)

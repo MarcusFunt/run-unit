@@ -37,7 +37,13 @@ The playable geometry is authored in Tiled and imported through YATI:
 - `scripts/gameplay/campaign_routes.gd` — the campaign route table the selector, game, and results menu all read
 - `scripts/world/static_world.gd` — indexes imported semantic tiles and authored markers
 
-`Semantic` owns route collision, `Obstacles` owns non-platform blockers such as the crouch gate, `ArtFill` / `ArtDeck` are decoration-only, and `Markers` supplies Spawn/Goal points.
+`Semantic` owns route collision, `Obstacles` owns non-platform blockers such as crouch gates, `ArtBackground` / `ArtStructure` / `ArtDeck` are decoration-only, and `Markers` supplies Spawn/Goal points.
+
+### Walkability and clearance visual rule
+
+Only a solid or one-way cell in `Semantic` supports UNIT. The bright cyan top rim drawn by `WalkableEdges` is the strongest continuous horizontal cue in the scene, and the high-contrast `ArtDeck` top-face tiles must occupy the same cells as semantic support. Keep similar edges in `ArtBackground` and `ArtStructure` subdued or broken so scenery does not read as a landing. `Obstacles` keeps crouch-gate collision in Tiled; a dark overhang with a narrow amber lower lip may clarify the constraint, but that foreground treatment is draw-only and must stay aligned to the existing obstacle span.
+
+Calibration keeps its visible `04 // CROUCH` prompt ahead of the existing required gate. That route has no hazards, so players can learn the crouch clearance safely.
 
 ## Level kit
 

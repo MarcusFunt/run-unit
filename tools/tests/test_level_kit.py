@@ -68,6 +68,45 @@ class SketchRoundTripTests(unittest.TestCase):
             self.assertIsNotNone(level.layer(level_kit.MARKER_LAYER))
 
 
+class WalkabilityVisualGrammarTests(unittest.TestCase):
+    ROUTE_MAPS = [
+        PROJECT_ROOT / "assets" / "tiled" / "levels" / "maintenance_shaft.tmj",
+        PROJECT_ROOT / "assets" / "tiled" / "levels" / "level_01_factory.tmj",
+        PROJECT_ROOT / "assets" / "tiled" / "levels" / "level_02_recovery.tmj",
+        PROJECT_ROOT / "assets" / "tiled" / "levels" / "level_03_beacon.tmj",
+    ]
+    # Global GIDs for the high-contrast industrial platform top and edge tiles.
+    PLATFORM_FACE_GIDS = frozenset({61, 62, 63, 64, 65, 66, 73, 74, 75})
+
+    def test_platform_face_art_only_appears_over_semantic_support(self) -> None:
+        violations = []
+        for path in self.ROUTE_MAPS:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            layers = {}
+
+            def collect(items: list[dict]) -> None:
+                for layer in items:
+                    layers[layer["name"]] = layer
+                    if "layers" in layer:
+                        collect(layer["layers"])
+
+            collect(data["layers"])
+            semantic = layers["Semantic"]["data"]
+            for layer_name in ("ArtBackground", "ArtStructure", "ArtDeck"):
+                for index, raw_gid in enumerate(layers[layer_name]["data"]):
+                    gid = raw_gid & 0x1FFFFFFF  # ignore Tiled flip/rotation flags
+                    if gid in self.PLATFORM_FACE_GIDS and semantic[index] not in (1, 2):
+                        x = index % data["width"]
+                        y = index // data["width"]
+                        violations.append(f"{path.name}:{layer_name}({x},{y}) GID {gid}")
+
+        self.assertEqual(
+            violations,
+            [],
+            "high-contrast platform face art must agree with solid or one-way Semantic support",
+        )
+
+
 class SurfaceExtractionTests(unittest.TestCase):
     def test_buried_rows_do_not_become_extra_platforms(self) -> None:
         grid = [
