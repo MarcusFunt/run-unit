@@ -61,6 +61,7 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 	if hud != null:
 		hud.set_objective("EXIT FACILITY // DELIVER ASSEMBLY")
 		hud.show_system_message("ASSEMBLY SECURED // EXIT FACILITY", 3.4)
+	RunUnitAudio.play_event("module_acquired")
 	module_acquired.emit()
 
 func _set_shutdown(active: bool) -> void:

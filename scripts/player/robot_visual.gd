@@ -361,13 +361,6 @@ func _update_charge_visuals() -> void:
 		var glow: float = [0.0, 0.35, 0.75, 1.0][stage]
 		charge_core.color = Color(0.35, 0.95, 0.96, glow)
 		charge_core.scale = Vector2.ONE * (0.8 + 0.2 * glow)
-	if stage > 0 and stage != _charge_stage:
-		var feedback: RunUnitPlayerFeedback = player.get_node_or_null("Feedback") as RunUnitPlayerFeedback
-		if feedback != null:
-			if stage == 3:
-				feedback.play_charge_ready()
-			else:
-				feedback.play_charge_stage(stage)
 	_charge_stage = stage
 
 func _apply_pose(upper_degrees: float, knee_degrees: float, body_lean: float, wheel_spin: float) -> void:

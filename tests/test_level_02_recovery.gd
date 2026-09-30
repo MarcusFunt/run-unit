@@ -301,6 +301,18 @@ func test_restarting_a_recovery_run_resets_the_cradle() -> void:
 
 
 func test_completing_level_2_starts_the_portal_handoff() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
+	(game.world.get_node("ModuleCradle") as RunUnitModuleCradle).acquire_for(game.player)
+
+	game.world.route_completed.emit()
+
+	assert_true(game.is_terminal())
+	assert_eq(RunUnitSession.last_run_outcome, "completed")
+	assert_false(game.death_menu.visible, "Portal completion should stay in-world instead of opening the results menu")
+	assert_not_null(game.route_exit)
+	if game.route_exit != null:
+		assert_true(game.route_exit.transition_started, "Completing Recovery should activate the portal")
+		assert_eq(game.route_exit.next_scene_path, "res://scenes/game.tscn")
 
 func test_module_is_acquired_in_the_target_progress_band_and_leads_to_a_short_exit() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()

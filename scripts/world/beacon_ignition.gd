@@ -124,6 +124,7 @@ func _process(delta: float) -> void:
 		})
 		if ratio >= 0.98:
 			interaction_completed.emit()
+			RunUnitAudio.play_event("beacon_online", -5.0)
 			_start_activation_sequence()
 		else:
 			_interaction_charge_seconds = 0.0
@@ -222,6 +223,7 @@ func _light_stage(index: int) -> void:
 	lit_stages += 1
 	activation_label.text = STAGE_COPY[index] if index < STAGE_COPY.size() else "SYSTEM STAGE %02d ONLINE" % (index + 1)
 	activation_progress.value = lerpf(24.0, 92.0, float(lit_stages) / maxf(float(stage_paths.size()), 1.0))
+	RunUnitAudio.play_event("beacon_stage", -12.0)
 func _declare_success() -> void:
 	activation_label.text = "BEACON 9 ONLINE  //  GRID SYNCHRONIZED"
 	activation_progress.value = 100.0
