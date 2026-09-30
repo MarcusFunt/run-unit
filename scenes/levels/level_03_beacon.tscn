@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/world/carried_module.gd" id="3_carried"]
 [ext_resource type="Script" path="res://scripts/world/beacon_ignition.gd" id="4_ignition"]
 [ext_resource type="Script" path="res://scripts/world/beacon_approach.gd" id="5_approach"]
-[ext_resource type="Texture2D" path="res://assets/generated/atlases/battery_charge_cyan_18x25.png" id="6_module"]
+[ext_resource type="SpriteFrames" path="res://assets/generated/godot/spriteframes/ui/battery_charge.tres" id="6_module"]
 [ext_resource type="PackedScene" path="res://scenes/props/beacon_9_skyline.tscn" id="7_beacon"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_4.png" id="8_city4"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_3.png" id="9_city3"]
@@ -188,14 +188,13 @@ hitstun_seconds = 0.12
 [node name="CarriedModule" type="Node2D" parent="." unique_id=2036385438]
 script = ExtResource("3_carried")
 
-[node name="ModuleTemplate" type="Sprite2D" parent="CarriedModule" unique_id=1173072084]
+[node name="ModuleTemplate" type="AnimatedSprite2D" parent="CarriedModule" unique_id=1173072084]
 visible = false
 modulate = Color(1, 0.72, 0.35, 1)
 scale = Vector2(1.6, 1.6)
-texture = ExtResource("6_module")
-hframes = 10
-vframes = 6
-frame = 14
+sprite_frames = ExtResource("6_module")
+animation = &"palette_0"
+autoplay = "palette_0"
 
 [node name="IgnitionChamber" type="Node2D" parent="." unique_id=2120194067]
 position = Vector2(15600, 160)

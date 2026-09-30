@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
 [ext_resource type="Script" path="res://scripts/world/recovery_module_cradle.gd" id="3_cradle"]
-[ext_resource type="Texture2D" path="res://assets/generated/atlases/battery_charge_cyan_18x25.png" id="4_module"]
+[ext_resource type="SpriteFrames" path="res://assets/generated/godot/spriteframes/ui/battery_charge.tres" id="4_module"]
 [ext_resource type="SpriteFrames" path="res://assets/generated/godot/spriteframes/industrial/screen1.tres" id="5_screen"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_4.png" id="6_city4"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_3.png" id="7_city3"]
@@ -199,14 +199,13 @@ polygon = PackedVector2Array(-72, -56, 72, -56, 72, 44, -72, 44)
 color = Color(0.02, 0.1, 0.12, 1)
 polygon = PackedVector2Array(-64, -48, 64, -48, 64, 36, -64, 36)
 
-[node name="ModulePreview" type="Sprite2D" parent="AssemblyMonitor" unique_id=2021294795]
+[node name="ModulePreview" type="AnimatedSprite2D" parent="AssemblyMonitor" unique_id=2021294795]
 modulate = Color(1, 0.72, 0.35, 1)
 position = Vector2(-30, -6)
 scale = Vector2(2, 2)
-texture = ExtResource("4_module")
-hframes = 10
-vframes = 6
-frame = 14
+sprite_frames = ExtResource("4_module")
+animation = &"palette_0"
+autoplay = "palette_0"
 
 [node name="Status" type="AnimatedSprite2D" parent="AssemblyMonitor" unique_id=2044320793]
 position = Vector2(30, -6)
@@ -246,14 +245,13 @@ theme_override_colors/font_color = Color(1, 0.78, 0.46, 1)
 theme_override_font_sizes/font_size = 14
 text = "IGNITION ASSEMBLY DETECTED"
 
-[node name="CradleModule" type="Sprite2D" parent="ModuleCradle" unique_id=862379264]
+[node name="CradleModule" type="AnimatedSprite2D" parent="ModuleCradle" unique_id=862379264]
 modulate = Color(1, 0.72, 0.35, 1)
 position = Vector2(0, 8)
 scale = Vector2(1.6, 1.6)
-texture = ExtResource("4_module")
-hframes = 10
-vframes = 6
-frame = 14
+sprite_frames = ExtResource("4_module")
+animation = &"palette_0"
+autoplay = "palette_0"
 
 [node name="AcquisitionReadout" type="Label" parent="ModuleCradle" unique_id=1993186327]
 visible = false
