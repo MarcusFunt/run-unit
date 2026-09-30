@@ -10,7 +10,10 @@ extends RefCounted
 
 const MOUNT_PARENT: String = "RobotVisual/BodyPivot"
 const MOUNT_NAME: StringName = &"MountedModule"
-const MOUNT_OFFSET: Vector2 = Vector2(165.0, -30.0)
+# Keep the battery just beyond the torso's rear edge. It renders behind the
+# body pivot, so the original offset let the torso cover most of it as the body
+# leaned and made the carried animation appear to blink.
+const MOUNT_OFFSET: Vector2 = Vector2(260.0, -30.0)
 const MOUNT_SCALE: float = 4.4
 ## Used when the robot has no visual rig to hang the module on.
 const FALLBACK_OFFSET: Vector2 = Vector2(0.0, -40.0)
