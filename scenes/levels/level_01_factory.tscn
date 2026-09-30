@@ -462,7 +462,10 @@ next_scene_path = "res://scenes/game.tscn"
 z_index = 5
 
 [node name="FactoryTransferGate" parent="ClearanceTreatments" instance=ExtResource("12_clearance_gate")]
-position = Vector2(1040, 416)
+position = Vector2(1040, 448)
 
 [node name="FactoryStorageGate" parent="ClearanceTreatments" instance=ExtResource("12_clearance_gate")]
-position = Vector2(4560, 704)
+position = Vector2(4560, 736)
+
+[node name="FactoryExteriorGate" parent="ClearanceTreatments" instance=ExtResource("12_clearance_gate")]
+position = Vector2(7920, 704)

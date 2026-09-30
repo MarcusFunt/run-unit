@@ -208,9 +208,18 @@ func test_calibration_crouch_prompt_precedes_the_safe_required_gate() -> void:
 			assert_eq(full_charge_keys.text, "RELEASE WHEN THE LOCK GLOWS")
 
 
-## The gate tile's collider is shorter than its 32px cell, leaving just enough
-## clearance to force a crouch. These passability tests pin that behaviour to
-## the real tile rather than a synthetic ceiling.
+## The gate's opening clears the visible torso and antenna while remaining
+## shorter than the standing body collider. Passability is pinned to the real
+## shared gate tile rather than a synthetic ceiling.
+func test_player_collider_is_aligned_to_the_full_robot_height() -> void:
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	var collision: CollisionShape2D = player.get_node("CollisionShape2D") as CollisionShape2D
+	var rectangle: RectangleShape2D = collision.shape as RectangleShape2D
+	assert_eq(rectangle.size, Vector2(50.0, 120.0))
+	assert_eq(collision.position, Vector2(0.0, -28.0), "The shape keeps its feet at the existing floor anchor")
+
+
 func test_shipping_crouch_gate_blocks_a_standing_player() -> void:
 	var reached_x: float = await _drive_through_gate(false)
 	assert_true(reached_x < GATE_LEFT_X, "A standing player must be stopped by the gate, got x=%.1f" % reached_x)
@@ -221,9 +230,9 @@ func test_shipping_crouch_gate_lets_a_crouched_player_through() -> void:
 	assert_true(reached_x > GATE_RIGHT_X, "A crouched player must clear the gate, got x=%.1f" % reached_x)
 
 
-func test_shipping_jammed_door_is_lower_than_a_partial_crouch() -> void:
+func test_shipping_gate_allows_a_partial_crouch() -> void:
 	var reached_x: float = await _drive_through_gate(true, 48.0)
-	assert_true(reached_x < GATE_LEFT_X, "A 48 px partial crouch must still be blocked by the lower jammed door, got x=%.1f" % reached_x)
+	assert_true(reached_x > GATE_RIGHT_X, "A crouched body should fit below the raised torso-height gate, got x=%.1f" % reached_x)
 
 
 ## The game stops the player the moment the Goal trigger fires and slams the

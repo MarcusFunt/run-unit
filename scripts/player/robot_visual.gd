@@ -400,6 +400,7 @@ func apply_pose_for_test(upper_degrees: float, knee_degrees: float, body_lean: f
 
 func set_facing_left_for_test(value: bool) -> void:
 	_facing_left = value
+	scale.x = 1.0 if _facing_left else -1.0
 
 func update_wheel_for_test(delta: float) -> void:
 	_update_wheel_spin(delta)

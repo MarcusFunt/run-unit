@@ -460,6 +460,7 @@ class PlayerPhysics:
     crouch_collision_height: float = 36.0
     body_width: float = 50.0
     body_height: float = 64.0
+    body_center_offset_y: float = 0.0
     death_y: float = 900.0
 
     @classmethod
@@ -485,10 +486,23 @@ class PlayerPhysics:
                     setattr(physics, name, float(match.group(1)))
         player = project_root / "scenes" / "player.tscn"
         if player.is_file():
-            match = re.search(r"size\s*=\s*Vector2\((-?[0-9.]+),\s*(-?[0-9.]+)\)", player.read_text(encoding="utf-8"))
+            player_scene = player.read_text(encoding="utf-8")
+            match = re.search(r"size\s*=\s*Vector2\((-?[0-9.]+),\s*(-?[0-9.]+)\)", player_scene)
             if match:
                 physics.body_width = float(match.group(1))
                 physics.body_height = float(match.group(2))
+            collision_shape = re.search(
+                r'\[node name="CollisionShape2D"[^\]]*\]\n(.*?)(?=\n\[node|\Z)',
+                player_scene,
+                re.DOTALL,
+            )
+            if collision_shape:
+                offset = re.search(
+                    r"position\s*=\s*Vector2\((-?[0-9.]+),\s*(-?[0-9.]+)\)",
+                    collision_shape.group(1),
+                )
+                if offset:
+                    physics.body_center_offset_y = float(offset.group(2))
         world = project_root / "scripts" / "world" / "static_world.gd"
         if world.is_file():
             match = re.search(r"var\s+death_y\s*:\s*float\s*=\s*(-?[0-9.]+)", world.read_text(encoding="utf-8"))
@@ -720,7 +734,7 @@ class RouteGraph:
 
     def drop_onto(self, world_x: float, world_y: float) -> Ledge | None:
         """Which ledge a body released at a world position comes to rest on."""
-        feet = world_y + self.physics.body_height / 2.0
+        feet = world_y + self.physics.body_center_offset_y + self.physics.body_height / 2.0
         landing = self.simulate(world_x, feet, 0, None, max_time=6.0)
         if landing is None:
             return None
@@ -1252,7 +1266,13 @@ def check_level(level: LevelMap, physics: PlayerPhysics | None = None, margin: f
     if spawn is None:
         return report
 
-    if world.blocked(spawn[0] - physics.body_width / 2, spawn[1] - physics.body_height / 2, spawn[0] + physics.body_width / 2, spawn[1] + physics.body_height / 2):
+    spawn_center_y = spawn[1] + physics.body_center_offset_y
+    if world.blocked(
+        spawn[0] - physics.body_width / 2,
+        spawn_center_y - physics.body_height / 2,
+        spawn[0] + physics.body_width / 2,
+        spawn_center_y + physics.body_height / 2,
+    ):
         report.errors.append("%s at (%g, %g) starts inside collision" % (SPAWN_MARKER, spawn[0], spawn[1]))
     spawn_ledge = graph.drop_onto(*spawn)
     if spawn_ledge is None:

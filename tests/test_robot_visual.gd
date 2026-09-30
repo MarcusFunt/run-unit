@@ -388,15 +388,46 @@ func test_antenna_folds_under_shipping_jammed_elevator_door() -> void:
 	player._is_crouching = true
 	player.crouch_ratio = 1.0
 	player._update_crouch_collision()
-	await get_tree().physics_frame
-	await get_tree().physics_frame
 	player.set_physics_process(false)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
 
 	for frame: int in range(8):
 		visual.run_process_for_test(0.016)
 
-	assert_gt(absf(visual.antenna_pivot.rotation), deg_to_rad(45.0), "The real jammed elevator door should visibly fold the crouched antenna")
+	assert_gt(
+		absf(visual.antenna_pivot.rotation),
+		deg_to_rad(45.0),
+		"The gate clears the crouched body and flexes the antenna when approached facing left"
+	)
+
+
+func test_antenna_folds_under_shipping_jammed_elevator_door_when_facing_right() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(world)
+	add_child_autofree(player)
+	player.global_position = Vector2(1988.0, 384.0)
+	player._is_crouching = true
+	player.crouch_ratio = 1.0
+	player._update_crouch_collision()
+	player.set_physics_process(false)
+	var visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+	visual.set_process(false)
+	visual.set_facing_left_for_test(false)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	for frame: int in range(8):
+		visual.run_process_for_test(0.016)
+
+	assert_almost_eq(
+		absf(visual.antenna_pivot.rotation),
+		deg_to_rad(65.0),
+		deg_to_rad(2.0),
+		"The gate should bend the crouched antenna equally while facing right"
+	)
 
 
 func test_antenna_folds_when_free_tip_starts_inside_overhang() -> void:

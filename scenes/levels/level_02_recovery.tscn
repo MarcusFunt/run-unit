@@ -307,10 +307,10 @@ next_scene_path = "res://scenes/game.tscn"
 z_index = 5
 
 [node name="RecoveryHatch" parent="ClearanceTreatments" instance=ExtResource("17_clearance_gate")]
-position = Vector2(4848, 416)
+position = Vector2(4848, 448)
 
 [node name="RecoveryShutter" parent="ClearanceTreatments" instance=ExtResource("17_clearance_gate")]
-position = Vector2(10000, 544)
+position = Vector2(10000, 576)
 
 [node name="LockdownSign" type="Label" parent="RecoverySigns" unique_id=1524602731]
 visible = false

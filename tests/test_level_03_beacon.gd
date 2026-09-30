@@ -32,6 +32,22 @@ func _assert_clearance_treatment(world: RunUnitStaticWorld, gate_name: String, e
 	assert_false(gate is CollisionObject2D, "%s treatment must stay decorative" % gate_name)
 	var bounds: Rect2 = gate.call("get_visual_bounds")
 	assert_eq(bounds.size, Vector2(96.0, 32.0), "%s treatment keeps the authored gate span" % gate_name)
+	assert_eq(bounds.position.y, -134.0, "%s treatment stays at the lowered, body-clearing height" % gate_name)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = Vector2(expected_position.x, expected_position.y - 32.0)
+	player._is_crouching = true
+	player.crouch_ratio = 1.0
+	var player_visual: RunUnitRobotVisual = player.get_node("RobotVisual") as RunUnitRobotVisual
+	player_visual.set_process(false)
+	player_visual.run_process_for_test(0.016)
+	var body: Sprite2D = player_visual.get_node("BodyPivot/Body") as Sprite2D
+	var body_rect: Rect2 = body.get_rect()
+	var body_top_y: float = minf(
+		body.to_global(body_rect.position).y,
+		body.to_global(Vector2(body_rect.end.x, body_rect.position.y)).y
+	)
+	assert_gt(body_top_y, gate.global_position.y + bounds.end.y, "%s leaves the crouched robot's body clear" % gate_name)
 
 
 func _drive_through_gate(gate_left_x: float, deck_y: float, crouch: bool) -> float:
@@ -97,7 +113,7 @@ func _jump_to_next_platform(from_index: int, charge_frames: int) -> bool:
 
 func test_crouch_gate_visual_treatments_are_aligned_and_non_colliding() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
-	_assert_clearance_treatment(world, "BeaconCanyonGate", Vector2(8240.0, 736.0))
+	_assert_clearance_treatment(world, "BeaconCanyonGate", Vector2(8240.0, 768.0))
 
 
 func test_level_03_has_the_expected_route() -> void:

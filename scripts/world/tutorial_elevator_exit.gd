@@ -1,8 +1,8 @@
 class_name RunUnitTutorialElevatorExit
 extends RunUnitRouteExit
 
-## Leaf centre while jammed: its bottom edge sits 102 px above the deck, just
-## clear of the crouched robot's body but below a standing robot's.
+## The visible leaf ends about 102 px above the deck so the crouched silhouette
+## clears it; the semantic collider sits lower for flexible antenna contact.
 @export var jammed_leaf_y: float = -189.75
 ## Leaf centre when shut, matching the panel inside ClosedDoor so the swap
 ## after the slam doesn't jump.

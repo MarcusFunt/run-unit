@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/player/follow_camera.gd" id="5_camera"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(50, 64)
+size = Vector2(50, 120)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
@@ -23,6 +23,7 @@ script = ExtResource("3_feedback")
 script = ExtResource("4_health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Camera2D" type="Camera2D" parent="."]

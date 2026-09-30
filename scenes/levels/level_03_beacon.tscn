@@ -528,4 +528,4 @@ horizontal_alignment = 1
 z_index = 5
 
 [node name="BeaconCanyonGate" parent="ClearanceTreatments" instance=ExtResource("17_clearance_gate")]
-position = Vector2(8240, 736)
+position = Vector2(8240, 768)

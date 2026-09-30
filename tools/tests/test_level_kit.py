@@ -131,6 +131,8 @@ class PhysicsSourceTests(unittest.TestCase):
         self.assertIn("var jump_velocity: float = %g" % physics.jump_velocity, motor)
         self.assertIn("var max_run_speed: float = %g" % physics.max_run_speed, motor)
         self.assertGreater(physics.body_height, physics.crouch_collision_height)
+        self.assertEqual(physics.body_height, 120.0)
+        self.assertEqual(physics.body_center_offset_y, -28.0)
 
     def test_a_stronger_charge_launches_harder(self) -> None:
         physics = level_kit.PlayerPhysics()
@@ -171,7 +173,7 @@ class CheckTests(unittest.TestCase):
             report = level_kit.check_level(level_from_rows(rows, Path(directory)))
         self.assertEqual(report.errors, [])
 
-    def test_a_gate_too_low_to_crouch_under_blocks_the_route(self) -> None:
+    def test_raised_shared_gate_keeps_its_crouch_route_reachable(self) -> None:
         rows = [
             "." * 20,
             "...." + "S" + "." * 15,
@@ -181,7 +183,8 @@ class CheckTests(unittest.TestCase):
         ]
         with tempfile.TemporaryDirectory() as directory:
             report = level_kit.check_level(level_from_rows(rows, Path(directory)))
-        self.assertTrue(any("unreachable" in error for error in report.errors))
+        self.assertEqual(report.errors, [])
+        self.assertTrue(any("crouch" in note for note in report.notes))
 
     def test_a_pit_with_no_way_out_is_reported_as_a_soft_lock(self) -> None:
         rows = [
