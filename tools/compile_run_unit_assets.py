@@ -283,17 +283,21 @@ def tiled_atlas(name: str, image_rel: str, image_size: tuple[int, int], tile_siz
 
 
 def write_spriteframes(target: Path, texture_path: str, frame_w: int, frame_h: int,
-                       frames: int, palette_rows: int, fps: int = 16) -> None:
+                       frames: int, palette_rows: int, fps: int = 16,
+                       columns: int | None = None) -> None:
+    columns = frames if columns is None else columns
     lines = ["[gd_resource type=\"SpriteFrames\" load_steps=%d format=3]" % (1 + frames * palette_rows), "",
              "[ext_resource type=\"Texture2D\" path=\"%s\" id=\"1_sheet\"]" % texture_path, ""]
     subresources = []
     for row in range(palette_rows):
         for frame in range(frames):
             identity = f"AtlasTexture_{row}_{frame}"
+            cell = row * frames + frame
+            x, y = (cell % columns) * frame_w, (cell // columns) * frame_h
             lines.extend([
                 f"[sub_resource type=\"AtlasTexture\" id=\"{identity}\"]",
                 "atlas = ExtResource(\"1_sheet\")",
-                f"region = Rect2({frame * frame_w}, {row * frame_h}, {frame_w}, {frame_h})",
+                f"region = Rect2({x}, {y}, {frame_w}, {frame_h})",
                 "",
             ])
             subresources.append((row, frame, identity))
@@ -849,7 +853,8 @@ def main() -> None:
     write_json(tiled / "battery_charge.tsj", tiled_atlas("RUN_UNIT_Battery_Charge", "../atlases/battery_charge_cyan_18x25.png",
                battery_atlas.size, (18, 25), battery_meta, "RUN_UNIT_UI"))
     write_spriteframes(godot / "spriteframes" / "ui" / "battery_charge.tres",
-                       "res://assets/generated/atlases/battery_charge_cyan_18x25.png", 18, 25, len(battery_meta), 1, 12)
+                       "res://assets/generated/atlases/battery_charge_cyan_18x25.png", 18, 25,
+                       len(battery_meta), 1, 12, columns=10)
     (licence_dir / "battery_provenance.txt").write_text(
         "Battery.zip was supplied by the user and contained no licence file. "
         "Treat the derived battery sprites as provenance-unverified until their upstream source and licence are recorded.\n",

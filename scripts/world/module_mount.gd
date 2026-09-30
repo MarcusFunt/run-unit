@@ -10,9 +10,7 @@ extends RefCounted
 
 const MOUNT_PARENT: String = "RobotVisual/BodyPivot"
 const MOUNT_NAME: StringName = &"MountedModule"
-# Seat the battery against the rear edge of the torso with a slight overlap, so
-# it reads as mounted instead of floating behind the robot.
-const MOUNT_OFFSET: Vector2 = Vector2(230.0, -30.0)
+const MOUNT_OFFSET: Vector2 = Vector2(165.0, -30.0)
 const MOUNT_SCALE: float = 4.4
 ## Used when the robot has no visual rig to hang the module on.
 const FALLBACK_OFFSET: Vector2 = Vector2(0.0, -40.0)
@@ -24,9 +22,8 @@ static func mount(player: RunUnitPlayerMotor, template: Node2D) -> Node2D:
 	var module: Node2D = template.duplicate() as Node2D
 	module.name = MOUNT_NAME
 	module.visible = true
-	# Keep the battery above the torso and route art. With it mounted on the
-	# outside edge, this prevents the carried animation from getting occluded.
-	module.z_index = 1
+	# Behind the body, so the robot reads as carrying it rather than wearing it.
+	module.z_index = -1
 	var mount_parent: Node2D = player.get_node_or_null(MOUNT_PARENT) as Node2D
 	if mount_parent == null:
 		mount_parent = player
