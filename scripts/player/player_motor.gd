@@ -37,6 +37,7 @@ var _jump_press_buffer_remaining: float = 0.0
 var _released_charge_ratio: float = 0.0
 var _was_on_floor: bool = false
 var _is_charging: bool = false
+var _recorded_charge_stage: int = 0
 var charge_ratio: float = 0.0
 var last_launch_velocity: float = 0.0
 var last_landing_speed: float = 0.0
@@ -72,6 +73,7 @@ func reset_motor() -> void:
 	set_collision_mask_value(ONE_WAY_COLLISION_LAYER, true)
 	_was_on_floor = false
 	_is_charging = false
+	_recorded_charge_stage = 0
 	charge_ratio = 0.0
 	last_launch_velocity = 0.0
 	last_landing_speed = 0.0
@@ -82,6 +84,17 @@ func reset_motor() -> void:
 
 func is_charging() -> bool:
 	return _is_charging
+
+## Also covers scripted/controller input, which does not flow through the
+## global Input singleton.
+func is_jump_held() -> bool:
+	return _action.jump_held
+
+## Reuses the player charge pose and charge meter for a stationary route
+## interaction, such as installing the recovered assembly at Beacon 9.
+func set_interaction_charge(ratio: float, charging: bool) -> void:
+	_is_charging = charging
+	charge_ratio = clampf(ratio, 0.0, 1.0) if charging else 0.0
 
 func is_crouching() -> bool:
 	return _is_crouching
@@ -127,6 +140,7 @@ func has_low_clearance_ahead(lookahead_distance: float) -> bool:
 	return not get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 func _physics_process(delta: float) -> void:
+	var was_charging: bool = _is_charging
 	var started_on_floor: bool = is_on_floor()
 	var in_hitstun: bool = _hitstun_remaining > 0.0
 	if started_on_floor:
@@ -148,6 +162,7 @@ func _physics_process(delta: float) -> void:
 		if _action.jump_released and _is_charging:
 			_release_buffer_remaining = jump_buffer_time
 			_released_charge_ratio = charge_ratio
+			RunUnitSession.record_playtest_event("charge_released", {"ratio": _released_charge_ratio})
 			_is_charging = false
 			charge_ratio = 0.0
 		else:
@@ -159,6 +174,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		_release_buffer_remaining = 0.0
 		_jump_press_buffer_remaining = 0.0
+	if _is_charging and not was_charging:
+		RunUnitSession.record_playtest_event("charge_started", {"position": [global_position.x, global_position.y]})
+	if _is_charging:
+		var charge_stage: int = 3 if charge_ratio >= 0.98 else (2 if charge_ratio >= 0.38 else 1)
+		if charge_stage != _recorded_charge_stage:
+			_recorded_charge_stage = charge_stage
+			RunUnitSession.record_playtest_event("charge_stage", {"stage": charge_stage, "ratio": charge_ratio})
+	elif not was_charging:
+		_recorded_charge_stage = 0
 
 	var wants_to_crouch: bool = not in_hitstun and _action.crouch_held and started_on_floor and not _action.jump_held
 	_update_crouch_state(wants_to_crouch, delta)
@@ -178,8 +202,14 @@ func _physics_process(delta: float) -> void:
 		_jump_origin_floor_y = _collision_bottom_y()
 		velocity.y = lerpf(min_jump_velocity, jump_velocity, launch_ratio)
 		last_launch_velocity = velocity.y
+		RunUnitSession.record_playtest_event("jump_launched", {
+			"charge_ratio": _released_charge_ratio,
+			"launch_velocity": velocity.y,
+			"position": [global_position.x, global_position.y],
+		})
 		_release_buffer_remaining = 0.0
 		_jump_press_buffer_remaining = 0.0
+		_recorded_charge_stage = 0
 		_coyote_remaining = 0.0
 		jumped.emit()
 

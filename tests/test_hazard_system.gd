@@ -225,6 +225,27 @@ func test_timed_hazard_reset_restores_authored_phase() -> void:
 	hazard.set("phase_offset_seconds", 0.1)
 	hazard.call("reset_level_state")
 	assert_true(bool(hazard.get("active")), "A reset into the active window should reproduce the authored phase")
+	assert_true(hazard.has_method("get_hazard_phase"), "Timed hazards expose their shared warning-state grammar")
+
+
+func test_timed_hazard_uses_shared_warning_inactive_and_active_states() -> void:
+	var hazard: RunUnitTimedHazard = _instantiate_hazard(TIMED_HAZARD_SCRIPT_PATH) as RunUnitTimedHazard
+	if hazard == null:
+		return
+	hazard.cycle_seconds = 1.0
+	hazard.active_seconds = 0.2
+	hazard.warning_seconds = 0.2
+	hazard.phase_offset_seconds = 0.85
+	hazard.reset_level_state()
+	assert_eq(hazard.get_hazard_phase(), RunUnitHazardArea.HazardPhase.WARNING, "The shared cue leads the next damaging phase")
+	assert_false(hazard.active, "The warning phase is safe to pass")
+	hazard.phase_offset_seconds = 0.5
+	hazard.reset_level_state()
+	assert_eq(hazard.get_hazard_phase(), RunUnitHazardArea.HazardPhase.INACTIVE)
+	hazard.phase_offset_seconds = 0.1
+	hazard.reset_level_state()
+	assert_eq(hazard.get_hazard_phase(), RunUnitHazardArea.HazardPhase.ACTIVE)
+	assert_true(hazard.active)
 
 
 func test_electric_floor_arc_scene_has_persistent_warning_and_switchable_arc() -> void:

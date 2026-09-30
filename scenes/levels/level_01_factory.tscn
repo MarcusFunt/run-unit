@@ -1,385 +1,455 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_01_factory.tmj" id="2_level"]
 [ext_resource type="PackedScene" path="res://scenes/player_robot_visual.tscn" id="3_robot"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/box.png" id="4_box"]
+[ext_resource type="Script" path="res://scripts/player/robot_visual.gd" id="4_pphmb"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="5_door"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="6_hazard"]
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="7_backdrop"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="8_crusher"]
-[ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="9_station"]
+[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="8_yq5ek"]
+[ext_resource type="Script" path="res://scripts/hazards/crusher_hazard.gd" id="10_rv8hf"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="10_saw"]
 [ext_resource type="PackedScene" path="res://scenes/props/dimensional_portal_exit.tscn" id="11_portal"]
 [ext_resource type="PackedScene" path="res://scenes/props/clearance_gate_visual.tscn" id="12_clearance_gate"]
+[ext_resource type="Script" path="res://scripts/hazards/saw_hazard.gd" id="12_mtbtc"]
 
-[node name="Level01Factory" type="Node2D"]
+[node name="Level01Factory" type="Node2D" unique_id=1650936774]
 script = ExtResource("1_world")
 death_y = 1180.0
 
-[node name="Backdrop" type="Polygon2D" parent="."]
+[node name="Backdrop" type="Polygon2D" parent="." unique_id=882775336]
 z_index = -20
 color = Color(0.012, 0.028, 0.043, 1)
 polygon = PackedVector2Array(-256, -1024, 8960, -1024, 8960, 1280, -256, 1280)
 
-[node name="EnvironmentDepth" type="Node2D" parent="."]
+[node name="EnvironmentDepth" type="Node2D" parent="." unique_id=17246023]
 z_index = -7
 script = ExtResource("7_backdrop")
 theme = "factory"
 
-[node name="DecorativeSetpieces" type="Node2D" parent="."]
+[node name="DecorativeSetpieces" type="Node2D" parent="." unique_id=1820370998]
 
-[node name="WarehouseHaze" type="Polygon2D" parent="."]
+[node name="WarehouseHaze" type="Polygon2D" parent="." unique_id=326403443]
 z_index = -18
 color = Color(0.03, 0.1, 0.12, 0.6)
 polygon = PackedVector2Array(3040, 128, 6240, 128, 6240, 1180, 3040, 1180)
 
-[node name="WarehouseHazeFade" type="Polygon2D" parent="."]
+[node name="WarehouseHazeFade" type="Polygon2D" parent="." unique_id=841677211]
 z_index = -18
 polygon = PackedVector2Array(2656, 128, 3040, 128, 3040, 1180, 2656, 1180)
 vertex_colors = PackedColorArray(0.03, 0.1, 0.12, 0, 0.03, 0.1, 0.12, 0.6, 0.03, 0.1, 0.12, 0.6, 0.03, 0.1, 0.12, 0)
 
-[node name="ExteriorSky" type="Polygon2D" parent="."]
+[node name="ExteriorSky" type="Polygon2D" parent="." unique_id=428698915]
 z_index = -17
 polygon = PackedVector2Array(6240, 64, 8960, 64, 8960, 1180, 6240, 1180)
 vertex_colors = PackedColorArray(0.1, 0.3, 0.38, 1, 0.14, 0.42, 0.5, 1, 0.03, 0.09, 0.12, 1, 0.02, 0.06, 0.08, 1)
 
-[node name="ExteriorSkyline" type="Polygon2D" parent="."]
+[node name="ExteriorSkyline" type="Polygon2D" parent="." unique_id=1278595046]
 z_index = -16
 color = Color(0.02, 0.07, 0.09, 1)
 polygon = PackedVector2Array(6240, 1180, 6240, 720, 6320, 720, 6320, 668, 6368, 668, 6368, 700, 6440, 700, 6440, 612, 6472, 596, 6504, 612, 6504, 690, 6590, 690, 6590, 640, 6660, 640, 6660, 700, 6760, 700, 6760, 580, 6800, 580, 6800, 660, 6900, 660, 6900, 620, 6990, 620, 6990, 700, 7120, 700, 7120, 600, 7200, 600, 7200, 690, 7380, 690, 7380, 640, 7440, 640, 7440, 700, 7680, 700, 7680, 1180)
 
-[node name="StorageUnits" type="Node2D" parent="."]
-z_index = -6
+[node name="StorageUnits" type="Node2D" parent="." unique_id=1902096349]
 modulate = Color(0.42, 0.62, 0.68, 0.85)
+z_index = -6
 
-[node name="Unit01" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit01" type="Node2D" parent="StorageUnits" unique_id=1028236062 instance=ExtResource("3_robot")]
 position = Vector2(3136, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit02" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit02" type="Node2D" parent="StorageUnits" unique_id=1207465513 instance=ExtResource("3_robot")]
 position = Vector2(3200, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit03" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit03" type="Node2D" parent="StorageUnits" unique_id=1404651917 instance=ExtResource("3_robot")]
 position = Vector2(3264, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit04" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit04" type="Node2D" parent="StorageUnits" unique_id=1950955382 instance=ExtResource("3_robot")]
 position = Vector2(3136, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit05" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit05" type="Node2D" parent="StorageUnits" unique_id=280549505 instance=ExtResource("3_robot")]
 position = Vector2(3200, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit06" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit06" type="Node2D" parent="StorageUnits" unique_id=1746861542 instance=ExtResource("3_robot")]
 position = Vector2(3264, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit07" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit07" type="Node2D" parent="StorageUnits" unique_id=1625128409 instance=ExtResource("3_robot")]
 position = Vector2(3392, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit08" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit08" type="Node2D" parent="StorageUnits" unique_id=718594301 instance=ExtResource("3_robot")]
 position = Vector2(3456, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit09" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit09" type="Node2D" parent="StorageUnits" unique_id=2013147317 instance=ExtResource("3_robot")]
 position = Vector2(3520, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit10" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit10" type="Node2D" parent="StorageUnits" unique_id=1110927700 instance=ExtResource("3_robot")]
 position = Vector2(3648, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit11" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit11" type="Node2D" parent="StorageUnits" unique_id=2068525940 instance=ExtResource("3_robot")]
 position = Vector2(3712, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit12" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit12" type="Node2D" parent="StorageUnits" unique_id=2045701170 instance=ExtResource("3_robot")]
 position = Vector2(3776, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit13" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit13" type="Node2D" parent="StorageUnits" unique_id=1624545238 instance=ExtResource("3_robot")]
 position = Vector2(3904, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit14" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit14" type="Node2D" parent="StorageUnits" unique_id=1597657537 instance=ExtResource("3_robot")]
 position = Vector2(3968, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit15" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit15" type="Node2D" parent="StorageUnits" unique_id=1777044551 instance=ExtResource("3_robot")]
 position = Vector2(4032, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit16" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit16" type="Node2D" parent="StorageUnits" unique_id=394378307 instance=ExtResource("3_robot")]
 position = Vector2(3904, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit17" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit17" type="Node2D" parent="StorageUnits" unique_id=2056517432 instance=ExtResource("3_robot")]
 position = Vector2(3968, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit18" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit18" type="Node2D" parent="StorageUnits" unique_id=2102462111 instance=ExtResource("3_robot")]
 position = Vector2(4032, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit19" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit19" type="Node2D" parent="StorageUnits" unique_id=383511880 instance=ExtResource("3_robot")]
 position = Vector2(4160, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit20" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit20" type="Node2D" parent="StorageUnits" unique_id=1817618900 instance=ExtResource("3_robot")]
 position = Vector2(4224, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit21" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit21" type="Node2D" parent="StorageUnits" unique_id=313914225 instance=ExtResource("3_robot")]
 position = Vector2(4288, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit22" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit22" type="Node2D" parent="StorageUnits" unique_id=1539417710 instance=ExtResource("3_robot")]
 position = Vector2(4160, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit23" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit23" type="Node2D" parent="StorageUnits" unique_id=1421728754 instance=ExtResource("3_robot")]
 position = Vector2(4224, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit24" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit24" type="Node2D" parent="StorageUnits" unique_id=17082467 instance=ExtResource("3_robot")]
 position = Vector2(4288, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit25" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit25" type="Node2D" parent="StorageUnits" unique_id=1776462194 instance=ExtResource("3_robot")]
 position = Vector2(4672, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit26" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit26" type="Node2D" parent="StorageUnits" unique_id=530389692 instance=ExtResource("3_robot")]
 position = Vector2(4736, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit27" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit27" type="Node2D" parent="StorageUnits" unique_id=79877574 instance=ExtResource("3_robot")]
 position = Vector2(4800, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit28" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit28" type="Node2D" parent="StorageUnits" unique_id=557408725 instance=ExtResource("3_robot")]
 position = Vector2(4672, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit29" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit29" type="Node2D" parent="StorageUnits" unique_id=163773310 instance=ExtResource("3_robot")]
 position = Vector2(4736, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit30" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit30" type="Node2D" parent="StorageUnits" unique_id=82809212 instance=ExtResource("3_robot")]
 position = Vector2(4800, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit31" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit31" type="Node2D" parent="StorageUnits" unique_id=2102969601 instance=ExtResource("3_robot")]
 position = Vector2(4928, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit32" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit32" type="Node2D" parent="StorageUnits" unique_id=62791726 instance=ExtResource("3_robot")]
 position = Vector2(4992, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit33" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit33" type="Node2D" parent="StorageUnits" unique_id=2096770467 instance=ExtResource("3_robot")]
 position = Vector2(5056, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit34" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit34" type="Node2D" parent="StorageUnits" unique_id=1319498412 instance=ExtResource("3_robot")]
 position = Vector2(4928, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit35" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit35" type="Node2D" parent="StorageUnits" unique_id=1238473875 instance=ExtResource("3_robot")]
 position = Vector2(4992, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit36" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit36" type="Node2D" parent="StorageUnits" unique_id=1838399918 instance=ExtResource("3_robot")]
 position = Vector2(5056, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit37" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit37" type="Node2D" parent="StorageUnits" unique_id=1233331351 instance=ExtResource("3_robot")]
 position = Vector2(5184, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit38" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit38" type="Node2D" parent="StorageUnits" unique_id=1699678707 instance=ExtResource("3_robot")]
 position = Vector2(5248, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit39" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit39" type="Node2D" parent="StorageUnits" unique_id=1679213232 instance=ExtResource("3_robot")]
 position = Vector2(5312, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit40" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit40" type="Node2D" parent="StorageUnits" unique_id=1909987968 instance=ExtResource("3_robot")]
 position = Vector2(5440, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit41" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit41" type="Node2D" parent="StorageUnits" unique_id=348274626 instance=ExtResource("3_robot")]
 position = Vector2(5504, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit42" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit42" type="Node2D" parent="StorageUnits" unique_id=728295332 instance=ExtResource("3_robot")]
 position = Vector2(5568, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit43" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit43" type="Node2D" parent="StorageUnits" unique_id=1415409807 instance=ExtResource("3_robot")]
 position = Vector2(5696, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit44" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit44" type="Node2D" parent="StorageUnits" unique_id=1242524830 instance=ExtResource("3_robot")]
 position = Vector2(5760, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit45" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit45" type="Node2D" parent="StorageUnits" unique_id=1482273292 instance=ExtResource("3_robot")]
 position = Vector2(5824, 334)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit46" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit46" type="Node2D" parent="StorageUnits" unique_id=1809024911 instance=ExtResource("3_robot")]
 position = Vector2(5696, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit47" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit47" type="Node2D" parent="StorageUnits" unique_id=349909019 instance=ExtResource("3_robot")]
 position = Vector2(5760, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="Unit48" parent="StorageUnits" instance=ExtResource("3_robot")]
+[node name="Unit48" type="Node2D" parent="StorageUnits" unique_id=2128401236 instance=ExtResource("3_robot")]
 position = Vector2(5824, 494)
 scale = Vector2(0.55, 0.55)
+script = ExtResource("4_pphmb")
 
-[node name="StorageCrates" type="Node2D" parent="."]
-z_index = -6
+[node name="StorageCrates" type="Node2D" parent="." unique_id=1584034187]
 modulate = Color(0.24, 0.32, 0.36, 1)
+z_index = -6
 
-[node name="Crate01" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate01" type="Sprite2D" parent="StorageCrates" unique_id=779614012]
 position = Vector2(3392, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate02" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate02" type="Sprite2D" parent="StorageCrates" unique_id=334551509]
 position = Vector2(3456, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate03" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate03" type="Sprite2D" parent="StorageCrates" unique_id=491988064]
 position = Vector2(3520, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate04" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate04" type="Sprite2D" parent="StorageCrates" unique_id=1676513176]
 position = Vector2(3648, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate05" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate05" type="Sprite2D" parent="StorageCrates" unique_id=2137851308]
 position = Vector2(3712, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate06" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate06" type="Sprite2D" parent="StorageCrates" unique_id=706894680]
 position = Vector2(3776, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate07" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate07" type="Sprite2D" parent="StorageCrates" unique_id=1627748837]
 position = Vector2(4416, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate08" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate08" type="Sprite2D" parent="StorageCrates" unique_id=1723104529]
 position = Vector2(4480, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate09" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate09" type="Sprite2D" parent="StorageCrates" unique_id=2115936670]
 position = Vector2(4544, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate10" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate10" type="Sprite2D" parent="StorageCrates" unique_id=350362326]
 position = Vector2(4416, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate11" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate11" type="Sprite2D" parent="StorageCrates" unique_id=1837357422]
 position = Vector2(4480, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate12" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate12" type="Sprite2D" parent="StorageCrates" unique_id=944470206]
 position = Vector2(4544, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate13" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate13" type="Sprite2D" parent="StorageCrates" unique_id=1806730003]
 position = Vector2(5184, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate14" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate14" type="Sprite2D" parent="StorageCrates" unique_id=13264182]
 position = Vector2(5248, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate15" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate15" type="Sprite2D" parent="StorageCrates" unique_id=1700622800]
 position = Vector2(5312, 323)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate16" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate16" type="Sprite2D" parent="StorageCrates" unique_id=591813718]
 position = Vector2(5440, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate17" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate17" type="Sprite2D" parent="StorageCrates" unique_id=1598863199]
 position = Vector2(5504, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="Crate18" type="Sprite2D" parent="StorageCrates"]
+[node name="Crate18" type="Sprite2D" parent="StorageCrates" unique_id=1656457044]
 position = Vector2(5568, 483)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_box")
 
-[node name="CheckpointFactory" type="Marker2D" parent="."]
+[node name="CheckpointFactory" type="Marker2D" parent="." unique_id=1861996373]
 position = Vector2(5200, 608)
 
-[node name="FactoryGeometry" parent="." instance=ExtResource("2_level")]
+[node name="FactoryGeometry" type="Node2D" parent="." unique_id=1949813196 instance=ExtResource("2_level")]
+metadata/level_id = "level_01_factory"
+metadata/display_name = "LEVEL 01 // TRANSFER & STORAGE"
+metadata/story_arc = "elevator_arrival -> stalled_transfer -> safe_collapse -> warehouse_reveal -> breach"
+metadata/authoring_note = "Collision lives only on Semantic/Obstacles; art layers are decorative. StoryZones import as collision-free Area2D metadata."
 
-[node name="ElectricalFaults" type="Node2D" parent="."]
+[node name="ElectricalFaults" type="Node2D" parent="." unique_id=463095682]
 
-[node name="TransferArc" parent="ElectricalFaults" instance=ExtResource("6_hazard")]
+[node name="TransferArc" type="Area2D" parent="ElectricalFaults" unique_id=229634995 instance=ExtResource("6_hazard")]
 position = Vector2(1200, 448)
+collision_layer = 0
+script = ExtResource("8_yq5ek")
 cycle_seconds = 2.2
 active_seconds = 0.85
 phase_offset_seconds = 0.15
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
 
-[node name="WarehouseArc" parent="ElectricalFaults" instance=ExtResource("6_hazard")]
-position = Vector2(4032, 704)
+[node name="ExteriorArc" type="Area2D" parent="ElectricalFaults" unique_id=1284980053 instance=ExtResource("6_hazard")]
+position = Vector2(7456, 640)
+collision_layer = 0
+script = ExtResource("8_yq5ek")
 cycle_seconds = 2.6
 active_seconds = 0.9
 phase_offset_seconds = 1.2
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
 
-[node name="MechanicalHazards" type="Node2D" parent="."]
+[node name="MechanicalHazards" type="Node2D" parent="." unique_id=916501760]
 
-[node name="TransferPress" parent="MechanicalHazards" instance=ExtResource("8_crusher")]
-position = Vector2(2752, 375)
-cycle_seconds = 3.1
+[node name="ExteriorCrusher" type="Area2D" parent="MechanicalHazards" unique_id=2014462186 instance=ExtResource("8_crusher")]
+position = Vector2(8048, 631)
+collision_layer = 0
+script = ExtResource("10_rv8hf")
+cycle_seconds = 3.2
 active_seconds = 0.62
-phase_offset_seconds = 1.55
+phase_offset_seconds = 1.5
+warning_seconds = 0.75
+lethal = true
 
-[node name="RotaryHazards" type="Node2D" parent="."]
+[node name="RotaryHazards" type="Node2D" parent="." unique_id=1002683836]
 
-[node name="AssemblySaw" parent="RotaryHazards" instance=ExtResource("10_saw")]
+[node name="AssemblySaw" type="Area2D" parent="RotaryHazards" unique_id=774065677 instance=ExtResource("10_saw")]
 position = Vector2(1760, 353)
+collision_layer = 0
+script = ExtResource("12_mtbtc")
+lethal = true
 
-[node name="EntryLift" type="Node2D" parent="."]
+[node name="EntryLift" type="Node2D" parent="." unique_id=608267642]
 position = Vector2(64, 448)
 
-[node name="Interior" type="Polygon2D" parent="EntryLift"]
+[node name="Interior" type="Polygon2D" parent="EntryLift" unique_id=1333180811]
 z_index = -1
 color = Color(0.008, 0.014, 0.022, 1)
 polygon = PackedVector2Array(-50, -190, 50, -190, 50, 0, -50, 0)
 
-[node name="DoorFrame" type="Sprite2D" parent="EntryLift"]
+[node name="DoorFrame" type="Sprite2D" parent="EntryLift" unique_id=509117316]
 position = Vector2(0, -104.4)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("5_door")

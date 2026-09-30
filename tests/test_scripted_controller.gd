@@ -87,6 +87,35 @@ func test_bot_jumps_the_factory_floor_arc_instead_of_tanking_the_hit() -> void:
 	assert_eq(health.current_health, health.max_health, "Hazard avoidance should prevent the floor arc from damaging the bot")
 
 
+func test_bot_waits_out_the_warning_before_crossing_the_lethal_factory_crusher() -> void:
+	var world: RunUnitStaticWorld = LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var crusher: RunUnitTimedHazard = world.get_node("MechanicalHazards/ExteriorCrusher") as RunUnitTimedHazard
+	crusher.phase_offset_seconds = 2.55
+	crusher.reset_level_state()
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = Vector2(7800.0, 704.0 - 32.0)
+	var health: RunUnitPlayerHealth = player.get_node("Health") as RunUnitPlayerHealth
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+	controller.active = true
+
+	var crossed_crusher: bool = false
+	for frame: int in range(900):
+		await get_tree().physics_frame
+		if health.current_health < health.max_health:
+			break
+		if player.global_position.x > 8120.0:
+			crossed_crusher = true
+			break
+
+	assert_true(crossed_crusher, "The bot should wait for the safe cycle, then cross the lethal crusher")
+	assert_eq(health.current_health, health.max_health, "Crusher timing should prevent lethal contact")
+
+
 func test_bot_releases_edge_jump_close_to_the_physical_ledge() -> void:
 	var world: RunUnitStaticWorld = TUTORIAL_LEVEL_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)

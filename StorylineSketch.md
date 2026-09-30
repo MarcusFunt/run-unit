@@ -27,7 +27,7 @@ The tutorial establishes that UNIT-07 is a manufactured machine and teaches the 
 
 ### Sequence
 
-UNIT-07 activates in a calibration/testing tunnel. Factory systems guide the robot through basic movement, a normal jump, a charged spring jump, and crouching.
+UNIT-07 activates in a calibration/testing tunnel. The route requires the core actions in order: move, tap across a short gap, use a partial spring charge, build to full charge for a high landing, then crouch beneath the malfunctioning transfer door.
 
 The environment should make each action feel like part of an industrial test rather than a floating tutorial challenge. The calibration area is enclosed, mechanical, and controlled, although signs of failure are already present.
 
@@ -51,6 +51,8 @@ The portal transport is the transition into Level 1.
 Level 1 turns the tutorial controls into real traversal and gives the first major narrative reveal: UNIT-07 is not unique, but one manufactured unit among many.
 
 Target first-play time: roughly **5–7 minutes**.
+
+The final third escalates without extending the route: a spring launch leads into a timed electrical arc, then a crusher with a low crouch-safe waiting point, followed by a full-charge leap to the exit.
 
 ### 1. Portal arrival / intact transfer line
 
@@ -190,8 +192,11 @@ No reusable device mechanic is introduced.
 
 This is the moment when the larger mission becomes explicit. The facility identifies the required target:
 
-> REPLACEMENT IGNITION MODULE ACQUIRED  
-> TARGET SYSTEM: BEACON 9
+> IGNITION ASSEMBLY SECURED
+
+The immediate objective changes to:
+
+> EXIT FACILITY // DELIVER ASSEMBLY
 
 The structure the player has already seen in the distance now becomes the final destination.
 
@@ -199,7 +204,7 @@ The structure the player has already seen in the distance now becomes the final 
 
 Removing the module changes the reserve facility's state. Emergency lighting, shutters, or other systems may react because the protected reserve component has been removed, but **the module itself has still not been used**.
 
-UNIT-07 leaves by a shorter maintenance return route rather than fully backtracking through the level.
+UNIT-07 leaves by a direct emergency service deck rather than replaying the descent, vault approach, and charged-climb course. The exit run is calm and brief, with no further jump chain.
 
 The level ends outside with Beacon 9 visible and the module mounted to UNIT-07.
 
@@ -284,7 +289,7 @@ The approach contains little or no danger. The player should understand what nee
 
 ### 9. Final installation — the module's only use
 
-UNIT-07 removes the module and installs it into Beacon 9.
+UNIT-07 removes the module and installs it into Beacon 9 only after holding the familiar jump action to full charge and releasing it. An early release leaves the assembly safe and lets the player try again; the multi-stage installation and world-state reveal begin after the full release.
 
 There should be a brief delay before anything happens. Activation then propagates outward in visible stages:
 

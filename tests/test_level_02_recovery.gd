@@ -127,17 +127,9 @@ func test_level_02_has_the_expected_route() -> void:
 		[211, 224, 26],  # lower machinery floor
 		[227, 231, 23],  # core-access ascent
 		[234, 238, 21],
-		[241, 245, 18],
-		[248, 252, 15],
-		[256, 272, 13],  # vault perimeter
-		[276, 290, 13],  # storage cradle
-		[294, 302, 16],  # maintenance return
-		[306, 341, 18],  # emergency shutter opens into the longer outbound deck
-		[345, 358, 17],  # upper conduit span
-		[362, 372, 19],  # lower city crossing
-		[376, 393, 16],  # final return to the skyline
+		[241, 393, 18],  # module cradle leads into the short, calm escape deck
 	]
-	assert_eq(plan.size(), expected.size(), "Level 2 should keep its twenty-six authored platform beats")
+	assert_eq(plan.size(), expected.size(), "The route keeps its challenge course and simplifies the post-pickup escape")
 	for index: int in range(mini(plan.size(), expected.size())):
 		var platform: Dictionary = plan[index]
 		assert_eq(int(platform.get("start_x", -1)), int(expected[index][0]), "platform %d start" % (index + 1))
@@ -150,7 +142,7 @@ func test_level_02_publishes_spawn_and_goal_markers() -> void:
 
 	assert_eq(world.get_spawn_position(), Vector2(160.0, 321.0), "Spawn sits just above the factory breach ledge")
 	assert_true(world.has_goal(), "Level 2 declares a Goal marker")
-	assert_eq(world.get_goal_position(), Vector2(12512.0, 448.0), "Goal sits beyond the extended outbound service route")
+	assert_eq(world.get_goal_position(), Vector2(12512.0, 544.0), "Goal sits at the end of the exit deck")
 
 	var trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
 	assert_not_null(trigger, "A completion trigger should be built from the Goal marker")
@@ -174,10 +166,10 @@ func test_player_lands_on_the_breach_ledge() -> void:
 func test_only_tile_layers_collide_with_the_player() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var story_zone_count: int = 0
-	var pending: Array[Node] = [world]
-	while not pending.is_empty():
-		var node: Node = pending.pop_back()
-		pending.append_array(node.get_children())
+	var nodes_to_visit: Array[Node] = [world]
+	while not nodes_to_visit.is_empty():
+		var node: Node = nodes_to_visit.pop_back()
+		nodes_to_visit.append_array(node.get_children())
 		if not node is CollisionObject2D or node.name == &"CompletionTrigger":
 			continue
 		assert_true(node is Area2D, "%s must not be a physics body" % node.get_path())
@@ -222,7 +214,9 @@ func test_reaching_the_cradle_mounts_the_module_once() -> void:
 	watch_signals(cradle)
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(player)
-	player.global_position = cradle.global_position + Vector2(-160.0, -32.0)
+	# Start on the final charged landing deck: the 160 px approach before this
+	# pickup crosses a gap and is intentionally not a walkable starting point.
+	player.global_position = cradle.global_position + Vector2(-96.0, 0.0)
 
 	for frame: int in range(90):
 		var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
@@ -307,6 +301,85 @@ func test_restarting_a_recovery_run_resets_the_cradle() -> void:
 
 
 func test_completing_level_2_starts_the_portal_handoff() -> void:
+
+func test_module_is_acquired_in_the_target_progress_band_and_leads_to_a_short_exit() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var cradle: RunUnitModuleCradle = world.get_node("ModuleCradle") as RunUnitModuleCradle
+	var spawn_x: float = world.get_spawn_position().x
+	var goal_x: float = world.get_goal_position().x
+	var pickup_progress: float = (cradle.global_position.x - spawn_x) / (goal_x - spawn_x)
+	assert_gte(pickup_progress, 0.60, "Acquisition should happen after the first half of the route")
+	assert_lte(pickup_progress, 0.65, "Acquisition should leave a distinct escape section")
+	assert_lte(goal_x - cradle.global_position.x, 4800.0, "The post-pickup escape stays under 150 metres and has no further jump chain")
+
+
+func test_module_playtest_telemetry_reports_route_progress_and_escape_distance_in_pixels() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
+	var cradle: RunUnitModuleCradle = game.world.get_node("ModuleCradle") as RunUnitModuleCradle
+	var metrics: Dictionary = game._module_acquisition_metrics(cradle.global_position.x)
+	var route_progress: float = float(metrics.get("route_progress", -1.0))
+	assert_gte(route_progress, 0.60, "The telemetry should place acquisition inside the 60–65% acceptance band")
+	assert_lte(route_progress, 0.65, "The telemetry should report the authored pickup progress, not clamp it to 100%")
+	assert_eq(float(metrics.get("post_pickup_distance", -1.0)), game.world.get_goal_position().x - cradle.global_position.x, "Escape distance is measured in world pixels")
+	get_tree().paused = false
+
+
+func test_pickup_changes_the_objective_and_keeps_the_existing_world_shutdown_reaction() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
+	var cradle: RunUnitModuleCradle = game.world.get_node("ModuleCradle") as RunUnitModuleCradle
+	var shutdown_lighting: CanvasItem = game.world.get_node("ShutdownLighting") as CanvasItem
+	var lockdown_sign: CanvasItem = game.world.get_node("RecoverySigns/LockdownSign") as CanvasItem
+	assert_false(shutdown_lighting.visible)
+	assert_false(lockdown_sign.visible)
+	cradle.acquire_for(game.player)
+	var objective_label: Label = game.hud.get_node_or_null("ObjectiveFrame/ObjectiveLabel") as Label
+	assert_not_null(objective_label)
+	if objective_label != null:
+		assert_eq(objective_label.text, "EXIT FACILITY // DELIVER ASSEMBLY")
+	assert_true(shutdown_lighting.visible, "Removing the module keeps the lighting response")
+	assert_true(lockdown_sign.visible, "Removing the module keeps the lockdown signage response")
+	get_tree().paused = false
+
+
+func test_story_zones_emit_one_reusable_non_repeating_runtime_beat() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var director: Node = world.get_node_or_null("StoryZoneDirector")
+	assert_not_null(director, "Authored story zones should be bound by the reusable world-side director")
+	if director == null:
+		return
+	var zone: Area2D = _find_area_named(world, "ModuleAcquisition")
+	assert_not_null(zone)
+	if zone == null:
+		return
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	var count: Array[int] = [0]
+	var beat_names: Array[String] = []
+	var messages: Array[String] = []
+	director.connect("story_beat", func(zone_name: String, cue: Dictionary) -> void:
+		count[0] += 1
+		beat_names.append(zone_name)
+		messages.append(String(cue.get("message", "")))
+	)
+	zone.body_entered.emit(player)
+	zone.body_entered.emit(player)
+	world.reset()
+	zone.body_entered.emit(player)
+	assert_eq(count[0], 1, "Re-entry and checkpoint retry must not replay the same beat")
+	assert_eq(beat_names, ["ModuleAcquisition"], "YATI's imported object name resolves back to its authored zone")
+	assert_eq(messages, ["ASSEMBLY CRADLE // ACCESS AHEAD"], "The module cue should name the objective ahead")
+
+
+func _find_area_named(root_node: Node, wanted_name: String) -> Area2D:
+	var nodes_to_visit: Array[Node] = [root_node]
+	while not nodes_to_visit.is_empty():
+		var node: Node = nodes_to_visit.pop_back()
+		nodes_to_visit.append_array(node.get_children())
+		if String(node.name).trim_suffix(" (Area)") == wanted_name and node is Area2D:
+			return node as Area2D
+	return null
+
+
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
 	(game.world.get_node("ModuleCradle") as RunUnitModuleCradle).acquire_for(game.player)
 

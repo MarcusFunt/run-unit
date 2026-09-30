@@ -177,10 +177,10 @@ func test_player_lands_on_the_opening_rooftop() -> void:
 func test_only_tile_layers_collide_with_the_player() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var story_zone_count: int = 0
-	var pending: Array[Node] = [world]
-	while not pending.is_empty():
-		var node: Node = pending.pop_back()
-		pending.append_array(node.get_children())
+	var nodes_to_visit: Array[Node] = [world]
+	while not nodes_to_visit.is_empty():
+		var node: Node = nodes_to_visit.pop_back()
+		nodes_to_visit.append_array(node.get_children())
 		if not node is CollisionObject2D or node.name == &"CompletionTrigger":
 			continue
 		assert_true(node is Area2D, "%s must not be a physics body" % node.get_path())
@@ -273,11 +273,20 @@ func test_passing_a_checkpoint_moves_where_a_retry_resumes() -> void:
 	assert_almost_eq(resumed_distance, (checkpoints[1].x - spawn.x) / 32.0, 1.0, "Distance is still measured from the route's spawn, so resuming keeps the progress already made")
 
 
-func test_completing_the_route_clears_the_checkpoint() -> void:
+func test_completing_the_route_clears_the_checkpoint_after_full_charge_release() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
+	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
+	ignition.next_scene_path = ""
+	ignition.install_delay = 0.05
+	ignition.stage_interval = 0.05
+	ignition.hold_after_activation = 0.05
 	RunUnitSession.record_checkpoint(LEVEL_3_INDEX, Vector2(9000.0, 700.0))
 
 	game.world.route_completed.emit()
+	Input.action_press("jump")
+	await get_tree().create_timer(0.5).timeout
+	Input.action_release("jump")
+	await get_tree().create_timer(0.12).timeout
 
 	assert_false(RunUnitSession.has_checkpoint(LEVEL_3_INDEX), "Finishing a route means the next deployment starts over")
 
@@ -304,9 +313,13 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	watch_signals(ignition)
 
 	game.world.route_completed.emit()
-
-	assert_true(game.is_terminal(), "Reaching the interface completes the route")
-	assert_true(ignition.transition_started, "Completing Level 3 hands the ending to the ignition chamber")
+	assert_false(game.is_terminal(), "Reaching the interface waits for the taught charge-and-release action")
+	assert_true(ignition.transition_started, "Reaching the interface begins the player-controlled ignition interaction")
+	Input.action_press("jump")
+	await get_tree().create_timer(0.5).timeout
+	Input.action_release("jump")
+	await get_tree().create_timer(0.12).timeout
+	assert_true(game.is_terminal(), "A full charge followed by release completes the route")
 	await wait_for_signal(ignition.transition_finished, 5.0)
 
 	assert_true(ignition.installed, "The module is installed into Beacon 9")
@@ -331,8 +344,11 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	ignition.hold_after_activation = 0.05
 
 	game.world.route_completed.emit()
-	assert_true(ignition.sequence_ui.visible, "The finale should announce that the ignition sequence has begun")
-	assert_true(ignition.activation_label.text.contains("MODULE"), "The first beat must explain what is happening")
+	assert_true(ignition.sequence_ui.visible, "The finale should announce that the ignition interface is ready")
+	assert_true(ignition.activation_label.text.contains("HOLD"), "The prompt should name the familiar charge action")
+	Input.action_press("jump")
+	await get_tree().create_timer(0.5).timeout
+	Input.action_release("jump")
 
 	await wait_for_signal(ignition.transition_finished, 5.0)
 
@@ -341,6 +357,23 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	assert_true(ignition.completion_banner.visible, "The player gets an unmistakable success beat before the ending screen")
 	assert_gt(ignition.socket_burst.amount, 0, "The lock-in moment has a dedicated visual burst")
 	assert_eq(ignition.lit_stages, ignition.stage_paths.size())
+
+
+func test_short_beacon_charge_is_safe_and_can_be_retried() -> void:
+	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
+	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
+	game.world.route_completed.emit()
+	Input.action_press("jump")
+	await get_tree().create_timer(0.08).timeout
+	Input.action_release("jump")
+	await get_tree().create_timer(0.12).timeout
+	assert_false(ignition.installed, "An undercharged release cannot install the module")
+	assert_false(game.is_terminal(), "An undercharged release returns to the same interaction")
+	assert_true(ignition.activation_label.text.contains("FULL CHARGE"), "The retry cue explains the missing requirement")
+	Input.action_press("jump")
+	await get_tree().create_timer(0.5).timeout
+	Input.action_release("jump")
+	await wait_for_signal(ignition.transition_finished, 5.0)
 
 
 func test_level_3_hands_off_to_the_ending_screen() -> void:
@@ -380,3 +413,29 @@ func test_beacon_route_frontloads_three_timed_faults_before_the_quiet_finale() -
 		if hazard != null:
 			assert_eq(hazard.position, expected[index])
 			assert_lt(hazard.position.x, 9152.0, "Hazards stop before the Beacon scale reveal and quiet interior")
+
+
+func test_beacon_has_a_calm_threshold_and_keeps_the_destination_in_view() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var interior: Area2D = _find_area_named(world, "BeaconInterior")
+	assert_not_null(interior, "The calm threshold is an authored story zone")
+	var approach: Parallax2D = world.get_node_or_null("BeaconParallax") as Parallax2D
+	assert_not_null(approach)
+	if approach != null:
+		assert_true(approach.visible, "Beacon 9 remains visible as the player reaches its perimeter")
+		assert_gt(float(approach.get("end_scale")), float(approach.get("start_scale")))
+	var faults: Node = world.get_node("ElectricalFaults")
+	for child: Node in faults.get_children():
+		var hazard: RunUnitHazardArea = child as RunUnitHazardArea
+		if hazard != null:
+			assert_lt(hazard.position.x, interior.position.x, "The quiet interior has no hazard pressure")
+
+
+func _find_area_named(root_node: Node, wanted_name: String) -> Area2D:
+	var nodes_to_visit: Array[Node] = [root_node]
+	while not nodes_to_visit.is_empty():
+		var node: Node = nodes_to_visit.pop_back()
+		nodes_to_visit.append_array(node.get_children())
+		if String(node.name).trim_suffix(" (Area)") == wanted_name and node is Area2D:
+			return node as Area2D
+	return null

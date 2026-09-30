@@ -24,7 +24,7 @@ func test_crusher_telegraphs_then_strikes() -> void:
 
 func test_campaign_routes_use_crushers_as_sparse_setpieces() -> void:
 	var scenes: Array[PackedScene] = [FACTORY_SCENE, RECOVERY_SCENE, BEACON_SCENE]
-	var names: Array[String] = ["TransferPress", "DepotPress", "ServicePress"]
+	var names: Array[String] = ["ExteriorCrusher", "DepotPress", "ServicePress"]
 	for index: int in range(scenes.size()):
 		var world: RunUnitStaticWorld = scenes[index].instantiate() as RunUnitStaticWorld
 		add_child_autofree(world)

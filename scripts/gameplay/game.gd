@@ -36,6 +36,9 @@ var _terminal_penalty_paid: bool = false
 var _trace_sample_countdown: float = 0.0
 var _run_elapsed_seconds: float = 0.0
 var _full_route_attempt: bool = true
+var _finished_metrics: Dictionary = {}
+var _crouch_started_msec: int = 0
+var _was_crouching: bool = false
 ## Deaths on the current route during a demo run. Scene-local, so it resets
 ## naturally when the demo moves on to the next route.
 var _demo_failures: int = 0
@@ -75,18 +78,32 @@ func _ready() -> void:
 		world.obstacle_triggered.connect(_on_obstacle_triggered)
 	if not world.route_completed.is_connected(_on_route_completed):
 		world.route_completed.connect(_on_route_completed)
-	var module_cradle: RunUnitModuleCradle = world.get_node_or_null("ModuleCradle") as RunUnitModuleCradle
-	if module_cradle != null and not module_cradle.module_acquired.is_connected(_on_module_acquired):
-		module_cradle.module_acquired.connect(_on_module_acquired)
+	if not world.story_beat.is_connected(_on_story_beat):
+		world.story_beat.connect(_on_story_beat)
 	if not player_health.damaged.is_connected(_on_player_damaged):
 		player_health.damaged.connect(_on_player_damaged)
 	if not player_health.depleted.is_connected(_on_player_depleted):
 		player_health.depleted.connect(_on_player_depleted)
+	if not player.landed.is_connected(_on_player_landed):
+		player.landed.connect(_on_player_landed)
 	hud.set_level_length(world.get_traversal_length())
+	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
+	hud.show_system_message(RunUnitCampaign.get_briefing(_selected_level_index), 4.0)
+	RunUnitAudio.set_ambience(_ambience_for_route(_selected_level_index))
 	for node: Node in world.get_node("CheckpointStations").get_children():
 		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
 		station.activated.connect(_on_checkpoint_activated)
+	var module_cradle := world.get_node_or_null("ModuleCradle") as RunUnitModuleCradle
+	if module_cradle != null and not module_cradle.module_acquired.is_connected(_on_module_acquired.bind(module_cradle)):
+		module_cradle.module_acquired.connect(_on_module_acquired.bind(module_cradle))
+	if route_exit is RunUnitBeaconIgnition:
+		var beacon: RunUnitBeaconIgnition = route_exit as RunUnitBeaconIgnition
+		if not beacon.interaction_completed.is_connected(_complete_run):
+			beacon.interaction_completed.connect(_complete_run)
 	reset_run(0)
+	for hazard: RunUnitHazardArea in world.get_hazard_nodes():
+		if not hazard.hazard_phase_changed.is_connected(_on_hazard_phase_changed.bind(hazard)):
+			hazard.hazard_phase_changed.connect(_on_hazard_phase_changed.bind(hazard))
 	_run_started = true
 
 func _physics_process(delta: float) -> void:
@@ -101,6 +118,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_run_elapsed_seconds += delta
 	var current_distance: float = score_manager.record_position(player.global_position.x)
+	_update_crouch_metrics()
 	RunUnitSession.record_best_distance(score_manager.best_distance)
 	_trace_sample_countdown -= delta
 	if _trace_sample_countdown <= 0.0:
@@ -111,7 +129,7 @@ func _physics_process(delta: float) -> void:
 	hud.set_scores(current_distance, score_manager.best_distance)
 	_update_debug(current_distance)
 	if player.global_position.y > world.death_y:
-		_fail_run()
+		_fail_run("fell_below_route")
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not (event is InputEventKey) or not event.pressed or event.echo:
@@ -126,6 +144,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		scripted_controller.reset_controller()
 
 func reset_run(run_seed: int) -> void:
+	if RunUnitSession.last_run_outcome == "failed":
+		RunUnitSession.begin_retry_attempt()
+	if RunUnitSession.has_checkpoint(_selected_level_index):
+		RunUnitSession.record_respawn()
 	initial_seed = run_seed
 	_run_state = RunState.ACTIVE
 	_external_control = false
@@ -145,6 +167,8 @@ func reset_run(run_seed: int) -> void:
 	_terminal_penalty_paid = false
 	_trace_sample_countdown = 0.0
 	_run_elapsed_seconds = 0.0
+	_finished_metrics.clear()
+	_was_crouching = false
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
 	world.reset(run_seed)
@@ -165,6 +189,7 @@ func reset_run(run_seed: int) -> void:
 		route_exit.reset_transition()
 	hud.set_scores(0.0, score_manager.best_distance)
 	hud.set_health(player_health.current_health, player_health.max_health)
+	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
 	if is_terminal():
@@ -208,7 +233,12 @@ func consume_reward() -> float:
 func is_terminal() -> bool:
 	return _run_state != RunState.ACTIVE
 
-func _fail_run() -> void:
+func _fail_run(reason: String = "unknown") -> void:
+	RunUnitSession.record_playtest_event("death", {
+		"reason": reason,
+		"position": [player.global_position.x, player.global_position.y],
+		"distance": score_manager.distance,
+	})
 	_finish_run(RunState.FAILED)
 
 func _complete_run() -> void:
@@ -223,6 +253,10 @@ func _finish_run(result: int) -> void:
 	player.set_physics_process(false)
 	var current_distance: float = score_manager.record_position(player.global_position.x)
 	RunUnitSession.record_best_distance(score_manager.best_distance)
+	RunUnitSession.record_playtest_event("run_end_position", {
+		"position": [player.global_position.x, player.global_position.y],
+		"distance": current_distance,
+	})
 	hud.set_scores(current_distance, score_manager.best_distance)
 	var outcome: String = "failed" if result == RunState.FAILED else "completed"
 	var campaign_completion_recorded: bool = true
@@ -234,13 +268,15 @@ func _finish_run(result: int) -> void:
 			outcome = "incomplete"
 	if result == RunState.FAILED:
 		player_feedback.play_game_over_feedback()
+	_finished_metrics = RunUnitSession.finish_run_metrics(outcome)
+	_trace.record("metrics:%s" % outcome, player.global_position, player.velocity)
 	_trace.record(outcome, player.global_position, player.velocity)
 	RunUnitSession.set_traversal_trace(_trace.export_data())
 	RunUnitSession.set_run_outcome(outcome)
 	if result == RunState.FAILED and RunUnitSession.demo_mode:
 		_demo_recover_from_failure()
 	elif result == RunState.FAILED:
-		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+		death_menu.open_with_scores(score_manager.distance, score_manager.best_distance, _finished_metrics)
 	elif outcome == "incomplete":
 		death_menu.open_missing_module()
 	elif route_exit != null:
@@ -252,7 +288,7 @@ func _finish_run(result: int) -> void:
 		# which would end the recording partway through the campaign.
 		_load_next_route()
 	else:
-		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
+		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance, _finished_metrics)
 
 ## A demo retries from its last checkpoint the way a player would, but it has to
 ## give up eventually: without a cap, a corner the bot cannot solve would loop
@@ -286,7 +322,7 @@ func _load_next_route() -> void:
 ## session has to point at that route before the load happens.
 func _on_route_exit_finished() -> void:
 	if route_exit.next_scene_path.is_empty():
-		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance)
+		death_menu.open_completed_with_scores(score_manager.distance, score_manager.best_distance, _finished_metrics)
 		return
 	if route_exit.next_scene_path == scene_file_path:
 		RunUnitSession.selected_level_index = RunUnitCampaign.get_next_route_index(_selected_level_index)
@@ -315,27 +351,96 @@ func _on_world_metrics_updated(metrics: Dictionary) -> void:
 
 func _on_player_damaged(current_health: int, max_health: int) -> void:
 	RunUnitSession.record_demo_damage()
+	RunUnitSession.record_damage()
+	RunUnitSession.record_playtest_event("health_changed", {"current": current_health, "maximum": max_health})
 	hud.set_health(current_health, max_health)
 	player_feedback.play_damage_feedback()
 
 func _on_player_depleted() -> void:
-	_fail_run()
+	_fail_run("health_depleted")
 
 func _on_obstacle_triggered(obstacle_type: String, platform_id: int) -> void:
 	if is_terminal():
 		return
 	_trace.record("obstacle:%s" % obstacle_type, player.global_position, player.velocity, platform_id)
-	_fail_run()
+	_fail_run("obstacle:%s" % obstacle_type)
 
 ## A checkpoint only registers when the player actually touches its node.
-func _on_checkpoint_activated(position: Vector2) -> void:
-	RunUnitSession.record_checkpoint(_selected_level_index, position)
+func _on_checkpoint_activated(checkpoint_position: Vector2) -> void:
+	RunUnitSession.record_checkpoint(_selected_level_index, checkpoint_position)
+	RunUnitAudio.play_event("checkpoint", -14.0)
+
+func _on_player_landed() -> void:
+	var platform: Dictionary = world.get_platform_below_position(player.global_position)
+	RunUnitSession.record_playtest_event("landing", {
+		"position": [player.global_position.x, player.global_position.y],
+		"platform_id": int(platform.get("platform_id", -1)),
+		"landing_speed": player.last_landing_speed,
+	})
+
+func _on_module_acquired(module_cradle: RunUnitModuleCradle) -> void:
+	RunUnitSession.record_module_acquired()
+	RunUnitSession.record_playtest_event("module_acquired_progress", _module_acquisition_metrics(module_cradle.global_position.x))
+
+func _module_acquisition_metrics(module_x: float) -> Dictionary:
+	# Traversal length is expressed in tiles; pickup positions are world pixels.
+	var route_length_pixels: float = maxf(world.get_traversal_length() * world.tile_size, 1.0)
+	var distance_from_spawn: float = module_x - world.get_spawn_position().x
+	return {
+		"position_x": module_x,
+		"route_progress": clampf(distance_from_spawn / route_length_pixels, 0.0, 1.0),
+		"post_pickup_distance": maxf(route_length_pixels - distance_from_spawn, 0.0),
+	}
 
 func _on_route_completed() -> void:
+	if route_exit is RunUnitBeaconIgnition:
+		var beacon: RunUnitBeaconIgnition = route_exit as RunUnitBeaconIgnition
+		beacon.begin_player_interaction(player)
+		human_controller.active = false
+		# The route ending uses the same hold/release input as a player. Keep the
+		# scripted controller alive only for an automated campaign demonstration.
+		scripted_controller.active = RunUnitSession.demo_mode
+		if RunUnitSession.demo_mode:
+			scripted_controller.reset_controller()
+		player.set_physics_process(false)
+		RunUnitSession.record_playtest_event("beacon_interaction_started", {"position": [player.global_position.x, player.global_position.y]})
+		return
 	_complete_run()
 
-func _on_module_acquired() -> void:
-	RunUnitSession.record_module_acquired()
+func _on_story_beat(zone_name: String, cue: Dictionary) -> void:
+	var message := str(cue.get("message", ""))
+	if not message.is_empty():
+		hud.show_system_message(message)
+	var ambience := str(cue.get("ambience", ""))
+	if not ambience.is_empty():
+		RunUnitAudio.set_ambience(ambience)
+	var event_name := str(cue.get("event", ""))
+	if not event_name.is_empty():
+		RunUnitAudio.play_event(event_name)
+	RunUnitSession.record_playtest_event("story_effect", {"zone": zone_name, "message": message, "ambience": ambience, "event": event_name})
+
+func _on_hazard_phase_changed(phase: int, hazard: RunUnitHazardArea) -> void:
+	if not is_instance_valid(hazard):
+		return
+	if hazard.global_position.distance_to(player.global_position) <= 1200.0:
+		RunUnitAudio.play_hazard_phase(phase, String(hazard.name), hazard.global_position)
+	RunUnitSession.record_playtest_event("hazard_phase", {"hazard": String(hazard.name), "phase": phase})
+
+func _update_crouch_metrics() -> void:
+	var crouching: bool = player.is_crouching()
+	if crouching and not _was_crouching:
+		_crouch_started_msec = Time.get_ticks_msec()
+		RunUnitSession.record_playtest_event("crouch_started", {"position": [player.global_position.x, player.global_position.y]})
+	elif _was_crouching and not crouching:
+		RunUnitSession.record_playtest_event("crouch_ended", {"duration_s": maxf((Time.get_ticks_msec() - _crouch_started_msec) / 1000.0, 0.0)})
+	_was_crouching = crouching
+
+func _ambience_for_route(route_index: int) -> String:
+	match route_index:
+		0, 1: return "factory"
+		2: return "exterior"
+		3: return "beacon_exterior"
+	return "factory"
 
 func _ensure_input_map() -> void:
 	_add_key_action("move_left", KEY_A)

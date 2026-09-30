@@ -1,4 +1,4 @@
-﻿RUN//UNIT uses four sound effects from Kenney's Sci-Fi Sounds and Impact Sounds packs.
+RUN//UNIT uses twelve sound effects from Kenney's Sci-Fi Sounds and Impact Sounds packs.
 
 Source packs:
 https://kenney.nl/assets/sci-fi-sounds
@@ -9,6 +9,14 @@ laserRetro_001.ogg -> jump_zap.ogg
 impactMetal_light_002.ogg -> land_metal.ogg
 impactMetal_heavy_001.ogg -> damage_metal.ogg
 explosionCrunch_004.ogg -> game_over_crunch.ogg
+computerNoise_000.ogg -> route ambience / hazard warning / Beacon interior
+doorClose_000.ogg -> structural-collapse warning
+engineCircular_000.ogg -> factory ambience and saw motor
+forceField_000.ogg -> cooling ambience / objective cue / module pickup
+impactMetal_000.ogg -> crusher / checkpoint impact
+laserLarge_000.ogg -> electrical arc / Beacon stage
+spaceEngine_000.ogg -> Beacon exterior ambience / online cue
+spaceEngineLow_000.ogg -> exterior service ambience
 
 License: Creative Commons CC0 1.0 Universal (public domain dedication).
 Attribution is not required by the license. Credit: Kenney.

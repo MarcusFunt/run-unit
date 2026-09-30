@@ -2,6 +2,7 @@ class_name RunUnitBeaconIgnition
 extends RunUnitRouteExit
 
 signal module_installed
+signal interaction_completed
 
 @export var carried_module_path: NodePath
 @export var stage_paths: Array[NodePath] = []
@@ -30,6 +31,10 @@ var _camera_tween: Tween = null
 var _camera: Camera2D = null
 var _camera_zoom_start: Vector2 = Vector2.ONE
 var _camera_offset_start: Vector2 = Vector2.ZERO
+var _interaction_player: RunUnitPlayerMotor = null
+var _interaction_active: bool = false
+var _interaction_charge_seconds: float = 0.0
+var _interaction_jump_was_held: bool = false
 
 const STAGE_COPY: Array[String] = [
 	"INTERFACE ONLINE  //  HANDSHAKE VERIFIED",
@@ -48,6 +53,10 @@ func reset_transition() -> void:
 		_camera_tween.kill()
 	_restore_camera()
 	installed = false
+	_interaction_active = false
+	_interaction_charge_seconds = 0.0
+	_interaction_jump_was_held = false
+	_interaction_player = null
 	lit_stages = 0
 	seated_module.visible = false
 	transfer_module.visible = false
@@ -67,7 +76,67 @@ func reset_transition() -> void:
 	var flash_color: Color = world_flash.color
 	flash_color.a = 0.0
 	world_flash.color = flash_color
+
+func begin_player_interaction(player: RunUnitPlayerMotor) -> void:
+	if transition_started:
+		return
+	transition_started = true
+	_interaction_active = true
+	_interaction_player = player
+	_interaction_charge_seconds = 0.0
+	_interaction_jump_was_held = false
+	if player != null:
+		player.set_interaction_charge(0.0, false)
+	sequence_ui.visible = true
+	completion_banner.visible = false
+	activation_label.text = "HOLD JUMP  //  RELEASE AT FULL CHARGE"
+	activation_progress.value = 0.0
+	_focus_camera()
+
+func is_interaction_active() -> bool:
+	return _interaction_active
+
+func _process(delta: float) -> void:
+	if not _interaction_active:
+		return
+	var player_holding_jump: bool = Input.is_action_pressed("jump") or (
+		_interaction_player != null and _interaction_player.is_jump_held()
+	)
+	if player_holding_jump:
+		_interaction_jump_was_held = true
+		_interaction_charge_seconds = minf(_interaction_charge_seconds + delta, _interaction_player.max_charge_time if _interaction_player != null else 0.36)
+		var maximum: float = _interaction_player.max_charge_time if _interaction_player != null else 0.36
+		var ratio: float = clampf(_interaction_charge_seconds / maxf(maximum, 0.01), 0.0, 1.0)
+		activation_progress.value = ratio * 100.0
+		activation_label.text = "IGNITION CHARGE  //  %d%%" % int(round(ratio * 100.0))
+		if _interaction_player != null:
+			_interaction_player.set_interaction_charge(ratio, true)
+	elif _interaction_jump_was_held:
+		_interaction_jump_was_held = false
+		var maximum: float = _interaction_player.max_charge_time if _interaction_player != null else 0.36
+		var ratio: float = clampf(_interaction_charge_seconds / maxf(maximum, 0.01), 0.0, 1.0)
+		if _interaction_player != null:
+			_interaction_player.set_interaction_charge(0.0, false)
+		_interaction_active = false
+		RunUnitSession.record_playtest_event("beacon_charge_released", {
+			"charge_ratio": ratio,
+			"position": [global_position.x, global_position.y],
+		})
+		if ratio >= 0.98:
+			interaction_completed.emit()
+			RunUnitAudio.play_event("beacon_online", -5.0)
+			_start_activation_sequence()
+		else:
+			_interaction_charge_seconds = 0.0
+			activation_progress.value = 0.0
+			activation_label.text = "CHARGE INCOMPLETE  //  HOLD TO FULL CHARGE"
+			_interaction_active = true
+
 func begin_transition() -> void:
+	if transition_started and _interaction_charge_seconds <= 0.0 and not _interaction_active:
+		# Beacon's full-charge release already claimed the interaction; the game
+		# now records the completed route while the staged installation begins.
+		return
 	if transition_started:
 		return
 	transition_started = true
@@ -76,6 +145,12 @@ func begin_transition() -> void:
 	activation_label.text = "IGNITION SEQUENCE  //  MODULE ALIGNMENT"
 	activation_progress.value = 4.0
 	_focus_camera()
+	_start_activation_sequence()
+
+func _start_activation_sequence() -> void:
+	_interaction_active = false
+	if _interaction_player != null:
+		_interaction_player.set_interaction_charge(0.0, false)
 
 	_sequence = create_tween()
 	_sequence.tween_interval(install_delay)
@@ -148,6 +223,7 @@ func _light_stage(index: int) -> void:
 	lit_stages += 1
 	activation_label.text = STAGE_COPY[index] if index < STAGE_COPY.size() else "SYSTEM STAGE %02d ONLINE" % (index + 1)
 	activation_progress.value = lerpf(24.0, 92.0, float(lit_stages) / maxf(float(stage_paths.size()), 1.0))
+	RunUnitAudio.play_event("beacon_stage", -12.0)
 func _declare_success() -> void:
 	activation_label.text = "BEACON 9 ONLINE  //  GRID SYNCHRONIZED"
 	activation_progress.value = 100.0

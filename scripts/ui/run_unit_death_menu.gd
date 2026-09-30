@@ -35,19 +35,28 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_on_restart_pressed()
 
-func open_with_scores(distance: float, best: float) -> void:
+func open_with_scores(distance: float, best: float, metrics: Dictionary = {}) -> void:
 	_apply_failure_presentation()
 	title_label.text = "UNIT OFFLINE"
-	description_label.text = "%s TERMINATED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\nRecovery point preserved. Re-enter when ready." % [_get_route_title(), int(distance), int(best)]
+	var run_time := float(metrics.get("time_s", RunUnitSession.run_elapsed_seconds))
+	var damage := int(metrics.get("damage", RunUnitSession.damage_taken))
+	var checkpoints := int(metrics.get("checkpoint_activations", RunUnitSession.checkpoint_activations))
+	var recoveries := int(metrics.get("checkpoint_recoveries", RunUnitSession.checkpoint_recoveries))
+	description_label.text = "%s TERMINATED\n\nTIME  %s\nDISTANCE  %05dm   BEST  %05dm\nDAMAGE  %d   CHECKPOINTS  %d   RESPAWNS  %d\n\nRecovery point preserved. Re-enter when ready." % [_get_route_title(), _format_time(run_time), int(distance), int(best), damage, checkpoints, recoveries]
 	restart_button.text = "RETRY FROM CHECKPOINT"
 	main_menu_button.text = "ABORT TO SECTOR SELECT"
 	hint_label.text = "SYSTEM HALTED  //  R TO RETRY"
 	_open(false)
 
-func open_completed_with_scores(distance: float, best: float) -> void:
+func open_completed_with_scores(distance: float, best: float, metrics: Dictionary = {}) -> void:
 	_apply_success_presentation()
 	title_label.text = "ROUTE COMPLETE"
-	description_label.text = "%s CERTIFIED\n\nRUN DISTANCE  %05dm\nBEST DISTANCE  %05dm\n\n%s" % [_get_route_title(), int(distance), int(best), RunUnitCampaign.get_completion(RunUnitSession.selected_level_index)]
+	var run_time := float(metrics.get("time_s", RunUnitSession.run_elapsed_seconds))
+	var best_time := float(metrics.get("best_time_s", RunUnitSession.best_time_seconds))
+	var damage := int(metrics.get("damage", RunUnitSession.damage_taken))
+	var checkpoints := int(metrics.get("checkpoint_activations", RunUnitSession.checkpoint_activations))
+	var recoveries := int(metrics.get("checkpoint_recoveries", RunUnitSession.checkpoint_recoveries))
+	description_label.text = "%s CERTIFIED\n\nTIME  %s   BEST  %s\nDISTANCE  %05dm   BEST  %05dm\nDAMAGE  %d   CHECKPOINTS  %d   RESPAWNS  %d\n\n%s" % [_get_route_title(), _format_time(run_time), _format_time(best_time), int(distance), int(best), damage, checkpoints, recoveries, RunUnitCampaign.get_completion(RunUnitSession.selected_level_index)]
 	restart_button.text = "REDEPLOY ROUTE"
 	main_menu_button.text = "CONTINUE TO SECTOR SELECT"
 	hint_label.text = "OBJECTIVE VERIFIED  //  ROUTE CERTIFIED"
@@ -126,6 +135,10 @@ func _release_pause() -> void:
 
 func _get_route_title() -> String:
 	return RunUnitCampaign.get_title(RunUnitSession.selected_level_index)
+
+func _format_time(seconds: float) -> String:
+	var whole_seconds := maxi(int(round(seconds)), 0)
+	return "%02d:%02d" % [floori(float(whole_seconds) / 60.0), whole_seconds % 60]
 
 func _on_restart_pressed() -> void:
 	_release_pause()

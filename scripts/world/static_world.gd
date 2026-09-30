@@ -14,6 +14,7 @@ signal world_metrics_updated(metrics: Dictionary)
 @warning_ignore("unused_signal")
 signal obstacle_triggered(obstacle_type: String, platform_id: int)
 signal route_completed
+signal story_beat(zone_name: String, cue: Dictionary)
 
 const TILE_SIZE: float = 32.0
 const SEMANTIC_EMPTY: int = 0
@@ -59,8 +60,16 @@ func _ready() -> void:
 	_create_checkpoint_stations()
 	_load_semantic_hazards_from_tilemap()
 	_collect_hazards()
+	_bind_story_zones()
 	_update_metrics()
 	_ensure_completion_trigger()
+
+func _bind_story_zones() -> void:
+	var director := RunUnitStoryZoneDirector.new()
+	director.name = "StoryZoneDirector"
+	add_child(director)
+	director.bind_zones(self)
+	director.story_beat.connect(func(zone_name: String, cue: Dictionary) -> void: story_beat.emit(zone_name, cue))
 
 func _create_walkable_edges() -> void:
 	var edges := RunUnitWalkableEdges.new()
@@ -173,6 +182,7 @@ func get_nearest_hazard_ahead(world_position: Vector2, max_distance: float = 240
 			"width": bounds.size.x,
 			"height": bounds.size.y,
 			"active": hazard.active,
+			"phase": hazard.get_hazard_phase(),
 			"lethal": hazard.lethal,
 		}
 	return best
@@ -185,6 +195,9 @@ func _collect_hazards() -> void:
 		pending.append_array(node.get_children())
 		if node is RunUnitHazardArea:
 			_hazards.append(node as RunUnitHazardArea)
+
+func get_hazard_nodes() -> Array[RunUnitHazardArea]:
+	return _hazards.duplicate()
 
 func _hazard_bounds(hazard: RunUnitHazardArea) -> Rect2:
 	var collision: CollisionShape2D = hazard.get_node_or_null("CollisionShape2D") as CollisionShape2D

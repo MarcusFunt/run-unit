@@ -7,6 +7,7 @@ extends GutTest
 const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
 const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
 const TRACE_SCRIPT: GDScript = preload("res://scripts/world/traversal_trace.gd")
+const RUN_SESSION_SCRIPT: GDScript = preload("res://scripts/gameplay/run_session.gd")
 const TILE: float = 32.0
 
 
@@ -73,10 +74,12 @@ func test_failure_penalty_is_charged_once_per_run() -> void:
 
 func test_resetting_a_run_rearms_the_failure_penalty() -> void:
 	var game: RunUnitGame = _make_game()
+	var attempt_before_failure: int = RunUnitSession.run_attempt_index
 	game.world.obstacle_triggered.emit("test", 1)
 	var _settle: float = game.consume_reward()
 
 	game.reset_run(0)
+	assert_eq(RunUnitSession.run_attempt_index, attempt_before_failure + 1, "Restarting a failed route should begin a separately recorded attempt")
 	assert_false(get_tree().paused, "Restarting should release the pause the results menu took")
 	game.world.obstacle_triggered.emit("test", 1)
 	var reward: float = game.consume_reward()
@@ -141,6 +144,62 @@ func test_platform_surface_position_is_reported_in_world_space() -> void:
 	var surface: Vector2 = world.get_platform_surface_position({"start_x": 4, "width": 6, "height": 12})
 
 	assert_eq(surface, Vector2(640.0 + 7.0 * TILE, 128.0 + 12.0 * TILE), "Observation geometry must be comparable with the player's global position")
+
+
+func test_retry_attempt_records_completion_and_keeps_cumulative_metrics() -> void:
+	var session: Variant = RUN_SESSION_SCRIPT.new()
+	assert_true(session.has_method("begin_retry_attempt"), "A retry needs a telemetry boundary so its events are not lost when the failed attempt closes")
+	if not session.has_method("begin_retry_attempt"):
+		session.free()
+		return
+
+	session.set("_playtest_enabled", true)
+	session.begin_run(2, 0, "authored", "static", "level_02_recovery.tscn")
+	var first_attempt_path: String = str(session.get("_playtest_path"))
+	session.record_damage()
+	session.record_checkpoint(2, Vector2(128.0, 64.0))
+	session.set("_run_started_msec", Time.get_ticks_msec() - 2000)
+	var failed_metrics: Dictionary = session.finish_run_metrics("failed")
+	session.set_run_outcome("failed")
+
+	session.begin_retry_attempt()
+	var retry_attempt_path: String = str(session.get("_playtest_path"))
+	session.record_respawn()
+	session.set("_run_started_msec", Time.get_ticks_msec() - 3000)
+	var completed_metrics: Dictionary = session.finish_run_metrics("completed")
+
+	assert_ne(first_attempt_path, retry_attempt_path, "Retries should have a separate JSONL file so each attempt retains its terminal outcome")
+	assert_eq(int(session.get("run_attempt_index")), 2)
+	assert_eq(int(completed_metrics.get("damage", -1)), 1, "Retrying should retain damage across the route attempt")
+	assert_eq(int(completed_metrics.get("checkpoint_activations", -1)), 1)
+	assert_eq(int(completed_metrics.get("checkpoint_recoveries", -1)), 1)
+	assert_gt(float(completed_metrics.get("time_s", 0.0)), float(failed_metrics.get("time_s", 0.0)) + 2.5, "The completed record should include both attempt durations")
+
+	var first_lines: PackedStringArray = FileAccess.get_file_as_string(first_attempt_path).strip_edges().split("\n")
+	var retry_lines: PackedStringArray = FileAccess.get_file_as_string(retry_attempt_path).strip_edges().split("\n")
+	var first_end: Dictionary = JSON.parse_string(first_lines[-1])
+	var retry_start: Dictionary = JSON.parse_string(retry_lines[0])
+	var retry_end: Dictionary = JSON.parse_string(retry_lines[-1])
+	var retry_events: Array[Dictionary] = []
+	for line: String in retry_lines:
+		var event: Variant = JSON.parse_string(line)
+		if event is Dictionary:
+			retry_events.append(event)
+	var has_respawn_event: bool = false
+	for event: Dictionary in retry_events:
+		if str(event.get("event", "")) == "checkpoint_respawn":
+			has_respawn_event = true
+	assert_eq(str(first_end.get("event", "")), "run_finished")
+	assert_eq(str((first_end.get("data", {}) as Dictionary).get("outcome", "")), "failed")
+	assert_eq(int((retry_start.get("data", {}) as Dictionary).get("attempt", -1)), 2)
+	assert_true(bool((retry_start.get("data", {}) as Dictionary).get("retry", false)))
+	assert_true(has_respawn_event, "Checkpoint recovery should be present in the retry's telemetry file")
+	assert_eq(str(retry_end.get("event", "")), "run_finished")
+	assert_eq(str((retry_end.get("data", {}) as Dictionary).get("outcome", "")), "completed")
+
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(first_attempt_path))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(retry_attempt_path))
+	session.free()
 
 
 func test_semantic_lookup_follows_the_world_transform() -> void:

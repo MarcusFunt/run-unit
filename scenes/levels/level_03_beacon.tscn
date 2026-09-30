@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_03_beacon.tmj" id="2_level"]
@@ -10,16 +10,18 @@
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_4.png" id="8_city4"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_3.png" id="9_city3"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/city_parallax/city_layer_2.png" id="10_city2"]
+[ext_resource type="Script" path="res://scripts/hazards/timed_hazard.gd" id="10_jxhdl"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/electric_floor_arc.tscn" id="11_hazard"]
 [ext_resource type="Script" path="res://scripts/world/environment_backdrop.gd" id="12_backdrop"]
+[ext_resource type="Script" path="res://scripts/hazards/crusher_hazard.gd" id="12_rdtwr"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/crusher.tscn" id="13_crusher"]
-[ext_resource type="PackedScene" path="res://scenes/props/maintenance_station.tscn" id="14_station"]
+[ext_resource type="Script" path="res://scripts/hazards/saw_hazard.gd" id="14_aecln"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/saw.tscn" id="15_saw"]
+[ext_resource type="Script" path="res://scripts/hazards/laser_gate_hazard.gd" id="16_4al5p"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/laser_gate.tscn" id="16_laser"]
 [ext_resource type="PackedScene" path="res://scenes/props/clearance_gate_visual.tscn" id="17_clearance_gate"]
 
 [sub_resource type="Gradient" id="IgnitionSparkGradient"]
-offsets = PackedFloat32Array(0, 1)
 colors = PackedColorArray(0.8, 1, 1, 1, 0.25, 0.85, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="IgnitionSparkTexture"]
@@ -30,217 +32,241 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[node name="Level03Beacon" type="Node2D"]
+[node name="Level03Beacon" type="Node2D" unique_id=491449355]
 script = ExtResource("1_world")
 death_y = 1000.0
 
-[node name="Backdrop" type="Polygon2D" parent="."]
+[node name="Backdrop" type="Polygon2D" parent="." unique_id=1399132407]
 z_index = -30
 color = Color(0.012, 0.028, 0.043, 1)
 polygon = PackedVector2Array(-512, -1400, 16800, -1400, 16800, 1536, -512, 1536)
 
-[node name="Sky" type="Polygon2D" parent="."]
+[node name="Sky" type="Polygon2D" parent="." unique_id=1243324346]
 z_index = -29
 polygon = PackedVector2Array(-512, -1400, 16800, -1400, 16800, 1100, -512, 1100)
 vertex_colors = PackedColorArray(0.04, 0.13, 0.19, 1, 0.04, 0.13, 0.19, 1, 0.1, 0.28, 0.34, 1, 0.1, 0.28, 0.34, 1)
 
-[node name="EnvironmentDepth" type="Node2D" parent="."]
+[node name="EnvironmentDepth" type="Node2D" parent="." unique_id=2013999173]
 z_index = -19
 script = ExtResource("12_backdrop")
 theme = "beacon"
 
-[node name="DecorativeSetpieces" type="Node2D" parent="."]
+[node name="DecorativeSetpieces" type="Node2D" parent="." unique_id=1986887726]
 
-[node name="BeaconParallax" type="Parallax2D" parent="."]
+[node name="BeaconParallax" type="Parallax2D" parent="." unique_id=1863179416]
 z_index = -28
 scroll_scale = Vector2(0.02, 0.1)
 scroll_offset = Vector2(700, 430)
 script = ExtResource("5_approach")
-start_x = 0.0
 end_x = 9200.0
-start_scale = 0.42
 end_scale = 1.9
 start_offset = Vector2(700, 430)
 end_offset = Vector2(640, 940)
 fade_from = 0.88
 
-[node name="Beacon9" parent="BeaconParallax" instance=ExtResource("7_beacon")]
+[node name="Beacon9" type="Node2D" parent="BeaconParallax" unique_id=1391303105 instance=ExtResource("7_beacon")]
 scale = Vector2(0.42, 0.42)
 
-[node name="CityFar" type="Parallax2D" parent="."]
+[node name="CityFar" type="Parallax2D" parent="." unique_id=1541968594]
 z_index = -27
 scroll_scale = Vector2(0.08, 0.1)
 scroll_offset = Vector2(0, -1)
 repeat_size = Vector2(960, 0)
 repeat_times = 24
 
-[node name="Sprite" type="Sprite2D" parent="CityFar"]
+[node name="Sprite" type="Sprite2D" parent="CityFar" unique_id=44561169]
 modulate = Color(0.62, 0.72, 0.78, 1)
+scale = Vector2(2, 2)
 texture = ExtResource("8_city4")
 centered = false
-scale = Vector2(2, 2)
 
-[node name="CityMid" type="Parallax2D" parent="."]
+[node name="CityMid" type="Parallax2D" parent="." unique_id=1100947280]
 z_index = -26
 scroll_scale = Vector2(0.16, 0.1)
 scroll_offset = Vector2(0, 60)
 repeat_size = Vector2(960, 0)
 repeat_times = 24
 
-[node name="Sprite" type="Sprite2D" parent="CityMid"]
+[node name="Sprite" type="Sprite2D" parent="CityMid" unique_id=1394855785]
 modulate = Color(0.7, 0.78, 0.82, 1)
+scale = Vector2(2, 2)
 texture = ExtResource("9_city3")
 centered = false
-scale = Vector2(2, 2)
 
-[node name="CityNear" type="Parallax2D" parent="."]
+[node name="CityNear" type="Parallax2D" parent="." unique_id=876937798]
 z_index = -25
 scroll_scale = Vector2(0.26, 0.1)
 scroll_offset = Vector2(0, 157)
 repeat_size = Vector2(960, 0)
 repeat_times = 24
 
-[node name="Sprite" type="Sprite2D" parent="CityNear"]
+[node name="Sprite" type="Sprite2D" parent="CityNear" unique_id=1695052657]
 modulate = Color(0.4, 0.46, 0.5, 1)
+scale = Vector2(2, 2)
 texture = ExtResource("10_city2")
 centered = false
-scale = Vector2(2, 2)
 
-[node name="StreetHaze" type="Polygon2D" parent="."]
+[node name="StreetHaze" type="Polygon2D" parent="." unique_id=173675838]
 z_index = -22
 polygon = PackedVector2Array(-512, 600, 9200, 600, 9200, 1100, -512, 1100)
 vertex_colors = PackedColorArray(0.02, 0.07, 0.09, 0, 0.02, 0.07, 0.09, 0, 0.02, 0.06, 0.08, 0.95, 0.02, 0.06, 0.08, 0.95)
 
-[node name="BeaconInteriorFill" type="Polygon2D" parent="."]
+[node name="BeaconInteriorFill" type="Polygon2D" parent="." unique_id=259660623]
 z_index = -20
 color = Color(0.022, 0.055, 0.075, 1)
 polygon = PackedVector2Array(14128, 72, 15030, 72, 15030, -900, 16250, -900, 16250, 1100, 14128, 1100)
 
-[node name="BeaconGeometry" parent="." instance=ExtResource("2_level")]
+[node name="BeaconGeometry" type="Node2D" parent="." unique_id=1675742294 instance=ExtResource("2_level")]
+metadata/level_id = "level_03_beacon"
+metadata/display_name = "LEVEL 03 // CITY CROSSING & BEACON 9"
+metadata/story_arc = "mission_confirmation -> rooftop_crossing -> transit_viaduct -> utility_canyon -> beacon_perimeter -> exterior_ascent -> beacon_interior -> ignition_chamber"
+metadata/authoring_note = "Collision lives only on Semantic/Obstacles; art layers are decorative. StoryZones import as collision-free Area2D metadata. Checkpoint markers feed RunUnitGame."
 
-[node name="ElectricalFaults" type="Node2D" parent="."]
+[node name="ElectricalFaults" type="Node2D" parent="." unique_id=1323062741]
 
-[node name="RooftopArc" parent="ElectricalFaults" instance=ExtResource("11_hazard")]
+[node name="RooftopArc" type="Area2D" parent="ElectricalFaults" unique_id=1953208335 instance=ExtResource("11_hazard")]
 position = Vector2(1376, 448)
+collision_layer = 0
+script = ExtResource("10_jxhdl")
 cycle_seconds = 2.2
 active_seconds = 0.75
 phase_offset_seconds = 0.25
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
 
-[node name="ViaductArc" parent="ElectricalFaults" instance=ExtResource("11_hazard")]
+[node name="ViaductArc" type="Area2D" parent="ElectricalFaults" unique_id=1485442130 instance=ExtResource("11_hazard")]
 position = Vector2(5056, 544)
+collision_layer = 0
+script = ExtResource("10_jxhdl")
 cycle_seconds = 2.5
 active_seconds = 0.9
 phase_offset_seconds = 1.15
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
 
-[node name="CanyonArc" parent="ElectricalFaults" instance=ExtResource("11_hazard")]
+[node name="CanyonArc" type="Area2D" parent="ElectricalFaults" unique_id=2087889168 instance=ExtResource("11_hazard")]
 position = Vector2(7744, 672)
-cycle_seconds = 2.0
+collision_layer = 0
+script = ExtResource("10_jxhdl")
 active_seconds = 0.7
 phase_offset_seconds = 0.8
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
 
-[node name="MechanicalHazards" type="Node2D" parent="."]
+[node name="MechanicalHazards" type="Node2D" parent="." unique_id=1029278444]
 
-[node name="ServicePress" parent="MechanicalHazards" instance=ExtResource("13_crusher")]
+[node name="ServicePress" type="Area2D" parent="MechanicalHazards" unique_id=1270067704 instance=ExtResource("13_crusher")]
 position = Vector2(6080, 503)
+collision_layer = 0
+script = ExtResource("12_rdtwr")
 cycle_seconds = 2.9
 active_seconds = 0.58
 phase_offset_seconds = 1.3
+warning_seconds = 0.5
+lethal = true
 
-[node name="RotaryHazards" type="Node2D" parent="."]
+[node name="RotaryHazards" type="Node2D" parent="." unique_id=1431747445]
 
-[node name="RooftopSaw" parent="RotaryHazards" instance=ExtResource("15_saw")]
+[node name="RooftopSaw" type="Area2D" parent="RotaryHazards" unique_id=1152600235 instance=ExtResource("15_saw")]
 position = Vector2(3360, 417)
+collision_layer = 0
+script = ExtResource("14_aecln")
+lethal = true
 
-[node name="TimingHazards" type="Node2D" parent="."]
+[node name="TimingHazards" type="Node2D" parent="." unique_id=574047067]
 
-[node name="BeaconLaser" parent="TimingHazards" instance=ExtResource("16_laser")]
+[node name="BeaconLaser" type="Area2D" parent="TimingHazards" unique_id=790892252 instance=ExtResource("16_laser")]
 position = Vector2(12480, 398)
+collision_layer = 0
+script = ExtResource("16_4al5p")
 cycle_seconds = 2.9
-active_seconds = 1.0
 phase_offset_seconds = 1.6
+warning_seconds = 0.4
+knockback = Vector2(-180, -40)
+hitstun_seconds = 0.12
 
-[node name="CarriedModule" type="Node2D" parent="."]
+[node name="CarriedModule" type="Node2D" parent="." unique_id=2036385438]
 script = ExtResource("3_carried")
 
-[node name="ModuleTemplate" type="Sprite2D" parent="CarriedModule"]
+[node name="ModuleTemplate" type="Sprite2D" parent="CarriedModule" unique_id=1173072084]
 visible = false
+modulate = Color(1, 0.72, 0.35, 1)
 scale = Vector2(1.6, 1.6)
 texture = ExtResource("6_module")
-modulate = Color(1, 0.72, 0.35, 1)
 hframes = 10
 vframes = 6
 frame = 14
 
-[node name="IgnitionChamber" type="Node2D" parent="."]
+[node name="IgnitionChamber" type="Node2D" parent="." unique_id=2120194067]
 position = Vector2(15600, 160)
 script = ExtResource("4_ignition")
 carried_module_path = NodePath("../CarriedModule")
-stage_paths = [NodePath("Stage1Interface"), NodePath("Stage2Conduits"), NodePath("Stage3Chamber"), NodePath("Stage4Interior"), NodePath("Stage5Column"), NodePath("Stage6City")]
+stage_paths = Array[NodePath]([NodePath("Stage1Interface"), NodePath("Stage2Conduits"), NodePath("Stage3Chamber"), NodePath("Stage4Interior"), NodePath("Stage5Column"), NodePath("Stage6City")])
 next_scene_path = "res://scenes/ending.tscn"
 
-[node name="Window" type="Node2D" parent="IgnitionChamber"]
+[node name="Window" type="Node2D" parent="IgnitionChamber" unique_id=819281035]
 z_index = 2
 
-[node name="Opening" type="Polygon2D" parent="IgnitionChamber/Window"]
+[node name="Opening" type="Polygon2D" parent="IgnitionChamber/Window" unique_id=854513221]
 polygon = PackedVector2Array(140, -164, 436, -164, 436, -28, 140, -28)
 vertex_colors = PackedColorArray(0.04, 0.13, 0.19, 1, 0.04, 0.13, 0.19, 1, 0.08, 0.22, 0.28, 1, 0.08, 0.22, 0.28, 1)
 
-[node name="DistantCity" type="Polygon2D" parent="IgnitionChamber/Window"]
+[node name="DistantCity" type="Polygon2D" parent="IgnitionChamber/Window" unique_id=691007109]
 color = Color(0.02, 0.07, 0.09, 1)
 polygon = PackedVector2Array(140, -28, 140, -62, 166, -62, 166, -80, 192, -80, 192, -54, 222, -54, 222, -96, 248, -96, 248, -66, 278, -66, 278, -86, 310, -86, 310, -58, 342, -58, 342, -92, 368, -92, 368, -62, 400, -62, 400, -76, 436, -76, 436, -28)
 
-[node name="Frame" type="Polygon2D" parent="IgnitionChamber/Window"]
+[node name="Frame" type="Polygon2D" parent="IgnitionChamber/Window" unique_id=1192967963]
 color = Color(0.09, 0.2, 0.24, 1)
 polygon = PackedVector2Array(132, -172, 444, -172, 444, -20, 132, -20, 132, -172, 140, -164, 140, -28, 436, -28, 436, -164, 132, -164)
 
-[node name="Mullion" type="Polygon2D" parent="IgnitionChamber/Window"]
+[node name="Mullion" type="Polygon2D" parent="IgnitionChamber/Window" unique_id=1263113183]
 color = Color(0.09, 0.2, 0.24, 1)
 polygon = PackedVector2Array(284, -164, 292, -164, 292, -28, 284, -28)
 
-[node name="Interface" type="Node2D" parent="IgnitionChamber"]
+[node name="Interface" type="Node2D" parent="IgnitionChamber" unique_id=1849455533]
 z_index = 1
 
-[node name="Plinth" type="Polygon2D" parent="IgnitionChamber/Interface"]
+[node name="Plinth" type="Polygon2D" parent="IgnitionChamber/Interface" unique_id=518295173]
 color = Color(0.07, 0.17, 0.21, 1)
 polygon = PackedVector2Array(-34, 0, 34, 0, 26, -34, -26, -34)
 
-[node name="Socket" type="Polygon2D" parent="IgnitionChamber/Interface"]
+[node name="Socket" type="Polygon2D" parent="IgnitionChamber/Interface" unique_id=383646012]
 color = Color(0.03, 0.09, 0.12, 1)
 polygon = PackedVector2Array(-20, -34, 20, -34, 20, -78, -20, -78)
 
-[node name="Clamp" type="Polygon2D" parent="IgnitionChamber/Interface"]
+[node name="Clamp" type="Polygon2D" parent="IgnitionChamber/Interface" unique_id=751775388]
 color = Color(0.12, 0.28, 0.33, 1)
 polygon = PackedVector2Array(-26, -78, -18, -78, -18, -34, -26, -34, -26, -78, 26, -78, 26, -34, 18, -34, 18, -78)
 
-[node name="SeatedModule" type="Sprite2D" parent="IgnitionChamber"]
+[node name="SeatedModule" type="Sprite2D" parent="IgnitionChamber" unique_id=865409959]
 visible = false
+modulate = Color(1, 0.72, 0.35, 1)
 z_index = 3
 position = Vector2(0, -56)
 scale = Vector2(1.7, 1.7)
 texture = ExtResource("6_module")
-modulate = Color(1, 0.72, 0.35, 1)
 hframes = 10
 vframes = 6
 frame = 3
 
-[node name="TransferModule" type="Sprite2D" parent="IgnitionChamber"]
+[node name="TransferModule" type="Sprite2D" parent="IgnitionChamber" unique_id=1082365189]
 visible = false
+modulate = Color(1, 0.72, 0.35, 1)
 z_index = 8
 texture = ExtResource("6_module")
-modulate = Color(1, 0.72, 0.35, 1)
 hframes = 10
 vframes = 6
 frame = 14
 
-[node name="SocketBurst" type="CPUParticles2D" parent="IgnitionChamber"]
+[node name="SocketBurst" type="CPUParticles2D" parent="IgnitionChamber" unique_id=1509396981]
 z_index = 7
 position = Vector2(0, -56)
 emitting = false
 amount = 52
+texture = SubResource("IgnitionSparkTexture")
 lifetime = 0.7
 one_shot = true
 explosiveness = 0.95
-texture = SubResource("IgnitionSparkTexture")
 emission_shape = 1
 emission_sphere_radius = 16.0
 direction = Vector2(0, -1)
@@ -252,163 +278,162 @@ scale_amount_min = 0.7
 scale_amount_max = 1.8
 color = Color(0.72, 0.97, 1, 1)
 
-[node name="Shockwave" type="Polygon2D" parent="IgnitionChamber"]
+[node name="Shockwave" type="Polygon2D" parent="IgnitionChamber" unique_id=1476427210]
 visible = false
 z_index = 6
 position = Vector2(0, -56)
 color = Color(0.38, 0.9, 1, 0.3)
 polygon = PackedVector2Array(-72, -72, 72, -72, 72, 72, -72, 72)
 
-[node name="Stage1Interface" type="Node2D" parent="IgnitionChamber"]
+[node name="Stage1Interface" type="Node2D" parent="IgnitionChamber" unique_id=818463806]
 visible = false
 z_index = 2
 
-[node name="SocketGlow" type="Polygon2D" parent="IgnitionChamber/Stage1Interface"]
+[node name="SocketGlow" type="Polygon2D" parent="IgnitionChamber/Stage1Interface" unique_id=502101957]
 color = Color(0.45, 0.9, 1, 0.42)
 polygon = PackedVector2Array(-42, -2, 42, -2, 32, -96, -32, -96)
 
-[node name="Stage2Conduits" type="Node2D" parent="IgnitionChamber"]
+[node name="Stage2Conduits" type="Node2D" parent="IgnitionChamber" unique_id=461994347]
 visible = false
 z_index = 2
 
-[node name="FloorRunLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+[node name="FloorRunLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits" unique_id=1265847917]
 color = Color(0.4, 0.85, 0.95, 0.5)
 polygon = PackedVector2Array(-430, -10, -40, -10, -40, -2, -430, -2)
 
-[node name="FloorRunRight" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+[node name="FloorRunRight" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits" unique_id=1324526400]
 color = Color(0.4, 0.85, 0.95, 0.5)
 polygon = PackedVector2Array(40, -10, 430, -10, 430, -2, 40, -2)
 
-[node name="RiserLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+[node name="RiserLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits" unique_id=330937062]
 color = Color(0.4, 0.85, 0.95, 0.4)
 polygon = PackedVector2Array(-430, -10, -422, -10, -422, -150, -430, -150)
 
-[node name="RiserRight" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits"]
+[node name="RiserRight" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits" unique_id=1855590487]
 color = Color(0.4, 0.85, 0.95, 0.4)
 polygon = PackedVector2Array(422, -10, 430, -10, 430, -150, 422, -150)
 
-[node name="Stage3Chamber" type="Node2D" parent="IgnitionChamber"]
+[node name="Stage3Chamber" type="Node2D" parent="IgnitionChamber" unique_id=1031893541]
 visible = false
 z_index = 2
 
-[node name="AssemblyLight" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber"]
+[node name="AssemblyLight" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber" unique_id=727793376]
 color = Color(0.35, 0.8, 0.92, 0.16)
 polygon = PackedVector2Array(-116, -164, 116, -164, 116, -4, -116, -4)
 
-[node name="AssemblyBands" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber"]
+[node name="AssemblyBands" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber" unique_id=193901658]
 color = Color(0.5, 0.92, 1, 0.55)
 polygon = PackedVector2Array(-108, -60, 108, -60, 108, -52, -108, -52)
 
-[node name="AssemblyBands2" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber"]
+[node name="AssemblyBands2" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber" unique_id=424242776]
 color = Color(0.5, 0.92, 1, 0.4)
 polygon = PackedVector2Array(-108, -116, 108, -116, 108, -108, -108, -108)
 
-[node name="Stage4Interior" type="Node2D" parent="IgnitionChamber"]
+[node name="Stage4Interior" type="Node2D" parent="IgnitionChamber" unique_id=1527692013]
 visible = false
 z_index = 2
 
-[node name="CorridorSpill" type="Polygon2D" parent="IgnitionChamber/Stage4Interior"]
+[node name="CorridorSpill" type="Polygon2D" parent="IgnitionChamber/Stage4Interior" unique_id=902076314]
 polygon = PackedVector2Array(-1460, -170, -120, -170, -120, -2, -1460, -2)
 vertex_colors = PackedColorArray(0.3, 0.75, 0.88, 0, 0.3, 0.75, 0.88, 0.3, 0.3, 0.75, 0.88, 0.3, 0.3, 0.75, 0.88, 0)
 
-[node name="Stage5Column" type="Node2D" parent="IgnitionChamber"]
+[node name="Stage5Column" type="Node2D" parent="IgnitionChamber" unique_id=1906463448]
 visible = false
 z_index = 2
 
-[node name="ColumnCore" type="Polygon2D" parent="IgnitionChamber/Stage5Column"]
+[node name="ColumnCore" type="Polygon2D" parent="IgnitionChamber/Stage5Column" unique_id=1895363060]
 color = Color(0.72, 0.96, 1, 0.85)
 polygon = PackedVector2Array(-14, -1200, 14, -1200, 14, 840, -14, 840)
 
-[node name="ColumnGlow" type="Polygon2D" parent="IgnitionChamber/Stage5Column"]
+[node name="ColumnGlow" type="Polygon2D" parent="IgnitionChamber/Stage5Column" unique_id=543108834]
 color = Color(0.4, 0.85, 1, 0.22)
 polygon = PackedVector2Array(-54, -1200, 54, -1200, 54, 840, -54, 840)
 
-[node name="Stage6City" type="Node2D" parent="IgnitionChamber"]
+[node name="Stage6City" type="Node2D" parent="IgnitionChamber" unique_id=676053478]
 visible = false
 z_index = 3
 
-[node name="Light01" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light01" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=2141978456]
 color = Color(0.45, 0.9, 1, 0.71)
 polygon = PackedVector2Array(152, -56, 157, -56, 157, -51, 152, -51)
 
-[node name="Light02" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light02" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1792485235]
 color = Color(0.45, 0.9, 1, 0.68)
 polygon = PackedVector2Array(170, -74, 175, -74, 175, -69, 170, -69)
 
-[node name="Light03" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
-color = Color(0.45, 0.9, 1, 0.60)
+[node name="Light03" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1397293663]
+color = Color(0.45, 0.9, 1, 0.6)
 polygon = PackedVector2Array(186, -48, 191, -48, 191, -43, 186, -43)
 
-[node name="Light04" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light04" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=452733830]
 color = Color(0.45, 0.9, 1, 0.85)
 polygon = PackedVector2Array(198, -66, 203, -66, 203, -61, 198, -61)
 
-[node name="Light05" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light05" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=303961395]
 color = Color(0.45, 0.9, 1, 0.55)
 polygon = PackedVector2Array(214, -84, 219, -84, 219, -79, 214, -79)
 
-[node name="Light06" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light06" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=133392193]
 color = Color(0.45, 0.9, 1, 0.73)
 polygon = PackedVector2Array(228, -58, 233, -58, 233, -53, 228, -53)
 
-[node name="Light07" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light07" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=602143738]
 color = Color(0.45, 0.9, 1, 0.86)
 polygon = PackedVector2Array(240, -76, 245, -76, 245, -71, 240, -71)
 
-[node name="Light08" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light08" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=41294194]
 color = Color(0.45, 0.9, 1, 0.58)
 polygon = PackedVector2Array(256, -50, 261, -50, 261, -45, 256, -45)
 
-[node name="Light09" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light09" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=934090077]
 color = Color(0.45, 0.9, 1, 0.74)
 polygon = PackedVector2Array(268, -88, 273, -88, 273, -83, 268, -83)
 
-[node name="Light10" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light10" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=187121209]
 color = Color(0.45, 0.9, 1, 0.77)
 polygon = PackedVector2Array(300, -62, 305, -62, 305, -57, 300, -57)
 
-[node name="Light11" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light11" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1348362905]
 color = Color(0.45, 0.9, 1, 0.56)
 polygon = PackedVector2Array(314, -80, 319, -80, 319, -75, 314, -75)
 
-[node name="Light12" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light12" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=180277391]
 color = Color(0.45, 0.9, 1, 0.68)
 polygon = PackedVector2Array(330, -54, 335, -54, 335, -49, 330, -49)
 
-[node name="Light13" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
-color = Color(0.45, 0.9, 1, 0.80)
+[node name="Light13" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1667793037]
+color = Color(0.45, 0.9, 1, 0.8)
 polygon = PackedVector2Array(346, -84, 351, -84, 351, -79, 346, -79)
 
-[node name="Light14" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light14" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1213286075]
 color = Color(0.45, 0.9, 1, 0.71)
 polygon = PackedVector2Array(360, -68, 365, -68, 365, -63, 360, -63)
 
-[node name="Light15" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
-color = Color(0.45, 0.9, 1, 0.80)
+[node name="Light15" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1265292041]
+color = Color(0.45, 0.9, 1, 0.8)
 polygon = PackedVector2Array(374, -56, 379, -56, 379, -51, 374, -51)
 
-[node name="Light16" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light16" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=1774628466]
 color = Color(0.45, 0.9, 1, 0.61)
 polygon = PackedVector2Array(392, -78, 397, -78, 397, -73, 392, -73)
 
-[node name="Light17" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light17" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=752117726]
 color = Color(0.45, 0.9, 1, 0.63)
 polygon = PackedVector2Array(406, -60, 411, -60, 411, -55, 406, -55)
 
-[node name="Light18" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Light18" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=2031669994]
 color = Color(0.45, 0.9, 1, 0.59)
 polygon = PackedVector2Array(420, -70, 425, -70, 425, -65, 420, -65)
 
-
-[node name="Glow" type="Polygon2D" parent="IgnitionChamber/Stage6City"]
+[node name="Glow" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=571211984]
 color = Color(0.35, 0.8, 0.95, 0.16)
 polygon = PackedVector2Array(140, -164, 436, -164, 436, -28, 140, -28)
 
-[node name="SequenceUI" type="CanvasLayer" parent="IgnitionChamber"]
-visible = false
+[node name="SequenceUI" type="CanvasLayer" parent="IgnitionChamber" unique_id=1038068689]
 layer = 48
+visible = false
 
-[node name="WorldFlash" type="ColorRect" parent="IgnitionChamber/SequenceUI"]
+[node name="WorldFlash" type="ColorRect" parent="IgnitionChamber/SequenceUI" unique_id=968941512]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -418,40 +443,41 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.4, 0.92, 1, 0)
 
-[node name="StatusPlate" type="ColorRect" parent="IgnitionChamber/SequenceUI"]
+[node name="StatusPlate" type="ColorRect" parent="IgnitionChamber/SequenceUI" unique_id=1330507687]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 82.0
+offset_top = 72.0
+offset_bottom = 150.0
 grow_horizontal = 2
 mouse_filter = 2
 color = Color(0.005, 0.035, 0.05, 0.88)
 
-[node name="ActivationLabel" type="Label" parent="IgnitionChamber/SequenceUI"]
+[node name="ActivationLabel" type="Label" parent="IgnitionChamber/SequenceUI" unique_id=397570983]
 unique_name_in_owner = true
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 16.0
-offset_bottom = 44.0
+offset_top = 84.0
+offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.58, 0.96, 1, 1)
-theme_override_colors/font_outline_color = Color(0.0, 0.02, 0.03, 1)
+theme_override_colors/font_outline_color = Color(0, 0.02, 0.03, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 16
 text = "IGNITION SEQUENCE  //  MODULE ALIGNMENT"
 horizontal_alignment = 1
 
-[node name="ActivationProgress" type="ProgressBar" parent="IgnitionChamber/SequenceUI"]
+[node name="ActivationProgress" type="ProgressBar" parent="IgnitionChamber/SequenceUI" unique_id=1622416451]
 unique_name_in_owner = true
-anchors_preset = 10
+anchors_preset = -1
 anchor_left = 0.18
 anchor_right = 0.82
-offset_top = 52.0
-offset_bottom = 64.0
+offset_top = 122.0
+offset_bottom = 134.0
 grow_horizontal = 2
-show_percentage = false
 value = 4.0
+show_percentage = false
 
-[node name="CompletionBanner" type="Label" parent="IgnitionChamber/SequenceUI"]
+[node name="CompletionBanner" type="Label" parent="IgnitionChamber/SequenceUI" unique_id=1121849753]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 8
@@ -467,27 +493,27 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(360, 60)
 theme_override_colors/font_color = Color(0.72, 1, 0.88, 1)
-theme_override_colors/font_outline_color = Color(0.0, 0.055, 0.045, 1)
+theme_override_colors/font_outline_color = Color(0, 0.055, 0.045, 1)
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 42
 text = "BEACON 9 ONLINE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BlackoutLayer" type="CanvasLayer" parent="IgnitionChamber"]
+[node name="BlackoutLayer" type="CanvasLayer" parent="IgnitionChamber" unique_id=537167366]
 layer = 100
 
-[node name="Blackout" type="ColorRect" parent="IgnitionChamber/BlackoutLayer"]
+[node name="Blackout" type="ColorRect" parent="IgnitionChamber/BlackoutLayer" unique_id=856461761]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0)
 mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
-[node name="BeaconSigns" type="Node2D" parent="."]
+[node name="BeaconSigns" type="Node2D" parent="." unique_id=1767774339]
 z_index = 4
 
-[node name="MissionSign" type="Label" parent="BeaconSigns"]
+[node name="MissionSign" type="Label" parent="BeaconSigns" unique_id=1635382031]
 offset_left = 40.0
 offset_top = 240.0
 offset_right = 480.0

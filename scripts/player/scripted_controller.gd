@@ -39,6 +39,7 @@ var _active_charge_ratio: float = 0.0
 var _active_plan_reason: String = ""
 var _timed_gate_commit_until_x: float = NAN
 var _timed_gate_node_id: int = 0
+var _beacon_charge_elapsed: float = 0.0
 
 func _ready() -> void:
 	_motor = get_node(player_path) as RunUnitPlayerMotor
@@ -51,10 +52,23 @@ func reset_controller() -> void:
 	_active_plan_reason = ""
 	_timed_gate_commit_until_x = NAN
 	_timed_gate_node_id = 0
+	_beacon_charge_elapsed = 0.0
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not active or _motor == null or _world == null:
 		return
+	var ignition := _world.get_node_or_null("IgnitionChamber") as RunUnitBeaconIgnition
+	if ignition != null and ignition.is_interaction_active():
+		_beacon_charge_elapsed += delta
+		var action := RunUnitPlayerAction.new()
+		var hold_duration: float = _motor.max_charge_time + 0.08
+		action.jump_held = _beacon_charge_elapsed < hold_duration
+		action.jump_pressed = action.jump_held and not _jump_held_last_frame
+		action.jump_released = not action.jump_held and _jump_held_last_frame
+		_jump_held_last_frame = action.jump_held
+		_motor.set_action(action)
+		return
+	_beacon_charge_elapsed = 0.0
 	var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
 	action.movement = _movement_input_for_plan()
 	var wants_to_crouch: bool = _should_crouch()
@@ -129,7 +143,7 @@ func _movement_input_for_plan() -> float:
 		_timed_gate_node_id = 0
 
 	var gate: Dictionary = _world.get_nearest_hazard_ahead(_motor.global_position, HAZARD_LOOKAHEAD_DISTANCE)
-	if _is_tall_timed_hazard(gate):
+	if _requires_timed_wait(gate):
 		if _can_run_through_hazard(gate):
 			var start_x: float = float(gate.get("start_x", _motor.global_position.x))
 			if start_x - _motor.global_position.x <= TIMED_GATE_COMMIT_DISTANCE:
@@ -194,11 +208,16 @@ func _build_jump_plan() -> Dictionary:
 		best = edge_plan
 	return best
 
-func _is_tall_timed_hazard(hazard: Dictionary) -> bool:
+func _requires_timed_wait(hazard: Dictionary) -> bool:
 	if hazard.is_empty():
 		return false
 	var node: Node = hazard.get("node") as Node
-	return node is RunUnitTimedHazard and float(hazard.get("height", 0.0)) >= TIMED_GATE_HEIGHT
+	if not node is RunUnitTimedHazard:
+		return false
+	var timed: RunUnitTimedHazard = node as RunUnitTimedHazard
+	# Floor-level lethal crushers use a short detector, so height alone cannot
+	# distinguish them from the arcs the controller can safely jump.
+	return timed.lethal or float(hazard.get("height", 0.0)) >= TIMED_GATE_HEIGHT
 
 func _is_committed_to_timed_hazard(hazard: Dictionary) -> bool:
 	if hazard.is_empty() or is_nan(_timed_gate_commit_until_x):
@@ -209,7 +228,7 @@ func _is_committed_to_timed_hazard(hazard: Dictionary) -> bool:
 	return node != null and node.get_instance_id() == _timed_gate_node_id
 
 func _should_wait_for_timed_hazard(hazard: Dictionary) -> bool:
-	if not _is_tall_timed_hazard(hazard):
+	if not _requires_timed_wait(hazard):
 		return false
 	if _is_committed_to_timed_hazard(hazard):
 		return false

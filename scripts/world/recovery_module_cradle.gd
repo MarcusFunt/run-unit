@@ -18,7 +18,7 @@ signal module_acquired
 var acquired: bool = false
 var _mounted_module: Node2D = null
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if acquired:
 		return
 	var halo: Polygon2D = get_node_or_null("ObjectiveHalo") as Polygon2D
@@ -56,6 +56,12 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 	_mounted_module = RunUnitModuleMount.mount(player, cradle_module)
 	acquisition_readout.visible = true
 	_set_shutdown(true)
+	RunUnitSession.record_playtest_event("module_acquired", {"position": [global_position.x, global_position.y]})
+	var hud: RunUnitHud = get_tree().get_first_node_in_group("run_hud") as RunUnitHud
+	if hud != null:
+		hud.set_objective("EXIT FACILITY // DELIVER ASSEMBLY")
+		hud.show_system_message("ASSEMBLY SECURED // EXIT FACILITY", 3.4)
+	RunUnitAudio.play_event("module_acquired")
 	module_acquired.emit()
 
 func _set_shutdown(active: bool) -> void:

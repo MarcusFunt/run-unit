@@ -13,6 +13,13 @@ var demo_completion_count: int = 0
 var demo_route_starts: Array[int] = []
 var demo_damage_events: int = 0
 var demo_failure_events: int = 0
+var run_elapsed_seconds: float = 0.0
+var damage_taken: int = 0
+var checkpoint_activations: int = 0
+var checkpoint_recoveries: int = 0
+var best_time_seconds: float:
+	get:
+		return float(_best_times_by_level.get(selected_level_index, 0.0))
 
 ## Campaign progress is intentionally a single, inspectable save. The menu
 ## template stores audio/video settings and remaps separately in player_config.cfg.
@@ -34,11 +41,20 @@ var configuration_hash: String = ""
 var last_world_metrics: Dictionary = {}
 var traversal_trace: Dictionary = {}
 var last_run_outcome: String = "active"
+var run_attempt_index: int = 0
 
 ## Keyed by route index. Routes differ wildly in length, so a single shared
 ## best-distance value would carry a meaningless number over when the player
 ## switches routes; each route remembers its own record instead.
 var _best_distances_by_level: Dictionary = {}
+var _run_started_msec: int = 0
+var _prior_attempt_seconds: float = 0.0
+var _previous_route_index: int = -1
+var _playtest_enabled: bool = false
+var _playtest_events: Array[Dictionary] = []
+var _playtest_path: String = ""
+var _playtest_file: FileAccess = null
+var _fresh_save_enabled: bool = false
 
 var best_distance: float:
 	get:
@@ -59,6 +75,9 @@ func _ready() -> void:
 	demo_mode = OS.get_cmdline_user_args().has("--demo") or OS.get_cmdline_args().has("--demo")
 	debug_unlock_routes = OS.is_debug_build() and (OS.get_cmdline_user_args().has("--unlock-routes") or OS.get_cmdline_args().has("--unlock-routes"))
 	load_campaign()
+	_playtest_enabled = OS.get_cmdline_user_args().has("--playtest") or OS.get_cmdline_args().has("--playtest")
+	_fresh_save_enabled = OS.get_cmdline_user_args().has("--fresh-save") or OS.get_cmdline_args().has("--fresh-save")
+	_load_progress()
 	reset_demo_lifecycle()
 
 ## Invalid fields cannot create progress. The derived unlock index wins over a
@@ -233,6 +252,16 @@ func mark_demo_completed() -> bool:
 	return true
 
 func begin_run(level_index: int, seed_value: int, mode: String, version: String, config_hash: String) -> void:
+	var retrying_route: bool = _previous_route_index == level_index and last_run_outcome == "failed"
+	if retrying_route:
+		_prior_attempt_seconds = run_elapsed_seconds
+		run_attempt_index += 1
+	else:
+		_prior_attempt_seconds = 0.0
+		run_attempt_index = 1
+		damage_taken = 0
+		checkpoint_activations = 0
+		checkpoint_recoveries = 0
 	selected_level_index = level_index
 	run_seed = seed_value
 	world_mode = mode
@@ -241,6 +270,37 @@ func begin_run(level_index: int, seed_value: int, mode: String, version: String,
 	last_world_metrics = {}
 	traversal_trace = {}
 	last_run_outcome = "active"
+	run_elapsed_seconds = _prior_attempt_seconds
+	_run_started_msec = Time.get_ticks_msec()
+	_previous_route_index = level_index
+	_open_playtest_attempt(false)
+
+## Starts a new telemetry segment for a retry without resetting route-wide
+## measures such as elapsed time, damage or checkpoint activity.
+func begin_retry_attempt() -> void:
+	_prior_attempt_seconds = run_elapsed_seconds
+	run_elapsed_seconds = _prior_attempt_seconds
+	run_attempt_index += 1
+	_run_started_msec = Time.get_ticks_msec()
+	last_run_outcome = "active"
+	_open_playtest_attempt(true)
+
+func _open_playtest_attempt(is_retry: bool) -> void:
+	_flush_playtest_events()
+	_playtest_events.clear()
+	if not _playtest_enabled:
+		return
+	var directory := "user://run_unit_playtests"
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(directory))
+	_playtest_path = "%s/route_%02d_%d_attempt_%02d.jsonl" % [directory, selected_level_index, _run_started_msec, run_attempt_index]
+	_playtest_file = FileAccess.open(_playtest_path, FileAccess.WRITE)
+	record_playtest_event("run_started", {
+		"route": selected_level_index,
+		"mode": world_mode,
+		"world": configuration_hash,
+		"attempt": run_attempt_index,
+		"retry": is_retry,
+	})
 
 func set_world_metrics(metrics: Dictionary) -> void:
 	last_world_metrics = metrics.duplicate(true)
@@ -251,12 +311,90 @@ func set_traversal_trace(trace: Dictionary) -> void:
 func record_best_distance(distance_value: float) -> void:
 	best_distance = maxf(best_distance, maxf(distance_value, 0.0))
 
+func record_damage(amount: int = 1) -> void:
+	damage_taken += maxi(amount, 0)
+	record_playtest_event("damage", {"amount": amount, "total": damage_taken})
+
+func record_respawn() -> void:
+	checkpoint_recoveries += 1
+	record_playtest_event("checkpoint_respawn", {"position": [checkpoint_position.x, checkpoint_position.y]})
+
+func record_playtest_event(event_name: String, payload: Dictionary = {}) -> void:
+	if not _playtest_enabled:
+		return
+	var event: Dictionary = {"t": maxf((Time.get_ticks_msec() - _run_started_msec) / 1000.0, 0.0), "event": event_name, "data": payload.duplicate(true)}
+	_playtest_events.append(event)
+	if _playtest_file != null:
+		_playtest_file.store_line(JSON.stringify(event))
+		_playtest_file.flush()
+
+func finish_run_metrics(outcome: String) -> Dictionary:
+	var attempt_elapsed_seconds: float = maxf((Time.get_ticks_msec() - _run_started_msec) / 1000.0, 0.0)
+	run_elapsed_seconds = _prior_attempt_seconds + attempt_elapsed_seconds
+	if outcome == "completed":
+		var old_time := float(_best_times_by_level.get(selected_level_index, 0.0))
+		if old_time <= 0.0 or run_elapsed_seconds < old_time:
+			_best_times_by_level[selected_level_index] = run_elapsed_seconds
+	record_playtest_event("run_finished", {"outcome": outcome, "attempt": run_attempt_index, "attempt_time_s": attempt_elapsed_seconds, "time_s": run_elapsed_seconds, "distance_m": best_distance, "damage": damage_taken, "checkpoint_activations": checkpoint_activations, "checkpoint_recoveries": checkpoint_recoveries})
+	_save_progress()
+	_flush_playtest_events()
+	return {"time_s": run_elapsed_seconds, "best_time_s": best_time_seconds, "damage": damage_taken, "checkpoint_activations": checkpoint_activations, "checkpoint_recoveries": checkpoint_recoveries}
+
 func set_run_outcome(outcome: String) -> void:
 	last_run_outcome = outcome
 
 func record_checkpoint(level_index: int, position: Vector2) -> void:
+	if not has_checkpoint(level_index) or position.x > checkpoint_position.x + 1.0:
+		checkpoint_activations += 1
+		record_playtest_event("checkpoint_activated", {"position": [position.x, position.y]})
 	checkpoint_level_index = level_index
 	checkpoint_position = position
+
+func _load_progress() -> void:
+	var config := ConfigFile.new()
+	if config.load(_progress_path()) != OK:
+		return
+	var distances: Variant = config.get_value("progress", "best_distances", {})
+	var times: Variant = config.get_value("progress", "best_times", {})
+	if distances is Dictionary:
+		_best_distances_by_level = distances
+	if times is Dictionary:
+		for route_key: Variant in times:
+			var time_value: Variant = times[route_key]
+			if not (time_value is int or time_value is float):
+				continue
+			var elapsed: float = float(time_value)
+			if elapsed <= 0.0 or is_nan(elapsed) or is_inf(elapsed):
+				continue
+			var route_index: int = int(route_key)
+			var campaign_time: float = float(_best_times_by_level.get(route_index, 0.0))
+			if campaign_time <= 0.0 or elapsed < campaign_time:
+				_best_times_by_level[route_index] = elapsed
+
+func _save_progress() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var config := ConfigFile.new()
+	config.load(_progress_path())
+	config.set_value("progress", "best_distances", _best_distances_by_level)
+	config.set_value("progress", "best_times", _best_times_by_level)
+	config.set_value("metrics", "last_route", selected_level_index)
+	config.set_value("metrics", "last_time_s", run_elapsed_seconds)
+	config.set_value("metrics", "last_distance_m", best_distance)
+	config.set_value("metrics", "last_damage", damage_taken)
+	config.set_value("metrics", "last_checkpoint_activations", checkpoint_activations)
+	config.set_value("metrics", "last_checkpoint_recoveries", checkpoint_recoveries)
+	config.save(_progress_path())
+
+func _progress_path() -> String:
+	return "user://run_unit_fresh_progress.cfg" if _fresh_save_enabled else "user://run_unit_progress.cfg"
+
+func _flush_playtest_events() -> void:
+	if _playtest_file == null:
+		return
+	_playtest_file.flush()
+	_playtest_file.close()
+	_playtest_file = null
 
 func has_checkpoint(level_index: int) -> bool:
 	return checkpoint_level_index == level_index

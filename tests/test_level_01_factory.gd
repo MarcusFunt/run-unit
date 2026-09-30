@@ -125,7 +125,7 @@ func test_level_01_has_the_expected_route() -> void:
 		[187, 221, 21],  # breach runway continues onto the exterior catwalk
 		[225, 239, 20],  # raised service span
 		[243, 254, 22],  # lower maintenance span
-		[258, 269, 20],  # final exterior approach
+		[258, 269, 18],  # full-charge escape leap onto the final approach
 	]
 	assert_eq(plan.size(), expected.size(), "Level 1 should keep its fourteen authored platform beats")
 	for index: int in range(mini(plan.size(), expected.size())):
@@ -167,10 +167,10 @@ func test_player_lands_on_the_arrival_deck() -> void:
 func test_only_tile_layers_collide_with_the_player() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var story_zone_count: int = 0
-	var pending: Array[Node] = [world]
-	while not pending.is_empty():
-		var node: Node = pending.pop_back()
-		pending.append_array(node.get_children())
+	var nodes_to_visit: Array[Node] = [world]
+	while not nodes_to_visit.is_empty():
+		var node: Node = nodes_to_visit.pop_back()
+		nodes_to_visit.append_array(node.get_children())
 		if not node is CollisionObject2D or node.name == &"CompletionTrigger":
 			continue
 		assert_true(node is Area2D, "%s must not be a physics body" % node.get_path())
@@ -274,7 +274,7 @@ func test_factory_escape_adds_two_readable_timed_floor_faults() -> void:
 	if faults == null:
 		return
 	assert_eq(faults.get_child_count(), 2, "Factory Escape should introduce the timed hazard language sparingly")
-	var expected: Array[Vector2] = [Vector2(1200, 448), Vector2(4032, 704)]
+	var expected: Array[Vector2] = [Vector2(1200, 448), Vector2(7456, 640)]
 	for index: int in range(expected.size()):
 		var hazard: RunUnitTimedHazard = faults.get_child(index) as RunUnitTimedHazard
 		assert_not_null(hazard)
@@ -283,3 +283,51 @@ func test_factory_escape_adds_two_readable_timed_floor_faults() -> void:
 		assert_eq(hazard.position, expected[index])
 		assert_false(hazard.lethal)
 		assert_not_null(hazard.get_node_or_null("WarningPlate"))
+
+
+func test_factory_final_third_combines_timing_crouch_and_an_escape_landing_without_growing() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	assert_eq(world.get_goal_position().x, 8544.0, "The final interactions use the existing route footprint")
+	var faults: Node = world.get_node("ElectricalFaults")
+	var late_arc_found: bool = false
+	for hazard_node: Node in faults.get_children():
+		var hazard: RunUnitTimedHazard = hazard_node as RunUnitTimedHazard
+		if hazard != null and hazard.position.x >= world.get_goal_position().x * 0.66:
+			late_arc_found = true
+	assert_true(late_arc_found, "The catastrophic third combines a timed arc with the exit traversal")
+	var obstacles: TileMapLayer = world.get_node_or_null("FactoryGeometry/Obstacles") as TileMapLayer
+	assert_not_null(obstacles, "The final crouch gate must use the authored Tiled obstacle layer")
+	if obstacles != null:
+		assert_ne(obstacles.get_cell_source_id(Vector2i(247, 20)), -1, "The final-third gate occupies its authored obstacle cells")
+	assert_true(world.get_current_plan().size() >= 14, "The escape leap has a distinct walkable landing")
+	var crusher: RunUnitTimedHazard = world.get_node_or_null("MechanicalHazards/ExteriorCrusher") as RunUnitTimedHazard
+	assert_not_null(crusher, "The late crouch point leads into an authored timed crusher")
+	if crusher != null:
+		assert_gte(crusher.position.x, world.get_goal_position().x * 0.66, "The crusher belongs to the catastrophic final third")
+		assert_gte(crusher.warning_seconds, 0.65, "The piston telegraphs before the strike")
+
+
+func _drive_through_final_gate(crouch: bool) -> float:
+	var world: RunUnitStaticWorld = LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child(world)
+	var crusher: RunUnitHazardArea = world.get_node("MechanicalHazards/ExteriorCrusher") as RunUnitHazardArea
+	(crusher as RunUnitTimedHazard).active_seconds = 0.0
+	crusher.reset_level_state()
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child(player)
+	player.global_position = Vector2(7872.0 - 120.0, 704.0 - 32.0)
+	for frame: int in range(150):
+		var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
+		action.movement = 1.0
+		action.crouch_held = crouch
+		player.set_action(action)
+		await get_tree().physics_frame
+	var reached_x: float = player.global_position.x
+	player.free()
+	world.free()
+	return reached_x
+
+
+func test_final_crouch_gate_blocks_standing_and_admits_the_low_profile_robot() -> void:
+	assert_lt(await _drive_through_final_gate(false), 7872.0)
+	assert_gt(await _drive_through_final_gate(true), 7968.0)

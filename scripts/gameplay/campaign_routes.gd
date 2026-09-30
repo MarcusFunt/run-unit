@@ -22,6 +22,8 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/world.tscn",
 		"runtime": "SHORT",
 		"summary": "Clear the factory movement checks and leave the calibration tunnel.",
+		"objective": "CALIBRATION ACTIVE",
+		"briefing": "Movement, spring charge, then one low-clearance gate. Read the route ahead.",
 		"completion": "Calibration checks complete.",
 	},
 	{
@@ -30,6 +32,8 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/levels/level_01_factory.tscn",
 		"runtime": "MEDIUM",
 		"summary": "Cross the stalled transfer line and leave the factory through the breached wall.",
+		"objective": "REACH THE FACTORY EXIT",
+		"briefing": "Transfer line is stalled. The exit route grows less stable as you cross it.",
 		"completion": "Exterior wall breached. Unit has left the factory.",
 	},
 	{
@@ -38,7 +42,9 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/levels/level_02_recovery.tscn",
 		"runtime": "MEDIUM",
 		"summary": "Cross the exterior service district and reach Reserve Depot 03.",
-		"completion": "Replacement ignition module recovered. Target system: Beacon 9.",
+		"objective": "SECURE IGNITION ASSEMBLY",
+		"briefing": "Reserve Depot 03 holds a compatible assembly. Electrical faults are cycling ahead.",
+		"completion": "Facility escaped. Ignition assembly retained. Target system: Beacon 9.",
 	},
 	{
 		"code": "03",
@@ -46,6 +52,8 @@ const ROUTES: Array[Dictionary] = [
 		"world_scene": "res://scenes/levels/level_03_beacon.tscn",
 		"runtime": "MEDIUM",
 		"summary": "Carry the recovered assembly across the city to Beacon 9.",
+		"objective": "DELIVER ASSEMBLY TO BEACON 9",
+		"briefing": "The skyline marker is Beacon 9. Its perimeter is exposed; the interior is quiet.",
 		"completion": "Beacon 9 ignition restored.",
 	},
 ]
@@ -88,6 +96,12 @@ static func get_runtime(route_index: int) -> String:
 
 static func get_summary(route_index: int) -> String:
 	return str(get_route(route_index).get("summary", ""))
+
+static func get_objective(route_index: int) -> String:
+	return str(get_route(route_index).get("objective", "ROUTE ACTIVE"))
+
+static func get_briefing(route_index: int) -> String:
+	return str(get_route(route_index).get("briefing", ""))
 
 ## Most routes derive their title from code + name. A route can override this
 ## with an explicit "title" entry (e.g. the tutorial's "TUTORIAL ROUTE").

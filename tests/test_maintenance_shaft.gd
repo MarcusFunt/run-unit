@@ -29,6 +29,21 @@ func test_tutorial_signage_uses_the_current_storyline() -> void:
 		assert_false(all_signage.contains(retired), "Retired name '%s' must not return to tutorial signage" % retired)
 
 
+func test_crouch_prompt_is_inside_the_viewport_when_approaching_the_gate() -> void:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var prompt: Node2D = world.get_node("TutorialSigns/CrouchPrompt") as Node2D
+	var heading: Label = prompt.get_node("Heading") as Label
+	var keys: Label = prompt.get_node("Keys") as Label
+	var camera_center_x: float = (GATE_LEFT_X - 120.0) + RunUnitFollowCamera.BASE_OFFSET.x
+	var viewport_left_x: float = camera_center_x - 480.0
+	var viewport_right_x: float = camera_center_x + 480.0
+	var prompt_left_x: float = prompt.global_position.x + minf(heading.offset_left, keys.offset_left)
+	var prompt_right_x: float = prompt.global_position.x + maxf(heading.offset_right, keys.offset_right)
+	assert_gt(prompt_left_x, viewport_left_x + 16.0, "The crouch instruction stays clear of the left screen edge")
+	assert_lt(prompt_right_x, viewport_right_x - 16.0, "The crouch instruction stays clear of the right screen edge")
+
+
 func _find_labels(node: Node) -> Array[Label]:
 	var labels: Array[Label] = []
 	var label: Label = node as Label
@@ -70,13 +85,14 @@ func test_shipping_maintenance_shaft_has_the_expected_route() -> void:
 	assert_true(world.is_route_valid(), "The shipping level must produce a route from its Semantic layer")
 
 	var plan: Array[Dictionary] = world.get_current_plan()
-	assert_eq(plan.size(), 4, "The light calibration route should have four readable platform beats")
+	assert_eq(plan.size(), 5, "Calibration sequences a tap, charged rise, full-charge landing, and crouch gate")
 
 	var expected: Array[Array] = [
 		[0, 17, 14],
 		[21, 31, 14],
-		[34, 45, 12],
-		[46, 68, 13],
+		[34, 42, 11],
+		[46, 52, 7],
+		[56, 68, 13],
 	]
 	for index: int in range(expected.size()):
 		var platform: Dictionary = plan[index]
@@ -85,6 +101,53 @@ func test_shipping_maintenance_shaft_has_the_expected_route() -> void:
 		assert_eq(int(platform.get("height", -1)), int(expected[index][2]))
 
 	assert_eq(world.get_route_length(), 69.0, "The tutorial should stay deliberately short")
+
+
+func _jump_to_full_charge_landing(charge_frames: int) -> bool:
+	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child(world)
+	add_child(player)
+	var plan: Array[Dictionary] = world.get_current_plan()
+	var source: Dictionary = plan[2]
+	var target: Dictionary = plan[3]
+	var release_x: float = (float(source["end_x"]) + 1.0) * 32.0 - 20.0
+	var start_x: float = maxf(release_x - 4.75 * charge_frames - 160.0, float(source["start_x"]) * 32.0 + 26.0)
+	player.global_position = Vector2(start_x, float(source["height"]) * 32.0 - 32.0)
+	for frame: int in range(3):
+		await get_tree().physics_frame
+	var released: bool = false
+	var landed: bool = false
+	var target_y: float = float(target["height"]) * 32.0 - 32.0
+	for frame: int in range(240):
+		var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
+		action.movement = 1.0
+		var current_x: float = player.global_position.x
+		if not released:
+			if charge_frames == 0 and current_x >= release_x:
+				action.jump_pressed = true
+				released = true
+			elif charge_frames > 0 and current_x >= release_x:
+				action.jump_released = true
+				released = true
+			elif charge_frames > 0 and current_x >= release_x - 4.75 * charge_frames:
+				action.jump_held = true
+		player.set_action(action)
+		await get_tree().physics_frame
+		if released and player.last_launch_velocity < 0.0 and player.is_on_floor() and player.velocity.y >= 0.0 and current_x > release_x + 32.0:
+			landed = floori(player.global_position.x / 32.0) >= int(target["start_x"]) and absf(player.global_position.y - target_y) < 6.0
+			break
+		if player.global_position.y > 900.0:
+			break
+	player.free()
+	world.free()
+	return landed
+
+
+func test_calibration_upper_landing_requires_full_charge_after_the_tap_and_medium_rises() -> void:
+	assert_false(await _jump_to_full_charge_landing(0), "A tap cannot reach the full-charge lesson ledge")
+	assert_false(await _jump_to_full_charge_landing(16), "A medium charge clears the prior rise but not this ledge")
+	assert_true(await _jump_to_full_charge_landing(24), "A full charge reaches the high ledge before the existing crouch gate")
 
 
 func test_shipping_level_publishes_spawn_and_goal_markers() -> void:
@@ -129,8 +192,20 @@ func test_calibration_crouch_prompt_precedes_the_safe_required_gate() -> void:
 	var heading: Label = prompt.get_node_or_null("Heading") as Label
 	assert_not_null(heading)
 	if heading != null:
-		assert_eq(heading.text, "04 // CROUCH")
+		assert_eq(heading.text, "05 // CROUCH")
 	assert_null(world.get_node_or_null("ElectricalFaults"), "Calibration remains a safe teaching route")
+
+	var full_charge_prompt: Node2D = world.get_node_or_null("TutorialSigns/FullChargePrompt") as Node2D
+	assert_not_null(full_charge_prompt, "Calibration teaches a full-charge-only landing after the tap/charge comparison")
+	if full_charge_prompt != null:
+		var full_charge_heading: Label = full_charge_prompt.get_node_or_null("Heading") as Label
+		var full_charge_keys: Label = full_charge_prompt.get_node_or_null("Keys") as Label
+		assert_not_null(full_charge_heading)
+		assert_not_null(full_charge_keys)
+		if full_charge_heading != null:
+			assert_eq(full_charge_heading.text, "04 // FULL CHARGE")
+		if full_charge_keys != null:
+			assert_eq(full_charge_keys.text, "RELEASE WHEN THE LOCK GLOWS")
 
 
 ## The gate tile's collider is shorter than its 32px cell, leaving just enough
@@ -158,7 +233,7 @@ func test_crouched_robot_is_inside_the_lift_door_when_the_route_completes() -> v
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
 	add_child_autofree(world)
 	add_child_autofree(player)
-	player.global_position = Vector2(GATE_LEFT_X - 160.0, DECK_Y - 32.0)
+	player.global_position = Vector2(GATE_LEFT_X - 120.0, DECK_Y - 32.0)
 	world.route_completed.connect(func() -> void: player.set_physics_process(false))
 
 	for frame: int in range(300):
