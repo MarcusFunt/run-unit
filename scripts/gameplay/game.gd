@@ -89,7 +89,6 @@ func _ready() -> void:
 	hud.set_level_length(world.get_traversal_length())
 	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
 	hud.show_system_message(RunUnitCampaign.get_briefing(_selected_level_index), 4.0)
-	RunUnitAudio.set_ambience(_ambience_for_route(_selected_level_index))
 	for node: Node in world.get_node("CheckpointStations").get_children():
 		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
 		station.activated.connect(_on_checkpoint_activated)
@@ -368,7 +367,6 @@ func _on_obstacle_triggered(obstacle_type: String, platform_id: int) -> void:
 ## A checkpoint only registers when the player actually touches its node.
 func _on_checkpoint_activated(checkpoint_position: Vector2) -> void:
 	RunUnitSession.record_checkpoint(_selected_level_index, checkpoint_position)
-	RunUnitAudio.play_event("checkpoint", -14.0)
 
 func _on_player_landed() -> void:
 	var platform: Dictionary = world.get_platform_below_position(player.global_position)
@@ -411,19 +409,11 @@ func _on_story_beat(zone_name: String, cue: Dictionary) -> void:
 	var message := str(cue.get("message", ""))
 	if not message.is_empty():
 		hud.show_system_message(message)
-	var ambience := str(cue.get("ambience", ""))
-	if not ambience.is_empty():
-		RunUnitAudio.set_ambience(ambience)
-	var event_name := str(cue.get("event", ""))
-	if not event_name.is_empty():
-		RunUnitAudio.play_event(event_name)
-	RunUnitSession.record_playtest_event("story_effect", {"zone": zone_name, "message": message, "ambience": ambience, "event": event_name})
+	RunUnitSession.record_playtest_event("story_effect", {"zone": zone_name, "message": message})
 
 func _on_hazard_phase_changed(phase: int, hazard: RunUnitHazardArea) -> void:
 	if not is_instance_valid(hazard):
 		return
-	if hazard.global_position.distance_to(player.global_position) <= 1200.0:
-		RunUnitAudio.play_hazard_phase(phase, String(hazard.name), hazard.global_position)
 	RunUnitSession.record_playtest_event("hazard_phase", {"hazard": String(hazard.name), "phase": phase})
 
 func _update_crouch_metrics() -> void:
@@ -434,13 +424,6 @@ func _update_crouch_metrics() -> void:
 	elif _was_crouching and not crouching:
 		RunUnitSession.record_playtest_event("crouch_ended", {"duration_s": maxf((Time.get_ticks_msec() - _crouch_started_msec) / 1000.0, 0.0)})
 	_was_crouching = crouching
-
-func _ambience_for_route(route_index: int) -> String:
-	match route_index:
-		0, 1: return "factory"
-		2: return "exterior"
-		3: return "beacon_exterior"
-	return "factory"
 
 func _ensure_input_map() -> void:
 	_add_key_action("move_left", KEY_A)

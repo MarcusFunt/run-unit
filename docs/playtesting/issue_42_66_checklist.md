@@ -25,8 +25,8 @@
 | #55 | Pickup occurs at 60–65% route progress and leaves a short, legible escape | `module_acquired_progress` records world x, ratio and remaining distance; record pickup-to-exit time |
 | #56 | Understands the Beacon hazard-to-calm transition, spots the destination, and completes the final interaction | Hazard phase events and screenshots; ask player to identify destination; `beacon_charge_released` ratio and outcome |
 | #57 | Each StoryZone effect occurs once per run, including after reset/retry | `story_zone` / `story_effect` event names and counts |
-| #58 | Sees/hears a warning before every damaging hazard state | `hazard_phase` transition sequence; record warning lead time and missed cues |
-| #59 | Recognizes hazard, ambience and objective sounds without masking speech or cues | Record route/event audio and player recognition; sound event and phase logs |
+| #58 | Sees the warning before every damaging hazard state | `hazard_phase` transition sequence; record warning lead time and missed cues |
+| #59 | Hazard, ambience and objective audio deferred from this build | No new audio cues are included |
 | #60 | Holds the Beacon interaction and releases only when full; an early release is safe and retryable | `beacon_charge_released` ratio; early-release retry and completed interaction |
 | #61 | Understands short narrative messages without stopping or confusing the objective | Ask for a short retell at each route end; record misunderstood terms/objective changes |
 | #62 | Finds and correctly reads elapsed/best time, distance, damage, checkpoint activations and recoveries | Results HUD and persisted progress file; record read/interpretation accuracy |

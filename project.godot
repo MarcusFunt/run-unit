@@ -18,7 +18,6 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 
 RunUnitSession="*res://scripts/gameplay/run_session.gd"
 PlayerSettings="*res://addons/maaacks_menus_template/base/nodes/config/start_up/start_up.tscn"
-RunUnitAudio="*res://scripts/gameplay/audio_director.gd"
 SceneLoader="*res://addons/maaacks_menus_template/base/nodes/autoloads/scene_loader/scene_loader.tscn"
 ProjectMusicController="*res://addons/maaacks_menus_template/base/nodes/autoloads/music_controller/project_music_controller.tscn"
 ProjectUISoundController="*res://addons/maaacks_menus_template/base/nodes/autoloads/ui_sound_controller/project_ui_sound_controller.tscn"
