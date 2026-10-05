@@ -4,7 +4,7 @@ const PORTAL_SCENE: PackedScene = preload("res://scenes/props/dimensional_portal
 const GAME_SCENE: String = "res://scenes/game.tscn"
 const INTER_LEVEL_ROUTES: Array[Dictionary] = [
 	{"scene": "res://scenes/world.tscn", "goal": Vector2(2032, 352)},
-	{"scene": "res://scenes/levels/level_01_factory.tscn", "goal": Vector2(8544, 576)},
+	{"scene": "res://scenes/levels/level_01_factory.tscn", "goal": Vector2(8544, 608)},
 	{"scene": "res://scenes/levels/level_02_recovery.tscn", "goal": Vector2(12512, 448)},
 ]
 
