@@ -148,6 +148,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func reset_run(run_seed: int) -> void:
 	if RunUnitSession.last_run_outcome == "failed":
 		RunUnitSession.begin_retry_attempt()
+	elif RunUnitSession.last_run_outcome in ["completed", "incomplete"]:
+		RunUnitSession.begin_redeployment_attempt()
 	if RunUnitSession.has_checkpoint(_selected_level_index):
 		RunUnitSession.record_respawn()
 	initial_seed = run_seed

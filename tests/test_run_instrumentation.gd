@@ -88,6 +88,27 @@ func test_resetting_a_run_rearms_the_failure_penalty() -> void:
 	assert_almost_eq(reward, -1.0, 0.001, "A fresh run should charge its own terminal penalty")
 
 
+func test_completed_results_retry_starts_a_fresh_route_attempt() -> void:
+	var game: RunUnitGame = _make_game()
+	RunUnitSession.last_run_outcome = "completed"
+	RunUnitSession.run_elapsed_seconds = 18.0
+	RunUnitSession.damage_taken = 2
+	RunUnitSession.checkpoint_activations = 1
+	RunUnitSession.checkpoint_recoveries = 1
+	var attempt_before_redeploy: int = RunUnitSession.run_attempt_index
+	game.set("_run_state", 2) # RunUnitGame.RunState.COMPLETED
+
+	game._on_retry_requested()
+
+	assert_false(game.is_terminal())
+	assert_eq(RunUnitSession.last_run_outcome, "active")
+	assert_eq(RunUnitSession.run_attempt_index, attempt_before_redeploy + 1)
+	assert_eq(RunUnitSession.run_elapsed_seconds, 0.0, "A redeploy should not inherit the previous completed duration")
+	assert_eq(RunUnitSession.damage_taken, 0)
+	assert_eq(RunUnitSession.checkpoint_activations, 0)
+	assert_eq(RunUnitSession.checkpoint_recoveries, 0)
+
+
 func test_world_metrics_are_not_republished_on_every_progress_sample() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
@@ -199,6 +220,51 @@ func test_retry_attempt_records_completion_and_keeps_cumulative_metrics() -> voi
 
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(first_attempt_path))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(retry_attempt_path))
+	session.free()
+
+
+func test_redeploy_after_completion_starts_a_fresh_telemetry_attempt() -> void:
+	var session: Variant = RUN_SESSION_SCRIPT.new()
+	session.set("_playtest_enabled", true)
+	session.begin_run(1, 0, "authored", "static", "level_01_factory.tscn")
+	var completed_attempt_path: String = str(session.get("_playtest_path"))
+	session.record_damage()
+	session.record_checkpoint(1, Vector2(640.0, 192.0))
+	session.set("_run_started_msec", Time.get_ticks_msec() - 1800)
+	var completed_metrics: Dictionary = session.finish_run_metrics("completed")
+	session.set_run_outcome("completed")
+	session.clear_checkpoint()
+
+	assert_true(session.has_method("begin_redeployment_attempt"), "Retrying from completed results needs a fresh route-attempt boundary")
+	if not session.has_method("begin_redeployment_attempt"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(completed_attempt_path))
+		session.free()
+		return
+	session.begin_redeployment_attempt()
+	var redeployed_attempt_path: String = str(session.get("_playtest_path"))
+	session.record_playtest_event("redeploy_probe")
+	session.set("_run_started_msec", Time.get_ticks_msec() - 650)
+	var redeployed_metrics: Dictionary = session.finish_run_metrics("completed")
+
+	assert_ne(completed_attempt_path, redeployed_attempt_path, "Redeploy should open a distinct event log")
+	assert_eq(int(session.get("run_attempt_index")), 2)
+	assert_eq(int(redeployed_metrics.get("damage", -1)), 0, "A completed-results retry should start fresh route metrics")
+	assert_eq(int(redeployed_metrics.get("checkpoint_activations", -1)), 0)
+	assert_eq(int(redeployed_metrics.get("checkpoint_recoveries", -1)), 0)
+	assert_lt(float(redeployed_metrics.get("time_s", 0.0)), float(completed_metrics.get("time_s", 0.0)), "The new attempt should not include the previous completion time")
+
+	var redeployed_lines: PackedStringArray = FileAccess.get_file_as_string(redeployed_attempt_path).strip_edges().split("\n")
+	var redeployed_events: Array[String] = []
+	for line: String in redeployed_lines:
+		var event: Variant = JSON.parse_string(line)
+		if event is Dictionary:
+			redeployed_events.append(str(event.get("event", "")))
+	assert_eq(redeployed_events[0], "run_started")
+	assert_true(redeployed_events.has("redeploy_probe"), "The new attempt's event log should remain open through the next run")
+	assert_eq(redeployed_events[-1], "run_finished")
+
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(completed_attempt_path))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(redeployed_attempt_path))
 	session.free()
 
 
