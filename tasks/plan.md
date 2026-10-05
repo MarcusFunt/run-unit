@@ -23,7 +23,7 @@ Deliver a complete four-route campaign with readable authored hazards, responsiv
 - [x] Cover pulse behavior and non-collision in focused presentation tests.
 - [x] Add gamepad defaults to the existing action map and cover them with input-map regression assertions.
 - [x] Run the complete gameplay and tooling suites after the final polish changes; GUT exits 0 and 49 tooling tests pass.
-- [ ] Inspect the rendered electrical warning and Recovery monitor across their pulse cycle.
+- [x] Inspect live Recovery warning/active frames and the monitor pulse; alpha changed within the authored bounds, RGB stayed fixed, and the warning silhouette remained clear.
 
 ### 2. Playtest the campaign
 

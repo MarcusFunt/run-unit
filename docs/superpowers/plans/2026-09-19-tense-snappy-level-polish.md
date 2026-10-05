@@ -141,7 +141,7 @@
   & 'C:\Users\marcu\Documents\GODOT\Godot_v4.7.1-stable_win64.exe' --headless --path . --editor --quit-after 8
   ```
 
-- [ ] Capture a short local gameplay run through an electric floor arc and the Recovery monitor using the project’s Godot scenario runner. Inspect frames at rest, warning, and active states for a restrained pulse that does not hide the timing silhouette. Keep captures outside version control.
+- [x] Inspect a live Recovery gameplay view at the electric floor arc and Assembly Monitor. Compare inactive/warning and active frames, then sample the pulse through its cycle; confirm the warning silhouette stays clear and RGB remains unchanged.
 
 - [x] Commit only the ambient-pulse script, two scenes, and presentation test as `feat: animate industrial warning lights` (`a33e6bf`).
 

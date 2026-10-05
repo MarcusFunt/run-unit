@@ -10,7 +10,9 @@ The playable campaign is Calibration → Factory Escape → Recovery → Beacon 
 - [x] Add non-colliding clearance treatments and tune the later-route landing gaps; preserve the Tiled/YATI world contract. (`f0e8ed2`)
 - [x] Retry a failed run in place through the existing run reset, retaining checkpoint recovery; a completed-result redeploy starts at spawn with fresh route metrics and telemetry. (`a29e110`, `9de36d0`)
 - [x] Add deterministic, resettable alpha pulses to electrical warning art and the Recovery monitor; focused presentation tests pass. (`a33e6bf`)
+- [x] Inspect a live Recovery warning/active cycle and the monitor pulse: the warning stripe varied from about 0.72–0.97 alpha and the monitor status from 0.78–0.99, with RGB unchanged and the warning silhouette clear.
 - [x] Add default gamepad bindings for movement, jump, crouch, menu accept, and cancel; verify the actions in the running game. (`b8e7253`)
+- [x] Probe live inputs in Godot: keyboard movement reached the Recovery arc and took one damage before falling; controller A retried to spawn, and the left stick moved toward the same hazard. Full route chains remain open.
 - [x] Run the built-in scripted campaign traverse with an isolated fresh progress file; it completed routes 0–3 with 1 damage event and 1 failed attempt.
 
 ## Remaining before release
