@@ -191,7 +191,31 @@ func test_player_options_list_only_live_gameplay_actions() -> void:
 	var action_names: Array = input_list.get("input_action_names") as Array
 	assert_eq(action_names, [&"move_left", &"move_right", &"jump", &"crouch", &"restart"])
 
+func test_gameplay_actions_have_default_gamepad_bindings() -> void:
+	assert_true(_has_joypad_axis(&"move_left", JOY_AXIS_LEFT_X, -1.0), "Left stick should move left")
+	assert_true(_has_joypad_axis(&"move_right", JOY_AXIS_LEFT_X, 1.0), "Left stick should move right")
+	assert_true(_has_joypad_button(&"move_left", JOY_BUTTON_DPAD_LEFT), "D-pad left should move left")
+	assert_true(_has_joypad_button(&"move_right", JOY_BUTTON_DPAD_RIGHT), "D-pad right should move right")
+	assert_true(_has_joypad_button(&"jump", JOY_BUTTON_A), "The south face button should jump")
+	assert_true(_has_joypad_button(&"crouch", JOY_BUTTON_LEFT_SHOULDER), "The left shoulder should crouch")
+	assert_true(_has_joypad_button(&"ui_accept", JOY_BUTTON_A), "The south face button should activate menu choices")
+	assert_true(_has_joypad_button(&"ui_cancel", JOY_BUTTON_B), "The east face button should cancel and open pause menus")
+
 func test_game_scene_has_one_pre_run_flow() -> void:
 	var game: Node = autofree(GAME_SCENE.instantiate()) as Node
 	assert_not_null(game, "The game scene should instantiate")
 	assert_null(game.get_node_or_null("TitleScreen"), "The retired duplicate route briefing must not be loaded into gameplay")
+
+func _has_joypad_axis(action: StringName, axis: int, value: float) -> bool:
+	for event: InputEvent in InputMap.action_get_events(action):
+		if event is InputEventJoypadMotion:
+			var motion: InputEventJoypadMotion = event as InputEventJoypadMotion
+			if motion.axis == axis and is_equal_approx(motion.axis_value, value):
+				return true
+	return false
+
+func _has_joypad_button(action: StringName, button_index: int) -> bool:
+	for event: InputEvent in InputMap.action_get_events(action):
+		if event is InputEventJoypadButton and (event as InputEventJoypadButton).button_index == button_index:
+			return true
+	return false
