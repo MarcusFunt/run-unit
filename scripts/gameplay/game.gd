@@ -64,6 +64,8 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	_ensure_input_map()
+	if not death_menu.retry_requested.is_connected(_on_retry_requested):
+		death_menu.retry_requested.connect(_on_retry_requested)
 	if RunUnitSession.demo_mode and RunUnitSession.demo_completed:
 		print("DEMO_GAME_RESTART_GUARD route=%d" % _selected_level_index)
 		get_tree().quit()
@@ -232,6 +234,11 @@ func consume_reward() -> float:
 
 func is_terminal() -> bool:
 	return _run_state != RunState.ACTIVE
+
+func _on_retry_requested() -> void:
+	if not is_terminal():
+		return
+	reset_run(initial_seed)
 
 func _fail_run(reason: String = "unknown") -> void:
 	RunUnitSession.record_playtest_event("death", {

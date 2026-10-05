@@ -1,6 +1,8 @@
 class_name RunUnitDeathMenu
 extends CanvasLayer
 
+signal retry_requested
+
 const FAILURE_ACCENT := Color(1.0, 0.28, 0.16, 1.0)
 const FAILURE_DIMMER := Color(0.08, 0.005, 0.01, 0.94)
 const FAILURE_PANEL := Color(0.055, 0.012, 0.018, 0.985)
@@ -141,9 +143,8 @@ func _format_time(seconds: float) -> String:
 	return "%02d:%02d" % [floori(float(whole_seconds) / 60.0), whole_seconds % 60]
 
 func _on_restart_pressed() -> void:
-	_release_pause()
-	get_tree().paused = false
-	SceneLoader.reload_current_scene()
+	close()
+	retry_requested.emit()
 
 func _on_main_menu_pressed() -> void:
 	_release_pause()
