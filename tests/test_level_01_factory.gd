@@ -278,14 +278,12 @@ func test_factory_history_units_render_between_background_and_foreground_art() -
 		assert_lt(units.z_index, foreground.z_index, "Foreground machinery stays in front of the history units")
 
 
-func test_factory_hides_the_retired_tunnel_shell_strip() -> void:
+func test_factory_removes_the_retired_tunnel_shell_strip() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var tunnel_shell: CanvasItem = world.get_node_or_null("FactoryGeometry/TunnelShell") as CanvasItem
 	var background: CanvasItem = world.get_node_or_null("FactoryGeometry/ArtBackground") as CanvasItem
-	assert_not_null(tunnel_shell, "Factory Escape retains its generated TunnelShell layer for map tooling")
+	assert_null(tunnel_shell, "Factory Escape must remove the retired TunnelShell layer entirely")
 	assert_not_null(background, "Factory Escape keeps the current industrial background art")
-	if tunnel_shell != null:
-		assert_false(tunnel_shell.visible, "The retired bulkhead strip must stay hidden behind the history setpiece")
 	if background != null:
 		assert_true(background.visible, "The current ArtBackground remains as the visual replacement")
 
