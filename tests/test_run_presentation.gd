@@ -6,6 +6,8 @@ extends GutTest
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 const DEATH_MENU_SCENE: PackedScene = preload("res://scenes/death_menu.tscn")
 const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
+const ELECTRIC_ARC_SCENE: PackedScene = preload("res://scenes/hazards/electric_floor_arc.tscn")
+const RECOVERY_SCENE: PackedScene = preload("res://scenes/levels/level_02_recovery.tscn")
 
 
 func after_each() -> void:
@@ -158,3 +160,63 @@ func _spawn_game_for_test(route_index: int) -> RunUnitGame:
 	add_child_autofree(game)
 	await get_tree().process_frame
 	return game
+
+func test_ambient_pulse_changes_only_alpha_and_resets_to_authored_phase() -> void:
+	var pulse_path: String = "res://scripts/world/ambient_pulse.gd"
+	if not ResourceLoader.exists(pulse_path):
+		assert_true(false, "The reusable ambient pulse script should be available")
+		return
+	var authored_color: Color = Color(0.9, 0.5, 0.2, 0.8)
+	var light: Polygon2D = Polygon2D.new()
+	light.modulate = authored_color
+	var pulse_script: Script = load(pulse_path) as Script
+	assert_not_null(pulse_script, "The reusable ambient pulse script should be available")
+	if pulse_script == null:
+		return
+	light.set_script(pulse_script)
+	light.set("period_seconds", 0.10)
+	light.set("dim_factor", 0.2)
+	add_child_autofree(light)
+	var authored_phase_alpha: float = light.modulate.a
+
+	await get_tree().create_timer(0.035).timeout
+
+	assert_ne(light.modulate.a, authored_phase_alpha, "The pulse should visibly change opacity")
+	assert_almost_eq(light.modulate.r, authored_color.r, 0.001)
+	assert_almost_eq(light.modulate.g, authored_color.g, 0.001)
+	assert_almost_eq(light.modulate.b, authored_color.b, 0.001)
+	light.call("reset_level_state")
+	assert_almost_eq(light.modulate.a, authored_phase_alpha, 0.001, "Reset should restore the authored pulse phase")
+
+
+func test_electric_floor_arc_pulse_art_is_resettable_and_non_colliding() -> void:
+	var hazard: Node = ELECTRIC_ARC_SCENE.instantiate()
+	add_child_autofree(hazard)
+	var warning_stripe: Node = hazard.get_node_or_null("WarningStripe")
+	var glow: Node = hazard.get_node_or_null("ActiveVisual/Glow")
+
+	assert_not_null(warning_stripe)
+	assert_not_null(glow)
+	if warning_stripe == null or glow == null:
+		return
+	assert_true(warning_stripe.has_method("reset_level_state"))
+	assert_true(glow.has_method("reset_level_state"))
+	assert_false(warning_stripe is CollisionObject2D)
+	assert_false(glow is CollisionObject2D)
+
+
+func test_recovery_monitor_pulse_resets_with_the_world() -> void:
+	var recovery: RunUnitStaticWorld = RECOVERY_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(recovery)
+	var status: CanvasItem = recovery.get_node_or_null("AssemblyMonitor/Status") as CanvasItem
+	assert_not_null(status)
+	if status == null:
+		return
+	assert_true(status.has_method("reset_level_state"))
+	assert_false(status is CollisionObject2D)
+	var authored_phase_alpha: float = status.modulate.a
+	status.modulate = Color(status.modulate.r, status.modulate.g, status.modulate.b, 0.1)
+
+	recovery.reset()
+
+	assert_almost_eq(status.modulate.a, authored_phase_alpha, 0.001, "World reset should restore the monitor pulse to its authored phase")

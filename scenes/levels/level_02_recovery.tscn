@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_02_recovery.tmj" id="2_level"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" path="res://scenes/hazards/laser_gate.tscn" id="15_laser"]
 [ext_resource type="PackedScene" path="res://scenes/props/dimensional_portal_exit.tscn" id="16_portal"]
 [ext_resource type="PackedScene" path="res://scenes/props/clearance_gate_visual.tscn" id="17_clearance_gate"]
+[ext_resource type="Script" path="res://scripts/world/ambient_pulse.gd" id="18_pulse"]
 [ext_resource type="Script" path="res://scripts/hazards/laser_gate_hazard.gd" id="15_p3ts3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cradle"]
@@ -212,6 +213,10 @@ position = Vector2(30, -6)
 sprite_frames = ExtResource("5_screen")
 animation = &"palette_0"
 autoplay = "palette_0"
+script = ExtResource("18_pulse")
+period_seconds = 3.8
+dim_factor = 0.78
+phase_offset_seconds = 1.2
 
 [node name="ModuleCradle" type="Area2D" parent="." unique_id=2129872803]
 position = Vector2(7808, 544)
