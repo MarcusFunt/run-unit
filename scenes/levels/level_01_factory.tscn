@@ -54,7 +54,7 @@ polygon = PackedVector2Array(6240, 1180, 6240, 720, 6320, 720, 6320, 668, 6368, 
 
 [node name="StorageUnits" type="Node2D" parent="." unique_id=1902096349]
 modulate = Color(0.42, 0.62, 0.68, 0.85)
-z_index = -6
+z_index = 1
 
 [node name="Unit01" type="Node2D" parent="StorageUnits" unique_id=1028236062 instance=ExtResource("3_robot")]
 position = Vector2(3136, 334)
@@ -455,7 +455,7 @@ scale = Vector2(0.45, 0.45)
 texture = ExtResource("5_door")
 
 [node name="DimensionalPortalExit" parent="." instance=ExtResource("11_portal")]
-position = Vector2(8544, 576)
+position = Vector2(8544, 608)
 next_scene_path = "res://scenes/game.tscn"
 
 [node name="ClearanceTreatments" type="Node2D" parent="."]

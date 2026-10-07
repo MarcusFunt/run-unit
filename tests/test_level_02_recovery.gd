@@ -17,6 +17,17 @@ const HATCH_DECK_Y: float = 448.0
 const SHUTTER_GATE_LEFT_X: float = 9952.0   # emergency shutter, tiles 311-313 over the row-18 exit
 const SHUTTER_GATE_RIGHT_X: float = 10048.0
 const SHUTTER_DECK_Y: float = 576.0
+const DECK_SUPPORT_BRIDGE_CELLS: Array[Vector2i] = [
+	Vector2i(27, 14), Vector2i(33, 14), Vector2i(39, 14),
+	Vector2i(85, 20), Vector2i(90, 20),
+	Vector2i(96, 19), Vector2i(98, 19),
+	Vector2i(175, 18), Vector2i(181, 18),
+	Vector2i(187, 21), Vector2i(193, 21),
+	Vector2i(199, 24), Vector2i(205, 24), Vector2i(206, 24),
+	Vector2i(228, 24), Vector2i(230, 24),
+	Vector2i(235, 22), Vector2i(237, 22),
+	Vector2i(242, 19),
+]
 
 
 func _instantiate_level() -> RunUnitStaticWorld:
@@ -118,6 +129,53 @@ func test_crouch_gate_visual_treatments_are_aligned_and_non_colliding() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	_assert_clearance_treatment(world, "RecoveryHatch", Vector2(4848.0, 448.0))
 	_assert_clearance_treatment(world, "RecoveryShutter", Vector2(10000.0, 576.0))
+
+
+func test_recovery_deck_supports_reach_the_deck_underside() -> void:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/tiled/levels/level_02_recovery.tmj"))
+	assert_true(parsed is Dictionary, "Recovery's authored map should remain readable JSON")
+	if not parsed is Dictionary:
+		return
+	var map_data: Dictionary = parsed as Dictionary
+	var tile_layers: Array = map_data.get("layers", [])
+	var art_deck: Dictionary = {}
+	var art_structure: Dictionary = {}
+	for layer_variant: Variant in tile_layers:
+		if not layer_variant is Dictionary:
+			continue
+		var layer: Dictionary = layer_variant as Dictionary
+		match str(layer.get("name", "")):
+			"ArtDeck":
+				art_deck = layer
+			"ArtStructure":
+				art_structure = layer
+	assert_true(not art_deck.is_empty(), "Recovery keeps its decorative deck layer")
+	assert_true(not art_structure.is_empty(), "Recovery keeps its structural art layer")
+	if art_deck.is_empty() or art_structure.is_empty():
+		return
+	var width: int = int(map_data.get("width", 0))
+	var tilesets: Array = map_data.get("tilesets", [])
+	var industrial_first_gid: int = 0
+	for tileset_variant: Variant in tilesets:
+		if not tileset_variant is Dictionary:
+			continue
+		var tileset: Dictionary = tileset_variant as Dictionary
+		if str(tileset.get("source", "")).ends_with("industrial_zone.tsj"):
+			industrial_first_gid = int(tileset.get("firstgid", 0))
+	assert_gt(industrial_first_gid, 0, "Recovery keeps the industrial tileset")
+	var deck_data: Array = art_deck.get("data", [])
+	var structure_data: Array = art_structure.get("data", [])
+	for cell: Vector2i in DECK_SUPPORT_BRIDGE_CELLS:
+		var index: int = cell.y * width + cell.x
+		assert_true(index < deck_data.size() and index < structure_data.size(), "Support cell %s is inside the authored map" % cell)
+		if index >= deck_data.size() or index >= structure_data.size():
+			continue
+		var deck_index: int = (cell.y - 1) * width + cell.x
+		assert_true(deck_index >= 0 and deck_index < deck_data.size(), "Deck cap above support %s is inside the authored map" % cell)
+		if deck_index < 0 or deck_index >= deck_data.size():
+			continue
+		assert_eq(int(deck_data[deck_index]), industrial_first_gid + 55, "Deck cap above support %s remains in place" % cell)
+		assert_eq(int(structure_data[index]), industrial_first_gid + 60, "Support at %s touches the deck underside" % cell)
 
 
 func test_level_02_has_the_expected_route() -> void:

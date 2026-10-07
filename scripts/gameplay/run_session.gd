@@ -285,6 +285,19 @@ func begin_retry_attempt() -> void:
 	last_run_outcome = "active"
 	_open_playtest_attempt(true)
 
+## Redeploying from a completed result starts a separate route attempt, rather
+## than adding its time and damage to the route that was just certified.
+func begin_redeployment_attempt() -> void:
+	_prior_attempt_seconds = 0.0
+	run_elapsed_seconds = 0.0
+	damage_taken = 0
+	checkpoint_activations = 0
+	checkpoint_recoveries = 0
+	run_attempt_index += 1
+	_run_started_msec = Time.get_ticks_msec()
+	last_run_outcome = "active"
+	_open_playtest_attempt(true)
+
 func _open_playtest_attempt(is_retry: bool) -> void:
 	_flush_playtest_events()
 	_playtest_events.clear()

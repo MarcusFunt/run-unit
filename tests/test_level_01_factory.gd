@@ -142,7 +142,7 @@ func test_level_01_has_the_expected_route() -> void:
 		[187, 221, 21],  # breach runway continues onto the exterior catwalk
 		[225, 239, 20],  # raised service span
 		[243, 254, 22],  # lower maintenance span
-		[258, 269, 18],  # full-charge escape leap onto the final approach
+		[258, 269, 19],  # charged escape leap onto the final approach
 	]
 	assert_eq(plan.size(), expected.size(), "Level 1 should keep its fourteen authored platform beats")
 	for index: int in range(mini(plan.size(), expected.size())):
@@ -157,7 +157,7 @@ func test_level_01_publishes_spawn_and_goal_markers() -> void:
 
 	assert_eq(world.get_spawn_position(), Vector2(160.0, 385.0), "Spawn sits just above the arrival deck")
 	assert_true(world.has_goal(), "Level 1 declares a Goal marker")
-	assert_eq(world.get_goal_position(), Vector2(8544.0, 576.0), "Goal sits at the far end of the extended exterior catwalk")
+	assert_eq(world.get_goal_position(), Vector2(8544.0, 608.0), "Goal sits at the far end of the extended exterior catwalk")
 
 	var trigger: Area2D = world.get_node_or_null("CompletionTrigger") as Area2D
 	assert_not_null(trigger, "A completion trigger should be built from the Goal marker")
@@ -223,6 +223,69 @@ func test_tall_rack_needs_a_charged_jump() -> void:
 	var clear_of_crates: float = STORAGE_GATE_RIGHT_X + 32.0
 	assert_false(await _jump_to_next_platform(LOW_RACK_INDEX, 0, clear_of_crates), "A tap jump must not reach the tall rack")
 	assert_true(await _jump_to_next_platform(LOW_RACK_INDEX, 16, clear_of_crates), "A charged jump must reach the tall rack")
+
+
+func test_final_crouch_gate_leads_into_the_charged_escape_leap() -> void:
+	var world: RunUnitStaticWorld = LEVEL_SCENE.instantiate() as RunUnitStaticWorld
+	add_child(world)
+	var crusher: RunUnitTimedHazard = world.get_node("MechanicalHazards/ExteriorCrusher") as RunUnitTimedHazard
+	crusher.active_seconds = 0.0
+	crusher.reset_level_state()
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child(player)
+	player.global_position = Vector2(7872.0 - 120.0, 704.0 - 32.0)
+	const TAKEOFF_X: float = 8140.0
+	const AFTER_GATE_X: float = 8000.0
+	const CHARGE_START_X: float = 8064.0
+	const TARGET_FLOOR_Y: float = 19.0 * 32.0
+	var jump_released: bool = false
+	var landed: bool = false
+
+	for frame: int in range(240):
+		var action: RunUnitPlayerAction = RunUnitPlayerAction.new()
+		action.movement = 1.0
+		var x: float = player.global_position.x
+		if x < AFTER_GATE_X:
+			action.crouch_held = true
+		elif not jump_released and x >= CHARGE_START_X and x < TAKEOFF_X:
+			action.jump_held = true
+		elif not jump_released and x >= TAKEOFF_X:
+			action.jump_released = true
+			jump_released = true
+		player.set_action(action)
+		await get_tree().physics_frame
+		if jump_released and player.last_launch_velocity < 0.0 and player.is_on_floor() and player.velocity.y >= 0.0 and x > TAKEOFF_X + 32.0:
+			landed = floori(player.global_position.x / 32.0) >= 258 and absf(player.global_position.y - (TARGET_FLOOR_Y - 32.0)) < 6.0
+			break
+		if player.global_position.y > 1180.0:
+			break
+
+	assert_true(landed, "A player can crouch through the exterior gate, charge the jump, and reach the final approach")
+	player.free()
+	world.free()
+
+
+func test_factory_history_units_render_between_background_and_foreground_art() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var units: CanvasItem = world.get_node_or_null("StorageUnits") as CanvasItem
+	var background: CanvasItem = world.get_node_or_null("FactoryGeometry/ArtBackground") as CanvasItem
+	var foreground: CanvasItem = world.get_node_or_null("FactoryGeometry/ArtForeground") as CanvasItem
+	assert_not_null(units, "Factory Escape keeps its stored UNIT history setpiece")
+	assert_not_null(background, "Factory Escape keeps its industrial background art")
+	assert_not_null(foreground, "Factory Escape keeps its foreground obstacle art")
+	if units != null and background != null and foreground != null:
+		assert_gt(units.z_index, background.z_index, "The history units render in front of the background wall")
+		assert_lt(units.z_index, foreground.z_index, "Foreground machinery stays in front of the history units")
+
+
+func test_factory_removes_the_retired_tunnel_shell_strip() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var tunnel_shell: CanvasItem = world.get_node_or_null("FactoryGeometry/TunnelShell") as CanvasItem
+	var background: CanvasItem = world.get_node_or_null("FactoryGeometry/ArtBackground") as CanvasItem
+	assert_null(tunnel_shell, "Factory Escape must remove the retired TunnelShell layer entirely")
+	assert_not_null(background, "Factory Escape keeps the current industrial background art")
+	if background != null:
+		assert_true(background.visible, "The current ArtBackground remains as the visual replacement")
 
 
 func _instantiate_game_for(level_index: int) -> RunUnitGame:
