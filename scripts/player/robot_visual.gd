@@ -48,11 +48,11 @@ const UPPER_LINK_LENGTH: float = 110.0
 const LOWER_LINK_LENGTH: float = 145.0
 ## Visible outside radius of the wheel artwork, in source SVG pixels.
 const WHEEL_RADIUS_SOURCE_PX: float = 70.0
-## robot_body.svg's visible shell starts at y=13; its rig pivot is at y=115.
-const BODY_TOP_OFFSET_SOURCE_PX: float = -102.0
-## The orange clearance lip sits 102 world units above the cyan deck line;
-## leave a 1-unit visual margin so the shell does not draw through the lip.
-const CROUCH_VISUAL_HEIGHT: float = 101.0
+## The full robot_body.svg sprite rect starts at y=0; its rig pivot is at y=115.
+const BODY_TOP_OFFSET_SOURCE_PX: float = -115.0
+## The full body sprite rect is about 98 units tall in the folded pose;
+## keeping that size leaves roughly 4 units beneath the 102-unit clearance lip.
+const CROUCH_VISUAL_HEIGHT: float = 98.0
 ## Antenna spring integration never advances by more than this, so a large
 ## frame-time spike (a hitch, a debugger pause) can't destabilize it.
 const ANTENNA_MAX_SUBSTEP: float = 1.0 / 120.0
