@@ -48,6 +48,11 @@ const UPPER_LINK_LENGTH: float = 110.0
 const LOWER_LINK_LENGTH: float = 145.0
 ## Visible outside radius of the wheel artwork, in source SVG pixels.
 const WHEEL_RADIUS_SOURCE_PX: float = 70.0
+## robot_body.svg's visible shell starts at y=13; its rig pivot is at y=115.
+const BODY_TOP_OFFSET_SOURCE_PX: float = -102.0
+## The orange clearance lip sits 102 world units above the cyan deck line;
+## leave a 1-unit visual margin so the shell does not draw through the lip.
+const CROUCH_VISUAL_HEIGHT: float = 101.0
 ## Antenna spring integration never advances by more than this, so a large
 ## frame-time spike (a hitch, a debugger pause) can't destabilize it.
 const ANTENNA_MAX_SUBSTEP: float = 1.0 / 120.0
@@ -117,11 +122,38 @@ func _process(delta: float) -> void:
 	_apply_antenna_overhead_contact()
 
 func _update_facing() -> void:
-	if player == null:
-		return
-	if absf(player.velocity.x) > 8.0:
+	if player != null and absf(player.velocity.x) > 8.0:
 		_facing_left = player.velocity.x < 0.0
-	scale.x = 1.0 if _facing_left else -1.0
+	var crouch: float = player.crouch_ratio if player != null else 0.0
+	var visual_scale: float = lerpf(1.0, _get_crouch_visual_scale(), crouch)
+	_apply_visual_transform(visual_scale)
+
+func _apply_visual_transform(visual_scale: float) -> void:
+	var facing_sign: float = 1.0 if _facing_left else -1.0
+	scale = Vector2(facing_sign * visual_scale, visual_scale)
+	# Scale around the wheel's ground contact, so crouching keeps the tire
+	# planted while the robot's body height matches the clearance.
+	var wheel_bottom_y: float = wheel_anchor.y + WHEEL_RADIUS_SOURCE_PX * art_scale
+	position = Vector2(
+		facing_sign * wheel_anchor.x * (1.0 - visual_scale),
+		wheel_bottom_y * (1.0 - visual_scale)
+	)
+
+func _get_crouch_visual_scale() -> float:
+	if player == null:
+		return 1.0
+	var upper_angle: float = deg_to_rad(15.0)
+	var lower_angle: float = deg_to_rad(155.0)
+	var linkage_y: float = (
+		sin(upper_angle) * UPPER_LINK_LENGTH
+		+ sin(lower_angle) * LOWER_LINK_LENGTH
+	) * art_scale
+	var body_top_y: float = wheel_anchor.y - linkage_y + BODY_TOP_OFFSET_SOURCE_PX * art_scale
+	var wheel_bottom_y: float = wheel_anchor.y + WHEEL_RADIUS_SOURCE_PX * art_scale
+	var crouched_height: float = wheel_bottom_y - body_top_y
+	if crouched_height <= 0.001:
+		return 1.0
+	return clampf(CROUCH_VISUAL_HEIGHT / crouched_height, 0.1, 2.0)
 
 func _advance_visual_clock(delta: float) -> void:
 	_visual_time += delta
@@ -151,10 +183,8 @@ func _build_base_pose() -> Dictionary:
 		pose["knee_deg"] = lerpf(105.0, 152.0, charge)
 		pose["knee_deg"] += sin(_visual_time * TAU * antenna_charge_tremor_hz) * 1.6 * charge
 	elif player.is_crouching():
-		# Crouch keeps the linkage geometry that clearance checks (and level
-		# gates) are tuned against -- see test_jammed_elevator_leaf_clears_a_
-		# crouched_robot_but_not_a_standing_one. It reads as "low-profile"
-		# rather than "loaded" via the antenna tuck below, not a deeper fold.
+		# Keep the linkage articulated while the visual rig fits the 102-unit
+		# gate clearance. The wheel's ground contact stays fixed.
 		var crouch: float = player.crouch_ratio
 		pose["upper_deg"] = lerpf(25.0, 15.0, crouch)
 		pose["knee_deg"] = lerpf(105.0, 140.0, crouch)
@@ -206,7 +236,7 @@ func _apply_body_lean(pose: Dictionary, delta: float) -> void:
 	pose["body_lean"] += _smoothed_body_lean
 
 func get_wheel_radius_world() -> float:
-	return WHEEL_RADIUS_SOURCE_PX * art_scale
+	return WHEEL_RADIUS_SOURCE_PX * art_scale * absf(scale.y)
 
 ## World-space forward speed expressed in the authored left-facing frame:
 ## positive means travelling in whichever world direction the rig is
@@ -400,7 +430,8 @@ func apply_pose_for_test(upper_degrees: float, knee_degrees: float, body_lean: f
 
 func set_facing_left_for_test(value: bool) -> void:
 	_facing_left = value
-	scale.x = 1.0 if _facing_left else -1.0
+	var crouch: float = player.crouch_ratio if player != null else 0.0
+	_apply_visual_transform(lerpf(1.0, _get_crouch_visual_scale(), crouch))
 
 func update_wheel_for_test(delta: float) -> void:
 	_update_wheel_spin(delta)

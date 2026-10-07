@@ -68,6 +68,12 @@ texture = ExtResource("5_door_closed")
 position = Vector2(2032, 352)
 next_scene_path = "res://scenes/game.tscn"
 
+[node name="Halo" parent="DimensionalPortalExit" index="0"]
+visible = false
+
+[node name="Portal" parent="DimensionalPortalExit" index="1"]
+visible = false
+
 [node name="TutorialSigns" type="Node2D" parent="." unique_id=1876423768]
 z_index = 5
 
