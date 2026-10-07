@@ -2,8 +2,10 @@ class_name RunUnitDimensionalPortalExit
 extends RunUnitRouteExit
 
 const FRAME_COUNT: int = 6
-const IDLE_SCALE: Vector2 = Vector2(2.0, 2.0)
-const HALO_SCALE: Vector2 = Vector2(2.55, 2.55)
+const IDLE_SCALE: Vector2 = Vector2(3.0, 3.0)
+const HALO_SCALE: Vector2 = Vector2(3.825, 3.825)
+const SURGE_PORTAL_SCALE: Vector2 = Vector2(4.05, 4.05)
+const SURGE_HALO_SCALE: Vector2 = Vector2(5.025, 5.025)
 
 @export_range(1.0, 24.0, 0.5) var animation_fps: float = 10.0
 @export_range(0.1, 1.0, 0.05) var transport_duration: float = 0.42
@@ -43,8 +45,8 @@ func begin_transition() -> void:
 	var surge_duration: float = transport_duration * 0.55
 	var fade_duration: float = transport_duration - surge_duration
 	_transition_tween = create_tween()
-	_transition_tween.tween_property(portal, "scale", Vector2.ONE * 2.7, surge_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_transition_tween.parallel().tween_property(halo, "scale", Vector2.ONE * 3.35, surge_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_transition_tween.tween_property(portal, "scale", SURGE_PORTAL_SCALE, surge_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_transition_tween.parallel().tween_property(halo, "scale", SURGE_HALO_SCALE, surge_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	_transition_tween.parallel().tween_property(halo, "modulate:a", 0.5, surge_duration)
 	_transition_tween.tween_property(blackout, "color:a", 1.0, fade_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_transition_tween.parallel().tween_property(portal, "modulate:a", 0.0, fade_duration)
