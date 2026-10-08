@@ -10,10 +10,10 @@ const WORLD_VISUALS_SCRIPT: Script = preload("res://scripts/world/story_world_st
 
 const CUES := {
 	"TransferLine": {"message": "TRANSFER LIFT 01 // DRIVE CURRENT LOST", "ambience": "factory"},
-	"Collapse": {"message": "LOAD BEARING // STRAIN DETECTED", "event": "collapse_warning", "world_change": "structure_shift"},
+	"Collapse": {"message": "The gantry shifts ahead.", "event": "collapse_warning", "world_change": "structure_shift"},
 	"WarehouseReveal": {"message": "UNIT STORAGE // PRODUCTION HALTED", "ambience": "factory_interior"},
 	"WarehouseTraversal": {"event": "hazard_warning"},
-	"ExteriorBreach": {"message": "OUTER WALL // PRESSURE LOSS", "ambience": "exterior", "world_change": "route_open"},
+	"ExteriorBreach": {"message": "The outer shutter slides open.", "ambience": "exterior", "world_change": "route_open"},
 	"FactoryExterior": {"message": "SERVICE DISTRICT // GRID FEED BELOW", "ambience": "exterior"},
 	"ServiceDistrict": {"message": "LIVE CONDUIT // ARC SCARS VISIBLE", "event": "hazard_warning"},
 	"DepotSightline": {"message": "RESERVE DEPOT 03 // ASSEMBLY CRADLE DETECTED", "event": "objective_cue"},
@@ -29,7 +29,7 @@ const CUES := {
 	"UtilityCanyon": {"message": "ARC SCARS // LINE STILL LIVE", "ambience": "cooling"},
 	"BeaconPerimeter": {"message": "BEACON 9 // OUTER SERVICE RING", "ambience": "beacon_exterior"},
 	"ExteriorAscent": {"message": "SERVICE SPINE // UPPER COUPLER UNPOWERED", "event": "objective_cue"},
-	"BeaconInterior": {"message": "SAFETY FIELD // RESIDUAL CHARGE", "ambience": "beacon_interior", "world_change": "hazard_field_cleared"},
+	"BeaconInterior": {"message": "The barrier drains its last charge.", "ambience": "beacon_interior", "world_change": "hazard_field_cleared"},
 	"IgnitionChamber": {"message": "IGNITION SOCKET // ASSEMBLY MATCH", "event": "objective_cue"},
 }
 

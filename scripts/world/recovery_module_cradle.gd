@@ -41,7 +41,7 @@ func reset_level_state() -> void:
 	get_node("ObjectiveHalo").visible = true
 	get_node("ModuleName").visible = true
 	acquisition_readout.visible = false
-	acquisition_readout.text = "RESERVE CELL REMOVED\nCRADLE EMPTY"
+	acquisition_readout.text = "Cell removed.\nThe cradle is empty."
 	_set_shutdown(false)
 
 func get_mounted_module() -> Node2D:
@@ -60,8 +60,8 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 	RunUnitSession.record_playtest_event("module_acquired", {"position": [global_position.x, global_position.y]})
 	var hud: RunUnitHud = get_tree().get_first_node_in_group("run_hud") as RunUnitHud
 	if hud != null:
-		hud.set_objective("Carry the reserve cell to Beacon 9")
-		hud.show_system_message("RESERVE CELL REMOVED // CRADLE EMPTY", 2.4)
+		hud.set_objective("Beacon 9 needs its reserve cell.")
+		hud.show_system_message("The cradle releases its cell.", 2.4)
 	RunUnitAudio.play_event("module_acquired")
 	module_acquired.emit()
 

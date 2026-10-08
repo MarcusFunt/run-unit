@@ -353,7 +353,7 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
 	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
 	assert_true(ignition.coupler_console.visible, "The machine explains the matching module before the interaction begins")
-	assert_true(ignition.coupler_prompt.text.contains("CELL REQUIRED"))
+	assert_true(ignition.coupler_prompt.text.contains("dark"))
 	ignition.next_scene_path = ""
 	ignition.install_delay = 0.05
 	ignition.transfer_duration = 0.08
@@ -365,7 +365,7 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	assert_true(ignition.sequence_ui.visible, "The finale should announce that the ignition interface is ready")
 	assert_false(game.hud.visible, "Normal route information yields as the Beacon interaction starts")
 	assert_true(ignition.coupler_console.visible, "The pressure instructions and progress live on the machine")
-	assert_true(ignition.coupler_prompt.text.contains("HOLD"), "The physical prompt explains the pressure action")
+	assert_true(ignition.coupler_prompt.text.contains("Hold to build pressure"), "The physical prompt explains the pressure action")
 	assert_false(ignition.activation_progress.visible, "The finale no longer relies on a screen-space progress bar")
 	Input.action_press("jump")
 	await get_tree().create_timer(0.5).timeout
@@ -374,7 +374,7 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	await wait_for_signal(ignition.transition_finished, 5.0)
 
 	assert_true(ignition.installed)
-	assert_eq(ignition.coupler_prompt.text, "BEACON 9 // LIGHT RETURNED")
+	assert_eq(ignition.coupler_prompt.text, "The city lights return.")
 	assert_true(ignition.completion_banner.visible, "The player gets an unmistakable success beat before the ending screen")
 	assert_gt(ignition.socket_burst.amount, 0, "The lock-in moment has a dedicated visual burst")
 	assert_eq(ignition.lit_stages, ignition.stage_paths.size())
@@ -390,7 +390,7 @@ func test_short_beacon_charge_is_safe_and_can_be_retried() -> void:
 	await get_tree().create_timer(0.12).timeout
 	assert_false(ignition.installed, "An undercharged release cannot install the module")
 	assert_false(game.is_terminal(), "An undercharged release returns to the same interaction")
-	assert_true(ignition.coupler_prompt.text.contains("PRESSURE LOW"), "The retry cue stays on the coupler itself")
+	assert_true(ignition.coupler_prompt.text.contains("Not enough pressure"), "The retry cue stays on the coupler itself")
 	Input.action_press("jump")
 	await get_tree().create_timer(0.5).timeout
 	Input.action_release("jump")

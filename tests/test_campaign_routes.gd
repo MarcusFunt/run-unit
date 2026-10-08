@@ -47,6 +47,16 @@ func test_every_route_carries_player_facing_copy() -> void:
 		assert_false(RunUnitCampaign.get_completion(index).is_empty(), "Route %d needs a completion line for the results menu" % index)
 		assert_eq(RunUnitCampaign.get_runtime(index), expected_sites[index], "Route %d should identify its physical site" % index)
 
+func test_objectives_describe_the_world_instead_of_platformer_tasks() -> void:
+	var expected_objectives: Array[String] = [
+		"Find the lift's manual release.",
+		"Reach the opening in the outer wall.",
+		"A reserve cell is calling from Depot 03.",
+		"Bring the matching cell to Beacon 9.",
+	]
+	for index: int in expected_objectives.size():
+		assert_eq(RunUnitCampaign.get_objective(index), expected_objectives[index])
+
 func test_route_names_exist_in_the_storyline_sketch() -> void:
 	var storyline: String = _read_storyline()
 	if storyline.is_empty():

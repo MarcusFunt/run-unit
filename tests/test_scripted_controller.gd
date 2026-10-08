@@ -6,6 +6,7 @@ extends GutTest
 
 const LEVEL_SCENE: PackedScene = preload("res://scenes/levels/level_01_factory.tscn")
 const RECOVERY_SCENE: PackedScene = preload("res://scenes/levels/level_02_recovery.tscn")
+const BEACON_SCENE: PackedScene = preload("res://scenes/levels/level_03_beacon.tscn")
 const TUTORIAL_LEVEL_SCENE: PackedScene = preload("res://scenes/world.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 
@@ -201,6 +202,42 @@ func test_bot_jumps_from_the_recovery_return_landing_to_the_exit_deck() -> void:
 
 	assert_true(jumped[0], "The bot must spring from Recovery's second lower catch pad to the exit deck")
 	assert_gt(player.global_position.x, 12000.0, "The bot must clear the final raised deck; got x=%.1f" % player.global_position.x)
+
+
+func test_bot_clears_the_beacon_ascent_and_reaches_the_exit() -> void:
+	var world: RunUnitStaticWorld = BEACON_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var saw: RunUnitSawHazard = world.get_node_or_null("RotaryHazards/AscentSaw") as RunUnitSawHazard
+	assert_not_null(saw, "Beacon's final ascent includes its taught saw hazard")
+	if saw == null:
+		return
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	# Begin on the final middle landing, immediately before the saw and the next rise.
+	player.global_position = Vector2(13472.0, 192.0)
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+	controller.active = true
+	var health: RunUnitPlayerHealth = player.get_node("Health") as RunUnitPlayerHealth
+	var reached_exit: Array[bool] = [false]
+	world.route_completed.connect(func() -> void: reached_exit[0] = true)
+	for frame: int in range(1800):
+		await get_tree().physics_frame
+		if reached_exit[0]:
+			break
+		if health.current_health <= 0 or player.global_position.y > world.death_y + 20.0:
+			break
+	var diagnostics: String = "position=%s velocity=%s health=%d platform=%s plan=%s" % [
+		player.global_position,
+		player.velocity,
+		health.current_health,
+		world.get_platform_below_position(player.global_position),
+		controller._build_jump_plan(),
+	]
+	assert_true(reached_exit[0], "The scripted campaign must clear the Beacon ascent and reach the exit; " + diagnostics)
+	assert_eq(health.current_health, health.max_health, "The taught saw cannot become an unavoidable lethal blocker")
 
 
 func test_jump_charge_scales_with_landing_distance() -> void:

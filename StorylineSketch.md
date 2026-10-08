@@ -193,11 +193,11 @@ No reusable device mechanic is introduced.
 This is the moment when the larger mission becomes explicit. The cradle
 display changes to:
 
-> RESERVE CELL REMOVED // CRADLE EMPTY
+> Cell removed. The cradle is empty.
 
 The immediate objective becomes:
 
-> Carry the reserve cell to Beacon 9
+> Beacon 9 needs its reserve cell.
 
 The structure the player has already seen in the distance now becomes the final destination.
 
@@ -234,7 +234,7 @@ Level 3 begins outside with the module mounted on UNIT-07 and Beacon 9 dominatin
 
 A brief route objective reads:
 
-> Carry the reserve cell to Beacon 9
+> Bring the matching cell to Beacon 9.
 
 The game should not need a waypoint arrow. Beacon 9 itself is the waypoint.
 

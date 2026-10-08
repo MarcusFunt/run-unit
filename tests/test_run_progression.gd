@@ -4,6 +4,7 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 const GAME_SCENE: PackedScene = preload("res://scenes/game.tscn")
 const SCORE_MANAGER_SCRIPT: GDScript = preload("res://scripts/gameplay/score_manager.gd")
 const WORLD_SCENE: PackedScene = preload("res://scenes/world.tscn")
+const HUD_SCENE: PackedScene = preload("res://scenes/hud.tscn")
 
 
 func before_each() -> void:
@@ -46,6 +47,17 @@ func test_game_hud_length_matches_spawn_to_goal_traversal() -> void:
 	var expected_metres: float = absf(game.world.get_goal_position().x - game.world.get_spawn_position().x) / game.world.get_tile_size()
 
 	assert_eq(game.hud.score_progress_bar.max_value, expected_metres, "HUD progress should reach its maximum at the authored Goal")
+
+
+func test_hud_exposes_campaign_progress_alongside_sector_distance() -> void:
+	var hud: RunUnitHud = HUD_SCENE.instantiate() as RunUnitHud
+	add_child_autofree(hud)
+	hud.set_campaign_progress(2, RunUnitCampaign.route_count())
+
+	var journey_label: Label = hud.get_node_or_null("ScoreBar/Margin/Rows/Header/JourneyLabel") as Label
+	assert_not_null(journey_label, "Sector metres need a separate campaign position indicator")
+	if journey_label != null:
+		assert_eq(journey_label.text, "SECTOR 03 / 04")
 
 
 func test_completion_trigger_tracks_goal_when_world_is_transformed() -> void:
@@ -192,6 +204,8 @@ func test_demo_mode_retries_a_death_instead_of_stopping_on_the_results_menu() ->
 func test_demo_mode_gives_up_after_the_retry_limit() -> void:
 	var game: RunUnitGame = _demo_game_for(3)
 	game._demo_failures = game.DEMO_RETRY_LIMIT
+	assert_true(game.auto_quit_failed_demo, "A movie/demo process must not remain open on the terminal failure screen")
+	game.auto_quit_failed_demo = false
 
 	game._demo_recover_from_failure()
 

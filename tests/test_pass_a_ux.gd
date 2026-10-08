@@ -54,7 +54,8 @@ func test_health_cells_keep_their_outline_when_depleted() -> void:
 	hud.set_health(2, 3)
 	assert_true(last.visible, "A depleted cell should remain visible as an empty socket")
 	assert_lt(last.color.get_luminance(), lit.get_luminance())
-	assert_gt(hud.get_node("HealthFrame").size.x, 80.0)
+	assert_gt(hud.get_node("HealthFrame").size.x, 190.0, "Integrity has enough area to read during movement")
+	assert_gte(hud.get_node("HealthFrame/HealthTitle").get_theme_font_size("font_size"), 17, "The health count is a primary HUD item")
 
 func test_camera_stays_put_on_a_jump_and_tracks_a_drop_without_rebound() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor

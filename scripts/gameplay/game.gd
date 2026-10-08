@@ -2,6 +2,10 @@ class_name RunUnitGame
 extends Node2D
 
 @export var initial_seed: int = 0
+## A hands-off movie must close after exhausting its final-route retries instead
+## of recording a static failure menu forever. Tests can disable this to inspect
+## that menu without quitting the test process.
+@export var auto_quit_failed_demo: bool = true
 
 @onready var world: RunUnitStaticWorld = $World
 @onready var player: RunUnitPlayerMotor = $Player
@@ -33,6 +37,7 @@ var _bot_enabled: bool = false
 var _external_control: bool = false
 var _last_reward_distance: float = 0.0
 var _terminal_penalty_paid: bool = false
+var _pending_checkpoint_recovery: bool = false
 var _trace_sample_countdown: float = 0.0
 var _run_elapsed_seconds: float = 0.0
 var _full_route_attempt: bool = true
@@ -89,6 +94,7 @@ func _ready() -> void:
 	if not player.landed.is_connected(_on_player_landed):
 		player.landed.connect(_on_player_landed)
 	hud.set_level_length(world.get_traversal_length())
+	hud.set_campaign_progress(_selected_level_index, RunUnitCampaign.route_count())
 	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
 	hud.show_system_message(RunUnitCampaign.get_briefing(_selected_level_index), 2.4)
 	RunUnitAudio.set_ambience(_ambience_for_route(_selected_level_index))
@@ -176,6 +182,8 @@ func reset_run(run_seed: int) -> void:
 	if not world.world_metrics_updated.is_connected(_on_world_metrics_updated):
 		world.world_metrics_updated.connect(_on_world_metrics_updated)
 	world.reset(run_seed)
+	var resumed_distance: float = score_manager.record_position(resume_position.x)
+	world.set_progress(resumed_distance)
 	RunUnitSession.run_seed = run_seed
 	RunUnitSession.set_run_outcome("active")
 	_trace.begin(run_seed)
@@ -183,7 +191,8 @@ func reset_run(run_seed: int) -> void:
 	for node: Node in world.get_node("CheckpointStations").get_children():
 		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
 		if RunUnitSession.has_checkpoint(_selected_level_index) and station.checkpoint_position.x <= resume_position.x:
-			station.restore_active()
+			var is_resume_station: bool = station.checkpoint_position.is_equal_approx(resume_position)
+			station.restore_active(_pending_checkpoint_recovery and is_resume_station)
 	player.reset_motor()
 	(player.get_node("Camera2D") as RunUnitFollowCamera).snap_to_player()
 	player_health.reset_health()
@@ -192,9 +201,13 @@ func reset_run(run_seed: int) -> void:
 	hud.show()
 	if route_exit != null:
 		route_exit.reset_transition()
-	hud.set_scores(0.0, score_manager.best_distance)
+	hud.set_campaign_progress(_selected_level_index, RunUnitCampaign.route_count())
+	hud.set_scores(resumed_distance, score_manager.best_distance)
 	hud.set_health(player_health.current_health, player_health.max_health)
 	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
+	if _pending_checkpoint_recovery:
+		hud.show_system_message("Recovered at the last service marker.", 2.4)
+		_pending_checkpoint_recovery = false
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:
 	if is_terminal():
@@ -244,6 +257,7 @@ func _on_retry_requested() -> void:
 	reset_run(initial_seed)
 
 func _fail_run(reason: String = "unknown") -> void:
+	_pending_checkpoint_recovery = reason == "fell_below_route" and RunUnitSession.has_checkpoint(_selected_level_index)
 	RunUnitSession.record_playtest_event("death", {
 		"reason": reason,
 		"position": [player.global_position.x, player.global_position.y],
@@ -314,6 +328,9 @@ func _demo_recover_from_failure() -> void:
 		_load_next_route()
 		return
 	death_menu.open_with_scores(score_manager.distance, score_manager.best_distance)
+	if auto_quit_failed_demo:
+		push_error("Demo: final route failed after %d attempts; stopping the capture." % _demo_failures)
+		get_tree().call_deferred("quit", 1)
 
 func _has_next_route() -> bool:
 	return RunUnitCampaign.get_next_route_index(_selected_level_index) != _selected_level_index

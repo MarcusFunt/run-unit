@@ -40,12 +40,12 @@ var _interaction_charge_seconds: float = 0.0
 var _interaction_jump_was_held: bool = false
 
 const STAGE_COPY: Array[String] = [
-	"SOCKET CLAMPS // CURRENT PASSING",
-	"FLOOR CONDUITS // CURRENT RISING",
-	"IGNITION ROTOR // TURNING",
-	"INNER LENS // LIGHT RETURNING",
-	"BEACON SHAFT // LIGHT CARRIED UP",
-	"CITY GRID // DISTANT LIGHTS RETURN",
+	"The socket clamps take hold.",
+	"Current climbs through the floor.",
+	"The rotor begins to turn.",
+	"Light returns to the lens.",
+	"Beacon 9 shines above the roofline.",
+	"Lights return across the city.",
 ]
 const OBJECTIVE_COLOR := Color(1.0, 0.88, 0.38, 1.0)
 const SYSTEM_COLOR := Color(0.72, 1.0, 0.96, 1.0)
@@ -72,8 +72,9 @@ func reset_transition() -> void:
 	completion_banner.visible = false
 	activation_progress.value = 0.0
 	_sync_coupler_gauge()
-	coupler_prompt.text = "MATCHING CELL REQUIRED // COUPLER OFFLINE"
+	coupler_prompt.text = "The coupler is dark."
 	coupler_prompt.add_theme_color_override("font_color", OBJECTIVE_COLOR)
+	_configure_coupler_signifier()
 	for path: NodePath in stage_paths:
 		var stage: CanvasItem = get_node_or_null(path) as CanvasItem
 		if stage != null:
@@ -98,9 +99,10 @@ func begin_player_interaction(player: RunUnitPlayerMotor) -> void:
 		player.set_interaction_charge(0.0, false)
 	sequence_ui.visible = true
 	coupler_console.visible = true
+	_configure_coupler_signifier()
 	completion_banner.visible = false
-	activation_label.text = "COUPLER LOCK OPEN  //  SPRING PRESSURE REQUIRED"
-	coupler_prompt.text = "HOLD TO BUILD PRESSURE // RELEASE TO SEAT"
+	activation_label.text = "The coupler is open. Build pressure, then release."
+	coupler_prompt.text = "Hold to build pressure; release to seat."
 	coupler_prompt.add_theme_color_override("font_color", SYSTEM_COLOR)
 	activation_progress.value = 0.0
 	_sync_coupler_gauge()
@@ -122,8 +124,8 @@ func _process(delta: float) -> void:
 		var maximum: float = _interaction_player.max_charge_time if _interaction_player != null else 0.36
 		var ratio: float = clampf(_interaction_charge_seconds / maxf(maximum, 0.01), 0.0, 1.0)
 		activation_progress.value = ratio * 100.0
-		activation_label.text = "SPRING PRESSURE  //  %d%%" % int(round(ratio * 100.0))
-		coupler_prompt.text = "SPRING PRESSURE  //  %d%%" % int(round(ratio * 100.0))
+		activation_label.text = "Spring pressure  %d%%" % int(round(ratio * 100.0))
+		coupler_prompt.text = "Pressure  %d%%" % int(round(ratio * 100.0))
 		_sync_coupler_gauge()
 		if _interaction_player != null:
 			_interaction_player.set_interaction_charge(ratio, true)
@@ -145,8 +147,8 @@ func _process(delta: float) -> void:
 		else:
 			_interaction_charge_seconds = 0.0
 			activation_progress.value = 0.0
-			activation_label.text = "SEATING PRESSURE LOW  //  COUPLER STILL OPEN"
-			coupler_prompt.text = "PRESSURE LOW // KEEP THE COUPLER OPEN"
+			activation_label.text = "Pressure too low. The coupler stays open."
+			coupler_prompt.text = "Not enough pressure. Try again."
 			coupler_prompt.add_theme_color_override("font_color", OBJECTIVE_COLOR)
 			_sync_coupler_gauge()
 			_interaction_active = true
@@ -161,14 +163,29 @@ func begin_transition() -> void:
 	transition_started = true
 	sequence_ui.visible = true
 	coupler_console.visible = true
+	_configure_coupler_signifier()
 	completion_banner.visible = false
-	activation_label.text = "COUPLER CALIBRATION  //  ALIGNMENT"
+	activation_label.text = "The coupler is aligning."
 	activation_progress.value = 4.0
-	coupler_prompt.text = "ALIGNING COUPLER // PRESSURE REQUIRED"
+	coupler_prompt.text = "Build pressure to seat the cell."
 	coupler_prompt.add_theme_color_override("font_color", SYSTEM_COLOR)
 	_sync_coupler_gauge()
 	_focus_camera()
 	_start_activation_sequence()
+
+func _configure_coupler_signifier() -> void:
+	coupler_console.scale = Vector2.ONE * 1.08
+	var panel: Polygon2D = coupler_console.get_node("ConsolePanel") as Polygon2D
+	panel.polygon = PackedVector2Array([
+		Vector2(-144.0, -40.0), Vector2(144.0, -40.0),
+		Vector2(144.0, 40.0), Vector2(-144.0, 40.0),
+	])
+	coupler_prompt.position = Vector2(-140.0, -32.0)
+	coupler_prompt.size = Vector2(280.0, 34.0)
+	coupler_prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	coupler_prompt.add_theme_font_size_override("font_size", 17)
+	var track: Line2D = coupler_console.get_node("GaugeTrack") as Line2D
+	track.points = PackedVector2Array([Vector2(-120.0, 0.0), Vector2(120.0, 0.0)])
 
 func _start_activation_sequence() -> void:
 	_interaction_active = false
@@ -206,18 +223,18 @@ func _start_module_transfer() -> void:
 	transfer_module.rotation = -0.18
 	transfer_module.modulate = Color(1.0, 0.9, 0.48, 1.0)
 	transfer_module.visible = true
-	activation_label.text = "MODULE RELEASED  //  MAGNETIC CAPTURE"
+	activation_label.text = "The cell rises into the socket."
 	activation_progress.value = 12.0
-	coupler_prompt.text = "RESERVE CELL IN TRANSIT"
+	coupler_prompt.text = "The clamps draw it in."
 	_sync_coupler_gauge()
 func _lock_module() -> void:
 	transfer_module.visible = false
 	seated_module.visible = true
 	installed = true
 	module_installed.emit()
-	activation_label.text = "CLAMPS CLOSED  //  FIRST CURRENT"
+	activation_label.text = "The clamps close around the cell."
 	activation_progress.value = 22.0
-	coupler_prompt.text = "CLAMPS CLOSED // CURRENT RETURNING"
+	coupler_prompt.text = "Current returns to the shaft."
 	_sync_coupler_gauge()
 
 	socket_burst.restart()
@@ -254,9 +271,9 @@ func _light_stage(index: int) -> void:
 	_sync_coupler_gauge()
 	RunUnitAudio.play_event("beacon_stage", -12.0)
 func _declare_success() -> void:
-	activation_label.text = "BEACON 9 // LIGHT RETURNED"
+	activation_label.text = "Beacon 9 shines again."
 	activation_progress.value = 100.0
-	coupler_prompt.text = "BEACON 9 // LIGHT RETURNED"
+	coupler_prompt.text = "The city lights return."
 	_sync_coupler_gauge()
 	completion_banner.visible = true
 	completion_banner.modulate.a = 0.0
@@ -288,5 +305,5 @@ func _sync_coupler_gauge() -> void:
 	if coupler_fill == null or activation_progress == null:
 		return
 	var ratio: float = clampf(activation_progress.value / 100.0, 0.0, 1.0)
-	var end_x: float = lerpf(-78.0, 78.0, ratio)
-	coupler_fill.points = PackedVector2Array([Vector2(-78.0, 0.0), Vector2(end_x, 0.0)])
+	var end_x: float = lerpf(-118.0, 118.0, ratio)
+	coupler_fill.points = PackedVector2Array([Vector2(-118.0, 0.0), Vector2(end_x, 0.0)])

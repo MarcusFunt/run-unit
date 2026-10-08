@@ -34,7 +34,7 @@ fill_to = Vector2(1, 0.5)
 
 [node name="Level03Beacon" type="Node2D" unique_id=491449355]
 script = ExtResource("1_world")
-death_y = 1000.0
+death_y = 900.0
 
 [node name="Backdrop" type="Polygon2D" parent="." unique_id=1399132407]
 z_index = -30
@@ -159,10 +159,10 @@ hitstun_seconds = 0.12
 position = Vector2(12032, 535)
 collision_layer = 0
 script = ExtResource("12_rdtwr")
-cycle_seconds = 3.4
-active_seconds = 0.58
-phase_offset_seconds = 1.2
-warning_seconds = 0.72
+cycle_seconds = 4.1
+active_seconds = 0.62
+phase_offset_seconds = 0.85
+warning_seconds = 0.95
 lethal = false
 
 [node name="ServicePress" type="Area2D" parent="MechanicalHazards" unique_id=1270067704 instance=ExtResource("13_crusher")]
@@ -179,6 +179,12 @@ lethal = true
 
 [node name="RooftopSaw" type="Area2D" parent="RotaryHazards" unique_id=1152600235 instance=ExtResource("15_saw")]
 position = Vector2(3360, 417)
+collision_layer = 0
+script = ExtResource("14_aecln")
+lethal = true
+
+[node name="AscentSaw" type="Area2D" parent="RotaryHazards" instance=ExtResource("15_saw")]
+position = Vector2(14600, 156)
 collision_layer = 0
 script = ExtResource("14_aecln")
 lethal = true
@@ -578,11 +584,11 @@ offset_left = 40.0
 offset_top = 240.0
 offset_right = 480.0
 offset_bottom = 320.0
-theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.92)
-theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.55, 0.64, 0.66, 0.75)
+theme_override_font_sizes/font_size = 15
 text = "BEACON 9
-IGNITION CORE // DARK
-MATCHING ASSEMBLY DETECTED"
+THE SIGNAL IS DARK
+THE CELL FITS"
 horizontal_alignment = 1
 
 [node name="ClearanceTreatments" type="Node2D" parent="."]

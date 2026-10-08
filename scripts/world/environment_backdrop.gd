@@ -10,13 +10,24 @@ const INK := Color(0.008, 0.025, 0.036, 0.92)
 const PANEL := Color(0.025, 0.075, 0.09, 0.78)
 const STEEL := Color(0.075, 0.18, 0.20, 0.72)
 const CYAN := Color(0.28, 0.82, 0.84, 0.42)
-const CYAN_DIM := Color(0.12, 0.26, 0.29, 0.22)
+const CYAN_DIM := Color(0.09, 0.19, 0.22, 0.14)
 const STATUS_LAMP := Color(0.36, 0.58, 0.63, 0.30)
 const WINDOW := Color(0.18, 0.52, 0.58, 0.30)
+
+var _ambient_time: float = 0.0
+var _ambient_redraw_time: float = 0.0
 
 
 func _ready() -> void:
 	queue_redraw()
+
+
+func _process(delta: float) -> void:
+	_ambient_time += delta
+	_ambient_redraw_time += delta
+	if _ambient_redraw_time >= 0.1:
+		_ambient_redraw_time = 0.0
+		queue_redraw()
 
 
 func _draw() -> void:
@@ -154,6 +165,16 @@ func _draw_beacon() -> void:
 		draw_rect(Rect2(x + 42, 86, 220, 10), Color(0.09, 0.25, 0.27, 0.52), true)
 		if posmod(int(x / 360.0), 2) == 0:
 			_draw_light(Vector2(x + 72, 128), STATUS_LAMP)
+	# This band sits beneath the final ascent only. If UNIT-07 drops below the
+	# supported route, the warning colour and broken floor marks make the open
+	# shaft read as a fall boundary instead of more dark architecture.
+	draw_rect(Rect2(11840, 784, 2560, 88), Color(0.18, 0.025, 0.018, 0.62), true)
+	for x: float in range(11840, 14400, 80):
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(x, 872), Vector2(x + 22, 872),
+			Vector2(x + 80, 784), Vector2(x + 58, 784),
+		]), Color(1.0, 0.18, 0.035, 0.25))
+	draw_line(Vector2(11840, 784), Vector2(14400, 784), Color(1.0, 0.28, 0.08, 0.56), 6.0)
 	# Beacon 9's interior is an optical plant, not another service corridor.
 	# A vast receiving lens hangs over the socket and gives the destination a
 	# silhouette unlike the factory's repeated ribs and horizontal conduits.
@@ -239,8 +260,10 @@ func _draw_pipe(a: Vector2, b: Vector2, width: float, color: Color) -> void:
 
 
 func _draw_light(position: Vector2, color: Color, size: float = 14.0) -> void:
-	draw_rect(Rect2(position - Vector2(size * 0.8, size * 0.28), Vector2(size * 1.6, size * 0.56)), color, true)
-	draw_rect(Rect2(position - Vector2(size * 1.8, size * 0.55), Vector2(size * 3.6, size * 1.1)), Color(color.r, color.g, color.b, color.a * 0.12), true)
+	var pulse: float = 0.78 + 0.22 * (0.5 + 0.5 * sin(_ambient_time * 2.0 + position.x * 0.002))
+	var lamp_color: Color = Color(color.r, color.g, color.b, color.a * pulse)
+	draw_rect(Rect2(position - Vector2(size * 0.8, size * 0.28), Vector2(size * 1.6, size * 0.56)), lamp_color, true)
+	draw_rect(Rect2(position - Vector2(size * 1.8, size * 0.55), Vector2(size * 3.6, size * 1.1)), Color(color.r, color.g, color.b, color.a * pulse * 0.12), true)
 
 
 func _draw_fan(center: Vector2, radius: float, color: Color) -> void:
@@ -249,7 +272,9 @@ func _draw_fan(center: Vector2, radius: float, color: Color) -> void:
 	draw_circle(center, radius, Color(color.r, color.g, color.b, color.a * 0.24))
 	draw_arc(center, radius, 0.0, TAU, 24, color, maxf(radius * 0.07, 5.0))
 	draw_arc(center, radius * 0.72, 0.0, TAU, 20, Color(color.r, color.g, color.b, color.a * 0.72), maxf(radius * 0.04, 3.0))
-	for angle: float in [0.0, PI * 0.5, PI, PI * 1.5]:
+	var rotation: float = _ambient_time * 0.42
+	for blade: int in range(4):
+		var angle: float = rotation + float(blade) * PI * 0.5
 		var direction := Vector2(cos(angle), sin(angle))
 		draw_line(center + direction * radius * 0.18, center + direction * radius * 0.62, color, maxf(radius * 0.14, 6.0))
 	draw_circle(center, radius * 0.13, color)

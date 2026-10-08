@@ -13,6 +13,7 @@ var is_active: bool = false
 var _display: Node2D
 var _confirmation: Label
 var _confirmation_time: float = 0.0
+var _recovery_feedback_time: float = 0.0
 
 func _ready() -> void:
 	collision_layer = 0
@@ -27,7 +28,8 @@ func _ready() -> void:
 	_display.position = Vector2(0, 32)
 	add_child(_display)
 	_confirmation = Label.new()
-	_confirmation.text = "LAST SERVICE POSITION RECORDED"
+	_confirmation.name = "Confirmation"
+	_confirmation.text = "SERVICE MARKER ARMED"
 	_confirmation.position = Vector2(-122, -126)
 	_confirmation.add_theme_color_override("font_color", ONLINE)
 	_confirmation.add_theme_font_size_override("font_size", 14)
@@ -38,11 +40,15 @@ func _ready() -> void:
 func reset_level_state() -> void:
 	is_active = false
 	_confirmation_time = 0.0
+	_recovery_feedback_time = 0.0
+	_confirmation.text = "SERVICE MARKER ARMED"
 	_update_display()
 
-func restore_active() -> void:
+func restore_active(show_recovery_feedback: bool = false) -> void:
 	is_active = true
-	_confirmation_time = 0.0
+	_confirmation.text = "RECOVERED HERE" if show_recovery_feedback else "SERVICE MARKER ARMED"
+	_confirmation_time = 2.2 if show_recovery_feedback else 0.0
+	_recovery_feedback_time = 1.0 if show_recovery_feedback else 0.0
 	_update_display()
 
 func activate_for(player: RunUnitPlayerMotor) -> void:
@@ -50,6 +56,7 @@ func activate_for(player: RunUnitPlayerMotor) -> void:
 		return
 	is_active = true
 	_confirmation_time = 2.0
+	_confirmation.text = "SERVICE MARKER ARMED"
 	_update_display()
 	activated.emit(checkpoint_position)
 	if DisplayServer.get_name() != "headless":
@@ -65,11 +72,20 @@ func _process(delta: float) -> void:
 	if _confirmation_time > 0.0:
 		_confirmation_time = maxf(_confirmation_time - delta, 0.0)
 		_confirmation.visible = _confirmation_time > 0.0
+	if _recovery_feedback_time > 0.0:
+		_recovery_feedback_time = maxf(_recovery_feedback_time - delta, 0.0)
+		var pulse: float = 1.0 + 0.22 * sin((1.0 - _recovery_feedback_time) * TAU * 2.0)
+		(_display.get_node("WorkLight") as Polygon2D).scale = Vector2.ONE * pulse
+		(_display.get_node("WorkGlow") as Polygon2D).color = Color(0.26, 1.0, 0.92, 0.72)
+	else:
+		(_display.get_node("WorkLight") as Polygon2D).scale = Vector2.ONE
+		(_display.get_node("WorkGlow") as Polygon2D).color = Color(0.20, 0.85, 0.82, 0.48) if is_active else Color(0.08, 0.16, 0.18, 0.14)
 
 func _update_display() -> void:
 	if _display == null:
 		return
 	(_display.get_node("WorkLight") as Polygon2D).color = ONLINE if is_active else OFFLINE
+	(_display.get_node("WorkLight") as Polygon2D).scale = Vector2.ONE
 	(_display.get_node("WorkGlow") as Polygon2D).color = Color(0.20, 0.85, 0.82, 0.48) if is_active else Color(0.08, 0.16, 0.18, 0.14)
 	(_display.get_node("StatusScreen") as CanvasItem).modulate = ONLINE if is_active else OFFLINE
 	_confirmation.visible = _confirmation_time > 0.0

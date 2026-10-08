@@ -11,7 +11,7 @@ extends RefCounted
 const MOUNT_PARENT: String = "RobotVisual/BodyPivot"
 const MOUNT_NAME: StringName = &"MountedModule"
 const MOUNT_OFFSET: Vector2 = Vector2(165.0, -30.0)
-const MOUNT_SCALE: float = 4.4
+const MOUNT_SCALE: float = 5.0
 ## Used when the robot has no visual rig to hang the module on.
 const FALLBACK_OFFSET: Vector2 = Vector2(0.0, -40.0)
 

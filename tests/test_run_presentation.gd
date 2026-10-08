@@ -125,6 +125,39 @@ func test_failed_retry_reuses_game_and_restores_checkpoint() -> void:
 	assert_eq(game.player_health.current_health, game.player_health.max_health)
 
 
+func test_fall_retry_restores_checkpoint_distance_without_zero_flash() -> void:
+	var route_index: int = 3
+	var checkpoint: Vector2 = Vector2(12400.0, 417.0)
+	var game: RunUnitGame = await _spawn_game_for_test(route_index)
+	RunUnitSession.record_checkpoint(route_index, checkpoint)
+
+	game._fail_run("fell_below_route")
+	assert_true(get_tree().paused)
+	game.death_menu.restart_button.emit_signal("pressed")
+	await get_tree().process_frame
+
+	assert_almost_eq(game.player.global_position.x, checkpoint.x, 0.01)
+	assert_almost_eq(game.player.global_position.y, checkpoint.y, 2.0, "UNIT-07 remains at the saved service marker while settling onto it")
+	assert_eq(game.score_manager.distance, 382.0, "The restored sector meter is measured from the original Spawn")
+	assert_eq(game.player_health.current_health, game.player_health.max_health, "A void fall returns to service without charging integrity")
+	assert_true(game.hud.distance_label.text.contains("0382m"), "The checkpoint distance appears on the first resumed HUD frame")
+	var message: Label = game.hud.get_node_or_null("SystemMessage") as Label
+	assert_not_null(message)
+	if message != null:
+		assert_true(message.visible)
+		assert_true(message.text.contains("Recovered"), "The return explains that UNIT-07 was found at a service marker")
+	var stations: Node = game.world.get_node_or_null("CheckpointStations")
+	assert_not_null(stations)
+	if stations != null:
+		var restored: bool = false
+		for station_node: Node in stations.get_children():
+			var station: RunUnitCheckpointStation = station_node as RunUnitCheckpointStation
+			if station != null and station.checkpoint_position.is_equal_approx(checkpoint):
+				restored = station.is_active
+				assert_true(station.get_node("Confirmation").visible, "The saved station pulses when the robot returns")
+		assert_true(restored, "The physical checkpoint stays online after recovery")
+
+
 func test_completed_retry_redeploys_at_spawn_after_checkpoint_clear() -> void:
 	var route_index: int = 1
 	var checkpoint: Vector2 = Vector2(8000.0, 544.0)

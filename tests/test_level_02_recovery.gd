@@ -183,6 +183,13 @@ func test_level_02_has_the_expected_route() -> void:
 	assert_true(world.is_route_valid(), "Level 2 must produce a route from its Semantic layer")
 
 	var plan: Array[Dictionary] = world.get_current_plan()
+	var solid_plan: Array[Dictionary] = []
+	var optional_catwalk: Array[Dictionary] = []
+	for platform: Dictionary in plan:
+		if str(platform.get("surface_type", "solid")) == "one_way":
+			optional_catwalk.append(platform)
+		else:
+			solid_plan.append(platform)
 	var expected: Array[Array] = [
 		[0, 22, 12],     # factory breach ledge
 		[26, 40, 13],    # service catwalk
@@ -209,12 +216,20 @@ func test_level_02_has_the_expected_route() -> void:
 		[367, 369, 20],  # forgiving lower landing under the second jump gap
 		[370, 393, 18],  # final step-up into the route exit
 	]
-	assert_eq(plan.size(), expected.size(), "The post-pickup escape should include several low-risk traversal beats")
-	for index: int in range(mini(plan.size(), expected.size())):
-		var platform: Dictionary = plan[index]
+	assert_eq(solid_plan.size(), expected.size(), "The post-pickup escape should include several low-risk traversal beats")
+	for index: int in range(mini(solid_plan.size(), expected.size())):
+		var platform: Dictionary = solid_plan[index]
 		assert_eq(int(platform.get("start_x", -1)), int(expected[index][0]), "platform %d start" % (index + 1))
 		assert_eq(int(platform.get("end_x", -1)), int(expected[index][1]), "platform %d end" % (index + 1))
 		assert_eq(int(platform.get("height", -1)), int(expected[index][2]), "platform %d height" % (index + 1))
+	assert_eq(optional_catwalk.size(), 2, "The reserve-cell return gives the player two short optional jumps")
+	if optional_catwalk.size() == 2:
+		assert_eq(int(optional_catwalk[0].get("start_x", -1)), 254)
+		assert_eq(int(optional_catwalk[0].get("end_x", -1)), 263)
+		assert_eq(int(optional_catwalk[0].get("height", -1)), 16)
+		assert_eq(int(optional_catwalk[1].get("start_x", -1)), 268)
+		assert_eq(int(optional_catwalk[1].get("end_x", -1)), 277)
+		assert_eq(int(optional_catwalk[1].get("height", -1)), 16)
 
 
 func test_level_02_publishes_spawn_and_goal_markers() -> void:
@@ -310,7 +325,7 @@ func test_reaching_the_cradle_mounts_the_module_once() -> void:
 	assert_not_null(cradle.get_mounted_module(), "The module is mounted on UNIT-07")
 	assert_true(player.is_ancestor_of(cradle.get_mounted_module()), "The mounted module travels with the player")
 	assert_true(cradle.acquisition_readout.visible, "The facility names the target once the module is taken")
-	assert_true(cradle.acquisition_readout.text.contains("CRADLE EMPTY"), "The emptied cradle keeps its completed state")
+	assert_true(cradle.acquisition_readout.text.contains("cradle is empty"), "The emptied cradle keeps its completed state")
 
 
 func test_restarting_the_run_returns_the_module_to_its_cradle() -> void:
@@ -428,9 +443,9 @@ func test_pickup_changes_the_objective_and_keeps_the_existing_world_shutdown_rea
 	var objective_label: Label = game.hud.get_node_or_null("ObjectiveFrame/ObjectiveLabel") as Label
 	assert_not_null(objective_label)
 	if objective_label != null:
-		assert_eq(objective_label.text, "Carry the reserve cell to Beacon 9")
+		assert_eq(objective_label.text, "Beacon 9 needs its reserve cell.")
 	assert_true(acquisition_readout.visible, "The emptied cradle keeps a visible completed state")
-	assert_true(acquisition_readout.text.contains("CRADLE EMPTY"))
+	assert_true(acquisition_readout.text.contains("cradle is empty"))
 	assert_true(shutdown_lighting.visible, "Removing the module keeps the lighting response")
 	assert_true(lockdown_sign.visible, "Removing the module keeps the lockdown signage response")
 	get_tree().paused = false
