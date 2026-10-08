@@ -11,7 +11,7 @@ const PANEL := Color(0.025, 0.075, 0.09, 0.78)
 const STEEL := Color(0.075, 0.18, 0.20, 0.72)
 const CYAN := Color(0.28, 0.82, 0.84, 0.42)
 const CYAN_DIM := Color(0.12, 0.26, 0.29, 0.22)
-const AMBER := Color(1.0, 0.48, 0.15, 0.46)
+const STATUS_LAMP := Color(0.36, 0.58, 0.63, 0.30)
 const WINDOW := Color(0.18, 0.52, 0.58, 0.30)
 
 
@@ -40,7 +40,7 @@ func _draw_tutorial() -> void:
 		_draw_rib(x, 58, 430)
 		_draw_light(Vector2(x + 44, 186), CYAN)
 		if posmod(int(x / 320.0), 3) == 1:
-			_draw_light(Vector2(x + 76, 186), AMBER)
+			_draw_light(Vector2(x + 76, 186), STATUS_LAMP)
 	# A recessed service trench gives the lower half a second plane of depth.
 	draw_rect(Rect2(-128, 356, 2460, 150), INK, true)
 	for x: float in range(-96, 2305, 160):
@@ -53,7 +53,7 @@ func _draw_tutorial() -> void:
 	# Heavier framing toward the elevator makes the route endpoint read early.
 	_draw_rib(1870, 42, 470, 18.0)
 	_draw_rib(2040, 42, 470, 18.0)
-	draw_rect(Rect2(1870, 66, 170, 12), AMBER, true)
+	draw_rect(Rect2(1870, 66, 170, 12), STATUS_LAMP, true)
 
 
 func _draw_factory() -> void:
@@ -72,11 +72,11 @@ func _draw_factory() -> void:
 	for x: float in range(2920, 6080, 256):
 		draw_rect(Rect2(x, 188, 9, 410), STEEL, true)
 		if posmod(int(x / 256.0), 4) == 0:
-			_draw_light(Vector2(x + 22, 210), AMBER)
+			_draw_light(Vector2(x + 22, 210), STATUS_LAMP)
 	# Overhead crane rail breaks the repeating robot grid with a large landmark.
 	draw_rect(Rect2(3030, 92, 2780, 18), Color(0.08, 0.20, 0.22, 0.80), true)
 	draw_rect(Rect2(4100, 110, 230, 34), Color(0.13, 0.28, 0.29, 0.74), true)
-	draw_line(Vector2(4215, 144), Vector2(4215, 222), AMBER, 4.0)
+	draw_line(Vector2(4215, 144), Vector2(4215, 222), STATUS_LAMP, 4.0)
 	# The warehouse is long enough that a second recognisable shape is useful:
 	# a pair of extraction fans reads immediately even under voice-over cuts.
 	_draw_fan(Vector2(3490, 360), 92.0, Color(0.055, 0.15, 0.17, 0.52))
@@ -111,17 +111,17 @@ func _draw_recovery() -> void:
 		_draw_light(Vector2(x + 34, 246), CYAN)
 		# Three bars read like bay-number plaques without introducing tiny text.
 		for bar: int in range(3):
-			draw_rect(Rect2(x + 70 + bar * 14, 238, 8, 3 + bar * 2), AMBER, true)
+			draw_rect(Rect2(x + 70 + bar * 14, 238, 8, 3 + bar * 2), STATUS_LAMP, true)
 	# Break the five-screen-long depot repetition with two large mechanical
 	# landmarks. They remain deliberately dimmer than hazards and pickups.
 	_draw_fan(Vector2(6420, 430), 112.0, Color(0.055, 0.16, 0.18, 0.54))
 	_draw_tank(Rect2(7540, 300, 230, 430))
 	_draw_pipe(Vector2(7655, 300), Vector2(7655, 174), 9.0, STEEL)
-	# The recovered assembly uses steady amber, distinct from cyan walkable edges.
-	draw_rect(Rect2(8710, 190, 760, 540), Color(0.12, 0.072, 0.025, 0.27), true)
+	# The assembly's signal is saturated yellow; ordinary bay lights stay subdued.
+	draw_rect(Rect2(8710, 190, 760, 540), Color(0.11, 0.095, 0.035, 0.26), true)
 	for x: float in range(8780, 9450, 112):
-		draw_line(Vector2(x, 226), Vector2(x - 40, 700), Color(0.64, 0.36, 0.12, 0.12), 4.0)
-	_draw_light(Vector2(9184, 226), Color(1.0, 0.67, 0.29, 0.52), 26.0)
+		draw_line(Vector2(x, 226), Vector2(x - 40, 700), Color(0.62, 0.52, 0.18, 0.12), 4.0)
+	_draw_light(Vector2(9184, 226), Color(1.0, 0.88, 0.34, 0.76), 26.0)
 	# Re-emerge into the city after the depot.
 	for x: float in range(10060, 12900, 420):
 		_draw_city_pylon(x, 220, 550)
@@ -153,13 +153,68 @@ func _draw_beacon() -> void:
 		_draw_rib(x, -160, 1000, 20.0)
 		draw_rect(Rect2(x + 42, 86, 220, 10), Color(0.09, 0.25, 0.27, 0.52), true)
 		if posmod(int(x / 360.0), 2) == 0:
-			_draw_light(Vector2(x + 72, 128), AMBER)
-	# Ignition interior: vertical scale, dark ribs, and restrained energized strips.
-	for x: float in range(14220, 16320, 300):
-		draw_rect(Rect2(x, -520, 22, 1580), Color(0.08, 0.18, 0.20, 0.64), true)
-		draw_rect(Rect2(x + 22, -520, 4, 1580), CYAN_DIM, true)
-	for y: float in range(-260, 900, 220):
-		draw_rect(Rect2(14160, y, 2100, 8), Color(0.055, 0.14, 0.16, 0.42), true)
+			_draw_light(Vector2(x + 72, 128), STATUS_LAMP)
+	# Beacon 9's interior is an optical plant, not another service corridor.
+	# A vast receiving lens hangs over the socket and gives the destination a
+	# silhouette unlike the factory's repeated ribs and horizontal conduits.
+	_draw_beacon_lens(Vector2(15560.0, -310.0))
+
+
+func _draw_beacon_lens(center: Vector2) -> void:
+	var bronze_shadow: Color = Color(0.11, 0.065, 0.034, 0.78)
+	var bronze: Color = Color(0.40, 0.24, 0.10, 0.72)
+	var gold: Color = Color(0.88, 0.61, 0.27, 0.82)
+	var opal: Color = Color(1.0, 0.88, 0.60, 0.94)
+	var pale_green: Color = Color(0.53, 0.84, 0.64, 0.72)
+
+	# Faceted backing and nested focusing rings read at a distance as one large
+	# optical instrument. The dim brass surfaces stay behind the playable tiles.
+	draw_colored_polygon(PackedVector2Array([
+		center + Vector2(-520.0, -52.0),
+		center + Vector2(-374.0, -262.0),
+		center + Vector2(-142.0, -360.0),
+		center + Vector2(142.0, -360.0),
+		center + Vector2(374.0, -262.0),
+		center + Vector2(520.0, -52.0),
+		center + Vector2(374.0, 158.0),
+		center + Vector2(142.0, 256.0),
+		center + Vector2(-142.0, 256.0),
+		center + Vector2(-374.0, 158.0),
+	]), bronze_shadow)
+	_draw_ellipse(center, 520.0, 292.0, bronze, 17.0)
+	_draw_ellipse(center, 474.0, 264.0, gold, 5.0)
+	_draw_ellipse(center, 350.0, 196.0, bronze, 12.0)
+	_draw_ellipse(center, 306.0, 170.0, gold, 4.0)
+
+	# The radial vanes pull the eye inward to the dark focusing chamber.
+	for vane: int in range(16):
+		var angle: float = TAU * float(vane) / 16.0
+		var direction: Vector2 = Vector2(cos(angle), sin(angle))
+		var inner: Vector2 = center + Vector2(direction.x * 116.0, direction.y * 64.0)
+		var outer: Vector2 = center + Vector2(direction.x * 456.0, direction.y * 250.0)
+		draw_line(inner, outer, bronze if vane % 2 == 0 else pale_green, 7.0 if vane % 2 == 0 else 3.0)
+
+	draw_circle(center, 132.0, bronze_shadow)
+	draw_circle(center, 104.0, bronze)
+	draw_arc(center, 92.0, 0.0, TAU, 48, gold, 9.0)
+	draw_circle(center, 46.0, Color(0.22, 0.13, 0.06, 1.0))
+	draw_circle(center, 25.0, opal)
+	draw_circle(center, 10.0, pale_green)
+
+	# A narrow, warm light well descends from the suspended lens to the socket.
+	var socket_y: float = 96.0
+	draw_line(Vector2(center.x, center.y + 134.0), Vector2(center.x, socket_y), gold, 18.0)
+	draw_line(Vector2(center.x, center.y + 134.0), Vector2(center.x, socket_y), opal, 4.0)
+	for collar_y: float in [center.y + 164.0, center.y + 212.0, center.y + 260.0]:
+		draw_line(Vector2(center.x - 72.0, collar_y), Vector2(center.x + 72.0, collar_y), bronze, 8.0)
+
+
+func _draw_ellipse(center: Vector2, radius_x: float, radius_y: float, color: Color, width: float) -> void:
+	var points: PackedVector2Array = PackedVector2Array()
+	for step: int in range(65):
+		var angle: float = TAU * float(step) / 64.0
+		points.append(center + Vector2(cos(angle) * radius_x, sin(angle) * radius_y))
+	draw_polyline(points, color, width)
 
 
 func _draw_bay(x: float, y: float, width: float, height: float, lit: bool) -> void:
@@ -208,7 +263,7 @@ func _draw_tank(rect: Rect2) -> void:
 	draw_rect(Rect2(rect.position + Vector2(18, 42), Vector2(8, rect.size.y - 64)), edge, true)
 	for y: float in [rect.position.y + rect.size.y * 0.35, rect.position.y + rect.size.y * 0.68]:
 		draw_rect(Rect2(rect.position.x - 8, y, rect.size.x + 16, 7), edge, true)
-	_draw_light(rect.position + Vector2(rect.size.x * 0.5, 58), AMBER, 10.0)
+	_draw_light(rect.position + Vector2(rect.size.x * 0.5, 58), STATUS_LAMP, 10.0)
 
 
 func _draw_city_pylon(x: float, top: float, bottom: float) -> void:

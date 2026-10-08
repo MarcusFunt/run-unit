@@ -66,9 +66,9 @@ func test_failure_and_completion_results_have_distinct_visual_language() -> void
 	assert_ne(menu.outcome_eyebrow.text, failure_eyebrow, "Success and death need different status language")
 	assert_ne(menu.accent_bar.color, failure_accent, "Success and death need different accent colours")
 	assert_ne(menu.dimmer.color, failure_dimmer, "The full-screen treatment must read differently before the player reads a word")
-	assert_eq(menu.outcome_glyph.text, "CLEAR")
-	assert_eq(menu.outcome_eyebrow.text, "MISSION SUCCESS")
-	assert_eq(menu.title_label.text, "ROUTE COMPLETE")
+	assert_eq(menu.outcome_glyph.text, "ACTIVE")
+	assert_eq(menu.outcome_eyebrow.text, "UNIT-07 // OPERATIONAL")
+	assert_eq(menu.title_label.text, "SECTOR LOGGED")
 
 	menu.close()
 

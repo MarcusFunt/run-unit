@@ -159,7 +159,7 @@ hitstun_seconds = 0.12
 [node name="MechanicalHazards" type="Node2D" parent="." unique_id=175515604]
 
 [node name="DepotPress" type="Area2D" parent="MechanicalHazards" unique_id=638408370 instance=ExtResource("12_crusher")]
-position = Vector2(5744, 503)
+position = Vector2(6080, 599)
 collision_layer = 0
 script = ExtResource("11_lje12")
 cycle_seconds = 3.25
@@ -167,6 +167,16 @@ active_seconds = 0.65
 phase_offset_seconds = 1.65
 warning_seconds = 0.5
 lethal = true
+
+[node name="ReserveReturnPress" type="Area2D" parent="MechanicalHazards" instance=ExtResource("12_crusher")]
+position = Vector2(10880, 599)
+collision_layer = 0
+script = ExtResource("11_lje12")
+cycle_seconds = 3.6
+active_seconds = 0.55
+phase_offset_seconds = 2.05
+warning_seconds = 0.7
+lethal = false
 
 [node name="RotaryHazards" type="Node2D" parent="." unique_id=879766475]
 
@@ -177,6 +187,16 @@ script = ExtResource("13_3yqhi")
 lethal = true
 
 [node name="TimingHazards" type="Node2D" parent="." unique_id=340927819]
+
+[node name="ReserveReturnArc" type="Area2D" parent="TimingHazards" instance=ExtResource("10_hazard")]
+position = Vector2(9728, 640)
+collision_layer = 0
+script = ExtResource("9_cx2dx")
+cycle_seconds = 2.8
+active_seconds = 0.72
+phase_offset_seconds = 0.55
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
 
 [node name="VaultLaser" type="Area2D" parent="TimingHazards" unique_id=1032834483 instance=ExtResource("15_laser")]
 position = Vector2(8640, 334)
@@ -201,7 +221,7 @@ color = Color(0.02, 0.1, 0.12, 1)
 polygon = PackedVector2Array(-64, -48, 64, -48, 64, 36, -64, 36)
 
 [node name="ModulePreview" type="AnimatedSprite2D" parent="AssemblyMonitor" unique_id=2021294795]
-modulate = Color(1, 0.72, 0.35, 1)
+modulate = Color(1, 0.9, 0.48, 1)
 position = Vector2(-30, -6)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("4_module")
@@ -238,7 +258,7 @@ polygon = PackedVector2Array(-22, -30, -16, -30, -16, 30, -22, 30, -22, -30, 22,
 
 [node name="ObjectiveHalo" type="Polygon2D" parent="ModuleCradle" unique_id=388765078]
 z_index = -1
-color = Color(1, 0.58, 0.17, 0.19)
+color = Color(1, 0.86, 0.3, 0.28)
 polygon = PackedVector2Array(0, -58, 52, 8, 0, 70, -52, 8)
 
 [node name="ModuleName" type="Label" parent="ModuleCradle" unique_id=218821314]
@@ -246,12 +266,12 @@ offset_left = -150.0
 offset_top = -112.0
 offset_right = 220.0
 offset_bottom = -82.0
-theme_override_colors/font_color = Color(1, 0.78, 0.46, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
 theme_override_font_sizes/font_size = 14
 text = "IGNITION ASSEMBLY DETECTED"
 
 [node name="CradleModule" type="AnimatedSprite2D" parent="ModuleCradle" unique_id=862379264]
-modulate = Color(1, 0.72, 0.35, 1)
+modulate = Color(1, 0.9, 0.48, 1)
 position = Vector2(0, 8)
 scale = Vector2(1.6, 1.6)
 sprite_frames = ExtResource("4_module")
@@ -267,13 +287,13 @@ offset_right = 440.0
 offset_bottom = -136.0
 theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.95)
 theme_override_font_sizes/font_size = 14
-text = "IGNITION ASSEMBLY SECURED
-TARGET: BEACON 9"
+text = "RESERVE CELL REMOVED
+CRADLE EMPTY"
 
 [node name="ShutdownLighting" type="Polygon2D" parent="." unique_id=392021479]
 visible = false
 z_index = 7
-color = Color(0.9, 0.12, 0.08, 0.08)
+color = Color(0.05, 0.11, 0.13, 0.24)
 polygon = PackedVector2Array(8160, 96, 10032, 96, 10032, 1100, 8160, 1100)
 
 [node name="RecoverySigns" type="Node2D" parent="." unique_id=1482704076]
@@ -297,7 +317,7 @@ offset_left = -168.0
 offset_top = -34.0
 offset_right = 168.0
 offset_bottom = 34.0
-theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.95)
+theme_override_colors/font_color = Color(1, 0.9, 0.42, 0.98)
 theme_override_font_sizes/font_size = 16
 text = "CRITICAL REPLACEMENT ASSEMBLY
 RESERVE DEPOT 03"
@@ -327,6 +347,6 @@ position = Vector2(10000, 576)
 visible = false
 z_index = 7
 position = Vector2(7872, 432)
-theme_override_colors/font_color = Color(1, 0.46, 0.3, 0.98)
+theme_override_colors/font_color = Color(0.74, 0.94, 0.92, 0.96)
 theme_override_font_sizes/font_size = 16
-text = "RESERVE DEPOT LOCKDOWN // EXIT FACILITY"
+text = "CRADLE EMPTY // DEPOT SEAL ACTIVE"

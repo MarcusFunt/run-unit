@@ -102,13 +102,13 @@ func _show_route_briefing(level_index: int) -> void:
 	if not lock_reason.is_empty():
 		description.text += "\n\n%s" % lock_reason
 	var best_time: float = RunUnitSession.get_best_time(level_index)
-	length_label.text = "ROUTE LENGTH  //  %s" % RunUnitCampaign.get_runtime(level_index)
+	length_label.text = "SITE  //  %s" % RunUnitCampaign.get_runtime(level_index)
 	if RunUnitSession.is_route_completed(level_index):
-		campaign_state.text = "COMPLETE  //  BEST %d:%02d" % [floori(best_time / 60.0), int(best_time) % 60] if best_time > 0.0 else "COMPLETE  //  REPLAY AVAILABLE"
+		campaign_state.text = "ARCHIVED  //  RECORD %d:%02d" % [floori(best_time / 60.0), int(best_time) % 60] if best_time > 0.0 else "ARCHIVED  //  SITE ACCESS OPEN"
 	elif not lock_reason.is_empty():
-		campaign_state.text = "LOCKED  //  PREREQUISITE REQUIRED"
+		campaign_state.text = "SITE SEALED  //  RELAY CONDITION UNMET"
 	else:
-		campaign_state.text = "READY  //  AVAILABLE TO DEPLOY"
+		campaign_state.text = "COMMS  //  SITE LINK OPEN"
 
 func _on_deploy_pressed() -> void:
 	if not _is_route_available(_selected_index):
@@ -126,10 +126,10 @@ func _is_route_available(level_index: int) -> bool:
 
 func _get_route_button_text(level_index: int) -> String:
 	if RunUnitSession.is_route_completed(level_index):
-		return "%s  //  COMPLETE" % RunUnitCampaign.get_title(level_index)
+		return "%s  //  ARCHIVED" % RunUnitCampaign.get_title(level_index)
 	if _is_route_available(level_index):
-		return "%s  //  READY" % RunUnitCampaign.get_title(level_index)
-	return "%s  //  LOCKED" % RunUnitCampaign.get_title(level_index)
+		return "%s  //  OPEN" % RunUnitCampaign.get_title(level_index)
+	return "%s  //  SEALED" % RunUnitCampaign.get_title(level_index)
 
 func _get_route_tooltip(level_index: int) -> String:
 	var summary: String = RunUnitCampaign.get_summary(level_index)

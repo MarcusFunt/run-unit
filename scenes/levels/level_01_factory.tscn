@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/world/static_world.gd" id="1_world"]
 [ext_resource type="PackedScene" path="res://assets/tiled/levels/level_01_factory.tmj" id="2_level"]
-[ext_resource type="PackedScene" path="res://scenes/player_robot_visual.tscn" id="3_robot"]
+[ext_resource type="PackedScene" path="res://scenes/robot_storage_visual.tscn" id="3_robot"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/box.png" id="4_box"]
 [ext_resource type="Script" path="res://scripts/player/robot_visual.gd" id="4_pphmb"]
 [ext_resource type="Texture2D" path="res://assets/generated/converted/pzuh_objects/dooropen.png" id="5_door"]
@@ -411,6 +411,16 @@ phase_offset_seconds = 0.15
 knockback = Vector2(-180, -90)
 hitstun_seconds = 0.12
 
+[node name="WarehouseArc" type="Area2D" parent="ElectricalFaults" instance=ExtResource("6_hazard")]
+position = Vector2(5600, 704)
+collision_layer = 0
+script = ExtResource("8_yq5ek")
+cycle_seconds = 2.8
+active_seconds = 0.72
+phase_offset_seconds = 0.9
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
+
 [node name="ExteriorArc" type="Area2D" parent="ElectricalFaults" unique_id=1284980053 instance=ExtResource("6_hazard")]
 position = Vector2(7456, 640)
 collision_layer = 0
@@ -422,6 +432,16 @@ knockback = Vector2(-180, -90)
 hitstun_seconds = 0.12
 
 [node name="MechanicalHazards" type="Node2D" parent="." unique_id=916501760]
+
+[node name="StoragePress" type="Area2D" parent="MechanicalHazards" instance=ExtResource("8_crusher")]
+position = Vector2(4000, 663)
+collision_layer = 0
+script = ExtResource("10_rv8hf")
+cycle_seconds = 3.6
+active_seconds = 0.58
+phase_offset_seconds = 1.1
+warning_seconds = 0.72
+lethal = false
 
 [node name="ExteriorCrusher" type="Area2D" parent="MechanicalHazards" unique_id=2014462186 instance=ExtResource("8_crusher")]
 position = Vector2(8048, 631)

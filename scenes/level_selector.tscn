@@ -124,7 +124,7 @@ theme_override_constants/separation = 6
 [node name="Kicker" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
-text = "MISSION BRIEFING"
+text = "FIELD RECORD"
 
 [node name="SelectedSector" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 unique_name_in_owner = true
@@ -142,14 +142,14 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_font_sizes/font_size = 12
-text = "READY  //  AVAILABLE TO DEPLOY"
+text = "LINK ESTABLISHED  //  SYSTEM IDLE"
 
 [node name="LengthLabel" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.72, 0.77, 1)
 theme_override_font_sizes/font_size = 12
-text = "ROUTE LENGTH  //  SHORT"
+text = "SITE  //  CALIBRATION SHAFT"
 
 [node name="Description" type="Label" parent="Margin/Layout/Body/BriefingPanel/BriefingMargin/Briefing"]
 unique_name_in_owner = true
@@ -157,7 +157,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.69, 0.8, 0.81, 1)
 theme_override_font_sizes/font_size = 14
-text = "CALIBRATION SEQUENCE ACTIVE\nUNIT-07 clears the mobility, hop, spring-load, and clearance checks.\n\nTransfer lift 01 has faulted. Pass beneath the door to leave calibration."
+text = "TRANSFER LIFT 01 // DRIVE CURRENT LOST\nUNIT-07 remains inside the calibration shaft.\n\nA service lock still holds the lower door open."
 autowrap_mode = 2
 
 [node name="Footer" type="HBoxContainer" parent="Margin/Layout"]
@@ -175,11 +175,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.35, 0.55, 0.6, 1)
-text = "CLICK / ARROWS SELECT   ENTER / SPACE DEPLOY   ESC BACK"
+text = "← / → CHANGE RECORD   ENTER / SPACE OPEN   ESC BACK"
 horizontal_alignment = 1
 
 [node name="DeployButton" type="Button" parent="Margin/Layout/Footer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(176, 38)
 layout_mode = 2
-text = "DEPLOY  →"
+text = "OPEN SYSTEM  →"

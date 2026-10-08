@@ -74,7 +74,7 @@ theme_override_colors/font_color = Color(1, 0.28, 0.16, 1)
 theme_override_colors/font_outline_color = Color(0.02, 0.005, 0.008, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 36
-text = "FAIL"
+text = "OFFLINE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -87,7 +87,7 @@ alignment = 1
 unique_name_in_owner = true
 theme_override_colors/font_color = Color(1, 0.28, 0.16, 1)
 theme_override_font_sizes/font_size = 13
-text = "RUN TERMINATED"
+text = "SIGNAL LOST"
 
 [node name="TitleLabel" type="Label" parent="Overlay/Center/ResultPanel/Content/Header/HeaderCopy"]
 unique_name_in_owner = true
@@ -95,7 +95,7 @@ theme_override_colors/font_color = Color(0.96, 0.98, 0.98, 1)
 theme_override_colors/font_outline_color = Color(0.02, 0.008, 0.01, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 32
-text = "UNIT OFFLINE"
+text = "UNIT-07 // SIGNAL LOST"
 
 [node name="Rule" type="HSeparator" parent="Overlay/Center/ResultPanel/Content"]
 
@@ -104,7 +104,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 132)
 theme_override_colors/font_color = Color(0.79, 0.91, 0.9, 1)
 theme_override_font_sizes/font_size = 16
-text = "ROUTE TERMINATED"
+text = "CARRIER LOST"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -112,15 +112,15 @@ vertical_alignment = 1
 unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.5, 0.68, 0.68, 1)
 theme_override_font_sizes/font_size = 12
-text = "SYSTEM HALTED  //  R TO RETRY"
+text = "R  //  RESTORE LAST SERVICE MEMORY"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="Overlay/Center/ResultPanel/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
-text = "RETRY FROM CHECKPOINT"
+text = "REBOOT AT SERVICE NODE"
 
 [node name="MainMenuButton" type="Button" parent="Overlay/Center/ResultPanel/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
-text = "ABORT TO SECTOR SELECT"
+text = "RETURN TO TRANSIT BAY"

@@ -87,7 +87,7 @@ offset_right = 128.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(0.35, 0.94, 0.92, 1)
 theme_override_font_sizes/font_size = 14
-text = "01 // MOBILITY"
+text = "ACTUATOR BAY // SERIES 07"
 horizontal_alignment = 1
 
 [node name="LeftArrowIcon" type="Sprite2D" parent="TutorialSigns/MovementPrompt" unique_id=1424412115]
@@ -110,7 +110,7 @@ offset_right = 128.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 14
-text = "02 // HOP TEST"
+text = "SERVICE RAIL // DISCONTINUITY"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=1044708881]
@@ -120,7 +120,7 @@ offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.8, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "TAP"
+text = "GAP: 1.5 m"
 horizontal_alignment = 2
 
 [node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/JumpPrompt" unique_id=236289175]
@@ -138,7 +138,7 @@ offset_right = 138.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 14
-text = "03 // SPRING CHARGE"
+text = "TORSION SPRING // LOAD CELL"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=708288622]
@@ -148,7 +148,7 @@ offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.8, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "TAP / HOLD / RELEASE"
+text = "WHITE MARK // SPRING AT LIMIT"
 horizontal_alignment = 2
 
 [node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/ChargePrompt" unique_id=232359983]
@@ -166,7 +166,7 @@ offset_right = 104.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(0.35, 0.94, 0.92, 1)
 theme_override_font_sizes/font_size = 14
-text = "05 // CROUCH"
+text = "LOW SERVICE HATCH"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=356979288]
@@ -176,7 +176,7 @@ offset_right = 250.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.8, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "HOLD THROUGH THE GATE"
+text = "HATCH CLEARANCE // 102 mm"
 horizontal_alignment = 0
 
 [node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/CrouchPrompt" unique_id=1928777131]
@@ -195,7 +195,7 @@ offset_right = 136.0
 offset_bottom = -14.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 15
-text = "04 // FULL CHARGE"
+text = "ENERGY LOCK // SPRING AT LIMIT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -206,6 +206,6 @@ offset_right = 174.0
 offset_bottom = 12.0
 theme_override_colors/font_color = Color(0.78, 0.9, 0.9, 1)
 theme_override_font_sizes/font_size = 11
-text = "RELEASE WHEN THE LOCK GLOWS"
+text = "GREEN LOCK // STORED PRESSURE MAXIMUM"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -213,8 +213,8 @@ theme_override_colors/font_color = Color(0.45, 0.92, 0.95, 0.95)
 theme_override_colors/font_outline_color = Color(0.004, 0.04, 0.06, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 17
-text = "BEACON 9 ONLINE
-IGNITION ASSEMBLY RESTORED"
+text = "BEACON 9 // CURRENT FLOWING
+CITY GRID // LIGHT RETURNING"
 horizontal_alignment = 1
 
 [node name="ThanksLabel" type="Label" parent="UI"]
@@ -228,7 +228,7 @@ theme_override_colors/font_color = Color(1, 0.74, 0.38, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.02, 0.01, 1)
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 40
-text = "THANK YOU FOR PLAYING"
+text = "THE CITY LIGHTS RETURN"
 horizontal_alignment = 1
 
 [node name="Buttons" type="PanelContainer" parent="UI"]

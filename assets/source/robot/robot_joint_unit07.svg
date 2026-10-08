@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
+  <!-- Pivot: 27,27. -->
+  <circle cx="27" cy="27" r="26" fill="#252727"/>
+  <circle cx="27" cy="27" r="22" fill="#3D3D3A"/>
+  <circle cx="27" cy="27" r="17" fill="#B9A783"/>
+  <circle cx="27" cy="27" r="12" fill="#676155"/>
+  <circle cx="27" cy="27" r="6" fill="#282929"/>
+  <path d="M27 11 V16 M43 27 H38 M27 43 V38 M11 27 H16" stroke="#E4D1A9" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+</svg>

@@ -1,13 +1,13 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/robot_visual.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/source/robot/robot_body_unit07.svg" id="2_body"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_body.svg" id="2_body"]
 [ext_resource type="Texture2D" path="res://assets/source/robot/robot_eye.svg" id="3_eye"]
 [ext_resource type="Texture2D" path="res://assets/source/robot/robot_antenna.svg" id="4_antenna"]
-[ext_resource type="Texture2D" path="res://assets/source/robot/robot_upper_link_unit07.svg" id="5_upper"]
-[ext_resource type="Texture2D" path="res://assets/source/robot/robot_lower_link_unit07.svg" id="6_lower"]
-[ext_resource type="Texture2D" path="res://assets/source/robot/robot_joint_unit07.svg" id="7_joint"]
-[ext_resource type="Texture2D" path="res://assets/source/robot/robot_wheel_unit07.svg" id="8_wheel"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_upper_link.svg" id="5_upper"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_lower_link.svg" id="6_lower"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_joint.svg" id="7_joint"]
+[ext_resource type="Texture2D" path="res://assets/source/robot/robot_wheel.svg" id="8_wheel"]
 
 [node name="RobotVisual" type="Node2D"]
 script = ExtResource("1_script")

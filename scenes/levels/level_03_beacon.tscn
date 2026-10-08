@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/clearance_gate_visual.tscn" id="17_clearance_gate"]
 
 [sub_resource type="Gradient" id="IgnitionSparkGradient"]
-colors = PackedColorArray(0.8, 1, 1, 1, 0.25, 0.85, 1, 0)
+colors = PackedColorArray(1, 0.88, 0.58, 1, 1, 0.48, 0.16, 0)
 
 [sub_resource type="GradientTexture2D" id="IgnitionSparkTexture"]
 gradient = SubResource("IgnitionSparkGradient")
@@ -155,6 +155,16 @@ hitstun_seconds = 0.12
 
 [node name="MechanicalHazards" type="Node2D" parent="." unique_id=1029278444]
 
+[node name="AscentPress" type="Area2D" parent="MechanicalHazards" instance=ExtResource("13_crusher")]
+position = Vector2(12032, 535)
+collision_layer = 0
+script = ExtResource("12_rdtwr")
+cycle_seconds = 3.4
+active_seconds = 0.58
+phase_offset_seconds = 1.2
+warning_seconds = 0.72
+lethal = false
+
 [node name="ServicePress" type="Area2D" parent="MechanicalHazards" unique_id=1270067704 instance=ExtResource("13_crusher")]
 position = Vector2(6080, 503)
 collision_layer = 0
@@ -175,8 +185,18 @@ lethal = true
 
 [node name="TimingHazards" type="Node2D" parent="." unique_id=574047067]
 
+[node name="AscentArc" type="Area2D" parent="TimingHazards" instance=ExtResource("11_hazard")]
+position = Vector2(12512, 480)
+collision_layer = 0
+script = ExtResource("10_jxhdl")
+cycle_seconds = 2.9
+active_seconds = 0.72
+phase_offset_seconds = 1.85
+knockback = Vector2(-180, -90)
+hitstun_seconds = 0.12
+
 [node name="BeaconLaser" type="Area2D" parent="TimingHazards" unique_id=790892252 instance=ExtResource("16_laser")]
-position = Vector2(12480, 398)
+position = Vector2(12848, 334)
 collision_layer = 0
 script = ExtResource("16_4al5p")
 cycle_seconds = 2.9
@@ -190,7 +210,7 @@ script = ExtResource("3_carried")
 
 [node name="ModuleTemplate" type="AnimatedSprite2D" parent="CarriedModule" unique_id=1173072084]
 visible = false
-modulate = Color(1, 0.72, 0.35, 1)
+modulate = Color(1, 0.9, 0.48, 1)
 scale = Vector2(1.6, 1.6)
 sprite_frames = ExtResource("6_module")
 animation = &"palette_0"
@@ -237,9 +257,41 @@ polygon = PackedVector2Array(-20, -34, 20, -34, 20, -78, -20, -78)
 color = Color(0.12, 0.28, 0.33, 1)
 polygon = PackedVector2Array(-26, -78, -18, -78, -18, -34, -26, -34, -26, -78, 26, -78, 26, -34, 18, -34, 18, -78)
 
+[node name="CouplerConsole" type="Node2D" parent="IgnitionChamber" unique_id=1573908821]
+visible = true
+z_index = 9
+position = Vector2(-145, -56)
+
+[node name="ConsolePanel" type="Polygon2D" parent="IgnitionChamber/CouplerConsole" unique_id=1661765134]
+color = Color(0.015, 0.06, 0.075, 0.96)
+polygon = PackedVector2Array(-104, -36, 104, -36, 104, 36, -104, 36)
+
+[node name="Prompt" type="Label" parent="IgnitionChamber/CouplerConsole" unique_id=1140192983]
+offset_left = -98.0
+offset_top = -29.0
+offset_right = 98.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0.72, 1, 0.96, 1)
+theme_override_font_sizes/font_size = 13
+text = "HOLD TO BUILD PRESSURE // RELEASE TO SEAT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GaugeTrack" type="Line2D" parent="IgnitionChamber/CouplerConsole" unique_id=1581966470]
+position = Vector2(0, 12)
+points = PackedVector2Array(-80, 0, 80, 0)
+width = 8.0
+default_color = Color(0.08, 0.24, 0.27, 1)
+
+[node name="GaugeFill" type="Line2D" parent="IgnitionChamber/CouplerConsole" unique_id=1268361100]
+position = Vector2(0, 12)
+points = PackedVector2Array(-78, 0, -76, 0)
+width = 4.0
+default_color = Color(0.32, 0.94, 0.91, 1)
+
 [node name="SeatedModule" type="Sprite2D" parent="IgnitionChamber" unique_id=865409959]
 visible = false
-modulate = Color(1, 0.72, 0.35, 1)
+modulate = Color(1, 0.9, 0.48, 1)
 z_index = 3
 position = Vector2(0, -56)
 scale = Vector2(1.7, 1.7)
@@ -250,7 +302,7 @@ frame = 3
 
 [node name="TransferModule" type="Sprite2D" parent="IgnitionChamber" unique_id=1082365189]
 visible = false
-modulate = Color(1, 0.72, 0.35, 1)
+modulate = Color(1, 0.9, 0.48, 1)
 z_index = 8
 texture = ExtResource("6_module")
 hframes = 10
@@ -281,12 +333,13 @@ color = Color(0.72, 0.97, 1, 1)
 visible = false
 z_index = 6
 position = Vector2(0, -56)
-color = Color(0.38, 0.9, 1, 0.3)
+color = Color(1, 0.68, 0.25, 0.3)
 polygon = PackedVector2Array(-72, -72, 72, -72, 72, 72, -72, 72)
 
 [node name="Stage1Interface" type="Node2D" parent="IgnitionChamber" unique_id=818463806]
 visible = false
 z_index = 2
+self_modulate = Color(1, 0.78, 0.46, 1)
 
 [node name="SocketGlow" type="Polygon2D" parent="IgnitionChamber/Stage1Interface" unique_id=502101957]
 color = Color(0.45, 0.9, 1, 0.42)
@@ -295,6 +348,7 @@ polygon = PackedVector2Array(-42, -2, 42, -2, 32, -96, -32, -96)
 [node name="Stage2Conduits" type="Node2D" parent="IgnitionChamber" unique_id=461994347]
 visible = false
 z_index = 2
+self_modulate = Color(1, 0.82, 0.54, 1)
 
 [node name="FloorRunLeft" type="Polygon2D" parent="IgnitionChamber/Stage2Conduits" unique_id=1265847917]
 color = Color(0.4, 0.85, 0.95, 0.5)
@@ -315,6 +369,7 @@ polygon = PackedVector2Array(422, -10, 430, -10, 430, -150, 422, -150)
 [node name="Stage3Chamber" type="Node2D" parent="IgnitionChamber" unique_id=1031893541]
 visible = false
 z_index = 2
+self_modulate = Color(1, 0.88, 0.60, 1)
 
 [node name="AssemblyLight" type="Polygon2D" parent="IgnitionChamber/Stage3Chamber" unique_id=727793376]
 color = Color(0.35, 0.8, 0.92, 0.16)
@@ -331,6 +386,7 @@ polygon = PackedVector2Array(-108, -116, 108, -116, 108, -108, -108, -108)
 [node name="Stage4Interior" type="Node2D" parent="IgnitionChamber" unique_id=1527692013]
 visible = false
 z_index = 2
+self_modulate = Color(1, 0.78, 0.48, 1)
 
 [node name="CorridorSpill" type="Polygon2D" parent="IgnitionChamber/Stage4Interior" unique_id=902076314]
 polygon = PackedVector2Array(-1460, -170, -120, -170, -120, -2, -1460, -2)
@@ -339,6 +395,7 @@ vertex_colors = PackedColorArray(0.3, 0.75, 0.88, 0, 0.3, 0.75, 0.88, 0.3, 0.3, 
 [node name="Stage5Column" type="Node2D" parent="IgnitionChamber" unique_id=1906463448]
 visible = false
 z_index = 2
+self_modulate = Color(1, 0.76, 0.42, 1)
 
 [node name="ColumnCore" type="Polygon2D" parent="IgnitionChamber/Stage5Column" unique_id=1895363060]
 color = Color(0.72, 0.96, 1, 0.85)
@@ -351,6 +408,7 @@ polygon = PackedVector2Array(-54, -1200, 54, -1200, 54, 840, -54, 840)
 [node name="Stage6City" type="Node2D" parent="IgnitionChamber" unique_id=676053478]
 visible = false
 z_index = 3
+self_modulate = Color(1, 0.82, 0.56, 1)
 
 [node name="Light01" type="Polygon2D" parent="IgnitionChamber/Stage6City" unique_id=2141978456]
 color = Color(0.45, 0.9, 1, 0.71)
@@ -440,9 +498,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.4, 0.92, 1, 0)
+color = Color(1, 0.72, 0.34, 0)
 
 [node name="StatusPlate" type="ColorRect" parent="IgnitionChamber/SequenceUI" unique_id=1330507687]
+visible = false
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 72.0
@@ -453,20 +512,22 @@ color = Color(0.005, 0.035, 0.05, 0.88)
 
 [node name="ActivationLabel" type="Label" parent="IgnitionChamber/SequenceUI" unique_id=397570983]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 84.0
 offset_bottom = 112.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.58, 0.96, 1, 1)
+theme_override_colors/font_color = Color(1, 0.81, 0.47, 1)
 theme_override_colors/font_outline_color = Color(0, 0.02, 0.03, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 16
-text = "IGNITION SEQUENCE  //  MODULE ALIGNMENT"
+text = "COUPLER CALIBRATION  //  ALIGNMENT"
 horizontal_alignment = 1
 
 [node name="ActivationProgress" type="ProgressBar" parent="IgnitionChamber/SequenceUI" unique_id=1622416451]
 unique_name_in_owner = true
+visible = false
 anchors_preset = -1
 anchor_left = 0.18
 anchor_right = 0.82
@@ -495,7 +556,7 @@ theme_override_colors/font_color = Color(0.72, 1, 0.88, 1)
 theme_override_colors/font_outline_color = Color(0, 0.055, 0.045, 1)
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 42
-text = "BEACON 9 ONLINE"
+text = "CITY GRID // POWER RETURNING"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -520,8 +581,8 @@ offset_bottom = 320.0
 theme_override_colors/font_color = Color(1, 0.62, 0.22, 0.92)
 theme_override_font_sizes/font_size = 13
 text = "BEACON 9
-IGNITION ASSEMBLY OFFLINE
-REPLACEMENT DETECTED"
+IGNITION CORE // DARK
+MATCHING ASSEMBLY DETECTED"
 horizontal_alignment = 1
 
 [node name="ClearanceTreatments" type="Node2D" parent="."]

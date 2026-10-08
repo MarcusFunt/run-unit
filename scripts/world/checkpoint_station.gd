@@ -5,7 +5,7 @@ signal activated(position: Vector2)
 
 const DISPLAY_SCENE: PackedScene = preload("res://scenes/props/maintenance_station.tscn")
 const CONFIRM_SOUND: AudioStream = preload("res://assets/audio/kenney/land_metal.ogg")
-const OFFLINE := Color(0.9, 0.44, 0.13, 0.8)
+const OFFLINE := Color(0.22, 0.34, 0.39, 0.92)
 const ONLINE := Color(0.28, 0.96, 0.92, 1.0)
 
 var checkpoint_position: Vector2
@@ -27,7 +27,7 @@ func _ready() -> void:
 	_display.position = Vector2(0, 32)
 	add_child(_display)
 	_confirmation = Label.new()
-	_confirmation.text = "RECOVERY NODE REGISTERED"
+	_confirmation.text = "LAST SERVICE POSITION RECORDED"
 	_confirmation.position = Vector2(-122, -126)
 	_confirmation.add_theme_color_override("font_color", ONLINE)
 	_confirmation.add_theme_font_size_override("font_size", 14)
@@ -70,7 +70,7 @@ func _update_display() -> void:
 	if _display == null:
 		return
 	(_display.get_node("WorkLight") as Polygon2D).color = ONLINE if is_active else OFFLINE
-	(_display.get_node("WorkGlow") as Polygon2D).color = Color(0.20, 0.85, 0.82, 0.18) if is_active else Color(0.9, 0.36, 0.08, 0.08)
+	(_display.get_node("WorkGlow") as Polygon2D).color = Color(0.20, 0.85, 0.82, 0.48) if is_active else Color(0.08, 0.16, 0.18, 0.14)
 	(_display.get_node("StatusScreen") as CanvasItem).modulate = ONLINE if is_active else OFFLINE
 	_confirmation.visible = _confirmation_time > 0.0
 

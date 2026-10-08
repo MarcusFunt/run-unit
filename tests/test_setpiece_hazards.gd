@@ -2,6 +2,8 @@ extends GutTest
 
 const SAW_SCENE: PackedScene = preload("res://scenes/hazards/saw.tscn")
 const LASER_SCENE: PackedScene = preload("res://scenes/hazards/laser_gate.tscn")
+const FLOOR_ARC_SCENE: PackedScene = preload("res://scenes/hazards/electric_floor_arc.tscn")
+const CRUSHER_SCENE: PackedScene = preload("res://scenes/hazards/crusher.tscn")
 const FACTORY_SCENE: PackedScene = preload("res://scenes/levels/level_01_factory.tscn")
 const RECOVERY_SCENE: PackedScene = preload("res://scenes/levels/level_02_recovery.tscn")
 const BEACON_SCENE: PackedScene = preload("res://scenes/levels/level_03_beacon.tscn")
@@ -55,3 +57,20 @@ func test_later_routes_gain_distinct_hazard_setpieces() -> void:
 	add_child_autofree(beacon)
 	assert_not_null(beacon.get_node_or_null("RotaryHazards/RooftopSaw"))
 	assert_not_null(beacon.get_node_or_null("TimingHazards/BeaconLaser"))
+
+func test_floor_arc_and_crusher_share_a_bold_danger_band() -> void:
+	var floor_arc: RunUnitTimedHazard = FLOOR_ARC_SCENE.instantiate() as RunUnitTimedHazard
+	add_child_autofree(floor_arc)
+	var plate: Polygon2D = floor_arc.get_node_or_null("WarningPlate") as Polygon2D
+	assert_not_null(plate, "The floor arc keeps a persistent warning plate while inactive")
+	assert_not_null(floor_arc.get_node_or_null("DangerBand"), "Floor arcs use the shared high-contrast hazard marking")
+	if plate != null:
+		assert_gt(plate.polygon.size(), 4, "The plate silhouette reads as a hazard rather than thin trim")
+
+	var crusher: RunUnitTimedHazard = CRUSHER_SCENE.instantiate() as RunUnitTimedHazard
+	add_child_autofree(crusher)
+	assert_not_null(crusher.get_node_or_null("PistonAssembly/DangerBand"), "The crusher face carries a broad hazard marking")
+	assert_not_null(crusher.get_node_or_null("WarningVisual/Lamp"), "The crusher keeps a visible amber approach warning")
+	assert_not_null(crusher.get_node_or_null("RestLimit"), "A fixed mark shows where the ram waits")
+	assert_not_null(crusher.get_node_or_null("StrikeLimit"), "A fixed mark shows the bottom of its sweep")
+	assert_not_null(crusher.get_node_or_null("SweptChannel"), "The full danger travel path remains visible before movement")

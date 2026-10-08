@@ -139,12 +139,16 @@ func test_level_01_has_the_expected_route() -> void:
 		[135, 149, 23],  # hanging crate load (crouch gate)
 		[153, 164, 20],  # tall rack (charged climb)
 		[170, 183, 22],
-		[187, 221, 21],  # breach runway continues onto the exterior catwalk
+		[187, 197, 21],  # short approach to the exterior service seam
+		[198, 200, 22],  # lower catch before the next raised section
+		[201, 210, 21],  # raised service beat
+		[211, 213, 22],  # second catch ledge breaks up the rooftop run
+		[214, 221, 21],
 		[225, 239, 20],  # raised service span
 		[243, 254, 22],  # lower maintenance span
 		[258, 269, 19],  # charged escape leap onto the final approach
 	]
-	assert_eq(plan.size(), expected.size(), "Level 1 should keep its fourteen authored platform beats")
+	assert_eq(plan.size(), expected.size(), "The exterior runway should break into short, readable traversal beats")
 	for index: int in range(mini(plan.size(), expected.size())):
 		var platform: Dictionary = plan[index]
 		assert_eq(int(platform.get("start_x", -1)), int(expected[index][0]), "platform %d start" % (index + 1))
@@ -347,14 +351,14 @@ func test_completing_level_1_starts_the_portal_handoff() -> void:
 		assert_eq(game.route_exit.next_scene_path, "res://scenes/game.tscn")
 
 
-func test_factory_escape_adds_two_readable_timed_floor_faults() -> void:
+func test_factory_escape_uses_three_spaced_readable_timed_floor_faults() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var faults: Node = world.get_node_or_null("ElectricalFaults")
 	assert_not_null(faults)
 	if faults == null:
 		return
-	assert_eq(faults.get_child_count(), 2, "Factory Escape should introduce the timed hazard language sparingly")
-	var expected: Array[Vector2] = [Vector2(1200, 448), Vector2(7456, 640)]
+	assert_eq(faults.get_child_count(), 3, "Factory Escape spaces its timed hazards across the route")
+	var expected: Array[Vector2] = [Vector2(1200, 448), Vector2(5600, 704), Vector2(7456, 640)]
 	for index: int in range(expected.size()):
 		var hazard: RunUnitTimedHazard = faults.get_child(index) as RunUnitTimedHazard
 		assert_not_null(hazard)

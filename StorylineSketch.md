@@ -190,13 +190,14 @@ UNIT-07 reaches the storage cradle and removes the replacement ignition module. 
 
 No reusable device mechanic is introduced.
 
-This is the moment when the larger mission becomes explicit. The facility identifies the required target:
+This is the moment when the larger mission becomes explicit. The cradle
+display changes to:
 
-> IGNITION ASSEMBLY SECURED
+> RESERVE CELL REMOVED // CRADLE EMPTY
 
-The immediate objective changes to:
+The immediate objective becomes:
 
-> EXIT FACILITY // DELIVER ASSEMBLY
+> Carry the reserve cell to Beacon 9
 
 The structure the player has already seen in the distance now becomes the final destination.
 
@@ -204,7 +205,7 @@ The structure the player has already seen in the distance now becomes the final 
 
 Removing the module changes the reserve facility's state. Emergency lighting, shutters, or other systems may react because the protected reserve component has been removed, but **the module itself has still not been used**.
 
-UNIT-07 leaves by a direct emergency service deck rather than replaying the descent, vault approach, and charged-climb course. The exit run is calm and brief, with no further jump chain.
+UNIT-07 leaves by a direct emergency service deck rather than replaying the descent, vault approach, and charged-climb course. The return crosses a low-risk electrical strip and a slow reserve ram, with broad safe ground between each timing beat.
 
 The level ends outside with Beacon 9 visible and the module mounted to UNIT-07.
 
@@ -231,11 +232,9 @@ Target first-play time: roughly **8–11 minutes**.
 
 Level 3 begins outside with the module mounted on UNIT-07 and Beacon 9 dominating the skyline.
 
-A minimal system message can confirm the objective:
+A brief route objective reads:
 
-> BEACON 9  
-> IGNITION ASSEMBLY OFFLINE  
-> REPLACEMENT DETECTED
+> Carry the reserve cell to Beacon 9
 
 The game should not need a waypoint arrow. Beacon 9 itself is the waypoint.
 
@@ -269,27 +268,30 @@ This is the main platforming climax of the game. The ascent should be composed o
 
 - support truss traversal using mostly ordinary jumps,
 - maintenance gantries combining ordinary and charged jumps,
-- final ignition-access platforms containing the hardest but still fair charged-jump sequence.
+- a warning-marked service press on the lower approach,
+- a checkpoint on the broad upper landing,
+- an electrical strip on the next step and a timed light barrier above it.
 
 Difficulty comes from longer combinations of mastered actions, not from pushing every jump to the movement system's theoretical limit.
+Let the player read the press and arc before each jump, then leave a landing between the electrical strip and the beam.
 
 ### 7. Beacon interior
 
-After the exterior ascent, the game becomes quiet again. UNIT-07 enters Beacon 9 through maintenance corridors and dormant machinery.
+After the exterior ascent, the room becomes quiet again. UNIT-07 enters Beacon 9 beneath its enormous suspended receiving lens and the dark light well leading to the socket.
 
-The enclosed geometry intentionally echoes the tutorial, but the narrative relationship is reversed: UNIT-07 is no longer being processed by a machine; it has arrived to repair one.
+Bronze, opal, and pale green optical machinery make the interior a landmark unlike the factory's blue steel ribs. UNIT-07 is no longer being processed by a machine; it has arrived to repair one.
 
-Platforming here should be easy.
+Movement here should be easy. The chamber should feel like an enormous optical plant: a suspended receiving lens, bronze and opal vanes, and a warm light well aligned with the ignition socket. It must read differently from the blue steel rooms left behind.
 
 ### 8. Ignition chamber
 
 The final chamber contains the failed ignition assembly and one obvious interface that matches the module UNIT-07 has carried since Level 2.
 
-The approach contains little or no danger. The player should understand what needs to happen before a prompt appears.
+The approach contains little or no danger. The coupler console identifies the matching cell before UNIT-07 reaches it; at the interface it shows the pressure and release sequence on the machine itself.
 
 ### 9. Final installation — the module's only use
 
-UNIT-07 removes the module and installs it into Beacon 9 only after holding the familiar jump action to full charge and releasing it. An early release leaves the assembly safe and lets the player try again; the multi-stage installation and world-state reveal begin after the full release.
+UNIT-07 removes the module and installs it into Beacon 9 after building spring pressure and releasing it into the open coupler. An early release leaves the assembly safe and lets the player try again; the coupler-mounted meter, multi-stage installation, and world-state reveal make progress visible in the chamber.
 
 There should be a brief delay before anything happens. Activation then propagates outward in visible stages:
 
@@ -341,6 +343,12 @@ Later levels should become harder by combining familiar actions into longer sequ
 - Mandatory crouch sections should be short.
 - Major story reveals should usually happen in low-danger spaces.
 - Mandatory set-pieces such as the warehouse collapse should not be hidden reaction-time death traps.
+
+Keep timed hazards and jumps in short, readable phrases with a broad landing or a checkpoint between the harder phrases. Avoid front-loading hazards and leaving the next several screens empty. Beacon 9's ascent builds through a warning-marked moving press, an electrical strip across the next landing, and a timed light barrier above it. The checkpoint sits before the arc and barrier that close the ascent; the quiet ignition chamber follows.
+
+### World-native interface copy
+
+HUD messages and route records should read like equipment telemetry, service markings, or observations made by UNIT-07. Avoid platformer terms such as "route clear", "final ascent", or naming jump buttons in story messages. The calibration shaft can teach controls through actuator readings, spring-lock indicators, and measured clearance marks; later rooms should let their machinery and visible changes explain what happened.
 
 ### Checkpoints
 

@@ -39,53 +39,53 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func open_with_scores(distance: float, best: float, metrics: Dictionary = {}) -> void:
 	_apply_failure_presentation()
-	title_label.text = "UNIT OFFLINE"
+	title_label.text = "UNIT-07 // SIGNAL LOST"
 	var run_time := float(metrics.get("time_s", RunUnitSession.run_elapsed_seconds))
 	var damage := int(metrics.get("damage", RunUnitSession.damage_taken))
 	var checkpoints := int(metrics.get("checkpoint_activations", RunUnitSession.checkpoint_activations))
 	var recoveries := int(metrics.get("checkpoint_recoveries", RunUnitSession.checkpoint_recoveries))
-	description_label.text = "%s TERMINATED\n\nTIME  %s\nDISTANCE  %05dm   BEST  %05dm\nDAMAGE  %d   CHECKPOINTS  %d   RESPAWNS  %d\n\nRecovery point preserved. Re-enter when ready." % [_get_route_title(), _format_time(run_time), int(distance), int(best), damage, checkpoints, recoveries]
-	restart_button.text = "RETRY FROM CHECKPOINT"
-	main_menu_button.text = "ABORT TO SECTOR SELECT"
-	hint_label.text = "SYSTEM HALTED  //  R TO RETRY"
+	description_label.text = "%s // CARRIER LOST\n\nUPTIME  %s\nDISTANCE  %05dm   RECORD  %05dm\nDAMAGE  %d   SERVICE NODES  %d   RESTORES  %d\n\nLast service memory remains intact." % [_get_route_title(), _format_time(run_time), int(distance), int(best), damage, checkpoints, recoveries]
+	restart_button.text = "REBOOT AT SERVICE NODE"
+	main_menu_button.text = "RETURN TO TRANSIT BAY"
+	hint_label.text = "R  //  RESTORE LAST SERVICE MEMORY"
 	_open(false)
 
 func open_completed_with_scores(distance: float, best: float, metrics: Dictionary = {}) -> void:
 	_apply_success_presentation()
-	title_label.text = "ROUTE COMPLETE"
+	title_label.text = "SECTOR LOGGED"
 	var run_time := float(metrics.get("time_s", RunUnitSession.run_elapsed_seconds))
 	var best_time := float(metrics.get("best_time_s", RunUnitSession.best_time_seconds))
 	var damage := int(metrics.get("damage", RunUnitSession.damage_taken))
 	var checkpoints := int(metrics.get("checkpoint_activations", RunUnitSession.checkpoint_activations))
 	var recoveries := int(metrics.get("checkpoint_recoveries", RunUnitSession.checkpoint_recoveries))
-	description_label.text = "%s CERTIFIED\n\nTIME  %s   BEST  %s\nDISTANCE  %05dm   BEST  %05dm\nDAMAGE  %d   CHECKPOINTS  %d   RESPAWNS  %d\n\n%s" % [_get_route_title(), _format_time(run_time), _format_time(best_time), int(distance), int(best), damage, checkpoints, recoveries, RunUnitCampaign.get_completion(RunUnitSession.selected_level_index)]
-	restart_button.text = "REDEPLOY ROUTE"
-	main_menu_button.text = "CONTINUE TO SECTOR SELECT"
-	hint_label.text = "OBJECTIVE VERIFIED  //  ROUTE CERTIFIED"
+	description_label.text = "%s // TELEMETRY ARCHIVED\n\nUPTIME  %s   RECORD  %s\nDISTANCE  %05dm   RECORD  %05dm\nDAMAGE  %d   SERVICE NODES  %d   RESTORES  %d\n\n%s" % [_get_route_title(), _format_time(run_time), _format_time(best_time), int(distance), int(best), damage, checkpoints, recoveries, RunUnitCampaign.get_completion(RunUnitSession.selected_level_index)]
+	restart_button.text = "REOPEN THIS SITE"
+	main_menu_button.text = "RETURN TO TRANSIT BAY"
+	hint_label.text = "SERVICE MEMORY  //  STORED"
 	_open(true)
 
 func open_missing_module() -> void:
 	_apply_failure_presentation()
-	title_label.text = "OBJECTIVE INCOMPLETE"
-	description_label.text = "RECOVERY  //  IGNITION MODULE MISSING\n\nReturn to Reserve Depot 03 and collect the replacement module. Beacon 9 remains locked."
-	restart_button.text = "REDEPLOY RECOVERY"
-	main_menu_button.text = "RETURN TO SECTOR SELECT"
-	hint_label.text = "MODULE REQUIRED  //  R TO RETRY"
+	title_label.text = "ASSEMBLY NOT INSTALLED"
+	description_label.text = "DEPOT 03 // IGNITION ASSEMBLY MISSING\n\nBeacon 9 remains without a replacement core. The depot cradle still holds another unit."
+	restart_button.text = "RETURN TO DEPOT 03"
+	main_menu_button.text = "RETURN TO TRANSIT BAY"
+	hint_label.text = "R  //  REOPEN DEPOT APPROACH"
 	_open(false)
 
 func _apply_failure_presentation() -> void:
-	outcome_glyph.text = "FAIL"
+	outcome_glyph.text = "OFFLINE"
 	outcome_glyph.add_theme_color_override("font_color", FAILURE_ACCENT)
-	outcome_eyebrow.text = "RUN TERMINATED"
+	outcome_eyebrow.text = "SIGNAL LOST"
 	outcome_eyebrow.add_theme_color_override("font_color", FAILURE_ACCENT)
 	accent_bar.color = FAILURE_ACCENT
 	dimmer.color = FAILURE_DIMMER
 	_set_panel_style(FAILURE_PANEL, FAILURE_ACCENT)
 
 func _apply_success_presentation() -> void:
-	outcome_glyph.text = "CLEAR"
+	outcome_glyph.text = "ACTIVE"
 	outcome_glyph.add_theme_color_override("font_color", SUCCESS_ACCENT)
-	outcome_eyebrow.text = "MISSION SUCCESS"
+	outcome_eyebrow.text = "UNIT-07 // OPERATIONAL"
 	outcome_eyebrow.add_theme_color_override("font_color", SUCCESS_ACCENT)
 	accent_bar.color = SUCCESS_ACCENT
 	dimmer.color = SUCCESS_DIMMER

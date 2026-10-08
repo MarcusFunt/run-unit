@@ -12,6 +12,7 @@ const SURGE_HALO_SCALE: Vector2 = Vector2(5.025, 5.025)
 
 @onready var portal: Sprite2D = $Portal
 @onready var halo: Sprite2D = $Halo
+@onready var mechanical_frame: Node2D = $MechanicalFrame
 @onready var blackout: ColorRect = $BlackoutLayer/Blackout
 
 var _frame_clock: float = 0.0
@@ -28,12 +29,14 @@ func reset_transition() -> void:
 	if _transition_tween != null and _transition_tween.is_valid():
 		_transition_tween.kill()
 	_frame_clock = 0.0
+	mechanical_frame.position = portal.position
+	mechanical_frame.visible = portal.visible
 	portal.frame = 0
 	portal.scale = IDLE_SCALE
-	portal.modulate = Color.WHITE
+	portal.modulate = Color(0.68, 1.0, 1.0, 1.0)
 	halo.frame = 0
 	halo.scale = HALO_SCALE
-	halo.modulate = Color(0.58, 1.0, 0.7, 0.18)
+	halo.modulate = Color(0.38, 0.9, 1.0, 0.18)
 	var blackout_color: Color = blackout.color
 	blackout_color.a = 0.0
 	blackout.color = blackout_color

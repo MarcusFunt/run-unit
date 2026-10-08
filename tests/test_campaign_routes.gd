@@ -40,11 +40,12 @@ func test_authored_worlds_exist_on_disk() -> void:
 		assert_true(ResourceLoader.exists(world_scene), "%s points at a missing world scene: %s" % [RunUnitCampaign.get_route_name(index), world_scene])
 
 func test_every_route_carries_player_facing_copy() -> void:
+	var expected_sites: Array[String] = ["CALIBRATION SHAFT", "TRANSFER HALL", "SERVICE DISTRICT", "CITY CROSSING"]
 	for index: int in RunUnitCampaign.route_count():
 		assert_false(RunUnitCampaign.get_code(index).is_empty(), "Route %d needs a campaign code" % index)
 		assert_false(RunUnitCampaign.get_summary(index).is_empty(), "Route %d needs a one-line summary" % index)
 		assert_false(RunUnitCampaign.get_completion(index).is_empty(), "Route %d needs a completion line for the results menu" % index)
-		assert_true(RunUnitCampaign.get_runtime(index) in ["SHORT", "MEDIUM"], "Route %d should use a qualitative length until playtest measurements exist" % index)
+		assert_eq(RunUnitCampaign.get_runtime(index), expected_sites[index], "Route %d should identify its physical site" % index)
 
 func test_route_names_exist_in_the_storyline_sketch() -> void:
 	var storyline: String = _read_storyline()

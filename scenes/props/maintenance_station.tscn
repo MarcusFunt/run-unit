@@ -7,7 +7,7 @@
 [ext_resource type="SpriteFrames" path="res://assets/generated/godot/spriteframes/industrial/screen1.tres" id="5_screen"]
 
 [node name="MaintenanceStation" type="Node2D"]
-z_index = -4
+z_index = 0
 
 [node name="BackPanel" type="Polygon2D" parent="."]
 color = Color(0.025, 0.07, 0.085, 0.9)
@@ -44,9 +44,9 @@ texture = ExtResource("4_ext")
 
 [node name="WorkLight" type="Polygon2D" parent="."]
 color = Color(0.25, 0.9, 0.86, 0.75)
-polygon = PackedVector2Array(-8, -86, 8, -86, 8, -81, -8, -81)
+polygon = PackedVector2Array(-11, -108, 11, -108, 15, -88, 11, -82, -11, -82, -15, -88)
 
 [node name="WorkGlow" type="Polygon2D" parent="."]
 z_index = -1
-color = Color(0.2, 0.85, 0.82, 0.06)
-polygon = PackedVector2Array(-46, -86, 46, -86, 72, 18, -72, 18)
+color = Color(0.2, 0.85, 0.82, 0.08)
+polygon = PackedVector2Array(-64, -110, 64, -110, 92, 18, -92, 18)

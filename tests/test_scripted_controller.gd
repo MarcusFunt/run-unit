@@ -5,6 +5,7 @@ extends GutTest
 ## permanently at the first crouch gate on every authored route.
 
 const LEVEL_SCENE: PackedScene = preload("res://scenes/levels/level_01_factory.tscn")
+const RECOVERY_SCENE: PackedScene = preload("res://scenes/levels/level_02_recovery.tscn")
 const TUTORIAL_LEVEL_SCENE: PackedScene = preload("res://scenes/world.tscn")
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 
@@ -145,6 +146,61 @@ func test_bot_releases_edge_jump_close_to_the_physical_ledge() -> void:
 	var distance_before_edge: float = physical_edge_x - launch_x[0]
 	assert_lt(distance_before_edge, 45.0, "Takeoff should happen near the ledge, not roughly 60 px early")
 	assert_gt(distance_before_edge, 20.0, "Takeoff should still leave the robot body safely on the platform")
+
+
+func test_bot_jumps_from_the_recovery_lower_landing_to_the_raised_deck() -> void:
+	var world: RunUnitStaticWorld = RECOVERY_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	# Approach from the shallow service dip so the bot must traverse both the
+	# lower landing and its following two-tile step-up, as in the campaign run.
+	player.global_position = Vector2(294.0 * world.tile_size + 16.0, 19.0 * world.tile_size - 32.0)
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+	controller.active = true
+	var jumped: Array[bool] = [false]
+	player.jumped.connect(func() -> void: jumped[0] = true)
+
+	for frame: int in range(420):
+		await get_tree().physics_frame
+		if player.global_position.x > 9800.0:
+			break
+
+	var platform: Dictionary = world.get_platform_below_position(player.global_position)
+	var plan: Dictionary = controller._edge_jump_plan(platform) if not platform.is_empty() else {}
+	var hazard: Dictionary = world.get_nearest_hazard_ahead(player.global_position, controller.HAZARD_LOOKAHEAD_DISTANCE)
+	var diagnostics := "pos=%s velocity=%s floor=%s crouch=%s charging=%s ratio=%.3f takeoff=%.1f plan=%s hazard=%s" % [
+		player.global_position, player.velocity, player.is_on_floor(), controller._should_crouch(), player.is_charging(),
+		player.charge_ratio, controller._active_takeoff_x, plan, hazard,
+	]
+	assert_true(jumped[0], "The bot must spring from Recovery's low catch pad to the raised deck; " + diagnostics)
+	assert_gt(player.global_position.x, 9800.0, "The bot must clear the raised deck instead of stopping at the catch pad; %s" % diagnostics)
+
+
+func test_bot_jumps_from_the_recovery_return_landing_to_the_exit_deck() -> void:
+	var world: RunUnitStaticWorld = RECOVERY_SCENE.instantiate() as RunUnitStaticWorld
+	add_child_autofree(world)
+	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
+	add_child_autofree(player)
+	player.global_position = Vector2(368.0 * world.tile_size + 16.0, 20.0 * world.tile_size - 32.0)
+	var controller: RunUnitScriptedController = RunUnitScriptedController.new()
+	controller.player_path = player.get_path()
+	controller.world_path = world.get_path()
+	add_child_autofree(controller)
+	controller.active = true
+	var jumped: Array[bool] = [false]
+	player.jumped.connect(func() -> void: jumped[0] = true)
+
+	for frame: int in range(420):
+		await get_tree().physics_frame
+		if player.global_position.x > 12000.0:
+			break
+
+	assert_true(jumped[0], "The bot must spring from Recovery's second lower catch pad to the exit deck")
+	assert_gt(player.global_position.x, 12000.0, "The bot must clear the final raised deck; got x=%.1f" % player.global_position.x)
 
 
 func test_jump_charge_scales_with_landing_distance() -> void:

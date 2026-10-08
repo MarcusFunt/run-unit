@@ -9,12 +9,21 @@ const BUTTON_SIZE: float = 88.0
 @onready var _crouch: TouchScreenButton = $Area/Crouch
 @onready var _jump: TouchScreenButton = $Area/Jump
 @onready var _pause: TouchScreenButton = $Area/Pause
+@onready var _training_labels: Array[Label] = [
+	$Area/Left/Label,
+	$Area/Right/Label,
+	$Area/Crouch/Label,
+	$Area/Jump/Label,
+]
 
 
 func _ready() -> void:
 	_area.resized.connect(_on_area_resized)
 	_pause.pressed.connect(_on_pause_pressed)
 	layout_for_viewport(_area.size)
+	var show_training_labels: bool = RunUnitSession.selected_level_index == 0 and not RunUnitSession.calibration_complete
+	for label: Label in _training_labels:
+		label.visible = show_training_labels
 	_update_visibility()
 
 

@@ -346,12 +346,14 @@ func test_installing_the_module_plays_the_activation_and_ends_the_run() -> void:
 	assert_eq(RunUnitSession.last_run_outcome, "completed")
 	assert_eq(ignition.blackout.color.a, 0.0, "With no scene to cut to, the ending holds on the restored beacon")
 	assert_true(game.death_menu.visible, "Without a hand-off the run finishes on the results screen")
-	assert_true(game.death_menu.description_label.text.contains("Beacon 9 ignition restored"), "Results copy should come from Level 3")
+	assert_true(game.death_menu.description_label.text.contains("Beacon 9 is lit"), "Results copy should describe Beacon 9's restored light")
 
 
 func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_3_INDEX)
 	var ignition: RunUnitBeaconIgnition = game.route_exit as RunUnitBeaconIgnition
+	assert_true(ignition.coupler_console.visible, "The machine explains the matching module before the interaction begins")
+	assert_true(ignition.coupler_prompt.text.contains("CELL REQUIRED"))
 	ignition.next_scene_path = ""
 	ignition.install_delay = 0.05
 	ignition.transfer_duration = 0.08
@@ -361,7 +363,10 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 
 	game.world.route_completed.emit()
 	assert_true(ignition.sequence_ui.visible, "The finale should announce that the ignition interface is ready")
-	assert_true(ignition.activation_label.text.contains("HOLD"), "The prompt should name the familiar charge action")
+	assert_false(game.hud.visible, "Normal route information yields as the Beacon interaction starts")
+	assert_true(ignition.coupler_console.visible, "The pressure instructions and progress live on the machine")
+	assert_true(ignition.coupler_prompt.text.contains("HOLD"), "The physical prompt explains the pressure action")
+	assert_false(ignition.activation_progress.visible, "The finale no longer relies on a screen-space progress bar")
 	Input.action_press("jump")
 	await get_tree().create_timer(0.5).timeout
 	Input.action_release("jump")
@@ -369,7 +374,7 @@ func test_beacon_ignition_exposes_a_readable_activation_sequence() -> void:
 	await wait_for_signal(ignition.transition_finished, 5.0)
 
 	assert_true(ignition.installed)
-	assert_eq(ignition.activation_label.text, "BEACON 9 ONLINE  //  GRID SYNCHRONIZED")
+	assert_eq(ignition.coupler_prompt.text, "BEACON 9 // LIGHT RETURNED")
 	assert_true(ignition.completion_banner.visible, "The player gets an unmistakable success beat before the ending screen")
 	assert_gt(ignition.socket_burst.amount, 0, "The lock-in moment has a dedicated visual burst")
 	assert_eq(ignition.lit_stages, ignition.stage_paths.size())
@@ -385,7 +390,7 @@ func test_short_beacon_charge_is_safe_and_can_be_retried() -> void:
 	await get_tree().create_timer(0.12).timeout
 	assert_false(ignition.installed, "An undercharged release cannot install the module")
 	assert_false(game.is_terminal(), "An undercharged release returns to the same interaction")
-	assert_true(ignition.activation_label.text.contains("FULL CHARGE"), "The retry cue explains the missing requirement")
+	assert_true(ignition.coupler_prompt.text.contains("PRESSURE LOW"), "The retry cue stays on the coupler itself")
 	Input.action_press("jump")
 	await get_tree().create_timer(0.5).timeout
 	Input.action_release("jump")
@@ -415,7 +420,7 @@ func test_restarting_level_3_puts_the_module_back_on_the_robot() -> void:
 	assert_eq(ignition.lit_stages, 0, "The activation stages go dark again")
 
 
-func test_beacon_route_frontloads_three_timed_faults_before_the_quiet_finale() -> void:
+func test_beacon_keeps_three_approach_arcs_before_the_final_ascent() -> void:
 	var world: RunUnitStaticWorld = _instantiate_level()
 	var faults: Node = world.get_node_or_null("ElectricalFaults")
 	assert_not_null(faults)
@@ -429,6 +434,21 @@ func test_beacon_route_frontloads_three_timed_faults_before_the_quiet_finale() -
 		if hazard != null:
 			assert_eq(hazard.position, expected[index])
 			assert_lt(hazard.position.x, 9152.0, "Hazards stop before the Beacon scale reveal and quiet interior")
+
+
+func test_final_ascent_combines_the_crusher_arc_and_laser_on_successive_steps() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var crusher: RunUnitTimedHazard = world.get_node_or_null("MechanicalHazards/AscentPress") as RunUnitTimedHazard
+	var arc: RunUnitTimedHazard = world.get_node_or_null("TimingHazards/AscentArc") as RunUnitTimedHazard
+	var laser: RunUnitTimedHazard = world.get_node_or_null("TimingHazards/BeaconLaser") as RunUnitTimedHazard
+	assert_not_null(crusher)
+	assert_not_null(arc)
+	assert_not_null(laser)
+	if crusher != null and arc != null and laser != null:
+		assert_true(crusher.position.x < arc.position.x and arc.position.x < laser.position.x)
+		assert_true(crusher.position.y > arc.position.y and arc.position.y > laser.position.y)
+		assert_eq(arc.position, Vector2(12512, 480), "The arc starts beyond the ascent checkpoint")
+		assert_false(arc.lethal, "The combined finale remains controlled rather than punitive")
 
 
 func test_beacon_has_a_calm_threshold_and_keeps_the_destination_in_view() -> void:

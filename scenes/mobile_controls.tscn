@@ -68,7 +68,7 @@ vertical_alignment = 1
 [node name="Jump" type="TouchScreenButton" parent="Area"]
 texture_normal = ExtResource("2_idle")
 texture_pressed = ExtResource("3_pressed")
-modulate = Color(1, 0.81, 0.48, 1)
+modulate = Color(0.78, 1, 0.98, 1)
 action = "jump"
 visibility_mode = 1
 

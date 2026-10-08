@@ -7,15 +7,39 @@
 z_index = 18
 script = ExtResource("1_portal")
 
+[node name="MechanicalFrame" type="Node2D" parent="."]
+z_index = -2
+
+[node name="TopBeam" type="Polygon2D" parent="MechanicalFrame"]
+color = Color(0.09, 0.2, 0.24, 1)
+polygon = PackedVector2Array(-78, -72, 78, -72, 78, -54, -78, -54)
+
+[node name="LeftRail" type="Polygon2D" parent="MechanicalFrame"]
+color = Color(0.09, 0.2, 0.24, 1)
+polygon = PackedVector2Array(-78, -56, -60, -56, -60, 60, -78, 60)
+
+[node name="RightRail" type="Polygon2D" parent="MechanicalFrame"]
+color = Color(0.09, 0.2, 0.24, 1)
+polygon = PackedVector2Array(60, -56, 78, -56, 78, 60, 60, 60)
+
+[node name="Threshold" type="Polygon2D" parent="MechanicalFrame"]
+color = Color(0.12, 0.28, 0.32, 1)
+polygon = PackedVector2Array(-76, 60, 76, 60, 86, 72, -86, 72)
+
+[node name="OnlineLamp" type="Polygon2D" parent="MechanicalFrame"]
+color = Color(0.28, 0.96, 0.92, 1)
+polygon = PackedVector2Array(-10, -68, 10, -68, 10, -62, -10, -62)
+
 [node name="Halo" type="Sprite2D" parent="."]
 z_index = -1
-modulate = Color(0.58, 1, 0.7, 0.18)
+modulate = Color(0.38, 0.9, 1, 0.18)
 texture = ExtResource("2_texture")
 hframes = 3
 vframes = 2
 scale = Vector2(3.825, 3.825)
 
 [node name="Portal" type="Sprite2D" parent="."]
+modulate = Color(0.68, 1, 1, 1)
 texture = ExtResource("2_texture")
 hframes = 3
 vframes = 2

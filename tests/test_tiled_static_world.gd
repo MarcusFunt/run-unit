@@ -44,6 +44,12 @@ func test_platforms_are_derived_from_the_semantic_tilemap_layer() -> void:
 	assert_eq(world.get_upcoming_platforms(0.0, 10).size(), 4)
 	assert_eq(world.get_route_length(), 22.0, "Route length should reach the far edge of the last platform (x=21)")
 
+func test_walkable_surface_rim_is_thick_enough_to_beat_background_echoes() -> void:
+	var edges: RunUnitWalkableEdges = RunUnitWalkableEdges.new()
+	add_child_autofree(edges)
+	var top_line_width: float = float(edges.call("get_top_line_width"))
+	assert_gte(top_line_width, 5.0, "Only collision surfaces should get a broad, high-contrast top rim")
+
 
 func test_position_aware_platform_query_prefers_nearest_surface_below_player() -> void:
 	var world: RunUnitStaticWorld = WORLD_SCENE.instantiate() as RunUnitStaticWorld

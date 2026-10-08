@@ -24,7 +24,11 @@ func test_crusher_telegraphs_then_strikes() -> void:
 
 func test_campaign_routes_use_crushers_as_sparse_setpieces() -> void:
 	var scenes: Array[PackedScene] = [FACTORY_SCENE, RECOVERY_SCENE, BEACON_SCENE]
-	var names: Array[String] = ["ExteriorCrusher", "DepotPress", "ServicePress"]
+	var names_by_route: Array[Array] = [
+		["StoragePress", "ExteriorCrusher"],
+		["DepotPress", "ReserveReturnPress"],
+		["AscentPress", "ServicePress"],
+	]
 	for index: int in range(scenes.size()):
 		var world: RunUnitStaticWorld = scenes[index].instantiate() as RunUnitStaticWorld
 		add_child_autofree(world)
@@ -32,8 +36,9 @@ func test_campaign_routes_use_crushers_as_sparse_setpieces() -> void:
 		assert_not_null(container, "Each post-tutorial route should have a mechanical setpiece")
 		if container == null:
 			continue
-		assert_eq(container.get_child_count(), 1, "Crushers stay memorable by remaining sparse")
-		var crusher: RunUnitCrusherHazard = container.get_child(0) as RunUnitCrusherHazard
-		assert_not_null(crusher)
-		if crusher != null:
-			assert_eq(String(crusher.name), names[index])
+		assert_eq(container.get_child_count(), names_by_route[index].size(), "Crusher encounters stay deliberately sparse")
+		var actual_names: Array[String] = []
+		for child: Node in container.get_children():
+			assert_true(child is RunUnitCrusherHazard, "Mechanical encounters use the crusher hazard")
+			actual_names.append(String(child.name))
+		assert_eq(actual_names, names_by_route[index], "Each route places its crushers at distinct authored beats")

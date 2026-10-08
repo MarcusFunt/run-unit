@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	score_progress_bar.max_value = _level_length
-	_health_title.text = "HEALTH %d / %d" % [_last_health, _health_cells.size()]
+	_health_title.text = "INTEGRITY %d / %d" % [_last_health, _health_cells.size()]
 	_build_mission_display()
 
 func _build_mission_display() -> void:
@@ -54,8 +54,8 @@ func _build_mission_display() -> void:
 	_objective_label.name = "ObjectiveLabel"
 	_objective_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_objective_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_objective_label.add_theme_color_override("font_color", Color(0.63, 0.96, 0.96))
-	_objective_label.add_theme_font_size_override("font_size", 15)
+	_objective_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.38))
+	_objective_label.add_theme_font_size_override("font_size", 16)
 	frame.add_child(_objective_label)
 	add_child(frame)
 	_objective_frame = frame
@@ -69,8 +69,8 @@ func _build_mission_display() -> void:
 	_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_message_label.add_theme_color_override("font_color", Color(1.0, 0.83, 0.48))
-	_message_label.add_theme_font_size_override("font_size", 17)
+	_message_label.add_theme_color_override("font_color", Color(0.82, 0.96, 0.95))
+	_message_label.add_theme_font_size_override("font_size", 15)
 	message_label_visible(false)
 	add_child(_message_label)
 
@@ -82,7 +82,7 @@ func set_objective(text: String) -> void:
 	if _objective_label != null:
 		_objective_label.text = text
 
-func show_system_message(text: String, duration: float = 3.2) -> void:
+func show_system_message(text: String, duration: float = 2.0) -> void:
 	if _message_label == null:
 		return
 	if _message_tween != null and _message_tween.is_valid():
@@ -97,9 +97,9 @@ func show_system_message(text: String, duration: float = 3.2) -> void:
 
 func set_scores(distance: float, best: float) -> void:
 	var safe_distance: float = maxf(distance, 0.0)
-	distance_label.text = "%04dm" % int(safe_distance)
+	distance_label.text = "SECTOR  %04dm" % int(safe_distance)
 	score_progress_bar.value = clampf(safe_distance, 0.0, _level_length)
-	best_label.text = "BEST  %04dm" % int(best)
+	best_label.text = "RECORD  %04dm" % int(best)
 
 func set_level_length(length: float) -> void:
 	_level_length = maxf(length, 1.0)
@@ -111,7 +111,7 @@ func set_health(current_health: int, maximum_health: int) -> void:
 	if safe_current < _last_health:
 		_damage_flash = 0.3
 	_last_health = safe_current
-	_health_title.text = "HEALTH %d / %d" % [safe_current, safe_maximum]
+	_health_title.text = "INTEGRITY %d / %d" % [safe_current, safe_maximum]
 	for index: int in range(_health_cells.size()):
 		var cell: ColorRect = _health_cells[index] as ColorRect
 		cell.visible = true

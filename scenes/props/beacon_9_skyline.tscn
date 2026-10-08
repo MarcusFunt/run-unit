@@ -71,23 +71,23 @@ color = Color(0.02, 0.06, 0.08, 1)
 polygon = PackedVector2Array(-15, -140, 15, -140, 15, -616, -15, -616)
 
 [node name="ShaftGlow" type="Polygon2D" parent="."]
-color = Color(0.3, 0.72, 0.82, 0.06)
+color = Color(1, 0.59, 0.25, 0.12)
 polygon = PackedVector2Array(-52, -150, 52, -150, 36, -616, -36, -616)
 
 [node name="Ignition1" type="Polygon2D" parent="."]
-color = Color(0.45, 0.85, 0.95, 0.6)
+color = Color(1, 0.78, 0.42, 0.78)
 polygon = PackedVector2Array(-8, -612, 8, -612, 8, -536, -8, -536)
 
 [node name="Ignition2" type="Polygon2D" parent="."]
-color = Color(0.45, 0.85, 0.95, 0.4)
+color = Color(1, 0.62, 0.27, 0.56)
 polygon = PackedVector2Array(-8, -520, 8, -520, 8, -430, -8, -430)
 
 [node name="Ignition3" type="Polygon2D" parent="."]
-color = Color(0.45, 0.85, 0.95, 0.26)
+color = Color(0.78, 0.48, 0.24, 0.38)
 polygon = PackedVector2Array(-8, -400, 8, -400, 8, -320, -8, -320)
 
 [node name="Ignition4" type="Polygon2D" parent="."]
-color = Color(0.45, 0.85, 0.95, 0.15)
+color = Color(0.62, 0.39, 0.22, 0.25)
 polygon = PackedVector2Array(-8, -268, 8, -268, 8, -180, -8, -180)
 
 [node name="RingArc" type="Polygon2D" parent="."]

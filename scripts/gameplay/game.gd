@@ -90,7 +90,7 @@ func _ready() -> void:
 		player.landed.connect(_on_player_landed)
 	hud.set_level_length(world.get_traversal_length())
 	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
-	hud.show_system_message(RunUnitCampaign.get_briefing(_selected_level_index), 4.0)
+	hud.show_system_message(RunUnitCampaign.get_briefing(_selected_level_index), 2.4)
 	RunUnitAudio.set_ambience(_ambience_for_route(_selected_level_index))
 	for node: Node in world.get_node("CheckpointStations").get_children():
 		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
@@ -189,6 +189,7 @@ func reset_run(run_seed: int) -> void:
 	player_health.reset_health()
 	player.set_physics_process(true)
 	death_menu.close()
+	hud.show()
 	if route_exit != null:
 		route_exit.reset_transition()
 	hud.set_scores(0.0, score_manager.best_distance)
@@ -404,6 +405,7 @@ func _module_acquisition_metrics(module_x: float) -> Dictionary:
 func _on_route_completed() -> void:
 	if route_exit is RunUnitBeaconIgnition:
 		var beacon: RunUnitBeaconIgnition = route_exit as RunUnitBeaconIgnition
+		hud.hide()
 		beacon.begin_player_interaction(player)
 		human_controller.active = false
 		# The route ending uses the same hold/release input as a player. Keep the
@@ -418,8 +420,10 @@ func _on_route_completed() -> void:
 
 func _on_story_beat(zone_name: String, cue: Dictionary) -> void:
 	var message := str(cue.get("message", ""))
-	if not message.is_empty():
-		hud.show_system_message(message)
+	# Zone labels are part of the machinery, not subtitles. Only surface a
+	# brief cue when the level also changes in a visible, persistent way.
+	if not message.is_empty() and not str(cue.get("world_change", "")).is_empty():
+		hud.show_system_message(message, 1.8)
 	var ambience := str(cue.get("ambience", ""))
 	if not ambience.is_empty():
 		RunUnitAudio.set_ambience(ambience)

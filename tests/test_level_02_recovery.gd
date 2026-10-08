@@ -201,9 +201,15 @@ func test_level_02_has_the_expected_route() -> void:
 		[211, 224, 26],  # lower machinery floor
 		[227, 231, 23],  # core-access ascent
 		[234, 238, 21],
-		[241, 393, 18],  # module cradle leads into the short, calm escape deck
+		[241, 271, 18],  # module cradle leads into the varied escape deck
+		[272, 299, 19],  # shallow service dip
+		[300, 302, 20],  # forgiving lower landing under the first jump gap
+		[303, 333, 18],  # short step-up
+		[334, 366, 19],  # second shallow dip
+		[367, 369, 20],  # forgiving lower landing under the second jump gap
+		[370, 393, 18],  # final step-up into the route exit
 	]
-	assert_eq(plan.size(), expected.size(), "The route keeps its challenge course and simplifies the post-pickup escape")
+	assert_eq(plan.size(), expected.size(), "The post-pickup escape should include several low-risk traversal beats")
 	for index: int in range(mini(plan.size(), expected.size())):
 		var platform: Dictionary = plan[index]
 		assert_eq(int(platform.get("start_x", -1)), int(expected[index][0]), "platform %d start" % (index + 1))
@@ -304,7 +310,7 @@ func test_reaching_the_cradle_mounts_the_module_once() -> void:
 	assert_not_null(cradle.get_mounted_module(), "The module is mounted on UNIT-07")
 	assert_true(player.is_ancestor_of(cradle.get_mounted_module()), "The mounted module travels with the player")
 	assert_true(cradle.acquisition_readout.visible, "The facility names the target once the module is taken")
-	assert_true(cradle.acquisition_readout.text.contains("BEACON 9"), "Acquisition makes Beacon 9 the explicit target")
+	assert_true(cradle.acquisition_readout.text.contains("CRADLE EMPTY"), "The emptied cradle keeps its completed state")
 
 
 func test_restarting_the_run_returns_the_module_to_its_cradle() -> void:
@@ -415,13 +421,16 @@ func test_pickup_changes_the_objective_and_keeps_the_existing_world_shutdown_rea
 	var cradle: RunUnitModuleCradle = game.world.get_node("ModuleCradle") as RunUnitModuleCradle
 	var shutdown_lighting: CanvasItem = game.world.get_node("ShutdownLighting") as CanvasItem
 	var lockdown_sign: CanvasItem = game.world.get_node("RecoverySigns/LockdownSign") as CanvasItem
+	var acquisition_readout: Label = cradle.get_node("AcquisitionReadout") as Label
 	assert_false(shutdown_lighting.visible)
 	assert_false(lockdown_sign.visible)
 	cradle.acquire_for(game.player)
 	var objective_label: Label = game.hud.get_node_or_null("ObjectiveFrame/ObjectiveLabel") as Label
 	assert_not_null(objective_label)
 	if objective_label != null:
-		assert_eq(objective_label.text, "EXIT FACILITY // DELIVER ASSEMBLY")
+		assert_eq(objective_label.text, "Carry the reserve cell to Beacon 9")
+	assert_true(acquisition_readout.visible, "The emptied cradle keeps a visible completed state")
+	assert_true(acquisition_readout.text.contains("CRADLE EMPTY"))
 	assert_true(shutdown_lighting.visible, "Removing the module keeps the lighting response")
 	assert_true(lockdown_sign.visible, "Removing the module keeps the lockdown signage response")
 	get_tree().paused = false
@@ -453,7 +462,7 @@ func test_story_zones_emit_one_reusable_non_repeating_runtime_beat() -> void:
 	zone.body_entered.emit(player)
 	assert_eq(count[0], 1, "Re-entry and checkpoint retry must not replay the same beat")
 	assert_eq(beat_names, ["ModuleAcquisition"], "YATI's imported object name resolves back to its authored zone")
-	assert_eq(messages, ["ASSEMBLY CRADLE // ACCESS AHEAD"], "The module cue should name the objective ahead")
+	assert_eq(messages, ["IGNITION ASSEMBLY // COMPATIBLE"], "The machine identifies the matching assembly")
 
 
 func _find_area_named(root_node: Node, wanted_name: String) -> Area2D:
@@ -486,7 +495,7 @@ func test_recovery_exit_without_module_does_not_certify_objective() -> void:
 	assert_eq(RunUnitSession.last_run_outcome, "incomplete")
 	assert_false(RunUnitSession.recovery_complete)
 	assert_false(RunUnitSession.is_route_unlocked(3))
-	assert_true(game.death_menu.description_label.text.contains("MODULE MISSING"))
+	assert_true(game.death_menu.description_label.text.contains("IGNITION ASSEMBLY MISSING"))
 
 func test_module_pickup_persists_and_completion_unlocks_beacon() -> void:
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
@@ -522,3 +531,16 @@ func test_recovery_combines_three_timed_faults_with_existing_platforming() -> vo
 		if hazard != null:
 			assert_eq(hazard.position, expected[index])
 			assert_false(hazard.lethal)
+
+
+func test_depot_return_breaks_the_flat_run_with_staggered_safe_timing_hazards() -> void:
+	var world: RunUnitStaticWorld = _instantiate_level()
+	var return_arc: RunUnitTimedHazard = world.get_node_or_null("TimingHazards/ReserveReturnArc") as RunUnitTimedHazard
+	var return_press: RunUnitTimedHazard = world.get_node_or_null("MechanicalHazards/ReserveReturnPress") as RunUnitTimedHazard
+	assert_not_null(return_arc, "The return path introduces an electrical timing beat after the manual release")
+	assert_not_null(return_press, "The final return stretch asks the player to time the depot ram")
+	if return_arc != null and return_press != null:
+		assert_eq(return_arc.position, Vector2(9728, 640))
+		assert_eq(return_press.position, Vector2(10880, 599))
+		assert_false(return_arc.lethal)
+		assert_false(return_press.lethal)

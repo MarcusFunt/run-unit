@@ -18,11 +18,11 @@ func after_each() -> void:
 	RunUnitSession.reset_demo_lifecycle()
 
 
-func test_the_ending_thanks_the_player() -> void:
+func test_the_ending_reports_the_city_grid_returning() -> void:
 	var ending: RunUnitEnding = _instantiate_ending()
 
-	assert_eq(ending.thanks_label.text, "THANK YOU FOR PLAYING")
-	assert_true(ending.status_label.text.contains("BEACON 9 ONLINE"), "The ending states what UNIT-07 achieved")
+	assert_eq(ending.thanks_label.text, "THE CITY LIGHTS RETURN")
+	assert_true(ending.status_label.text.contains("CITY GRID // LIGHT RETURNING"), "The ending shows the world state UNIT-07 restored")
 	assert_eq(ending.sector_button.text, "SECTOR SELECT")
 	assert_eq(ending.menu_button.text, "MAIN MENU")
 

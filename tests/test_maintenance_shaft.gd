@@ -192,7 +192,7 @@ func test_calibration_crouch_prompt_precedes_the_safe_required_gate() -> void:
 	var heading: Label = prompt.get_node_or_null("Heading") as Label
 	assert_not_null(heading)
 	if heading != null:
-		assert_eq(heading.text, "05 // CROUCH")
+		assert_eq(heading.text, "LOW SERVICE HATCH")
 	assert_null(world.get_node_or_null("ElectricalFaults"), "Calibration remains a safe teaching route")
 
 	var full_charge_prompt: Node2D = world.get_node_or_null("TutorialSigns/FullChargePrompt") as Node2D
@@ -203,9 +203,9 @@ func test_calibration_crouch_prompt_precedes_the_safe_required_gate() -> void:
 		assert_not_null(full_charge_heading)
 		assert_not_null(full_charge_keys)
 		if full_charge_heading != null:
-			assert_eq(full_charge_heading.text, "04 // FULL CHARGE")
+			assert_eq(full_charge_heading.text, "ENERGY LOCK // SPRING AT LIMIT")
 		if full_charge_keys != null:
-			assert_eq(full_charge_keys.text, "RELEASE WHEN THE LOCK GLOWS")
+			assert_eq(full_charge_keys.text, "GREEN LOCK // STORED PRESSURE MAXIMUM")
 
 
 ## The gate's opening clears the visible torso and antenna while remaining

@@ -29,6 +29,10 @@ const TIMED_GATE_BRAKE_DISTANCE: float = 150.0
 const TIMED_GATE_COMMIT_DISTANCE: float = 92.0
 const LANDING_DEPTH_MIN: float = 24.0
 const LANDING_DEPTH_MAX: float = 52.0
+## Rising platforms have a vertical face that can pin the player sideways until
+## the feet clear the lip. Ask for extra apex height so the bot has time to
+## move past that face instead of landing back on the lower pad.
+const UPHILL_FACE_CLEARANCE: float = 36.0
 
 var active: bool = false
 var _motor: RunUnitPlayerMotor = null
@@ -95,7 +99,21 @@ func _should_crouch() -> bool:
 		CROUCH_LOOKAHEAD_MIN,
 		CROUCH_LOOKAHEAD_MAX
 	)
-	return _motor.has_low_clearance_ahead(0.0) or _motor.has_low_clearance_ahead(lookahead)
+	if _motor.has_low_clearance_ahead(0.0):
+		return true
+	if not _motor.has_low_clearance_ahead(lookahead):
+		return false
+	# The forward probe also sees the vertical face of a raised landing as an
+	# overhead obstruction. When an edge jump reaches that face within the same
+	# probe distance, charging the jump takes priority over ducking into it.
+	var platform: Dictionary = _world.get_platform_below_position(_motor.global_position)
+	if not platform.is_empty():
+		var edge_plan: Dictionary = _edge_jump_plan(platform)
+		if str(edge_plan.get("reason", "")) == "edge":
+			var distance_to_takeoff: float = float(edge_plan.get("takeoff_x", INF)) - _motor.global_position.x
+			if distance_to_takeoff <= lookahead:
+				return false
+	return true
 
 func _should_hold_jump() -> bool:
 	if not _motor.is_on_floor():
@@ -277,7 +295,10 @@ func _edge_jump_plan(platform: Dictionary) -> Dictionary:
 	var landing_width: float = float(next_platform.get("width", 1)) * _world.tile_size
 	var landing_depth: float = clampf(landing_width * 0.22, LANDING_DEPTH_MIN, LANDING_DEPTH_MAX)
 	var required_range: float = EDGE_BODY_CLEARANCE + float(gap_tiles) * _world.tile_size + landing_depth
-	var charge_ratio: float = _required_charge_ratio(required_range, rise_pixels)
+	var planned_rise: float = rise_pixels
+	if planned_rise > 8.0:
+		planned_rise += UPHILL_FACE_CLEARANCE
+	var charge_ratio: float = _required_charge_ratio(required_range, planned_rise)
 	var platform_id: int = int(platform.get("platform_id", 0))
 	charge_ratio = clampf(charge_ratio + _stable_variation(platform_id, 0.025), 0.02, 0.95)
 	return {

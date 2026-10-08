@@ -158,17 +158,17 @@ func is_route_unlocked(route_index: int) -> bool:
 
 func get_route_lock_reason(route_index: int) -> String:
 	if not RunUnitCampaign.is_available(route_index):
-		return "Route unavailable in this build."
+		return "No local relay record exists for this site."
 	if is_route_unlocked(route_index):
 		return ""
 	match route_index:
 		1:
-			return "Complete Calibration to unlock Factory Escape."
+			return "Lift 01 is still seized. Its release opens the transfer hall."
 		2:
-			return "Complete Factory Escape to unlock Recovery."
+			return "The outer wall is still sealed. A breach exposes the service district."
 		3:
-			return "Complete Recovery and recover the ignition module to unlock Beacon 9."
-	return "Complete the preceding route to unlock this route."
+			return "Beacon 9's perimeter lock is waiting on a matching assembly from Depot 03."
+	return "The previous relay record is missing."
 
 func get_best_time(route_index: int) -> float:
 	return float(_best_times_by_level.get(route_index, 0.0))
