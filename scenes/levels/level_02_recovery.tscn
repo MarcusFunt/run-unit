@@ -269,6 +269,7 @@ offset_bottom = -82.0
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
 theme_override_font_sizes/font_size = 14
 text = "RESERVE MODULE"
+horizontal_alignment = 1
 
 [node name="CradleModule" type="AnimatedSprite2D" parent="ModuleCradle" unique_id=862379264]
 modulate = Color(1, 0.9, 0.48, 1)
