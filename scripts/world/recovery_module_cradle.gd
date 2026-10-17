@@ -41,7 +41,7 @@ func reset_level_state() -> void:
 	get_node("ObjectiveHalo").visible = true
 	get_node("ModuleName").visible = true
 	acquisition_readout.visible = false
-	acquisition_readout.text = "Cell removed.\nThe cradle is empty."
+	acquisition_readout.text = "MODULE SECURED"
 	_set_shutdown(false)
 
 func get_mounted_module() -> Node2D:
@@ -61,7 +61,6 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 	var hud: RunUnitHud = get_tree().get_first_node_in_group("run_hud") as RunUnitHud
 	if hud != null:
 		hud.set_objective("Beacon 9 needs its reserve cell.")
-		hud.show_system_message("The cradle releases its cell.", 2.4)
 	RunUnitAudio.play_event("module_acquired")
 	module_acquired.emit()
 

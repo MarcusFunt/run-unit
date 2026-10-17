@@ -268,7 +268,7 @@ offset_right = 220.0
 offset_bottom = -82.0
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
 theme_override_font_sizes/font_size = 14
-text = "IGNITION ASSEMBLY DETECTED"
+text = "RESERVE MODULE"
 
 [node name="CradleModule" type="AnimatedSprite2D" parent="ModuleCradle" unique_id=862379264]
 modulate = Color(1, 0.9, 0.48, 1)
@@ -287,8 +287,7 @@ offset_right = 440.0
 offset_bottom = -136.0
 theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.95)
 theme_override_font_sizes/font_size = 14
-text = "RESERVE CELL REMOVED
-CRADLE EMPTY"
+text = "MODULE SECURED"
 
 [node name="ShutdownLighting" type="Polygon2D" parent="." unique_id=392021479]
 visible = false
@@ -319,8 +318,7 @@ offset_right = 168.0
 offset_bottom = 34.0
 theme_override_colors/font_color = Color(1, 0.9, 0.42, 0.98)
 theme_override_font_sizes/font_size = 16
-text = "CRITICAL REPLACEMENT ASSEMBLY
-RESERVE DEPOT 03"
+text = "RESERVE DEPOT 03"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -349,4 +347,4 @@ z_index = 7
 position = Vector2(7872, 432)
 theme_override_colors/font_color = Color(0.74, 0.94, 0.92, 0.96)
 theme_override_font_sizes/font_size = 16
-text = "CRADLE EMPTY // DEPOT SEAL ACTIVE"
+text = ""

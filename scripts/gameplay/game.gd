@@ -96,7 +96,6 @@ func _ready() -> void:
 	hud.set_level_length(world.get_traversal_length())
 	hud.set_campaign_progress(_selected_level_index, RunUnitCampaign.route_count())
 	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
-	hud.show_system_message(RunUnitCampaign.get_briefing(_selected_level_index), 2.4)
 	RunUnitAudio.set_ambience(_ambience_for_route(_selected_level_index))
 	for node: Node in world.get_node("CheckpointStations").get_children():
 		var station: RunUnitCheckpointStation = node as RunUnitCheckpointStation
@@ -437,10 +436,7 @@ func _on_route_completed() -> void:
 
 func _on_story_beat(zone_name: String, cue: Dictionary) -> void:
 	var message := str(cue.get("message", ""))
-	# Zone labels are part of the machinery, not subtitles. Only surface a
-	# brief cue when the level also changes in a visible, persistent way.
-	if not message.is_empty() and not str(cue.get("world_change", "")).is_empty():
-		hud.show_system_message(message, 1.8)
+	# Let environmental changes speak visually; story copy stays in telemetry.
 	var ambience := str(cue.get("ambience", ""))
 	if not ambience.is_empty():
 		RunUnitAudio.set_ambience(ambience)
