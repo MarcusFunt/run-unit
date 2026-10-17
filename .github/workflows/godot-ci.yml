@@ -36,6 +36,21 @@ jobs:
       - name: Import and run GUT
         run: python3 tools/run_gut.py --godot godot
 
+      - name: Capture in-engine showcase frames
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb libgl1-mesa-dri
+          mkdir -p build/highlights
+          timeout 120s xvfb-run -a godot --path . --script res://tools/capture_highlights.gd --rendering-method gl_compatibility -- --unlock-routes
+
+      - name: Upload highlight screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: RUN_UNIT-highlights
+          path: build/highlights/*.png
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Export Windows release
         run: |
           mkdir -p build
