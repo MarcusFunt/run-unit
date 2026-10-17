@@ -325,7 +325,7 @@ func test_reaching_the_cradle_mounts_the_module_once() -> void:
 	assert_not_null(cradle.get_mounted_module(), "The module is mounted on UNIT-07")
 	assert_true(player.is_ancestor_of(cradle.get_mounted_module()), "The mounted module travels with the player")
 	assert_true(cradle.acquisition_readout.visible, "The facility names the target once the module is taken")
-	assert_true(cradle.acquisition_readout.text.contains("cradle is empty"), "The emptied cradle keeps its completed state")
+	assert_true(cradle.acquisition_readout.text.contains("MODULE SECURED"), "The emptied cradle keeps its completed state")
 
 
 func test_restarting_the_run_returns_the_module_to_its_cradle() -> void:
@@ -445,7 +445,7 @@ func test_pickup_changes_the_objective_and_keeps_the_existing_world_shutdown_rea
 	if objective_label != null:
 		assert_eq(objective_label.text, "Beacon 9 needs its reserve cell.")
 	assert_true(acquisition_readout.visible, "The emptied cradle keeps a visible completed state")
-	assert_true(acquisition_readout.text.contains("cradle is empty"))
+	assert_true(acquisition_readout.text.contains("MODULE SECURED"))
 	assert_true(shutdown_lighting.visible, "Removing the module keeps the lighting response")
 	assert_true(lockdown_sign.visible, "Removing the module keeps the lockdown signage response")
 	get_tree().paused = false

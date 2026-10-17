@@ -72,7 +72,7 @@ func reset_transition() -> void:
 	completion_banner.visible = false
 	activation_progress.value = 0.0
 	_sync_coupler_gauge()
-	coupler_prompt.text = ""
+	coupler_prompt.text = "COUPLER OFFLINE"
 	coupler_prompt.add_theme_color_override("font_color", OBJECTIVE_COLOR)
 	_configure_coupler_signifier()
 	for path: NodePath in stage_paths:

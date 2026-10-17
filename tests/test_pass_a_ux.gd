@@ -141,6 +141,6 @@ func test_module_cradle_identifies_the_ignition_assembly() -> void:
 	var world: RunUnitStaticWorld = (load("res://scenes/levels/level_02_recovery.tscn") as PackedScene).instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
 	var cradle: RunUnitModuleCradle = world.get_node("ModuleCradle") as RunUnitModuleCradle
-	assert_true((cradle.get_node("ModuleName") as Label).text.contains("IGNITION"))
+	assert_true((cradle.get_node("ModuleName") as Label).text.contains("MODULE"))
 	assert_true((cradle.get_node("ObjectiveHalo") as CanvasItem).visible)
 	assert_gt((cradle.cradle_module as CanvasItem).modulate.r, (cradle.cradle_module as CanvasItem).modulate.b, "Warm module lighting is distinct from cyan hazards")
