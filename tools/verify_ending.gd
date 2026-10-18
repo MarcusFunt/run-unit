@@ -67,8 +67,23 @@ func _run() -> void:
 				push_error("ENDING_SMOKE screenshot save error %d" % err)
 				quit(1)
 				return
-			print("ENDING_SMOKE PASSED")
-			quit(0)
+			var ending: Node = current_scene
+			var menu: Button = ending.get_node_or_null("UI/Buttons/Content/MenuButton") as Button
+			if menu == null:
+				push_error("ENDING_SMOKE missing main menu button")
+				quit(1)
+				return
+			menu.pressed.emit()
+			var menu_deadline: int = Time.get_ticks_msec() + 10000
+			while Time.get_ticks_msec() < menu_deadline:
+				await create_timer(0.1).timeout
+				if current_scene != null and current_scene.scene_file_path == "res://scenes/main_menu.tscn":
+					print("ENDING_SMOKE ending main-menu button navigated OK")
+					print("ENDING_SMOKE PASSED")
+					quit(0)
+					return
+			push_error("ENDING_SMOKE main menu button did not navigate")
+			quit(1)
 			return
 	push_error("ENDING_SMOKE timed out waiting for ending screen: current=%s" % str(current_scene.scene_file_path if current_scene != null else "(none)"))
 	quit(1)
