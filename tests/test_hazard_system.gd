@@ -147,7 +147,7 @@ func test_hud_exposes_three_compact_health_cells() -> void:
 	assert_true((cells[0] as CanvasItem).visible)
 	assert_true((cells[1] as CanvasItem).visible)
 	assert_true((cells[2] as CanvasItem).visible, "The empty socket remains visible")
-	assert_lt((cells[2] as ColorRect).color.get_luminance(), (cells[1] as ColorRect).color.get_luminance())
+	assert_lt((cells[2] as TextureRect).modulate.get_luminance(), (cells[1] as TextureRect).modulate.get_luminance(), "The missing heart is dimmer than the remaining ones")
 
 func test_active_hazard_hits_once_for_one_continuous_exposure() -> void:
 	var hazard: Area2D = _instantiate_hazard()
