@@ -1,0 +1,33 @@
+name: Verify playable ending
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ending-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.7.1
+          use-dotnet: false
+      - name: Import game resources
+        run: godot --headless --path . --import
+      - name: Play Beacon ignition into the real ending screen
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb libgl1-mesa-dri
+          timeout 90s xvfb-run -a godot --path . --rendering-method gl_compatibility --script res://tools/verify_ending.gd
+      - name: Upload ending evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: RUN_UNIT-ending-integration
+          path: build/ending-check/ending.png
+          if-no-files-found: warn
