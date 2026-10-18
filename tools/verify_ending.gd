@@ -29,13 +29,17 @@ func _run() -> void:
 		quit(1)
 		return
 	player.global_position = world.call("get_goal_position")
-	world.call("_on_completion_trigger_body_entered", player)
-	await process_frame
+	# The *physics* overlap must fire the authored Goal trigger; calling its
+	# callback by hand would miss the exact regression we are checking.
+	for step: int in range(8):
+		await physics_frame
+		if bool(ignition.call("is_interaction_active")):
+			break
 	if not bool(ignition.call("is_interaction_active")):
 		push_error("ENDING_SMOKE goal did not open ignition interaction")
 		quit(1)
 		return
-	print("ENDING_SMOKE goal -> ignition interaction OK")
+	print("ENDING_SMOKE physical Goal contact -> ignition interaction OK")
 	Input.action_press("jump")
 	await create_timer(0.65).timeout
 	Input.action_release("jump")
@@ -54,6 +58,7 @@ func _run() -> void:
 				quit(1)
 				return
 			print("ENDING_SMOKE ending scene reached and controls loaded")
+			await create_timer(4.0).timeout
 			DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://build/ending-check"))
 			await RenderingServer.frame_post_draw
 			var screenshot: Image = root.get_texture().get_image()
