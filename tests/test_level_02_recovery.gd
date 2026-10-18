@@ -324,8 +324,8 @@ func test_reaching_the_cradle_mounts_the_module_once() -> void:
 	assert_false(cradle.cradle_module.visible, "The module leaves its cradle")
 	assert_not_null(cradle.get_mounted_module(), "The module is mounted on UNIT-07")
 	assert_true(player.is_ancestor_of(cradle.get_mounted_module()), "The mounted module travels with the player")
-	assert_true(cradle.acquisition_readout.visible, "The facility names the target once the module is taken")
-	assert_true(cradle.acquisition_readout.text.contains("MODULE SECURED"), "The emptied cradle keeps its completed state")
+	assert_null(cradle.get_node_or_null("ModuleName"), "The objective is signified by the lit module, not overlaid text")
+	assert_null(cradle.get_node_or_null("AcquisitionReadout"), "Pickup feedback stays visual and audio-only")
 
 
 func test_restarting_the_run_returns_the_module_to_its_cradle() -> void:
@@ -345,7 +345,6 @@ func test_restarting_the_run_returns_the_module_to_its_cradle() -> void:
 	assert_true(cradle.cradle_module.visible, "The module is back in its cradle")
 	assert_null(cradle.get_mounted_module(), "The player no longer carries a module")
 	assert_eq(player.find_children("*", "", true, false).filter(func(node: Node) -> bool: return node.name == &"MountedModule").size(), 0, "No stale module is left on the player")
-	assert_false(cradle.acquisition_readout.visible)
 
 
 func _instantiate_game_for(level_index: int) -> RunUnitGame:
@@ -435,19 +434,15 @@ func test_pickup_changes_the_objective_and_keeps_the_existing_world_shutdown_rea
 	var game: RunUnitGame = _instantiate_game_for(LEVEL_2_INDEX)
 	var cradle: RunUnitModuleCradle = game.world.get_node("ModuleCradle") as RunUnitModuleCradle
 	var shutdown_lighting: CanvasItem = game.world.get_node("ShutdownLighting") as CanvasItem
-	var lockdown_sign: CanvasItem = game.world.get_node("RecoverySigns/LockdownSign") as CanvasItem
-	var acquisition_readout: Label = cradle.get_node("AcquisitionReadout") as Label
 	assert_false(shutdown_lighting.visible)
-	assert_false(lockdown_sign.visible)
+	assert_null(game.world.get_node_or_null("RecoverySigns"), "Opaque depot billboard must not cover UNIT")
 	cradle.acquire_for(game.player)
 	var objective_label: Label = game.hud.get_node_or_null("ObjectiveFrame/ObjectiveLabel") as Label
 	assert_not_null(objective_label)
 	if objective_label != null:
 		assert_eq(objective_label.text, "Beacon 9 needs its reserve cell.")
-	assert_true(acquisition_readout.visible, "The emptied cradle keeps a visible completed state")
-	assert_true(acquisition_readout.text.contains("MODULE SECURED"))
 	assert_true(shutdown_lighting.visible, "Removing the module keeps the lighting response")
-	assert_true(lockdown_sign.visible, "Removing the module keeps the lockdown signage response")
+	assert_false(game.hud._objective_frame.visible, "Progress updates are kept without a permanent objective overlay")
 	get_tree().paused = false
 
 

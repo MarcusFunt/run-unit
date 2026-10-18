@@ -205,7 +205,6 @@ func reset_run(run_seed: int) -> void:
 	hud.set_health(player_health.current_health, player_health.max_health)
 	hud.set_objective(RunUnitCampaign.get_objective(_selected_level_index))
 	if _pending_checkpoint_recovery:
-		hud.show_system_message("Recovered at the last service marker.", 2.4)
 		_pending_checkpoint_recovery = false
 
 func apply_external_action(action: RunUnitPlayerAction) -> void:

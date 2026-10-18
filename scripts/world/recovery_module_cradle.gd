@@ -13,7 +13,6 @@ signal module_acquired
 @export var shutdown_nodes: Array[NodePath] = []
 
 @onready var cradle_module: Node2D = $CradleModule
-@onready var acquisition_readout: Label = $AcquisitionReadout
 
 var acquired: bool = false
 var _mounted_module: Node2D = null
@@ -39,9 +38,6 @@ func reset_level_state() -> void:
 	_mounted_module = null
 	cradle_module.visible = true
 	get_node("ObjectiveHalo").visible = true
-	get_node("ModuleName").visible = true
-	acquisition_readout.visible = false
-	acquisition_readout.text = "MODULE SECURED"
 	_set_shutdown(false)
 
 func get_mounted_module() -> Node2D:
@@ -53,9 +49,7 @@ func acquire_for(player: RunUnitPlayerMotor) -> void:
 	acquired = true
 	cradle_module.visible = false
 	get_node("ObjectiveHalo").visible = false
-	get_node("ModuleName").visible = false
 	_mounted_module = RunUnitModuleMount.mount(player, cradle_module)
-	acquisition_readout.visible = true
 	_set_shutdown(true)
 	RunUnitSession.record_playtest_event("module_acquired", {"position": [global_position.x, global_position.y]})
 	var hud: RunUnitHud = get_tree().get_first_node_in_group("run_hud") as RunUnitHud

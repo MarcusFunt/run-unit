@@ -241,7 +241,7 @@ phase_offset_seconds = 1.2
 [node name="ModuleCradle" type="Area2D" parent="." unique_id=2129872803]
 position = Vector2(7808, 544)
 script = ExtResource("3_cradle")
-shutdown_nodes = Array[NodePath]([NodePath("../ShutdownLighting"), NodePath("../RecoverySigns/LockdownSign")])
+shutdown_nodes = Array[NodePath]([NodePath("../ShutdownLighting")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ModuleCradle" unique_id=1469014705]
 shape = SubResource("RectangleShape2D_cradle")
@@ -261,16 +261,6 @@ z_index = -1
 color = Color(1, 0.86, 0.3, 0.28)
 polygon = PackedVector2Array(0, -58, 52, 8, 0, 70, -52, 8)
 
-[node name="ModuleName" type="Label" parent="ModuleCradle" unique_id=218821314]
-offset_left = -150.0
-offset_top = -112.0
-offset_right = 220.0
-offset_bottom = -82.0
-theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
-theme_override_font_sizes/font_size = 14
-text = "RESERVE MODULE"
-horizontal_alignment = 1
-
 [node name="CradleModule" type="AnimatedSprite2D" parent="ModuleCradle" unique_id=862379264]
 modulate = Color(1, 0.9, 0.48, 1)
 position = Vector2(0, 8)
@@ -279,49 +269,11 @@ sprite_frames = ExtResource("4_module")
 animation = &"palette_0"
 autoplay = "palette_0"
 
-[node name="AcquisitionReadout" type="Label" parent="ModuleCradle" unique_id=1993186327]
-visible = false
-z_index = 8
-offset_left = -40.0
-offset_top = -180.0
-offset_right = 440.0
-offset_bottom = -136.0
-theme_override_colors/font_color = Color(0.32, 0.86, 0.84, 0.95)
-theme_override_font_sizes/font_size = 14
-text = "MODULE SECURED"
-
 [node name="ShutdownLighting" type="Polygon2D" parent="." unique_id=392021479]
 visible = false
 z_index = 7
 color = Color(0.05, 0.11, 0.13, 0.24)
 polygon = PackedVector2Array(8160, 96, 10032, 96, 10032, 1100, 8160, 1100)
-
-[node name="RecoverySigns" type="Node2D" parent="." unique_id=1482704076]
-z_index = 4
-
-[node name="DepotDisplay" type="Node2D" parent="RecoverySigns" unique_id=1978260043]
-position = Vector2(3664, 520)
-
-[node name="Frame" type="Polygon2D" parent="RecoverySigns/DepotDisplay" unique_id=1395114021]
-z_index = -1
-color = Color(0.05, 0.12, 0.15, 0.95)
-polygon = PackedVector2Array(-176, -44, 176, -44, 176, 44, -176, 44)
-
-[node name="Post" type="Polygon2D" parent="RecoverySigns/DepotDisplay" unique_id=1047709414]
-z_index = -2
-color = Color(0.08, 0.18, 0.22, 1)
-polygon = PackedVector2Array(-6, 44, 6, 44, 6, 120, -6, 120)
-
-[node name="Text" type="Label" parent="RecoverySigns/DepotDisplay" unique_id=999879321]
-offset_left = -168.0
-offset_top = -34.0
-offset_right = 168.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(1, 0.9, 0.42, 0.98)
-theme_override_font_sizes/font_size = 16
-text = "RESERVE DEPOT 03"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="DimensionalPortalExit" parent="." instance=ExtResource("16_portal")]
 position = Vector2(12512, 448)
@@ -342,10 +294,3 @@ position = Vector2(4848, 448)
 [node name="RecoveryShutter" parent="ClearanceTreatments" instance=ExtResource("17_clearance_gate")]
 position = Vector2(10000, 576)
 
-[node name="LockdownSign" type="Label" parent="RecoverySigns" unique_id=1524602731]
-visible = false
-z_index = 7
-position = Vector2(7872, 432)
-theme_override_colors/font_color = Color(0.74, 0.94, 0.92, 0.96)
-theme_override_font_sizes/font_size = 16
-text = ""

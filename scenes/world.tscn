@@ -75,7 +75,7 @@ visible = false
 visible = false
 
 [node name="TutorialSigns" type="Node2D" parent="." unique_id=1876423768]
-z_index = 5
+z_index = -2
 
 [node name="MovementPrompt" type="Node2D" parent="TutorialSigns" unique_id=72128949]
 position = Vector2(300, 258)

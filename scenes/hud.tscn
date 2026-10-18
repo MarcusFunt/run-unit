@@ -36,7 +36,7 @@ script = ExtResource("1_hud")
 [node name="ScoreBar" type="PanelContainer" parent="." unique_id=709269692]
 offset_left = 24.0
 offset_top = 20.0
-offset_right = 384.0
+offset_right = 250.0
 offset_bottom = 82.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_transparent")
@@ -64,8 +64,8 @@ theme_override_colors/font_color = Color(0.86, 0.98, 0.97, 1)
 theme_override_colors/font_shadow_color = Color(0, 0.08, 0.11, 0.9)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 28
-text = "0000m"
+theme_override_font_sizes/font_size = 22
+text = "0m"
 vertical_alignment = 1
 
 [node name="ScoreProgressBar" type="ProgressBar" parent="ScoreBar/Margin/Rows" unique_id=40542093]
@@ -83,6 +83,7 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="BestLabel" type="Label" parent="ScoreBar/Margin/Rows/Footer" unique_id=513817407]
+visible = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

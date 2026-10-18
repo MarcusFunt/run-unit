@@ -35,6 +35,7 @@ func _build_mission_display() -> void:
 	var header: HBoxContainer = distance_label.get_parent() as HBoxContainer
 	_journey_label = Label.new()
 	_journey_label.name = "JourneyLabel"
+	_journey_label.visible = false
 	_journey_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_journey_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_journey_label.size_flags_horizontal = Control.SIZE_SHRINK_END
@@ -46,6 +47,7 @@ func _build_mission_display() -> void:
 	# Keep the mission line between the sector meter and integrity panel.
 	var frame := PanelContainer.new()
 	frame.name = "ObjectiveFrame"
+	frame.visible = false
 	frame.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	frame.anchor_left = 0.40
 	frame.anchor_right = 0.765
@@ -118,7 +120,7 @@ func show_system_message(text: String, duration: float = 2.0) -> void:
 
 func set_scores(distance: float, best: float) -> void:
 	var safe_distance: float = maxf(distance, 0.0)
-	distance_label.text = "SECTOR  %04dm" % int(safe_distance)
+	distance_label.text = "%dm" % int(safe_distance)
 	score_progress_bar.value = clampf(safe_distance, 0.0, _level_length)
 	best_label.text = "RECORD  %04dm" % int(best)
 

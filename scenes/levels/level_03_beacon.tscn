@@ -265,7 +265,7 @@ polygon = PackedVector2Array(-26, -78, -18, -78, -18, -34, -26, -34, -26, -78, 2
 
 [node name="CouplerConsole" type="Node2D" parent="IgnitionChamber" unique_id=1573908821]
 visible = true
-z_index = 9
+z_index = -2
 position = Vector2(-145, -56)
 
 [node name="ConsolePanel" type="Polygon2D" parent="IgnitionChamber/CouplerConsole" unique_id=1661765134]
@@ -575,19 +575,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
-
-[node name="BeaconSigns" type="Node2D" parent="." unique_id=1767774339]
-z_index = 4
-
-[node name="MissionSign" type="Label" parent="BeaconSigns" unique_id=1635382031]
-offset_left = 40.0
-offset_top = 240.0
-offset_right = 480.0
-offset_bottom = 320.0
-theme_override_colors/font_color = Color(0.55, 0.64, 0.66, 0.75)
-theme_override_font_sizes/font_size = 15
-text = "BEACON 9"
-horizontal_alignment = 1
 
 [node name="ClearanceTreatments" type="Node2D" parent="."]
 z_index = 5
