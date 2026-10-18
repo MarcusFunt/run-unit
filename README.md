@@ -43,7 +43,9 @@ The playable geometry is authored in Tiled and imported through YATI:
 
 Only a solid or one-way cell in `Semantic` supports UNIT. The bright cyan top rim drawn by `WalkableEdges` is the strongest continuous horizontal cue in the scene, and the high-contrast `ArtDeck` top-face tiles must occupy the same cells as semantic support. Keep similar edges in `ArtBackground` and `ArtStructure` subdued or broken so scenery does not read as a landing. `Obstacles` keeps crouch-gate collision in Tiled; a dark overhang with a narrow amber lower lip may clarify the constraint, but that foreground treatment is draw-only and must stay aligned to the existing obstacle span.
 
-Calibration keeps its visible `04 // CROUCH` prompt ahead of the existing required gate. That route has no hazards, so players can learn the crouch clearance safely.
+Calibration keeps only three short control prompts (movement, hold/release jump, and crouch), positioned behind UNIT-07 rather than floating over its sprite. That route has no hazards, so players can learn the crouch clearance safely.
+
+The regular gameplay HUD displays distance, route progress, and integrity without a persistent objective card, sector repeat, record caption, or decorative story notifications. Recovery uses the lit module and shutdown lighting to show its state; neither depot billboards nor pickup captions cover the player. Beacon 9 reserves its text for the final hold/release interaction and success state. Environmental artwork and signs must never be drawn over UNIT-07.
 
 ## Level kit
 
