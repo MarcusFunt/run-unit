@@ -11,7 +11,6 @@ extends CanvasLayer
 ]
 
 @onready var _health_frame: Panel = $HealthFrame
-@onready var _health_title: Label = $HealthFrame/HealthTitle
 var _level_length: float = 1.0
 var _last_health: int = 3
 var _damage_flash: float = 0.0
@@ -27,7 +26,6 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	score_progress_bar.max_value = _level_length
-	_health_title.text = "INTEGRITY %d / %d" % [_last_health, _health_cells.size()]
 	_build_mission_display()
 	_adjust_integrity_layout()
 
@@ -35,6 +33,7 @@ func _build_mission_display() -> void:
 	var header: HBoxContainer = distance_label.get_parent() as HBoxContainer
 	_journey_label = Label.new()
 	_journey_label.name = "JourneyLabel"
+	_journey_label.visible = false
 	_journey_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_journey_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_journey_label.size_flags_horizontal = Control.SIZE_SHRINK_END
@@ -46,6 +45,7 @@ func _build_mission_display() -> void:
 	# Keep the mission line between the sector meter and integrity panel.
 	var frame := PanelContainer.new()
 	frame.name = "ObjectiveFrame"
+	frame.visible = false
 	frame.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	frame.anchor_left = 0.40
 	frame.anchor_right = 0.765
@@ -118,7 +118,7 @@ func show_system_message(text: String, duration: float = 2.0) -> void:
 
 func set_scores(distance: float, best: float) -> void:
 	var safe_distance: float = maxf(distance, 0.0)
-	distance_label.text = "SECTOR  %04dm" % int(safe_distance)
+	distance_label.text = "%dm" % int(safe_distance)
 	score_progress_bar.value = clampf(safe_distance, 0.0, _level_length)
 	best_label.text = "RECORD  %04dm" % int(best)
 
@@ -132,22 +132,18 @@ func set_health(current_health: int, maximum_health: int) -> void:
 	if safe_current < _last_health:
 		_damage_flash = 0.58
 	_last_health = safe_current
-	_health_title.text = "INTEGRITY %d / %d" % [safe_current, safe_maximum]
 	for index: int in range(_health_cells.size()):
-		var cell: ColorRect = _health_cells[index] as ColorRect
-		cell.visible = true
-		cell.color = Color(0.32, 0.88, 0.94, 1.0) if index < safe_current else Color(0.075, 0.22, 0.26, 1.0)
+		var heart: TextureRect = _health_cells[index] as TextureRect
+		heart.visible = true
+		heart.modulate = Color(1.0, 0.39, 0.36, 1.0) if index < safe_current else Color(0.18, 0.28, 0.32, 0.86)
 
 func _adjust_integrity_layout() -> void:
-	_health_frame.position.x = 742.0
-	_health_frame.size = Vector2(206.0, 68.0)
-	_health_title.position = Vector2(12.0, 5.0)
-	_health_title.size = Vector2(180.0, 28.0)
-	_health_title.add_theme_font_size_override("font_size", 18)
+	_health_frame.position = Vector2(798.0, 14.0)
+	_health_frame.size = Vector2(150.0, 51.0)
 	var display: HBoxContainer = $HealthDisplay as HBoxContainer
-	display.position = Vector2(774.0, 42.0)
-	display.size = Vector2(168.0, 20.0)
+	display.position = Vector2(808.0, 20.0)
+	display.size = Vector2(138.0, 38.0)
 	display.add_theme_constant_override("separation", 8)
 	for cell_item: CanvasItem in _health_cells:
-		var cell: ColorRect = cell_item as ColorRect
-		cell.custom_minimum_size = Vector2(48.0, 14.0)
+		var heart: TextureRect = cell_item as TextureRect
+		heart.custom_minimum_size = Vector2(38.0, 38.0)

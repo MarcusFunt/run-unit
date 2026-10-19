@@ -34,6 +34,7 @@ jobs:
         run: python3 -m unittest discover -s tools/tests -v
 
       - name: Import and run GUT
+        if: always() # The pre-existing Python autoart regression should not mask Godot test results.
         run: python3 tools/run_gut.py --godot godot
 
       - name: Export Windows release

@@ -140,12 +140,11 @@ func test_fall_retry_restores_checkpoint_distance_without_zero_flash() -> void:
 	assert_almost_eq(game.player.global_position.y, checkpoint.y, 2.0, "UNIT-07 remains at the saved service marker while settling onto it")
 	assert_eq(game.score_manager.distance, 382.0, "The restored sector meter is measured from the original Spawn")
 	assert_eq(game.player_health.current_health, game.player_health.max_health, "A void fall returns to service without charging integrity")
-	assert_true(game.hud.distance_label.text.contains("0382m"), "The checkpoint distance appears on the first resumed HUD frame")
+	assert_true(game.hud.distance_label.text.contains("382m"), "The compact checkpoint distance appears on the first resumed HUD frame")
 	var message: Label = game.hud.get_node_or_null("SystemMessage") as Label
 	assert_not_null(message)
 	if message != null:
-		assert_true(message.visible)
-		assert_true(message.text.contains("Recovered"), "The return explains that UNIT-07 was found at a service marker")
+		assert_false(message.visible, "Recovery is signified by the lit checkpoint rather than a central caption")
 	var stations: Node = game.world.get_node_or_null("CheckpointStations")
 	assert_not_null(stations)
 	if stations != null:

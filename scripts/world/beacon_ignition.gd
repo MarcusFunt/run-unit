@@ -39,14 +39,6 @@ var _interaction_active: bool = false
 var _interaction_charge_seconds: float = 0.0
 var _interaction_jump_was_held: bool = false
 
-const STAGE_COPY: Array[String] = [
-	"The socket clamps take hold.",
-	"Current climbs through the floor.",
-	"The rotor begins to turn.",
-	"Light returns to the lens.",
-	"Beacon 9 shines above the roofline.",
-	"Lights return across the city.",
-]
 const OBJECTIVE_COLOR := Color(1.0, 0.88, 0.38, 1.0)
 const SYSTEM_COLOR := Color(0.72, 1.0, 0.96, 1.0)
 
@@ -72,7 +64,7 @@ func reset_transition() -> void:
 	completion_banner.visible = false
 	activation_progress.value = 0.0
 	_sync_coupler_gauge()
-	coupler_prompt.text = "The coupler is dark."
+	coupler_prompt.text = "COUPLER OFFLINE"
 	coupler_prompt.add_theme_color_override("font_color", OBJECTIVE_COLOR)
 	_configure_coupler_signifier()
 	for path: NodePath in stage_paths:
@@ -101,8 +93,8 @@ func begin_player_interaction(player: RunUnitPlayerMotor) -> void:
 	coupler_console.visible = true
 	_configure_coupler_signifier()
 	completion_banner.visible = false
-	activation_label.text = "The coupler is open. Build pressure, then release."
-	coupler_prompt.text = "Hold to build pressure; release to seat."
+	activation_label.text = ""
+	coupler_prompt.text = "HOLD SPACE / RELEASE TO INSTALL"
 	coupler_prompt.add_theme_color_override("font_color", SYSTEM_COLOR)
 	activation_progress.value = 0.0
 	_sync_coupler_gauge()
@@ -124,7 +116,7 @@ func _process(delta: float) -> void:
 		var maximum: float = _interaction_player.max_charge_time if _interaction_player != null else 0.36
 		var ratio: float = clampf(_interaction_charge_seconds / maxf(maximum, 0.01), 0.0, 1.0)
 		activation_progress.value = ratio * 100.0
-		activation_label.text = "Spring pressure  %d%%" % int(round(ratio * 100.0))
+		activation_label.text = ""
 		coupler_prompt.text = "Pressure  %d%%" % int(round(ratio * 100.0))
 		_sync_coupler_gauge()
 		if _interaction_player != null:
@@ -147,8 +139,8 @@ func _process(delta: float) -> void:
 		else:
 			_interaction_charge_seconds = 0.0
 			activation_progress.value = 0.0
-			activation_label.text = "Pressure too low. The coupler stays open."
-			coupler_prompt.text = "Not enough pressure. Try again."
+			activation_label.text = ""
+			coupler_prompt.text = "CHARGE MORE / RETRY"
 			coupler_prompt.add_theme_color_override("font_color", OBJECTIVE_COLOR)
 			_sync_coupler_gauge()
 			_interaction_active = true
@@ -165,9 +157,9 @@ func begin_transition() -> void:
 	coupler_console.visible = true
 	_configure_coupler_signifier()
 	completion_banner.visible = false
-	activation_label.text = "The coupler is aligning."
+	activation_label.text = ""
 	activation_progress.value = 4.0
-	coupler_prompt.text = "Build pressure to seat the cell."
+	coupler_prompt.text = "HOLD SPACE / RELEASE TO INSTALL"
 	coupler_prompt.add_theme_color_override("font_color", SYSTEM_COLOR)
 	_sync_coupler_gauge()
 	_focus_camera()
@@ -223,18 +215,18 @@ func _start_module_transfer() -> void:
 	transfer_module.rotation = -0.18
 	transfer_module.modulate = Color(1.0, 0.9, 0.48, 1.0)
 	transfer_module.visible = true
-	activation_label.text = "The cell rises into the socket."
+	activation_label.text = ""
 	activation_progress.value = 12.0
-	coupler_prompt.text = "The clamps draw it in."
+	coupler_prompt.text = ""
 	_sync_coupler_gauge()
 func _lock_module() -> void:
 	transfer_module.visible = false
 	seated_module.visible = true
 	installed = true
 	module_installed.emit()
-	activation_label.text = "The clamps close around the cell."
+	activation_label.text = ""
 	activation_progress.value = 22.0
-	coupler_prompt.text = "Current returns to the shaft."
+	coupler_prompt.text = ""
 	_sync_coupler_gauge()
 
 	socket_burst.restart()
@@ -265,15 +257,15 @@ func _light_stage(index: int) -> void:
 	reveal.parallel().tween_property(stage, "scale", Vector2.ONE * 1.015, stage_interval * 0.4)
 	reveal.tween_property(stage, "scale", Vector2.ONE, stage_interval * 0.35)
 	lit_stages += 1
-	activation_label.text = STAGE_COPY[index] if index < STAGE_COPY.size() else "CURRENT STAGE %02d // STABLE" % (index + 1)
+	activation_label.text = ""
 	activation_progress.value = lerpf(24.0, 92.0, float(lit_stages) / maxf(float(stage_paths.size()), 1.0))
-	coupler_prompt.text = STAGE_COPY[index] if index < STAGE_COPY.size() else "CURRENT STAGE %02d // STABLE" % (index + 1)
+	coupler_prompt.text = ""
 	_sync_coupler_gauge()
 	RunUnitAudio.play_event("beacon_stage", -12.0)
 func _declare_success() -> void:
-	activation_label.text = "Beacon 9 shines again."
+	activation_label.text = ""
 	activation_progress.value = 100.0
-	coupler_prompt.text = "The city lights return."
+	coupler_prompt.text = ""
 	_sync_coupler_gauge()
 	completion_banner.visible = true
 	completion_banner.modulate.a = 0.0

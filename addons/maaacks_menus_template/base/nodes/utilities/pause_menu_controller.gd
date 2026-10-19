@@ -39,4 +39,6 @@ func _ready() -> void:
 	var pause_menu_layer := CanvasLayer.new()
 	pause_menu_layer.name = "PauseMenuLayer"
 	pause_menu_layer.add_child(pause_menu)
-	get_tree().current_scene.call_deferred("add_child", pause_menu_layer)
+	# The scene may still be entering the tree, when current_scene is null.
+	# Attach to the controller's game root instead of relying on that pointer.
+	get_parent().call_deferred("add_child", pause_menu_layer)

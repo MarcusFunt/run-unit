@@ -44,18 +44,24 @@ func test_checkpoint_needs_contact_and_is_visible_after_retry() -> void:
 	assert_true(station.is_active, "The node remains visibly online after retry")
 	assert_eq(game.player.global_position, station.checkpoint_position)
 
-func test_health_cells_keep_their_outline_when_depleted() -> void:
+func test_health_hearts_show_three_lives_without_any_integrity_text() -> void:
 	var hud: RunUnitHud = HUD_SCENE.instantiate() as RunUnitHud
 	add_child_autofree(hud)
 	assert_not_null(hud.get_node_or_null("HealthFrame"))
-	var last: ColorRect = hud.get_node("HealthDisplay/HealthCell3") as ColorRect
+	assert_null(hud.get_node_or_null("HealthFrame/HealthTitle"), "The heart meter has no text")
+	assert_eq(hud.get_node("HealthDisplay").get_child_count(), 3)
+	var last: TextureRect = hud.get_node("HealthDisplay/HealthCell3") as TextureRect
+	assert_not_null(last.texture, "Hearts are actual graphical icons")
 	hud.set_health(3, 3)
-	var lit: Color = last.color
+	var lit: Color = last.modulate
 	hud.set_health(2, 3)
-	assert_true(last.visible, "A depleted cell should remain visible as an empty socket")
-	assert_lt(last.color.get_luminance(), lit.get_luminance())
-	assert_gt(hud.get_node("HealthFrame").size.x, 190.0, "Integrity has enough area to read during movement")
-	assert_gte(hud.get_node("HealthFrame/HealthTitle").get_theme_font_size("font_size"), 17, "The health count is a primary HUD item")
+	assert_true(last.visible, "A depleted heart remains as a dark silhouette")
+	assert_lt(last.modulate.get_luminance(), lit.get_luminance())
+	hud.set_health(3, 3)
+	assert_eq(last.modulate, lit, "Healing restores a filled heart")
+	hud.set_health(0, 3)
+	for cell: Node in hud.get_node("HealthDisplay").get_children():
+		assert_lt((cell as TextureRect).modulate.get_luminance(), lit.get_luminance(), "All three hearts empty at zero health")
 
 func test_camera_stays_put_on_a_jump_and_tracks_a_drop_without_rebound() -> void:
 	var player: RunUnitPlayerMotor = PLAYER_SCENE.instantiate() as RunUnitPlayerMotor
@@ -141,6 +147,6 @@ func test_module_cradle_identifies_the_ignition_assembly() -> void:
 	var world: RunUnitStaticWorld = (load("res://scenes/levels/level_02_recovery.tscn") as PackedScene).instantiate() as RunUnitStaticWorld
 	add_child_autofree(world)
 	var cradle: RunUnitModuleCradle = world.get_node("ModuleCradle") as RunUnitModuleCradle
-	assert_true((cradle.get_node("ModuleName") as Label).text.contains("IGNITION"))
+	assert_null(cradle.get_node_or_null("ModuleName"), "Module pickup is signified by the warm-lit asset instead of floating text")
 	assert_true((cradle.get_node("ObjectiveHalo") as CanvasItem).visible)
 	assert_gt((cradle.cradle_module as CanvasItem).modulate.r, (cradle.cradle_module as CanvasItem).modulate.b, "Warm module lighting is distinct from cyan hazards")

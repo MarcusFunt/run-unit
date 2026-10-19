@@ -75,7 +75,7 @@ visible = false
 visible = false
 
 [node name="TutorialSigns" type="Node2D" parent="." unique_id=1876423768]
-z_index = 5
+z_index = -2
 
 [node name="MovementPrompt" type="Node2D" parent="TutorialSigns" unique_id=72128949]
 position = Vector2(300, 258)
@@ -87,7 +87,7 @@ offset_right = 128.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(0.35, 0.94, 0.92, 1)
 theme_override_font_sizes/font_size = 14
-text = "ACTUATOR BAY // SERIES 07"
+text = "A / D  MOVE"
 horizontal_alignment = 1
 
 [node name="LeftArrowIcon" type="Sprite2D" parent="TutorialSigns/MovementPrompt" unique_id=1424412115]
@@ -110,7 +110,7 @@ offset_right = 128.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 14
-text = "SERVICE RAIL // DISCONTINUITY"
+text = "HOLD SPACE  /  RELEASE TO JUMP"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/JumpPrompt" unique_id=1044708881]
@@ -120,7 +120,7 @@ offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.8, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "GAP: 1.5 m"
+text = ""
 horizontal_alignment = 2
 
 [node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/JumpPrompt" unique_id=236289175]
@@ -129,6 +129,7 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("8_arrow_up")
 
 [node name="ChargePrompt" type="Node2D" parent="TutorialSigns" unique_id=2027746770]
+visible = false
 position = Vector2(1085, 212)
 
 [node name="Heading" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=2096671820]
@@ -138,7 +139,7 @@ offset_right = 138.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 14
-text = "TORSION SPRING // LOAD CELL"
+text = ""
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/ChargePrompt" unique_id=708288622]
@@ -148,7 +149,7 @@ offset_right = -6.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.8, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "WHITE MARK // SPRING AT LIMIT"
+text = ""
 horizontal_alignment = 2
 
 [node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/ChargePrompt" unique_id=232359983]
@@ -166,7 +167,7 @@ offset_right = 104.0
 offset_bottom = -20.0
 theme_override_colors/font_color = Color(0.35, 0.94, 0.92, 1)
 theme_override_font_sizes/font_size = 14
-text = "LOW SERVICE HATCH"
+text = "DOWN  CROUCH"
 horizontal_alignment = 1
 
 [node name="Keys" type="Label" parent="TutorialSigns/CrouchPrompt" unique_id=356979288]
@@ -176,7 +177,7 @@ offset_right = 250.0
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0.8, 0.97, 0.96, 1)
 theme_override_font_sizes/font_size = 15
-text = "HATCH CLEARANCE // 102 mm"
+text = ""
 horizontal_alignment = 0
 
 [node name="KeyIcon" type="Sprite2D" parent="TutorialSigns/CrouchPrompt" unique_id=1928777131]
@@ -185,6 +186,7 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("9_arrow_down")
 
 [node name="FullChargePrompt" type="Node2D" parent="TutorialSigns" unique_id=355301095]
+visible = false
 z_index = 5
 position = Vector2(1504, 244)
 
@@ -195,7 +197,7 @@ offset_right = 136.0
 offset_bottom = -14.0
 theme_override_colors/font_color = Color(1, 0.68, 0.25, 1)
 theme_override_font_sizes/font_size = 15
-text = "ENERGY LOCK // SPRING AT LIMIT"
+text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -206,6 +208,6 @@ offset_right = 174.0
 offset_bottom = 12.0
 theme_override_colors/font_color = Color(0.78, 0.9, 0.9, 1)
 theme_override_font_sizes/font_size = 11
-text = "GREEN LOCK // STORED PRESSURE MAXIMUM"
+text = ""
 horizontal_alignment = 1
 vertical_alignment = 1

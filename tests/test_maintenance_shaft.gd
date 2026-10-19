@@ -192,20 +192,21 @@ func test_calibration_crouch_prompt_precedes_the_safe_required_gate() -> void:
 	var heading: Label = prompt.get_node_or_null("Heading") as Label
 	assert_not_null(heading)
 	if heading != null:
-		assert_eq(heading.text, "LOW SERVICE HATCH")
+		assert_eq(heading.text, "DOWN  CROUCH")
 	assert_null(world.get_node_or_null("ElectricalFaults"), "Calibration remains a safe teaching route")
 
 	var full_charge_prompt: Node2D = world.get_node_or_null("TutorialSigns/FullChargePrompt") as Node2D
-	assert_not_null(full_charge_prompt, "Calibration teaches a full-charge-only landing after the tap/charge comparison")
+	assert_not_null(full_charge_prompt)
 	if full_charge_prompt != null:
-		var full_charge_heading: Label = full_charge_prompt.get_node_or_null("Heading") as Label
-		var full_charge_keys: Label = full_charge_prompt.get_node_or_null("Keys") as Label
-		assert_not_null(full_charge_heading)
-		assert_not_null(full_charge_keys)
-		if full_charge_heading != null:
-			assert_eq(full_charge_heading.text, "ENERGY LOCK // SPRING AT LIMIT")
-		if full_charge_keys != null:
-			assert_eq(full_charge_keys.text, "GREEN LOCK // STORED PRESSURE MAXIMUM")
+		assert_false(full_charge_prompt.visible, "Redundant charge-limit text stays hidden")
+	var move_hint: Label = world.get_node_or_null("TutorialSigns/MovementPrompt/Heading") as Label
+	var jump_hint: Label = world.get_node_or_null("TutorialSigns/JumpPrompt/Heading") as Label
+	assert_not_null(move_hint)
+	assert_not_null(jump_hint)
+	if move_hint != null:
+		assert_eq(move_hint.text, "A / D  MOVE")
+	if jump_hint != null:
+		assert_eq(jump_hint.text, "HOLD SPACE  /  RELEASE TO JUMP")
 
 
 ## The gate's opening clears the visible torso and antenna while remaining

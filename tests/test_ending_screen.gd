@@ -55,7 +55,12 @@ func test_the_ending_is_not_a_still_frame() -> void:
 	assert_true(embers.emitting, "Embers drift up through the foreground")
 	assert_gt(ending.twinkles.get_child_count(), 0, "Windows blink across the city")
 	assert_not_null(ending.unit_07, "UNIT-07 is in frame for the last shot of the game")
-	assert_lt(ending.unit_07.scale.x, 0.0, "UNIT-07 faces the beacon it just restored")
+	var anchor: Node2D = ending.get_node("Vista/Unit07Anchor") as Node2D
+	assert_lt(anchor.scale.x, 0.0, "UNIT-07 faces the beacon it just restored")
+	assert_gt(anchor.position.x, 100.0, "The robot stays inside the left side of the vista")
+	await get_tree().process_frame
+	assert_almost_eq(anchor.position.x, 214.0, 0.01, "The visual rig must not move its scene-level anchor")
+	assert_almost_eq(anchor.scale.x, -0.85, 0.01, "The visual rig must not overwrite its parent's authored scale")
 
 	var column_alpha: float = ending.beacon_column.modulate.a
 	var unit_y: float = ending.unit_07.position.y
